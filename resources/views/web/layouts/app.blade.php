@@ -22,15 +22,26 @@
         <div class="min-h-screen bg-gray-100">
 
             <!-- Page Heading -->
-            @livewire('navigation-dropdown')
+            {{-- @livewire('navigation-dropdown') --}}
 
+            <div id="TOPBAR" class="">
+                @livewire('layouts.partials.topbar.index')
+            </div>
 
             <!-- Page Content -->
-            <main>
+            <main class="p-3">
                 {{ $slot }}
             </main>
 
-            {{ $test }}
+            <div id="SIDEBAR">
+
+            </div>
+
+            <div id="FOOTER">
+
+            </div>
+
+
 
         </div>
 

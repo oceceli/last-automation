@@ -15,6 +15,16 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code');
+            $table->integer('barcode');
+            $table->integer('min_threshold');
+            $table->integer('shelf_life'); 
+            $table->string('note')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->boolean('producible');
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

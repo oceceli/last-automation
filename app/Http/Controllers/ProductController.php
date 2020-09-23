@@ -30,7 +30,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        return 'başarılı';
+        return view('web.sections.products.index');
     }
 
 }

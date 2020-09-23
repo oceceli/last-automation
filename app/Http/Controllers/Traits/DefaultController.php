@@ -138,9 +138,9 @@ trait DefaultController
 
     /**
      * Data validation logic.
-     * Given getModelPath() represents the model's name string eg. "\App\User"
+     * Given getModelPath() represents the model's name string eg. "\App\Models\User"
      * And the validateData is a middleware that responsible for validating the array data
-     * which is given by eg. "\App\User" for this case.
+     * which is given by eg. "\App\Models\User" for this case.
      */
     protected function validateData(array $only) // should be called in controller's _construct method
     {

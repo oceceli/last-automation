@@ -23,7 +23,14 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->randomLetter . ' ürünü',
+            'code' => $this->faker->ean8,
+            'barcode' => $this->faker->ean13,
+            'min_threshold' => 50,
+            'shelf_life' => 2,
+            'note' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi excepturi aliquam dolor. Error pariatur eum fugit reprehenderit, aut, doloremque voluptatem, iusto officiis esse perferendis quo. Placeat ea dolorum dolores debitis?",
+            'is_active' => true,
+            'producible' => $this->faker->boolean(),
         ];
     }
 }
