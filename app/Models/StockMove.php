@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 
-class Product extends Model
+class StockMove extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
 
@@ -34,10 +34,9 @@ class Product extends Model
         ];
     }
 
-
-    public function stockmoves()
+    public function product() 
     {
-        return $this->hasMany(StockMove::class);
+        return $this->belongsTo(Product::class);
     }
     
 }

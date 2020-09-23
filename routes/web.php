@@ -25,6 +25,7 @@ Route::get('/deneme', function () {
 
 Route::middleware('auth')->group(function () {
     #automatic #addAfter
+	Route::resource('/stockmoves', 'StockMoveController');
     Route::resource('/products', 'ProductController');
     
     Route::get('/dashboard', function () {
