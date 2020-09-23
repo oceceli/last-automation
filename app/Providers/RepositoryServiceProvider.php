@@ -13,6 +13,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         #automatic #addAfter
+		$this->app->bind('App\Contracts\RoleContract', 'App\Repositories\RoleRepository');
 		$this->app->bind('App\Contracts\StockMoveContract', 'App\Repositories\StockMoveRepository');
 		$this->app->bind('App\Contracts\ProductContract', 'App\Repositories\ProductRepository');
     }
