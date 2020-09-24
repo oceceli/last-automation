@@ -19,36 +19,35 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen h-screen bg-gray-100 overflow-hidden">
+        <div class="min-h-screen bg-gray-100 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
-            {{-- <div class="h-full flex flex-col justify-between bg-indigo-800 "> --}}
-
                 <div class="flex" x-data="{open: false}">
-                    {{-- Left Drawer --}}
-                    <div id="SIDEBAR" class="w-0 bg-purple-300" :class="{'w-3/12': !open}">
+
+                    <div id="SIDEBAR" class="w-0 h-screen bg-purple-300" :class="{'w-3/12': !open}">
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 
-                    <div class="w-full flex flex-col bg-green-200">
+                    <div class="w-full h-screen flex flex-col bg-green-200 ">
+
                         <div id="TOPBAR">
                             @livewire('layouts.partials.topbar.index')
                         </div>
+
                         <!-- Page Content -->
-                        <main class="p-3 overflow-y-scroll overflow-visible">
-                            <div class="scrolling-auto">
-                                {{ $slot }} 
-                            </div>
-                        </main>
+                        <div class="overflow-y-hidden flex flex-1">
+                            <main class="p-4 overflow-x-hidden">{{ $slot }}</main>
+                        </div>
+                        
+                        <div id="FOOTER" class="bg-red-300 max-h-10">
+                            footer
+                        </div>
+
                     </div>
                 </div>
                 
-                {{-- <div id="FOOTER" class="bg-red-300 max-h-10">
-                    footer
-                </div> --}}
 
-            {{-- </div> --}}
 
         </div>
 
