@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 
-class Product extends Model
+class Recipe extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
 
@@ -34,15 +34,19 @@ class Product extends Model
         ];
     }
 
-
-    public function stockmoves()
+    public function product()
     {
-        return $this->hasMany(StockMove::class);
+        return $this->belongsTo(Product::class);
     }
 
-    public function recipe()
+    public function contents()
     {
-        return $this->hasOne(Recipe::class);
+        return $this->belongsToMany(Product::class)->withPivot('amount');
+    }
+
+    public function workorders()
+    {
+        return $this->hasMany(WorkOrder::class);
     }
     
 }
