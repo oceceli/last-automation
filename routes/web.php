@@ -25,10 +25,10 @@ Route::get('/deneme', function () {
 
 Route::middleware('auth')->group(function () {
     #automatic #addAfter
-	Route::resource('/workorders', 'WorkOrderController');
+	Route::resource('/work-orders', 'WorkOrderController');
 	Route::resource('/recipes', 'RecipeController');
 	Route::resource('/roles', 'RoleController');
-	Route::resource('/stockmoves', 'StockMoveController');
+	Route::resource('/stock-moves', 'StockMoveController');
     Route::resource('/products', 'ProductController');
     
     Route::get('/dashboard', function () {

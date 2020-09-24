@@ -24,7 +24,7 @@ class RecipeController extends Controller
     public function __construct(RecipeContract $repository)
     {
         $this->repository = $repository;
-        $this->authorization = true;
+        // $this->authorization = true;
         $this->validateData(['store', 'update']);
     }
 

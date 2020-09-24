@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Http\Livewire\Layouts\Partials\Topbar;
+namespace App\Http\Livewire\layouts\partials\topbar;
 
 use Livewire\Component;
 

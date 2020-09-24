@@ -33,4 +33,10 @@ class ProductController extends Controller
         return view('web.sections.products.index');
     }
 
+    public function create()
+    {
+        return view('web.sections.products.create');
+    }
+
+
 }
