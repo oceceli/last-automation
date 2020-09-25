@@ -31,12 +31,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->repository->all();
-
         return view('web.sections.products.index', compact('products'));
     }
 
-    public function show()
+    public function show($id)
     {
+        $product = $this->repository->fetch($id);
         return view('web.sections.products.create');
     }
 

@@ -16,8 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code');
-            $table->integer('barcode');
+            $table->string('code')->unique();
+            $table->integer('barcode')->unique();
             $table->integer('min_threshold');
             $table->integer('shelf_life'); 
             $table->string('note')->nullable();

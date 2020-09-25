@@ -7,6 +7,9 @@ use Illuminate\View\Component;
 class Breadcrumb extends Component
 {
 
+    public $crumbsCount;
+
+    public $currentPath;
 
     /**
      * Create a new component instance.
@@ -15,7 +18,8 @@ class Breadcrumb extends Component
      */
     public function __construct()   
     {
-        //
+        $this->crumbsCount = count($this->crumbs());
+        $this->currentPath = request()->getPathInfo();
     }
 
     /**
@@ -32,6 +36,7 @@ class Breadcrumb extends Component
     {
         return array_filter(explode('/', request()->getPathInfo()));
     }
+
 
     
 

@@ -1,5 +1,8 @@
 <x-app-layout>
-    product create
+	<div>
+		product create
+	</div>
+	
 
 	
 

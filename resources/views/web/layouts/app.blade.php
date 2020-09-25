@@ -23,13 +23,13 @@
 
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 overflow-y-hidden">
+        <div class="min-h-screen bg-indigo-50 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
                 <div class="flex" x-data="{open: false}">
 
-                    <div id="SIDEBAR" class="w-0 h-screen bg-white" :class="{'w-3/12':open}">
+                    <div id="SIDEBAR" class="w-0 h-screen bg-white" :class="{'w-3/12':!open}">
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 

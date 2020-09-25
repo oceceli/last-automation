@@ -1,4 +1,4 @@
-<div class="h-12 px-3 py-1 shadow bg-white flex items-center justify-between relative">
+<div class="h-13 px-3 py-1 shadow bg-white flex items-center justify-between relative">
     <button @click="open = !open">...</button>
     <div>topbar ----------------------------- </div>
     <div>şasdlfkj</div>

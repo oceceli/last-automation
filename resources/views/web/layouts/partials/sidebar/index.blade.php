@@ -1,3 +1,29 @@
-<div class="shadow h-full border-r border-gray-300">
-    sdakljfsd sidebar
+<div class="shadow h-full border-r">
+    {{-- <div class="bg-red-800 h-full flex flex-col justify-between">
+        <div>fsdfa</div>
+        <div>sadşfkjl</div>
+    </div> --}}
+    <div class="h-full flex flex-col justify-between">
+
+        <div class="h-3/12 flex-1 bg-cool-gray-100">
+            <div class="h-full p-3 flex flex-col items-center">
+                <div>Kullanıcı resim</div>
+                <div>
+                    kullanıcı 
+                    yetki
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-green-300 h-8/12">
+            Body(links)
+        </div>
+
+
+        <div class="bg-purple-300 h-1/12">
+            Settings
+        </div>
+
+    </div>
 </div>

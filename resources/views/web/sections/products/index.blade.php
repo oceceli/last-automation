@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="shadow p-4 bg-white rounded-lg">
+    <div class="shadow-lg p-4 bg-white rounded-lg">
         <table class="ui celled table">
             <thead>
                 <tr>
