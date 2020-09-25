@@ -29,7 +29,7 @@
 
                 <div class="flex" x-data="{open: false}">
 
-                    <div id="SIDEBAR" class="w-0 h-screen" :class="{'w-3/12':open}">
+                    <div id="SIDEBAR" class="w-0 h-screen bg-white" :class="{'w-3/12':open}">
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 
@@ -39,14 +39,8 @@
                             @livewire('layouts.partials.topbar.index')
                         </div>
 
-                        <div class="px-6 py-3 border-b border-gray-300 shadow">
-                            <div class="ui breadcrumb">
-                                <a class="section">Home</a>
-                                <i class="right angle icon divider"></i>
-                                <a class="section">Store</a>
-                                <i class="right angle icon divider"></i>
-                                <div class="active section">T-Shirt</div>
-                            </div>
+                        <div class="px-6 py-3 border-b border-gray-300 shadow bg-gray-50">
+                            <x-breadcrumb/>
                         </div>
                         
                         <!-- Page Content -->
