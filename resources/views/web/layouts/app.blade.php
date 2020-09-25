@@ -12,33 +12,33 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+        <script src="{{ asset('js/semantic.min.js') }}"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
                 <div class="flex" x-data="{open: false}">
 
-                    <div id="SIDEBAR" class="w-0 h-screen bg-purple-300" :class="{'w-3/12': !open}">
+                    <div id="SIDEBAR" class="w-0 h-screen bg-purple-300" :class="{'w-3/12':open}">
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 
-                    <div class="w-full h-screen flex flex-col bg-green-200 overflow-y-hidden">
+                    <div class="w-full h-screen flex flex-col bg-green-200 ">
 
                         <div id="TOPBAR">
                             @livewire('layouts.partials.topbar.index')
                         </div>
 
                         <!-- Page Content -->
-                        <div class="overflow-y-hidden flex flex-1">
-                            <main class="p-4 overflow-x-hidden">{{ $slot }}</main>
-                        </div>
+                        <div class="p-4 overflow-x-hidden w-full flex-1">{{ $slot }}</div>
                         
                         <div id="FOOTER" class="bg-red-300 max-h-10">
                             footer
@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 
+
 
         </div>
 
