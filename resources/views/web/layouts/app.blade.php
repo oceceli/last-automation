@@ -19,7 +19,7 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 overflow-y-hidden">
+        <div class="min-h-screen bg-gray-100">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
@@ -29,7 +29,7 @@
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 
-                    <div class="w-full h-screen flex flex-col bg-green-200 ">
+                    <div class="w-full h-screen flex flex-col bg-green-200 overflow-y-hidden">
 
                         <div id="TOPBAR">
                             @livewire('layouts.partials.topbar.index')
@@ -47,7 +47,6 @@
                     </div>
                 </div>
                 
-
 
         </div>
 
