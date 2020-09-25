@@ -17,8 +17,10 @@
         @livewireStyles
 
         <!-- Scripts -->
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{{ asset('js/semantic.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 overflow-y-hidden">
@@ -27,18 +29,30 @@
 
                 <div class="flex" x-data="{open: false}">
 
-                    <div id="SIDEBAR" class="w-0 h-screen bg-purple-300" :class="{'w-3/12':open}">
+                    <div id="SIDEBAR" class="w-0 h-screen" :class="{'w-3/12':open}">
                         @livewire('layouts.partials.sidebar.index')
                     </div>
                 
-                    <div class="w-full h-screen flex flex-col bg-green-200 ">
+                    <div class="w-full h-screen flex flex-col">
 
                         <div id="TOPBAR">
                             @livewire('layouts.partials.topbar.index')
                         </div>
 
+                        <div class="px-6 py-3 border-b border-gray-300 shadow">
+                            <div class="ui breadcrumb">
+                                <a class="section">Home</a>
+                                <i class="right angle icon divider"></i>
+                                <a class="section">Store</a>
+                                <i class="right angle icon divider"></i>
+                                <div class="active section">T-Shirt</div>
+                            </div>
+                        </div>
+                        
                         <!-- Page Content -->
-                        <div class="p-4 overflow-x-hidden w-full flex-1">{{ $slot }}</div>
+                        <div class="p-5 overflow-x-hidden w-full flex-1">
+                            <div>{{ $slot }}</div>
+                        </div>
                         
                         <div id="FOOTER" class="bg-red-300 max-h-10">
                             footer

@@ -17,4 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
     ])
     .copy('node_modules/fomantic-ui-css/semantic.min.css','public/css/semantic.min.css')
+    .copy('node_modules/fomantic-ui-css/themes/default/assets/fonts', 'public/css/themes/default/assets/fonts')
     .copy('node_modules/fomantic-ui-css/semantic.min.js','public/js/semantic.min.js');
