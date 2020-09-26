@@ -31,14 +31,14 @@
 
                     <template x-if="!open">
                         <div id="SIDEBAR" class="w-3/12 h-screen bg-white">
-                            @livewire('layouts.partials.sidebar.index')
+                            <x-layouts.partials.sidebar/>
                         </div>
                     </template>
                 
                     <div class="w-full h-screen flex flex-col">
 
                         <div id="TOPBAR">
-                            @livewire('layouts.partials.topbar.index')
+                            <x-layouts.partials.topbar/>
                         </div>
 
                         <div class="px-6 py-3 border-b border-gray-300 shadow bg-gray-50">

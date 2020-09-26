@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class CircleImage extends Component
 {
-    public $image;
+    public $imageUrl;
     public $height;
 
     /**
@@ -17,7 +17,7 @@ class CircleImage extends Component
     public function __construct($height)
     {
         $this->height = $height;
-        $this->image = asset('storage/' . auth()->user()->profile_photo_path);
+        $this->imageUrl = asset('storage/' . auth()->user()->profile_photo_path);
     }
 
     /**
