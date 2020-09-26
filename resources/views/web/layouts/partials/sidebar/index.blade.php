@@ -7,8 +7,8 @@
 
         <div class="h-3/12 flex-1 bg-cool-gray-100">
             <div class="h-full p-3 flex flex-col items-center">
-                <div>Kullanıcı resim</div>
-                <div>
+                <x-circle-image height="h-24 w-24"/>
+                <div class="pt-4">
                     kullanıcı 
                     yetki
                 </div>

@@ -29,9 +29,11 @@
 
                 <div class="flex" x-data="{open: false}">
 
-                    <div id="SIDEBAR" class="w-0 h-screen bg-white" :class="{'w-3/12':!open}">
-                        @livewire('layouts.partials.sidebar.index')
-                    </div>
+                    <template x-if="!open">
+                        <div id="SIDEBAR" class="w-3/12 h-screen bg-white">
+                            @livewire('layouts.partials.sidebar.index')
+                        </div>
+                    </template>
                 
                     <div class="w-full h-screen flex flex-col">
 
