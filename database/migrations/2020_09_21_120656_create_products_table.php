@@ -18,11 +18,11 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->integer('barcode')->unique();
-            $table->integer('min_threshold');
-            $table->integer('shelf_life'); 
+            $table->integer('min_threshold')->nullable();
+            $table->integer('shelf_life')->default('2');
             $table->string('note')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->boolean('producible');
+            $table->boolean('producible')->default(false);
             $table->softDeletes();
 
             $table->timestamps();

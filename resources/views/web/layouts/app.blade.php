@@ -29,14 +29,14 @@
 
                 <div class="flex" x-data="{open: false}">
 
-                    <template x-if="!open">
-                        <div id="SIDEBAR" class="w-3/12 h-screen bg-white">
+                    <template id="SIDEBAR"  x-if="!open">
+                        <div class="w-3/12 h-screen bg-white">
                             <x-layouts.partials.sidebar/>
                         </div>
                     </template>
                 
-                    <div class="w-full h-screen flex flex-col">
 
+                    <div class="w-full h-screen flex flex-col">
                         <div id="TOPBAR">
                             <x-layouts.partials.topbar/>
                         </div>
@@ -46,15 +46,16 @@
                         </div>
                         
                         <!-- Page Content -->
-                        <div class="p-5 overflow-x-hidden w-full flex-1">
-                            <div>{{ $slot }}</div>
+                        <div class="overflow-x-hidden flex flex-col flex-1">
+                            <div class="p-5 flex-1">
+                                <div class="shadow-lg p-4 bg-gray-50 rounded-lg">{{ $slot }}</div>
+                            </div>
+                            <div id="FOOTER" class="bg-white">
+                                <x-layouts.partials.footer/>
+                            </div>
                         </div>
-                        
-                        <div id="FOOTER" class="bg-red-300 max-h-10">
-                            footer
-                        </div>
-
                     </div>
+
                 </div>
                 
 
@@ -66,3 +67,5 @@
         @livewireScripts
     </body>
 </html>
+
+

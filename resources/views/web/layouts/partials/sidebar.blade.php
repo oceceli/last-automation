@@ -58,3 +58,9 @@
 
     </div>
 </div>
+
+
+<script>
+    $('.ui.sidebar')
+    .sidebar('toggle');
+</script>

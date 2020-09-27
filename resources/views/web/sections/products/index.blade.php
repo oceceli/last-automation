@@ -1,5 +1,4 @@
 <x-app-layout>
-    <div class="shadow-lg p-4 bg-white rounded-lg">
         <table class="ui celled table">
             <thead>
                 <tr>
@@ -29,6 +28,5 @@
             </tbody>
            
         </table>
-    </div>
 
 </x-app-layout>
