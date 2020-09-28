@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.semanticui.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.semanticui.min.css">
 {{-- <link rel="stylesheet" type="text/css" href={{asset("DataTables/datatables.min.css")}}/> --}}
 
 
@@ -23,10 +24,21 @@
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{{ asset('js/semantic.min.js') }}"></script>
+        
+        {{-- Datatable .. --}}
+        <script src="{{ asset('js/jszip.min.js') }}"></script>
+        <script src="{{ asset('js/pdfmake/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('js/pdfmake/vfs_fonts.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
 
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" defer></script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.semanticui.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.semanticui.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js" defer></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js" defer></script>
     {{-- <script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script> --}}
 
  

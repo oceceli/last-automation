@@ -17,7 +17,12 @@ class Create extends Component
     public $is_active = false;
     public $producible = false;
 
-    public $success = false;
+    public $success;
+
+    public function mount()
+    {
+        $this->success = false;
+    }
 
     public function render()
     {
@@ -42,6 +47,11 @@ class Create extends Component
                 $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
         }
 
+    }
+
+    public function clearFields()
+    {
+        $this->reset();
     }
 
 }

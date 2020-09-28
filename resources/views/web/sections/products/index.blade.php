@@ -48,9 +48,14 @@ $(document).ready( function () {
         paging: false,
         // scrollY: 40
         // scrollX: 500
-        "autoWidth": true,
-        "info":true,
-        autoFill: true,
+        // "autoWidth": true,
+        // "info":true,
+        // autoFill: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf'
+        ],
     });
+    
 } );
 </script>

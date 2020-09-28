@@ -66,8 +66,9 @@
         
         <div>
             @if ($success)
-                <div class="bg-green-100 rounded-t-lg">
-                    <p class="text-green-600 p-2">Kayıt başarılı!</p>
+                <div class="bg-green-100 rounded-t-lg flex items-center justify-center p-3">
+                    <i class="icon info circular"></i>
+                    <p class="text-green-600">Ürün kaydedildi!</p>
                 </div>
             @endif
             <hr>
@@ -76,7 +77,7 @@
         <div class="mt-8 flex justify-between items-center">
             <div></div>
             <div class="ui buttons w-full xl:w-3/12">
-                <button class="ui basic button labeled icon" type="reset">
+                <button class="ui basic button labeled icon" type="reset" wire:click="clearFields">
                     <i class="redo icon"></i>
                     Temizle
                 </button>
