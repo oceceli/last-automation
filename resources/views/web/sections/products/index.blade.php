@@ -49,7 +49,8 @@ $(document).ready( function () {
         // scrollY: 40
         // scrollX: 500
         "autoWidth": true,
-        "info":true
+        "info":true,
+        autoFill: true,
     });
 } );
 </script>
