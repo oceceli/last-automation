@@ -26,7 +26,14 @@ class Product extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                //
+                'code' => ['required', 'min:2', 'unique:products,code'],
+                'barcode' => ['required', 'numeric', 'unique:products,barcode'],
+                'name' => ['required', 'min:3'],
+                'shelf_life' => 'required',
+                'producible' => 'required',
+                'is_active' => 'required',
+                'min_threshold' => 'nullable',
+                'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships
                 //

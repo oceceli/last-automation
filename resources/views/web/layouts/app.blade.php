@@ -13,6 +13,8 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
+<link rel="stylesheet" type="text/css" href={{asset("DataTables/datatables.min.css")}}/>
+
 
         @livewireStyles
 
@@ -20,7 +22,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{{ asset('js/semantic.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+<script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script>
 
+ 
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-indigo-50 overflow-y-hidden">
@@ -30,13 +34,13 @@
                 <div class="flex" x-data="{open: false}">
 
                     <template id="SIDEBAR"  x-if="!open">
-                        <div class="w-3/12 h-screen bg-white">
+                        <div class="w-96 h-screen bg-white">
                             <x-layouts.partials.sidebar/>
                         </div>
                     </template>
                 
 
-                    <div class="w-full h-screen flex flex-col">
+                    <div class="flex-1 h-screen flex flex-col">
                         <div id="TOPBAR">
                             <x-layouts.partials.topbar/>
                         </div>

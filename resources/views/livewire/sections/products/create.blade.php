@@ -3,21 +3,21 @@
         <div class="three fields">
             <div class="four wide required field">
                 <label>Kod</label>
-                <input wire:model="code" type="text" placeholder="Ürün Kodu">
+                <input wire:model.lazy="code" type="text" placeholder="Ürün Kodu">
                 @error('code')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
             </div>
             <div class="nine wide required field">
                 <label>İsim</label>
-                <input wire:model="name" type="text" placeholder="Ürün Adı">
+                <input wire:model.lazy="name" type="text" placeholder="Ürün Adı">
                 @error('name')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
             </div>
             <div class="three wide required field">
                 <label>Barkod</label>
-                <input wire:model="barcode" type="text" placeholder="EAN13">
+                <input wire:model.lazy="barcode" type="text" placeholder="EAN13">
                 @error('barcode')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
@@ -27,14 +27,14 @@
         <div class="equal width fields">
             <div class="field">
                 <label>Minimum Stok</label>
-                <input wire:model="min_threshold" type="text" placeholder="Minimum Stok">
+                <input wire:model.lazy="min_threshold" type="text" placeholder="Minimum Stok">
                 @error('min_threshold')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>Raf Ömrü</label>
-                <input wire:model="shelf_life" type="text" placeholder="Raf Ömrü">
+                <input wire:model.lazy="shelf_life" type="text" placeholder="Raf Ömrü">
                 @error('shelf_life')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
@@ -45,32 +45,34 @@
         <div class="fields">
             <div class="sixteen wide field">
                 <label>Açıklama</label>
-                <textarea wire:model="note" rows="2"></textarea>
+                <textarea wire:model.lazy="note" rows="2"></textarea>
             </div>
         </div>
 
         <div class="fields">
             <div class="field">
                 <div class="ui toggle checkbox">
-                    <input wire:model="is_active" type="checkbox">
+                    <input wire:model.lazy="is_active" type="checkbox">
                     <label>Aktif</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui toggle checkbox" data-tooltip="Fabrikada üretimi gerçekleştirilecek ürünü belirtir." data-position="top center" data-variation="mini">
-                    <input wire:model="producible" type="checkbox">
+                    <input wire:model.lazy="producible" type="checkbox">
                     <label>Üretim yapılacak</label>
                 </div>
             </div>
         </div>
         
-        <hr>
-        
         <div>
-            <p class="text-green-500 w-full">Başarılı!</p>
             @if ($success)
+                <div class="bg-green-100 rounded-t-lg">
+                    <p class="text-green-600 p-2">Kayıt başarılı!</p>
+                </div>
             @endif
+            <hr>
         </div>
+        
         <div class="mt-8 flex justify-between items-center">
             <div></div>
             <div class="ui buttons w-full xl:w-3/12">

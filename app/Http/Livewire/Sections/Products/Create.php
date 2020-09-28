@@ -26,16 +26,7 @@ class Create extends Component
 
     public function submit()
     {
-        $this->validate([
-            'code' => ['required', 'min:3'],
-            'name' => ['required', 'min:3'],
-            'barcode' => ['required', 'numeric'],
-            'min_threshold' => 'nullable',
-            'shelf_life' => 'nullable',
-            'note' => 'nullable',
-            'is_active' => 'nullable',
-            'producible' => 'nullable',
-        ]);
+        $this->validate(Product::rules()['data']);
 
         if(Product::create([
             'code' => $this->code,
@@ -47,8 +38,8 @@ class Create extends Component
             'is_active' => $this->is_active,
             'producible' => $this->producible,
         ])) {
-            $this->success = true;
-            $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
+                $this->success = true;
+                $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
         }
 
     }

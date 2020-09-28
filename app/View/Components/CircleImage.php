@@ -20,11 +20,9 @@ class CircleImage extends Component
         $user = auth()->user();
 
 
-        if($user->profile_photo_path) {
-            $this->imageUrl = asset('storage/' . $user->profile_photo_path);
-        } else {
-            $this->imageUrl = 'https://ui-avatars.com/api/?name=' . $user->name;
-        }
+        $this->imageUrl = $user->profile_photo_path
+            ? asset('storage/' . $user->profile_photo_path)
+            : 'https://ui-avatars.com/api/?name=' . $user->name;
     }
 
     /**
