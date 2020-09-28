@@ -66,13 +66,13 @@
         
         <hr>
         
-        <div class="mt-8 flex justify-between">
-            <div>
-                @if ($success)
-                    <i class="ui mask icon"></i>
-                    <p>Başarılı!</p>
-                @endif
-            </div>
+        <div>
+            <p class="text-green-500 w-full">Başarılı!</p>
+            @if ($success)
+            @endif
+        </div>
+        <div class="mt-8 flex justify-between items-center">
+            <div></div>
             <div class="ui buttons w-full xl:w-3/12">
                 <button class="ui basic button labeled icon" type="reset">
                     <i class="redo icon"></i>

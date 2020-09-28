@@ -48,7 +48,7 @@ class Create extends Component
             'producible' => $this->producible,
         ])) {
             $this->success = true;
-            $this->reset();
+            $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
         }
 
     }
