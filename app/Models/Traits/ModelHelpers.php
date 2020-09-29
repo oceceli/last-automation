@@ -73,15 +73,15 @@ trait ModelHelpers
         return Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class))); 
     }
 
-    public static function search($query)
+    public static function search($string)
     {
-        // return self::orWhereLike(self::getColumnNames(), $query);
-        // $columns = self::getColumnNames();
+        $columns = self::getColumnNames();
         return self::query()
-            ->where('name', 'LIKE', "%{$query}%") 
-            ->orWhere('code', 'LIKE', "%{$query}%")
-            ->orWhere('barcode', 'LIKE', "%{$query}%")
-            ->get();
+            ->where(function($query) use ($columns, $string) {
+                foreach($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$string}%");
+                }
+            })->get();
     }
 }
 

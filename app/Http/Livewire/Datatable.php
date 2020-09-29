@@ -25,15 +25,10 @@ class Datatable extends Component
     public $attributes;
     
     /**
-     * The data which will be shown in the table
-     */
-    // public $data;
-
-    /**
      * These columns should not be shown in the table
      */
     public $except = [
-        'created_at', 'updated_at', 'deleted_at', 'id', 'note' // note kaldır
+        'created_at', 'updated_at', 'deleted_at', 'id',  // note kaldır
     ];
 
     /**
@@ -41,26 +36,34 @@ class Datatable extends Component
      */
     public $searchQuery = '';
 
+    /**
+     * Pagination
+     */
+    public $paginate;
+
+    /**
+     * 
+     */
+    public $perPage = 10;
+
 
 
     public function mount()
     {
         $this->modelPath = ModelFactory::make($this->modelName);
         $this->attributes = array_diff($this->modelPath::getColumnNames(), $this->except);
-        // $this->data = $this->modelPath::all();
     }
 
 
     public function queryResults()
     {
         if($this->searchQuery == null)
-            return $this->modelPath::all();
+            return $this->modelPath::paginate($this->perPage);
         return $this->modelPath::search($this->searchQuery);
     }
 
     
     
-
 
     public function render()
     {
