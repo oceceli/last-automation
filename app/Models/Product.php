@@ -18,6 +18,12 @@ class Product extends Model
      */
     protected $with = []; 
 
+
+    // public const theadAttributes = [
+    //     'Sıra', 'Ürün Adı', 'Kod', 'Barkod', 'Raf Ömrü', 'Min. Stok', 'Aktif', 'Üretilebilir',
+    // ];
+
+
     /**
      * Validate rules for current model
      */
@@ -40,6 +46,7 @@ class Product extends Model
             ],
         ];
     }
+
 
 
     public function stockmoves()

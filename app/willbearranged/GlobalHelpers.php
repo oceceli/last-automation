@@ -14,6 +14,8 @@ trait GlobalHelpers
         return false;
     }
 
+
+
     /**
      * Remove path and returns class name
      * @return String
@@ -22,6 +24,8 @@ trait GlobalHelpers
     {
         return preg_replace('/.*\\\/', '', $string);
     }
+
+
 
     /**
      * Takes class string with path or not.

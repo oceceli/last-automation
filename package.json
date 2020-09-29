@@ -21,8 +21,6 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "fomantic-ui-css": "^2.8.7",
-        "jszip": "^3.5.0",
-        "pdfmake": "^0.1.68"
+        "fomantic-ui-css": "^2.8.7"
     }
 }

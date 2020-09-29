@@ -1,5 +1,5 @@
 <x-app-layout>
-        <table class="ui celled green table" id="example">
+        {{-- <table class="ui celled green table">
             <thead>
                 <tr>
                     <th>Sıra</th>
@@ -29,33 +29,8 @@
                 @endforeach
             </tbody>
            
-        </table>
+        </table> --}}
+        
+        <livewire:datatable :modelName="'product'">
 
 </x-app-layout>
-
-<script>
-//    $(document).ready(function() {
-//     var table = $('#example').DataTable( {
-//         lengthChange: false,
-//         buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
-//     } );
- 
-//     table.buttons().container()
-//         .appendTo( $('div.eight.column:eq(0)', table.table().container()) );
-//     });
-$(document).ready( function () {
-    $('#example').DataTable({
-        paging: false,
-        // scrollY: 40
-        // scrollX: 500
-        // "autoWidth": true,
-        // "info":true,
-        // autoFill: true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf'
-        ],
-    });
-    
-} );
-</script>

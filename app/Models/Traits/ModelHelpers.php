@@ -4,6 +4,8 @@ namespace App\Models\Traits;
 
 use App\Traits\GlobalHelpers;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 trait ModelHelpers
 {
@@ -61,6 +63,25 @@ trait ModelHelpers
         if (request()->has('id'))
             return request()->get('id');
         return null;
+    }
+
+    /**
+     * Gets 
+     */
+    public static function getColumnNames()
+    {
+        return Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class))); 
+    }
+
+    public static function search($query)
+    {
+        // return self::orWhereLike(self::getColumnNames(), $query);
+        // $columns = self::getColumnNames();
+        return self::query()
+            ->where('name', 'LIKE', "%{$query}%") 
+            ->orWhere('code', 'LIKE', "%{$query}%")
+            ->orWhere('barcode', 'LIKE', "%{$query}%")
+            ->get();
     }
 }
 

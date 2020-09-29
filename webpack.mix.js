@@ -20,6 +20,3 @@ mix.js('resources/js/app.js', 'public/js')
     .copy('node_modules/fomantic-ui-css/themes/default/assets/fonts', 'public/css/themes/default/assets/fonts')
     .copy('node_modules/fomantic-ui-css/semantic.min.js','public/js/semantic.min.js')
 
-    // datatable things
-    .copy('node_modules/jszip/dist/jszip.min.js','public/js/jszip.min.js');
-    // .copy('node_modules/pdfmake/build/pdfmake.min.js','public/js/pdfmake.min.js');
