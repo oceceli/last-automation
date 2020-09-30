@@ -1,7 +1,7 @@
 <div>
     
     <div class="bg-white border-t border-r border-l rounded-t-md  p-4 flex justify-between items-center">
-        <div class="ui icon input w-28" wire:model.debounce.800ms="perPage" data-tooltip="{{ __('datatable.perpage_explain') }}" data-position="top left" data-variation="tiny wide fixed">
+        <div class="ui icon input w-28 border-green-500" wire:model.debounce.300ms="perPage" data-tooltip="{{ __('datatable.perpage_explain') }}" data-position="top left" data-variation="tiny wide fixed">
             <i class="stream icon"></i>
             <input type="number" value="{{ $perPage }}" placeholder="{{ __('datatable.perpage') }}">
         </div>
@@ -63,12 +63,39 @@
                 </tr>
             </tfoot> --}}
         </table>
-        <div>
-            {{-- {{ $data->links() }} --}}
-        </div>
+       
+
+
+        
         <div class="flex justify-between items-center">
-            <div>Toplam (Bilmem kaç) sayfadan (bilmem kaç) - (bilmem kaç) arası gösteriliyor</div>
-            <div>pagi links</div>
+            <div>
+                <p class="text-sm">
+                    Toplam <strong class="text-red-800">{{ $total }}</strong> sonuçtan <strong>{{ $firstItem }} - {{ $firstItem + ($count-1) }}</strong> arası gösteriliyor
+                </p>
+            </div>
+        <div>
+            {{ $data->links('components.semantic-pagination') }}
         </div>
+
+            {{-- <div class="ui buttons tiny">
+                <button class="ui icon button">
+                    <i class="left chevron icon"></i>
+                </button>
+                @if ($lastPage >= 8)
+                    <button class="ui basic button ">test</button>
+                @else
+                    @for ($i = 0; $i < $lastPage; $i++)
+                        <button class="ui basic button ">{{ $i+1 }}</button>
+                    @endfor
+                @endif
+                <button class="ui icon button">
+                    <i class="right chevron icon"></i>
+                </button>
+            </div> --}}
+        </div>
+
+
+
+        
     </div>
 </div>

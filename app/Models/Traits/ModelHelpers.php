@@ -81,8 +81,6 @@ trait ModelHelpers
                 foreach($columns as $column) {
                     $query->orWhere($column, 'LIKE', "%{$string}%");
                 }
-            })->get();
+            });
     }
 }
-
-
