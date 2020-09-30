@@ -43,24 +43,11 @@ class Datatable extends Component
      */
     private $data;
    
-
     /** 
-     * ****************************************
-     * These properties for pagination purposes
-     * ****************************************
+     * Paginate per page 
      */
     public $perPage = 7;
 
-    public $total;
-    
-    public $firstItem;
-    
-    public $count;
-    
-    public $lastPage;
-
-
-    // Pagination **************************
 
 
     public function mount()
@@ -72,7 +59,6 @@ class Datatable extends Component
 
     public function render()
     {
-        $this->resetPage();
         $this->queryResults();
         $this->setPagination();
         // dd($this->data->setCollection(collect('test')));
@@ -98,10 +84,17 @@ class Datatable extends Component
     }
 
 
-    // public function updatedSearchQuery($value) 
-    // {
-    //     dd($value);
-    // }
+    public function updatedSearchQuery($value) 
+    {
+        $this->resetPage();
+
+        // dd($value);
+    }
+
+    public function updatedPerPage($value)
+    {
+        $this->resetPage();
+    }
 
     
 

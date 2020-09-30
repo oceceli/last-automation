@@ -67,32 +67,19 @@
 
 
         
-        <div class="flex justify-between items-center">
-            <div>
+
+            {{-- <div>
                 <p class="text-sm">
                     Toplam <strong class="text-red-800">{{ $total }}</strong> sonuçtan <strong>{{ $firstItem }} - {{ $firstItem + ($count-1) }}</strong> arası gösteriliyor
                 </p>
-            </div>
-        <div>
+            </div> --}}
+
+
+        <div class="w-full">
             {{ $data->links('components.semantic-pagination') }}
         </div>
 
-            {{-- <div class="ui buttons tiny">
-                <button class="ui icon button">
-                    <i class="left chevron icon"></i>
-                </button>
-                @if ($lastPage >= 8)
-                    <button class="ui basic button ">test</button>
-                @else
-                    @for ($i = 0; $i < $lastPage; $i++)
-                        <button class="ui basic button ">{{ $i+1 }}</button>
-                    @endfor
-                @endif
-                <button class="ui icon button">
-                    <i class="right chevron icon"></i>
-                </button>
-            </div> --}}
-        </div>
+            
 
 
 
