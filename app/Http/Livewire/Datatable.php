@@ -61,16 +61,15 @@ class Datatable extends Component
 
     public function render()
     {
-        $this->queryResults();
+        $this->setData();
+
         return view('livewire.datatable', [
             'data' => $this->data,
         ]);
     }
 
 
-
-
-    private function queryResults()
+    private function setData()
     {
         $this->data = $this->searchQuery == null 
             ? $this->modelPath::paginate($this->perPage)
@@ -78,17 +77,17 @@ class Datatable extends Component
     }
 
 
-    public function updatedSearchQuery($value) 
-    {
-        $this->resetPage();
-    }
-
     public function updatedPerPage($value)
     {
-        $this->resetPage();
+        // $this->resetPage();
         auth()->user()->setDatatablePerpage($value);
     }
 
+
+    public function hydrate()
+    {
+        $this->resetPage();
+    }
     
 
 

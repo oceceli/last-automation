@@ -14,7 +14,7 @@ trait HasQueries
         })->get()->first();
 
         return $result 
-            ? $result->value
+            ? (int)abs($result->value)
             : $default;
     }
 
