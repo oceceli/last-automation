@@ -11,12 +11,12 @@
         </div>
     </div>
     <div class="">
-        <table class="ui celled table">
+        <table class="ui celled table loading">
             <thead>
                 <tr>
                     <th>Sıra</th>
                     @foreach ($attributes as $attribute)
-                        <th>{{ __('sections/products.'.$attribute) }}</th>
+                        <th>{{ __('sections/' . Illuminate\Support\Str::plural($modelName)  . '.' . $attribute) }}</th>
                     @endforeach
                     <th>İşlemler</th>
                 </tr>
@@ -44,45 +44,16 @@
                 </tr>
                 @endforeach
             </tbody>
-            {{-- <tfoot>
-                <tr>
-                    <th colspan="5">
-                        <div class="ui right floated pagination menu">
-                            <a class="icon item">
-                                <i class="left chevron icon"></i>
-                            </a>
-                            <a class="item">1</a>
-                            <a class="item">2</a>
-                            <a class="item">3</a>
-                            <a class="item">4</a>
-                            <a class="icon item">
-                                <i class="right chevron icon"></i>
-                            </a>
-                        </div>
-                    </th>,
-                </tr>
-            </tfoot> --}}
         </table>
        
-
-
-        
-
-            {{-- <div>
-                <p class="text-sm">
-                    Toplam <strong class="text-red-800">{{ $total }}</strong> sonuçtan <strong>{{ $firstItem }} - {{ $firstItem + ($count-1) }}</strong> arası gösteriliyor
-                </p>
-            </div> --}}
-
-
         <div class="w-full">
             {{ $data->links('components.tailwind-pagination') }}
         </div>
-
-            
-
-
-
-        
     </div>
 </div>
+
+{{-- <div>
+    <p class="text-sm">
+        Toplam <strong class="text-red-800">{{ $total }}</strong> sonuçtan <strong>{{ $firstItem }} - {{ $firstItem + ($count-1) }}</strong> arası gösteriliyor
+    </p>
+</div> --}}        

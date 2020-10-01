@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Common\Factories\ModelFactory;
+use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -46,7 +47,7 @@ class Datatable extends Component
     /** 
      * Paginate per page 
      */
-    public $perPage = 7;
+    public $perPage;
 
 
 
@@ -54,18 +55,19 @@ class Datatable extends Component
     {
         $this->modelPath = ModelFactory::make($this->modelName);
         $this->attributes = array_diff($this->modelPath::getColumnNames(), $this->except); // dinamik olursa rendera taşı
+        $this->perPage = auth()->user()->getDatatablePerpage();
     }  
     
 
     public function render()
     {
         $this->queryResults();
-        $this->setPagination();
-        // dd($this->data->setCollection(collect('test')));
         return view('livewire.datatable', [
             'data' => $this->data,
         ]);
     }
+
+
 
 
     private function queryResults()
@@ -75,25 +77,16 @@ class Datatable extends Component
             : $this->modelPath::search($this->searchQuery)->paginate($this->perPage);
     }
 
-    private function setPagination()
-    {
-        $this->total = $this->data->total();
-        $this->count = $this->data->count();
-        $this->firstItem = $this->data->firstItem();
-        $this->lastPage = $this->data->lastPage();
-    }
-
 
     public function updatedSearchQuery($value) 
     {
         $this->resetPage();
-
-        // dd($value);
     }
 
     public function updatedPerPage($value)
     {
         $this->resetPage();
+        auth()->user()->setDatatablePerpage($value);
     }
 
     

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasQueries;
+use App\Models\Traits\HasSettings;
 use App\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +17,8 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
+    use HasSettings;
+    use HasQueries;
     // use HasRoles;
     use HasProfilePhoto;
     use Notifiable;
