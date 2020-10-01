@@ -76,7 +76,7 @@
 
 
         <div class="w-full">
-            {{ $data->links('components.semantic-pagination') }}
+            {{ $data->links('components.tailwind-pagination') }}
         </div>
 
             
