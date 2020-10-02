@@ -26,7 +26,14 @@ class WorkOrder extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                //
+                'recipe_id' => 'required',
+                'lot_no' => 'required',
+                'amount' => 'required',
+                'datetime' => 'required',
+                'queue' => 'required',
+                'is_active' => 'required',
+                'in_progress' => 'required',
+                'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships
                 //
@@ -38,5 +45,6 @@ class WorkOrder extends Model
     {
         return $this->belongsTo(Recipe::class);
     }
+    const manipulatedColumns = 1;
     
 }

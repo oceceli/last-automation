@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Sections\Products;
+namespace App\Http\Livewire\Sections\WorkOrders;
 
-use App\Models\Product;
+use App\Models\WorkOrder;
 use Livewire\Component;
 
 class Create extends Component
@@ -31,14 +31,14 @@ class Create extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, Product::rules()['data']);
+        $this->validateOnly($propertyName, WorkOrder::rules()['data']);
     }
 
     public function submit()
     {
-        $validated = $this->validate(Product::rules()['data']);
+        $validated = $this->validate(WorkOrder::rules()['data']);
 
-        if(Product::create($validated)) {
+        if(WorkOrder::create($validated)) {
             $this->success = true;
             $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
         }

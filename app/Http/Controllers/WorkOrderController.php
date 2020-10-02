@@ -28,4 +28,9 @@ class WorkOrderController extends Controller
         $this->validateData(['store', 'update']);
     }
 
+    public function index()
+    {
+        return view('web.sections.workorders.index');
+    }
+
 }

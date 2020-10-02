@@ -21,8 +21,8 @@ class CreateWorkOrdersTable extends Migration
             $table->dateTime('datetime');
             $table->string('code');
             $table->integer('queue');
-            $table->boolean('is_active')->default(true);
-            $table->boolean('in_progress')->default(false);
+            $table->boolean('is_active');
+            $table->boolean('in_progress');
             $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();

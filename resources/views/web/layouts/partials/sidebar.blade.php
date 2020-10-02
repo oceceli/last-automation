@@ -35,11 +35,10 @@
                     <a href="{{ route($route['name']) }}"> 
                         <div class="h-14 p-2 flex items-center border-b">
                             <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
-                            <div class="pl-2"><p class="font-extrabold text-lg text-gray-600">{{ ucfirst($route['label']) }}</p></div>
+                            <div class="pl-2"><p class="font-extrabold text-lg text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
                         </div>
                     </a>  
                 @endforeach              
-               
             </div>
         </div>
 

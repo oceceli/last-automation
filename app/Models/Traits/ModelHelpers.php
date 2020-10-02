@@ -72,6 +72,7 @@ trait ModelHelpers
     {
         return Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class))); 
     }
+    
 
     public static function search($string)
     {

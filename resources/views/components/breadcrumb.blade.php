@@ -1,15 +1,15 @@
 <div>
     <div class="ui breadcrumb">
         @if($currentPath == '/')
-            <div class="active section">{{ucfirst(__('home'))}}</div>
+            <div class="active section">{{ ucfirst(__('home')) }}</div>
         @else
-            <a href="{{ url('/') }}" class="section">{{ucfirst(__('home'))}}</a>
+            <a href="{{ url('/') }}" class="section">{{ ucfirst(__('common.'.'home')) }}</a>
             <i class="right angle icon divider"></i>
             @foreach ($crumbs as $key => $crumb)
                 @if($key === $crumbsCount)
-                    <div class="active section">{{ ucfirst(__($crumb)) }}</div>
+                    <div class="active section">{{ ucfirst(__('common.'.$crumb)) }}</div>
                 @else
-                    <a href="{{ url($crumb) }}" class="section">{{ ucfirst(__($crumb)) }}</a>
+                    <a href="{{ url($crumb) }}" class="section">{{ ucfirst(__('common.'.$crumb)) }}</a>
                     <i class="right angle icon divider"></i>
                 @endif
             @endforeach

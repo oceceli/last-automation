@@ -27,11 +27,12 @@ class Sidebar extends Component
         return [
             ['name' => 'dashboard', 'label' => 'dashboard', 'icon' => 'icon large dashboard'],
             ['name' => 'products.index', 'label' => 'products', 'icon' => 'icon large dove'],
-            ['name' => 'products.create', 'label' => 'products_create', 'icon' => 'icon large home'],
-            ['name' => 'work-orders.index', 'label' => 'work_orders', 'icon' => 'icon large home'],
-            ['name' => 'work-orders.create', 'label' => 'work_orders_create', 'icon' => 'icon large home'],
+            ['name' => 'products.create', 'label' => 'products-create', 'icon' => 'icon large home'],
+            ['name' => 'work-orders.index', 'label' => 'work-orders', 'icon' => 'icon large home'],
+            ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large home'],
             ['name' => 'recipes.index', 'label' => 'recipes', 'icon' => 'icon large home'],
-            ['name' => 'recipes.create', 'label' => 'recipes_create', 'icon' => 'icon large home'],
+            ['name' => 'recipes.create', 'label' => 'recipes-create', 'icon' => 'icon large home'],
+            ['name' => 'stock-moves.index', 'label' => 'stock-moves', 'icon' => 'icon large box'],
         ];
     }
 }
