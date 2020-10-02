@@ -45,6 +45,10 @@ class WorkOrder extends Model
     {
         return $this->belongsTo(Recipe::class);
     }
-    const manipulatedColumns = 1;
-    
+
+    public function productName()
+    {
+        return $this->recipe->product->name;
+    }
+
 }

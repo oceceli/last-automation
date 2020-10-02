@@ -22,7 +22,7 @@ class Datatable extends Component
     public $modelPath;
 
     /**
-     * Table thead attributes
+     * Table attributes
      */
     public $attributes;
     
@@ -50,10 +50,15 @@ class Datatable extends Component
 
 
 
+    protected $view = 'livewire.datatable'; // dikkat
+
+
+
     public function mount()
     {
         $this->modelPath = ModelFactory::make($this->modelName);
-        $this->attributes = array_diff($this->modelPath::getColumnNames(), $this->except); // dinamik olursa rendera taşı
+        if( ! $this->attributes)
+            $this->attributes = array_diff($this->modelPath::getColumnNames(), $this->except); 
         $this->perPage = auth()->user()->getDatatablePerpage();
     }  
     
@@ -62,13 +67,23 @@ class Datatable extends Component
     {
         $this->setData();
 
-        return view('livewire.datatable', [
+        return view($this->view, [
             'data' => $this->data,
         ]);
     }
+    
+    
+    // public function render()
+    // {
+    //     $this->setData();
+
+    //     return view('livewire.datatable', [
+    //         'data' => $this->data,
+    //     ]);
+    // }
 
 
-    private function setData()
+    protected function setData()
     {
         $this->data = $this->searchQuery == null 
             ? $this->modelPath::paginate($this->perPage)
