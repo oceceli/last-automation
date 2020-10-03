@@ -26,7 +26,7 @@ class WorkOrderFactory extends Factory
             'recipe_id' => 1,
             'lot_no' => $this->faker->ean8,
             'amount' => $this->faker->randomNumber(),
-            'datetime' => now() + $this->faker->numberBetween(0,10),
+            'datetime' => now(),
             'code' => $this->faker->randomNumber(),
             'queue' => $this->faker->randomNumber(),
             'is_active' => $this->faker->boolean(),

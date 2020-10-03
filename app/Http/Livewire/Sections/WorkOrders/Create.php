@@ -26,7 +26,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.sections.products.create');
+        return view('livewire.sections.workorders.form');
     }
 
     public function updated($propertyName)

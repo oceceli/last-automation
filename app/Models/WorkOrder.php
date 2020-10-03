@@ -16,7 +16,7 @@ class WorkOrder extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = []; 
+    protected $with = ['recipe']; 
 
     /**
      * Validate rules for current model
@@ -46,9 +46,6 @@ class WorkOrder extends Model
         return $this->belongsTo(Recipe::class);
     }
 
-    public function productName()
-    {
-        return $this->recipe->product->name;
-    }
+    
 
 }

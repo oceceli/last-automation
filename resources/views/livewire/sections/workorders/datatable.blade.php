@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="">
-            <table class="ui celled table tablet stackable compact">
+            <table class="ui celled sortable selectable table tablet stackable very compact">
                 <thead>
                     <tr>
                         <th>{{ __('sections/workorders.code') }}</th>
@@ -26,12 +26,8 @@
                 </thead>
                 <tbody>
                     @foreach ($data as $key => $workOrder)
-                    @if ($workOrder->in_progress)
-                        <tr class="bg-indigo-100 relative">
-                    @else
-                        <tr>
-                    @endif
-                            <td>{{ $workOrder->code }}</td>
+                        <tr wire:click="show({{ $workOrder->id }})">
+                            <td class="right marked collapsing font-bold ">{{ $workOrder->code }}</td>
                             <td>{{ $workOrder->recipe->product->name }}</td>
                             <td>{{ $workOrder->amount }}</td>
                             <td>{{ $workOrder->lot_no }}</td>
@@ -39,7 +35,7 @@
                             <td>{{ $workOrder->queue }}</td>
                             {{-- <td>{{ $workOrder->in_progress }}</td> --}}
                             <td>{{ $workOrder->is_active }}</td>
-                            {{-- <td class="center aligned"><i class="large green checkmark icon"></i></td> --}}
+                            {{-- <td class="">Onay<i class="green checkmark icon"></i></td> --}}
                             <td>düzenle sil</td>
                         </tr>
                     @endforeach
@@ -55,6 +51,7 @@
             </div>
         </div>
     </div>
+
     
     {{-- <div>
         <p class="text-sm">

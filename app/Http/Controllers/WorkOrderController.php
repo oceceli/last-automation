@@ -33,4 +33,10 @@ class WorkOrderController extends Controller
         return view('web.sections.workorders.index');
     }
 
+    public function show($id)
+    {
+        $workOrder = $this->repository->fetch($id);
+        return view('web.sections.workorders.show', ['workOrder' => $workOrder]);
+    }
+
 }

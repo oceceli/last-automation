@@ -9,5 +9,6 @@ return [
     'queue' => 'Şarj no',
     'is_active' => 'Aktif',
     'in_progress' => 'Üretiliyor',
+    'is_completed' => 'Tamamlandı',
     'note' => 'Açıklama',
 ];

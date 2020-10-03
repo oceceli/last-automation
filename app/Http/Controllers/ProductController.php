@@ -37,7 +37,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->repository->fetch($id);
-        return view('web.sections.products.create');
+        return view('web.sections.products.show', compact('product'));
     }
 
     public function create()
