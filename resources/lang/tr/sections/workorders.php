@@ -3,9 +3,9 @@
 return [
     'recipe_id' => 'Reçete no',
     'lot_no' => 'Lot No',
-    'amount' => 'Üretim miktarı',
+    'amount' => 'Miktar',
     'datetime' => 'Planlanan Tarih',
-    'code' => 'No',
+    'code' => 'İş Emri No',
     'queue' => 'Şarj no',
     'is_active' => 'Aktif',
     'in_progress' => 'Üretiliyor',

@@ -22,6 +22,7 @@ class CreateWorkOrdersTable extends Migration
             $table->string('code');
             $table->integer('queue');
             $table->boolean('is_active');
+            $table->boolean('is_completed')->default(false);
             $table->boolean('in_progress');
             $table->string('note')->nullable();
             $table->softDeletes();

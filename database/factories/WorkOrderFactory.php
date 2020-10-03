@@ -30,6 +30,7 @@ class WorkOrderFactory extends Factory
             'code' => $this->faker->randomNumber(),
             'queue' => $this->faker->randomNumber(),
             'is_active' => $this->faker->boolean(),
+            'is_completed' => $this->faker->boolean(),
             'in_progress' => $this->faker->boolean(),
             'note' => 'test note of workorder',
         ];

@@ -3,23 +3,25 @@
 namespace App\Http\Livewire\Sections\Workorders;
 
 use App\Http\Livewire\Datatable as BaseDatatable;
+use App\Models\WorkOrder;
 
 class Datatable extends BaseDatatable
 {
 
-    protected $view = 'livewire.sections.workorders.index';
+    protected $view = 'livewire.sections.workorders.datatable';
 
-    public $attributes = [
-        'recipe_id', 
-        'lot_no', 
-        'amount', 
-        'datetime', 
-        'code', 
-        'queue', 
-        'is_active', 
-        'in_progress', 
-        'note', 
-    ];
+    public $model = WorkOrder::class;
 
+    // public $attributes = [
+    //     'lot_no', 
+    //     'recipe_id', 
+    //     'amount', 
+    //     'datetime', 
+    //     'code', 
+    //     'queue', 
+    //     'is_active', 
+    //     'in_progress', 
+    //     'note', 
+    // ];
 
 }

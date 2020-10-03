@@ -19,7 +19,7 @@ class Datatable extends Component
     /**
      * Points the model path
      */
-    public $modelPath;
+    public $model;
 
     /**
      * Table attributes
@@ -41,7 +41,7 @@ class Datatable extends Component
     /**
      * The data which will be shown to a user
      */
-    protected $data;
+    protected $data = [];
    
     /** 
      * Paginate per page 
@@ -56,9 +56,10 @@ class Datatable extends Component
 
     public function mount()
     {
-        $this->modelPath = ModelFactory::make($this->modelName);
+        if($this->modelName)
+            $this->model = ModelFactory::make($this->modelName);
         if( ! $this->attributes)
-            $this->attributes = array_diff($this->modelPath::getColumnNames(), $this->except); 
+            $this->attributes = array_diff($this->model::getColumnNames(), $this->except); 
         $this->perPage = auth()->user()->getDatatablePerpage();
     }  
     
@@ -71,23 +72,13 @@ class Datatable extends Component
             'data' => $this->data,
         ]);
     }
-    
-    
-    // public function render()
-    // {
-    //     $this->setData();
-
-    //     return view('livewire.datatable', [
-    //         'data' => $this->data,
-    //     ]);
-    // }
 
 
     protected function setData()
     {
         $this->data = $this->searchQuery == null 
-            ? $this->modelPath::paginate($this->perPage)
-            : $this->modelPath::search($this->searchQuery)->paginate($this->perPage);
+            ? $this->model::paginate($this->perPage)
+            : $this->model::search($this->searchQuery)->paginate($this->perPage);
     }
 
     public function updatedSearchQuery()
