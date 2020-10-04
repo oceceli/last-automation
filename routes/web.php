@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function () {
 	Route::resource('/work-orders', 'WorkOrderController');
     Route::resource('/stock-moves', 'StockMoveController');
     
-	Route::resource('/roles', 'RoleController');
+    Route::resource('/roles', 'RoleController');
+    
     
     Route::get('/dashboard', function () {
         return view('web.sections.dashboard.index');

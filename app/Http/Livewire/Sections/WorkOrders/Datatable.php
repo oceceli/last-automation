@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Sections\Workorders;
+namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Http\Livewire\Datatable as BaseDatatable;
 use App\Models\WorkOrder;
@@ -12,12 +12,9 @@ class Datatable extends BaseDatatable
 
     public $model = WorkOrder::class;
 
+    public $searchQuery = '';
 
 
-    public function show($id) 
-    {
-        redirect()->route('work-orders.show', ['work_order' => $id]);
-    }
 
     // public $attributes = [
     //     'lot_no', 

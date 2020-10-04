@@ -39,4 +39,9 @@ class WorkOrderController extends Controller
         return view('web.sections.workorders.show', ['workOrder' => $workOrder]);
     }
 
+    public function create()
+    {
+        return view('web.sections.workorders.create');
+    }
+
 }

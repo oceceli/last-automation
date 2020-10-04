@@ -50,7 +50,7 @@ class Datatable extends Component
 
 
 
-    protected $view = 'livewire.datatable'; // dikkat
+    protected $view = 'livewire.datatable'; // default
 
 
 

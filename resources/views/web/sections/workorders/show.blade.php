@@ -2,7 +2,7 @@
     <div class="flex gap-4">
         <div class="p-6 rounded-lg bg-green-50 shadow w-1/2">
             <div class="pb-6 flex justify-between">
-                <div><h4 class="text-red-900">{{__('sections/workorders.code')}}: {{ $workOrder->code }}</h4></div>
+                <div><h4 class="text-red-900">{{__('sections/workorders.queue')}}: {{ $workOrder->queue }}</h4></div>
                 <div><h4>{{ __('sections/workorders.datetime') }}: {{ $workOrder->datetime }}</h4></div>
             </div>
             <hr>
@@ -28,8 +28,8 @@
                     </div>
                     <div class="item">
                       <div class="content">
-                        <div class="header">{{ __('sections/workorders.queue') }}</div>
-                        {{ $workOrder->queue }}
+                        <div class="header">{{ __('sections/workorders.code') }}</div>
+                        {{ $workOrder->code }}
                       </div>
                     </div>
                     <div class="item">
@@ -47,7 +47,7 @@
                     <div class="item">
                       <div class="content">
                         <div class="header">{{ __('sections/workorders.is_completed')}}</div>
-                        {{ $workOrder->is_completed }}
+                        {{ $workOrder->is_completed }} <i class="red cancel icon"></i>
                       </div>
                     </div>
                     
