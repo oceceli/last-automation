@@ -12,7 +12,6 @@ class Datatable extends BaseDatatable
 
     public $model = WorkOrder::class;
 
-    public $searchQuery = '';
 
 
 
