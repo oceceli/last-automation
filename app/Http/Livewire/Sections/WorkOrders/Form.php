@@ -2,54 +2,40 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
+use App\Http\Livewire\Form as BaseForm;
+use App\Models\Recipe;
 use App\Models\WorkOrder;
-use Livewire\Component;
 
-class Form extends Component
+class Form extends BaseForm
 {
+    public $model = WorkOrder::class;
+    
+    public $view = 'livewire.sections.workorders.form';
 
-    // public $code;
-    // public $name;
-    // public $barcode;
-    // public $min_threshold;
-    // public $shelf_life;
-    // public $note;
-    // public $is_active = false;
-    // public $producible = false;
 
-    // public $success;
+    public $recipe_id;
 
-    // public function mount()
-    // {
-    //     $this->success = false;
-    // }
+    public $selected;
 
-    public function render()
+
+
+    protected function passToView()
     {
-        return view('livewire.sections.workorders.form');
+        return [
+            'products' => $this->products(),
+        ];
     }
 
-    public $test = 'test asşdkjfl';
+    public function products()
+    {
+        $products = [];
+        foreach( Recipe::all() as $recipe) {
+            if($recipe->product)
+                $products[] = $recipe->product;
+        }
+        return $products;
+    }
 
-    // public function updated($propertyName)
-    // {
-    //     $this->validateOnly($propertyName, WorkOrder::rules()['data']);
-    // }
-
-    // public function submit()
-    // {
-    //     $validated = $this->validate(WorkOrder::rules()['data']);
-
-    //     if(WorkOrder::create($validated)) {
-    //         $this->success = true;
-    //         $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
-    //     }
-
-    // }
-
-    // public function clearFields()
-    // {
-    //     $this->reset();
-    // }
+    
 
 }

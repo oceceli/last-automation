@@ -68,7 +68,7 @@
             @if ($success)
                 <div class="bg-green-100 rounded-t-lg flex items-center justify-center p-3">
                     <i class="icon info circular"></i>
-                    <p class="text-green-600">Ürün kaydedildi!</p>
+                    <p class="text-green-600">{{ __('common.saved_successfully') }}Ürün kaydedildi!</p>
                 </div>
             @endif
             <hr>

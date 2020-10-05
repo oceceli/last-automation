@@ -3,6 +3,7 @@
 return [
     'empty' => 'Boş', 
     'search_in_database' => 'Veritabanında ara...',
+    'saved_successfully' => 'Başarıyla kaydedildi!',
 
 
 
