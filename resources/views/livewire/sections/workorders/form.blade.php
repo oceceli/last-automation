@@ -54,9 +54,14 @@
 
         <div>
             @if ($success)
-                <div class="bg-green-100 rounded-t-lg flex items-center justify-center p-3">
-                    <i class="icon info circular"></i>
-                    <p class="text-green-600">{{ __('common.saved_successfully') }}</p>
+                <div class="ui positive icon message">
+                    <i class="checkmark  icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            <p>{{ __('common.saved_successfully') }}</p>
+                        </div>
+                        <p>{{ __('common.saved_successfully') }}</p>
+                    </div>
                 </div>
             @endif
             <hr>
