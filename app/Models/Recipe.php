@@ -26,7 +26,8 @@ class Recipe extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                //
+                'product_id' => 'required',
+                'code' => 'required',
             ],
             'relation' => [ // use for many to many relationships
                 //

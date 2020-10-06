@@ -14,8 +14,14 @@ class Form extends BaseForm
 
 
     public $recipe_id;
-
-    public $selected;
+    public $lot_no;
+    public $amount;
+    public $datetime;
+    public $code;
+    public $queue;
+    public $is_active = false;
+    public $in_progress = false;
+    public $note;
 
 
 
@@ -29,7 +35,7 @@ class Form extends BaseForm
     public function products()
     {
         $products = [];
-        foreach( Recipe::all() as $recipe) {
+        foreach(Recipe::all() as $recipe) {
             if($recipe->product)
                 $products[] = $recipe->product;
         }

@@ -27,5 +27,10 @@ class RecipeController extends Controller
         // $this->authorization = true;
         $this->validateData(['store', 'update']);
     }
+    
+    public function create()
+    {
+        return view('web.sections.recipes.create');
+    }
 
 }

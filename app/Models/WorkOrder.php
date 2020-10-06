@@ -27,12 +27,13 @@ class WorkOrder extends Model
         return [
             'data' => [
                 'recipe_id' => 'required',
+                'code' => 'required',
                 'lot_no' => 'required',
                 'amount' => 'required',
                 'datetime' => 'required',
                 'queue' => 'required',
                 'is_active' => 'required',
-                'in_progress' => 'required',
+                'in_progress' => 'nullable',
                 'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships

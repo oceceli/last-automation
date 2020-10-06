@@ -24,12 +24,13 @@ class Form extends Component
     {
         if($this->view)
             return view($this->view, $this->passToView());
+        return response('View belirtilmedi!');
     }
 
 
     public function updated($propertyName)
     {
-        // $this->validateOnly($propertyName, $this->model::rules()['data']);
+        $this->validateOnly($propertyName, $this->model::rules()['data']);
     }
 
     public function submit()

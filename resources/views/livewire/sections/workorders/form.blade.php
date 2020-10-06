@@ -1,7 +1,7 @@
 <div class="p-4 bg-white shadow rounded-lg">
-    <form class="ui form" wire:submit.prevent="submit">
+    <form class="ui form p-2" wire:submit.prevent="submit">
         <div class="fields equal width">
-            <div class="field ">
+            <div class="required field ">
                 <label>{{ __('sections/products.name') }}</label>
                 <select class="ui dropdown" id="recipe_id_select" wire:model.lazy="recipe_id">
                     <option selected>Ürün seçiniz...</option>
@@ -10,7 +10,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>{{ __('sections/workorders.lot_no') }}</label>
                 <input wire:model.lazy="lot_no" type="text" placeholder="{{ __('sections/workorders.lot_no') }}">
                 @error('lot_no')
@@ -26,14 +26,14 @@
             </div>
         </div>
         <div class="equal width fields">
-            <div class="field">
+            <div class="required field">
                 <label>{{ __('sections/workorders.code') }}</label>
                 <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/workorders.code') }}">
                 @error('code')
                     <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                 @enderror
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>{{ __('sections/workorders.queue') }}</label>
                 <input wire:model.lazy="queue" type="text" placeholder="{{ __('sections/workorders.queue') }}">
                 @error('queue')
@@ -41,7 +41,16 @@
                 @enderror
             </div>
         </div>    
-        <div class="fields">
+        <div class="equal width fields">
+            <div class="required field">
+                <label for="date">{{ __('sections/workorders.datetime') }}</label>
+                <input type="date" wire:model.lazy="datetime">
+                @error('datetime')
+                    <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+                @enderror
+            </div>
+        </div>
+        <div class="fields py-4">
             <div class="field">
                 <div class="ui toggle checkbox">
                     <input wire:model.lazy="is_active" type="checkbox">
@@ -89,8 +98,8 @@
         select.dropdown();
         $('body').on('mousemove', function() {
                 select.dropdown();
-           })
-    })
+            });
+    });
 </script>
 
 
