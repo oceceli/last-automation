@@ -5,7 +5,7 @@ return [
     'subheader' => 'Üretim için reçete oluştur',
 
     'code' => 'Reçete Kodu',
-    'product' => 'Ürün',
+    'recipe_product' => 'Reçetesi yazılacak ürün',
 
     'random_code' => 'Rastgele',
 ];

@@ -30,7 +30,7 @@ class Form extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, $this->model::rules()['data']);
+        // $this->validateOnly($propertyName, $this->model::rules()['data']);
     }
 
     public function submit()

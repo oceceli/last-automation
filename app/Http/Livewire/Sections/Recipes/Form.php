@@ -15,8 +15,10 @@ class Form extends BaseForm
     public $view = 'livewire.sections.recipes.form';
 
 
-    public $product_id;
+    public $recipe_id;
     public $code;
+
+    public $currentProduct;
     
 
 

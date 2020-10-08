@@ -31,20 +31,20 @@
 
         <div class="h-full p-2 border-t bg-gray-50 overflow-x-hidden">
             <div class="h-full p-2 border bg-white border-indigo-200 shadow rounded flex flex-col overflow-x-hidden">
-                <div class="ui middle aligned selection animated list">
+                <div class="ui middle aligned selection animated link divided small list">
                     @foreach ($routes as $route)
-                        <div class="item">
-                            @if (route($route['name']) == request()->url())
-                            <div class="h-11 p-5 flex items-center shadow-lg bg-cool-gray-200 rounded-lg">
-                            @else
-                            <a href="{{ route($route['name']) }}"> 
-                            <div class="h-11 p-3 flex items-center border-b">
-                            @endif
-                                <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
-                                <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
+                        @if (route($route['name']) == request()->url())
+                            <div class="active item">
+                        @else
+                            <div class="item">
+                                <a href="{{ route($route['name']) }}"> 
+                        @endif
+                                    <div class="h-11 p-3 flex items-center">
+                                        <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
+                                        <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
+                                    </div>
+                                </a>  
                             </div>
-                            </a>  
-                        </div>
                     @endforeach            
                 </div>
             </div>
