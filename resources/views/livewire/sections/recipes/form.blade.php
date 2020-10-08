@@ -1,4 +1,4 @@
-<div class="p-6 bg-white bg-opacity-25 shadow rounded-lg">
+<div class="p-6 bg-white bg-opacity-25 shadow rounded-lg ">
 
     <h3 class="ui horizontal left aligned divider header">
         <i class="mortar pestle icon"></i>
@@ -10,10 +10,10 @@
 
     <form class="ui form" wire:submit.prevent="submit" wire:loading.class="loading">
         <div class="ui raised teal padded segment">
-            <div class="equal width fields pb-2">
+            <div class="equal width fields pb-4">
                 <div class="required field">
                     <label>{{ __('sections/recipes.recipe_product') }}</label>
-                    <select wire:model.lazy="recipe_id" id="product_id_select" class="ui dropdown icon">
+                    <select wire:model.lazy="product_id" id="product_id_select" class="ui dropdown icon">
                         <option selected>Ürün seçiniz...</option>
                         @foreach ($this->products as $product)
                             <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -37,41 +37,44 @@
             </div>
         
             {{-- <hr> --}}
-            <h4 class="ui horizontal divider header">
-                <i class="flask!! exchange  icon"></i>
-                İçerik ekle
-            </h4>
-            @if ($currentProduct)
+            
+            @if (!$currentProduct)
                 <div class="shadow-inner rounded-lg p-3">
                     <div class="ui segment">
-                        <div class="ui two column grid">
+                        <div class="ui internally celled grid">
 
-                        <div class="column">
-                            <h5 class="ui horizontal divider header">
-                                <i class="layer group  icon"></i>
-                                Ham ürünler
-                            </h5>
-                            
-                            <div class="ui animated selection list overflow-x-hidden h-40">
-                                @foreach ($this->products as $product)
-                                    <li class="item">
-                                        {{ $product->name }}
-                                    </li>
-                                @endforeach
+                            <div class="four wide column bg-orange-50 rounded-lg">
+                                <h5 class="ui horizontal divider header">
+                                    <i class="vial icon"></i>
+                                    Malzemeler
+                                </h5>
+                                
+                                <div class="ui animated selection list overflow-x-hidden h-40 xl:h-96">
+                                    @foreach ($this->products as $product)
+                                        <li class="item">
+                                            {{ $product->name }}
+                                        </li>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="column">
-                            <h5 class="ui horizontal divider header">
-                                <i class="barcode icon"></i>
-                            
-                            </h5>
-                        </div>
+                            <div class="twelve wide column bg-green-50 text-center">
+                                <h4 class="ui horizontal divider header">
+                                    <i class="flask icon"></i>
+                                    1 {birim} {ürün} içerisinde
+                                </h4>
+                                <div class="ui  list overflow-x-hidden h-40 xl:h-96">
+                                    @foreach ($this->products as $product)
+                                        <li class="item">
+                                            <div class="header">{{ $product->name }}</div>
+                                            {miktar} {birim} 
+                                        </li>
+                                    @endforeach
+                                </div>
+                            </div>
 
                         </div>
-                        <div class="ui vertical full divider">
-                            
-                        </div>
+                        {{-- <div class="ui vertical full divider"></div> --}}
                     </div>
                 </div>
             @else
