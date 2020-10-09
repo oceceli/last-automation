@@ -19,8 +19,9 @@ class Form extends BaseForm
     public $code;
 
     public $currentProduct;
-    
 
+    public $ingredients = [];
+    
 
     protected function passToView()
     {
@@ -28,6 +29,23 @@ class Form extends BaseForm
             //
         ];
     }
+
+
+    public function updatedProductId($id)
+    {
+        $this->currentProduct = $this->products->find($id);
+    }
+
+    public function addIngredient($ingredient)
+    {
+        $this->ingredients[] = $ingredient;
+    }
+
+    public function removeIngredient($key)
+    {
+        unset($this->ingredients[$key]);
+    }
+    
 
     public function getProductsProperty()
     {
@@ -51,6 +69,9 @@ class Form extends BaseForm
         }
         
     }
+
+
+    
 
 
 }
