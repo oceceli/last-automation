@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Contracts\$nameContract;
+use App\Models\$name;
+
+class $nameRepository extends BaseRepository implements $nameContract
+{
+
+    public function __construct($name $model)
+    {
+        $this->model = $model;
+    }
+}

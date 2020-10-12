@@ -1,0 +1,16 @@
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\IndexTest;
+
+class $nameTest extends IndexTest
+{
+    protected $uri = "/api/$lowerNames";
+
+    protected $contract = "App\Contracts\$nameContract";
+
+    protected $givenPermissions = ['view-$lowerName', 'create-$lowerName', 'update-$lowerName', 'delete-$lowerName',];
+
+}
