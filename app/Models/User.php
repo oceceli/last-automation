@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Traits\HasQueries;
 use App\Models\Traits\HasSettings;
-use App\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

@@ -25,7 +25,7 @@ class CreatePolicyCommand extends Command
     
     protected $sourceFile = 'Policy';
 
-    protected $suffix = '';
+    protected $suffix = 'Policy';
 
     protected $targetDirectory = "app/Policies";
 

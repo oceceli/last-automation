@@ -30,7 +30,7 @@ class CreateModelCommand extends Command
     protected $sourceFile = 'model';
 
 
-    protected $targetDirectory = "app\Models";
+    protected $targetDirectory = "app/Models";
 
     /**
      * Execute the console command.
