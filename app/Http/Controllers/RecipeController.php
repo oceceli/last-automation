@@ -33,4 +33,8 @@ class RecipeController extends Controller
         return view('web.sections.recipes.create');
     }
 
+    public function index()
+    {
+        return view('web.sections.recipes.index');
+    }
 }

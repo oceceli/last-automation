@@ -42,7 +42,7 @@ class CreateAllCommand extends Command
      */
     public function handle()
     {
-        if($this->argument('password') == 'ekmek') {
+        if($this->argument('password') == 'ekmek') { // :))
             if($this->argument('name')) {
                 $this->createOnce();
             } else {

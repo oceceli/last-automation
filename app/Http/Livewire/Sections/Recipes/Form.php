@@ -14,14 +14,23 @@ class Form extends BaseForm
     
     public $view = 'livewire.sections.recipes.form';
 
-
     public $product_id;
+
     public $code;
 
     public $currentProduct;
 
     public $ingredients = [];
     
+    public $test;
+
+    public $testArray = [
+        ['id' => 1, 'name' => 'g'],
+        ['id' => 2, 'name' => 'kg'],
+        ['id' => 3, 'name' => 'ton'],
+        ['id' => 4, 'name' => 'palet'],
+    ];
+
 
     protected function passToView()
     {
@@ -33,7 +42,7 @@ class Form extends BaseForm
 
     public function updatedProductId($id)
     {
-        $this->currentProduct = $this->products->find($id);
+        $this->currentProduct = $this->producibleProducts->find($id);
     }
 
     public function addIngredient($ingredient)
@@ -47,9 +56,14 @@ class Form extends BaseForm
     }
     
 
-    public function getProductsProperty()
+    public function getProducibleProductsProperty()
     {
-        return Product::all();
+        return Product::where('producible', true)->get();
+    }
+
+    public function getUnitsProperty()
+    {
+        return Unit::all(); 
     }
 
     public function random()
@@ -65,10 +79,12 @@ class Form extends BaseForm
                 $this->code = $string . '_' . Str::random($number);
             }
         } else {
-            $this->code = Str::random($number);
+            $this->code = 'rct_' . Str::random($number);
         }
         
     }
+
+
 
 
     
