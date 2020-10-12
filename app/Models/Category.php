@@ -24,6 +24,11 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function unproducibleProducts()
+    {
+        return $this->products()->where('producible', false);
+    }
+
     /**
      * Validate rules for current model
      */

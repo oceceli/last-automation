@@ -38,20 +38,53 @@
 
                         <div class="ui internally celled grid border rounded-lg">
 
-                            <div class="five wide column bg-orange-50 rounded-l-lg text-center">
-                                <h5 class="ui horizontal header">
+                            <div class="five wide column bg-orange-50 rounded-l-lg">
+                                <h5 class="ui horizontal header text-center">
                                     <i class="vial icon"></i>
                                     Malzemeler
                                 </h5>
                                 
-                                <div class="overflow-x-hidden h-40 xl:h-96 border-t border-b p-2">
-                                    <div class="ui animated selection list">
-                                        @foreach ($this->rawMaterials as $rawMaterial)
+                                <div class="overflow-x-hidden h-40 xl:h-96 border-t border-b p-2 pt-4">
+                                    {{-- <div class="ui animated selection list">
+                                        @foreach ($this->unproducibleProducts as $product)
                                             <li class="item" wire:click.prevent="addIngredient({{ $product }})">
                                                 {{ $product->name }} - {{ $product->code }}
                                             </li>
                                         @endforeach
+                                    </div> --}}
+                                    @foreach ($this->categories as $category)
+                                    <div class="relative" x-data="{open: false}">
+                                        <div class="absolute w-full h-9 cursor-pointer text-right" @click="open = !open">
+                                            <i  :class="{'caret down text-teal-800 icon': open, 'caret right icon': !open}"></i>
+                                        </div>
+                                        <div class="ui list">
+                                            <div class="item">
+                                                <i class="layer group icon"></i>
+                                                <div class="content">
+                                                    <div class="header">{{ $category->name }}</div>
+                                                    <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                                                    @foreach ($category->unproducibleProducts as $product)
+                                                        <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
+                                                                                                   x-transition:enter-start="opacity-0 transform scale-60" 
+                                                                                                   x-transition:enter-end="opacity-100 transform scale-100" 
+                                                                                                   x-transition:leave="transition ease-in duration-100" 
+                                                                                                   x-transition:leave-start="opacity-100 transform scale-100" 
+                                                                                                   x-transition:leave-end="opacity-0 transform scale-60">
+                                                            <div class="item" wire:click.prevent="addIngredient({{ $product }})">
+                                                                <i class="box icon"></i>
+                                                                <div class="content">
+                                                                    <div class="header">{{ $product->name }}</div>
+                                                                    <div class="description">{{ $product->code }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>  
                                     </div>
+                                    @endforeach
+
                                 </div>
                             </div>
 
@@ -74,12 +107,11 @@
                                                         <div class="shadow border p-2 hover:bg-gray-50 rounded">
                                                             <strong>{{ $ingredient['name'] }} - {{ $ingredient['code'] }}</strong>
                                                         </div>
-                                                        
                                                         <div class="field">
                                                             <div class="ui right action left icon small input" wire:ignore>
-                                                                <i class="calculator icon"></i>
-                                                                <input type="text" placeholder="{{ __('sections/recipes.amount') }}">
-                                                                <x-dropdown.search model="test" :collection="$testArray" value="id" placeholder="birim" text="name" class="ui search selection dropdown" />
+                                                                <i class="calculator icon"></i> 
+                                                                <input wire:model.lazy="amount.{{ $key }}" type="text" placeholder="{{ __('sections/recipes.amount') }}">
+                                                                <x-dropdown.search model="unit.{{ $key }}" :collection="$this->units" value="id" placeholder="sections/units.unit" text="name" class="ui search selection dropdown" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -105,15 +137,9 @@
                             </div>
 
                         </div>
-                        {{-- <div class="ui vertical full divider"></div> --}}
-                    {{-- @else --}}
-                        {{-- <div class="ui placeholder segment"></div> --}}
-                        {{-- </div> --}}
                 </div>
-                    @endif
-                
-
-        </div> {{-- segment ending --}}
+            @endif
+            </div> {{-- segment ending --}}
         
         <div>
             @if ($success)
@@ -147,6 +173,7 @@
 
 
     </form>
+    
 </div>
 
 

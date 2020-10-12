@@ -16,7 +16,7 @@
 </div> --}}
 
 <select {{ $attributes }} wire:model="{{ $model }}">
-    <option class="item" selected >{{ __($placeholder) }}</option>
+    <option class="item" selected >{{ ucfirst(__($placeholder)) }}</option>
     @foreach ($collection as $item)
             <option class="item" value="{{ $item[$value] }}">
                 @foreach ($array = explode(',', $text) as $display)

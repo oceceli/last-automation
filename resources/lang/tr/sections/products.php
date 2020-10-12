@@ -1,6 +1,7 @@
 <?php 
 
 return [
+    'product' => 'ürün',
     'name' => 'Ürün Adı',
     'code' => 'Kod',
     'barcode' => 'Barkod',

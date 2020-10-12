@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sections\Recipes;
 
 use App\Http\Livewire\Form as BaseForm;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
 use \Illuminate\Support\Str;
@@ -24,12 +25,10 @@ class Form extends BaseForm
     
     public $test;
 
-    public $testArray = [
-        ['id' => 1, 'name' => 'g'],
-        ['id' => 2, 'name' => 'kg'],
-        ['id' => 3, 'name' => 'ton'],
-        ['id' => 4, 'name' => 'palet'],
-    ];
+
+
+    public $amount = [];
+    public $unit = [];
 
 
     protected function passToView()
@@ -37,6 +36,14 @@ class Form extends BaseForm
         return [
             //
         ];
+    }
+
+    // submit hazır DEVAM
+    public function submit()
+    {
+        dump($this->amount);
+        dump($this->ingredients);
+        dump($this->unit);
     }
 
 
@@ -47,7 +54,8 @@ class Form extends BaseForm
 
     public function addIngredient($ingredient)
     {
-        $this->ingredients[] = $ingredient;
+        if(! in_array($ingredient, $this->ingredients))
+            $this->ingredients[] = $ingredient;
     }
 
     public function removeIngredient($key)
@@ -55,15 +63,30 @@ class Form extends BaseForm
         unset($this->ingredients[$key]);
     }
     
+    public function getCategoriesProperty()
+    {
+        return Category::all();
+    }
 
     public function getProducibleProductsProperty()
     {
         return Product::where('producible', true)->get();
     }
 
+    // public function getUnproducibleProductsProperty()
+    // {
+    //     return Product::where('producible', false)->get();
+    // }
+
     public function getUnitsProperty()
     {
-        return Unit::all(); 
+        return [
+            ['id' => 1, 'name' => 'g'],
+            ['id' => 2, 'name' => 'kg'],
+            ['id' => 3, 'name' => 'ton'],
+            ['id' => 4, 'name' => 'palet'],
+        ];
+        // return Unit::all(); 
     }
 
     public function random()
