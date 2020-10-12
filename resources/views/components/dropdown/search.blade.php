@@ -41,7 +41,7 @@
             preserveHTML: false,
             ignoreDiacritics: true,
             sortSelect: true,
-            transition: 'slide right',
+            transition: '{{ $transition }}',
             ignoreCase: false,
             match: 'text', // text içinde ara
             forceSelection: false, // select açılıp seçim yapmadan blur edildiğinde

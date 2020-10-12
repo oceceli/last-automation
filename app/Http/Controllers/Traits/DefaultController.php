@@ -35,12 +35,20 @@ trait DefaultController
 
 
 
-    public function index() {
-        $this->grantAccess('viewAny');
+    public $view = 'web.layouts.welcome';
 
-        $all = $this->repository->all();
-        return $this->decideResource($all);
+
+    public function index()
+    {
+        return view($this->view);
     }
+
+    // public function index() {
+    //     $this->grantAccess('viewAny');
+
+    //     $all = $this->repository->all();
+    //     return $this->decideResource($all);
+    // }
 
 
     public function getRelated($main, $id, $related) // categories/1/products

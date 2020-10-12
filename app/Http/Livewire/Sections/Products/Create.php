@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Sections\Products;
 
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
 
 class Create extends Component
 {
 
+    public $category_id;
     public $code;
     public $name;
     public $barcode;
@@ -27,6 +29,11 @@ class Create extends Component
     public function render()
     {
         return view('livewire.sections.products.create');
+    }
+
+    public function getCategoriesProperty()
+    {
+        return Category::all();
     }
 
     public function updated($propertyName)

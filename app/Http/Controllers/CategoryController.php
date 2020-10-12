@@ -15,6 +15,7 @@ class CategoryController extends Controller
     protected $repository;
 
 
+
     /**
      * Create controller instance
      * Authorization has been set true, so there should be a Policy class.
@@ -24,8 +25,10 @@ class CategoryController extends Controller
     public function __construct(CategoryContract $repository)
     {
         $this->repository = $repository;
-        $this->authorization = true;
-        $this->validateData(['store', 'update']);
+        // $this->authorization = true;
+        // $this->validateData(['store', 'update']);
     }
+
+
 
 }

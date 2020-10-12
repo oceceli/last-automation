@@ -41,6 +41,15 @@
             </div>
         </div>
         
+        <div class="equal width fields">
+            <div class="field" wire:ignore>
+                <label>Kategori</label>
+                <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
+                        placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="ui search selection dropdown" />
+                <a href="">create_category</a>
+            </div>
+        </div>
+        
         
         <div class="fields">
             <div class="sixteen wide field">

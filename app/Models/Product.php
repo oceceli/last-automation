@@ -23,6 +23,12 @@ class Product extends Model
     //     'Sıra', 'Ürün Adı', 'Kod', 'Barkod', 'Raf Ömrü', 'Min. Stok', 'Aktif', 'Üretilebilir',
     // ];
 
+        
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 
     /**
      * Validate rules for current model
@@ -32,6 +38,7 @@ class Product extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
+                'category_id' => 'required',
                 'code' => ['required', 'min:2', 'unique:products,code'],
                 'barcode' => ['required', 'numeric', 'unique:products,barcode'],
                 'name' => ['required', 'min:3'],

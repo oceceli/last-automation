@@ -16,19 +16,22 @@ class Search extends Component
     public $text;
 
     public $placeholder;
+
+    public $transition;
     
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($model, $collection, $value, $text, $placeholder = 'common.dropdown_placeholder')
+    public function __construct($model, $collection, $value, $text, $placeholder = 'common.dropdown_placeholder', $transition = 'slide')
     {
         $this->model = $model;
         $this->collection = $collection;
         $this->value = $value;
         $this->text = $text;
         $this->placeholder = $placeholder;
+        $this->transition = $transition;
     }
 
     /**

@@ -23,6 +23,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
+            'category_id' => $this->faker->randomDigit,
             'name' => $this->faker->randomLetter . ' ürünü',
             'code' => $this->faker->ean8,
             'barcode' => $this->faker->ean13,

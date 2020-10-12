@@ -18,6 +18,12 @@ class Category extends Model
      */
     protected $with = []; 
 
+
+    public function products() 
+    {
+        return $this->hasMany(Product::class);
+    }
+
     /**
      * Validate rules for current model
      */
@@ -26,7 +32,7 @@ class Category extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                //
+                'name' => 'required',
             ],
             'relation' => [ // use for many to many relationships
                 //
