@@ -10,4 +10,6 @@ return [
 
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',
+
+    'add_ingredients' => 'İçerik Ekle'
 ];

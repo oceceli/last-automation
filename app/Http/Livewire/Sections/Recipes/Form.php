@@ -21,7 +21,10 @@ class Form extends BaseForm
 
     public $currentProduct;
 
-    public $ingredients = [];
+    public $ingredients = [
+        ['id' => 1, 'name' => 'ürün1', 'code' => 'sdkf'],
+        ['id' => 2, 'name' => 'ürün2', 'code' => 'sdkf'],
+    ];
     
     public $test;
 
