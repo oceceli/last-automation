@@ -2,6 +2,7 @@
 
 return [
     'product' => 'ürün',
+    'category_id' => 'Kategori',
     'name' => 'Ürün Adı',
     'code' => 'Kod',
     'barcode' => 'Barkod',
