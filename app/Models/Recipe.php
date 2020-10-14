@@ -40,7 +40,7 @@ class Recipe extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function contents()
+    public function ingredients()
     {
         return $this->belongsToMany(Product::class)->withPivot('amount');
     }

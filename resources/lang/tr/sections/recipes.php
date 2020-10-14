@@ -11,5 +11,6 @@ return [
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',
 
-    'add_ingredients' => 'İçerik Ekle'
+    'add_ingredients' => 'İçerik Ekle',
+    'remove_ingredients' => 'Tüm içeriği kaldır',
 ];

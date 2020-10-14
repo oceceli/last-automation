@@ -22,8 +22,8 @@ class Form extends BaseForm
     public $currentProduct;
 
     public $ingredients = [
-        ['id' => 1, 'name' => 'ürün1', 'code' => 'sdkf'],
-        ['id' => 2, 'name' => 'ürün2', 'code' => 'sdkf'],
+        ['id' => 10, 'name' => 'Tuz', 'code' => 'TZ'],
+        ['id' => 20, 'name' => 'Sodyum Bikarbonat', 'code' => 'SB'],
     ];
     
     public $test;
@@ -44,9 +44,14 @@ class Form extends BaseForm
     // submit hazır DEVAM
     public function submit()
     {
-        dump($this->amount);
-        dump($this->ingredients);
-        dump($this->unit);
+        if($recipe = parent::submit()->created) {
+            array_map(function($ingredient, $amount, $unit) use ($recipe){
+                $recipe->ingredients()->attach($ingredient['id'], ['amount' => $amount]);
+            }, $this->ingredients, $this->amount, $this->unit);
+        }
+        // dump($this->amount);
+        // dump($this->ingredients);
+        // dump($this->unit);
     }
 
 
@@ -64,6 +69,11 @@ class Form extends BaseForm
     public function removeIngredient($key)
     {
         unset($this->ingredients[$key]);
+    }
+
+    public function clearIngredients()
+    {
+        $this->ingredients = [];
     }
     
     public function getCategoriesProperty()

@@ -34,55 +34,89 @@
 
 
             {{-- @if ($currentProduct) --}}
-                <div class="relative border rounded-t" x-data="{'materials' : false}">
+                <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}">
                     
-                    <div class="p-4 bg-cool-gray-100 shadow">
-                        <h4 class="ui horizontal divider header">
-                            <i class="red flask icon"></i>
-                            1 {birim} {ürün} şunları içerir
-                        </h4>
+                    {{-- BAŞLIK VE BUTONLAR --}}
+                    <div class="py-4 px-3 flex items-center justify-between bg-cool-gray-50">
+                        <div class="w-11/12">
+                            <h4 class="ui horizontal left aligned divider header">
+                                <div class="p-3 rounded bg-white shadow border border-red-100 hover:border-red-200">
+                                    <i class="large flask icon"></i>
+                                    1 {birim} {ürün}
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="pl-4 flex">
+                            {{-- MALZEMELER BARINI AÇAN BUTON --}}
+                            <div class="ui buttons">
+                                <button wire:click.prevent @click="materials = true" class="ui icon small teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                    <i class="plus icon"></i>
+                                </button>
+                                <button wire:click.prevent="clearIngredients" class="ui icon small gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                    <i class="red trash icon"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="border-t relative">
+                    <div class="shadow-inner relative">
 
-                        {{-- İÇERİK - CARD KISMI --}}
-                        <div class="md:h-96 overflow-x-hidden">                        
-                            <div class="p-5">
-                                <div class="ui two doubling horizontal cards">
-                                @foreach ($ingredients as $key => $ingredient)
-                                    <div class="ui card">
-                                        {{-- <div class="image">
-                                            <img src="/images/avatar2/large/elyse.png">
-                                        </div> --}}
-                                        <div class="content">
-                                            <div class="header">{{ $ingredient['name'] }}</div>
-                                            <div class="meta">
-                                                <span class="code">{{ $ingredient['code'] }}</span>
-                                            </div>
-                                            <div class="description">
-                                                <p>test</p>
-                                            </div>
-                                        </div>
-                                        <div class="extra content">
-                                            <div class="equal width fields">
-                                                <div class="field">
-                                                    <label>miktar</label>
-                                                    <input wire:model="amount.{{ $key }}" type="text" placeholder="miktar" class="ui input">
-                                                </div>
-                                                <div class="field" wire:ignore>
-                                                    <label>{{ __('sections/units.unit') }}</label>
-                                                    <x-dropdown.search model="unit.{{ $key }}" :collection="$this->units" value="id" placeholder="sections/units.unit" text="name" class="ui search selection dropdown" />
-                                                </div>
-                                            </div>
-                                        </div>
+                        {{-- İÇERİK - CARD KISMI   md:h-96 overflow-x-hidden  --}}
+                        <div class="p-5 py-7">
+                            <div class="flex flex-col gap-3">
+                                @if (! $ingredients)
+                                <div class="ui placeholder segment h-full">
+                                    <div class="ui icon header">
+                                        <i class="blue atom left bottom corner icon"></i>
+                                        <i class="flask icon"></i>
+                                        <button @click="materials = true" wire:click.prevent class="text-blue-600 font-bold focus:outline-none">Buradan</button> reçete içeriği oluşturun
                                     </div>
-                                    @endforeach
+                                    <div class="text-sm text-center">{ürün} içeriği burada görüntülenecek</div>
                                 </div>
+                                @else
+                                @foreach ($ingredients as $key => $ingredient)
+                                    <div class="bg-white shadow rounded-lg flex relative hover:shadow-outline-teal">
+
+                                        <div class="w-16 flex pl-2 rounded-l-lg justify-center items-center shadow-md">
+                                            {{-- image field --}}
+                                            <i class="large box icon"></i>
+                                        </div>
+
+                                        <div class="flex flex-1 justify-between items-center p-3">
+                                            <div>
+                                                <div class="font-bold">{{ $ingredient['name'] }}</div>
+                                                <div class="text-sm text-gray-500">{{ $ingredient['code'] }}</div>
+                                            </div>
+                                            {{-- inputs --}}
+                                            <div class="">
+                                                <div class="field flex gap-2">
+                                                    <div class="ui icon input small">
+                                                        <input wire:model="amount.{{ $key }}" type="text" placeholder="Miktar">
+                                                        <i class="calculator icon"></i>
+                                                    </div>
+                                                    <div wire:ignore>
+                                                        <x-dropdown.search model="unit.{{ $key }}" :collection="$this->units" value="id" placeholder="sections/units.unit" text="name" class="ui search selection dropdown" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <button wire:click.prevent="removeIngredient({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
+                                            <i class="red shadow rounded-full cancel icon"></i>
+                                        </button>
+                                    </div>
+                                @endforeach
+                                @endif
                             </div>
                         </div>
 
-                        {{-- MALZEMELER BÖLÜMÜ - SIDEBAR ABSOLUTE--}}
-                        <div x-show="materials" @click.away="materials = false"  class="bg-gray-50 w-1/4 h-full absolute top-0 z-10">
+
+                                                
+                                                    
+
+
+                        {{-- MALZEMELER BÖLÜMÜ - MATERIALS FIXED --}}
+                        <div x-show="materials" @click.away="materials = false" class="rounded-lg w-4/12 bg-gray-50 h-96 shadow-lg fixed top-1/4 right-1/4 z-10">
                             <div class="overflow-x-hidden h-full p-3">
                                 <div class="px-4 py-2 bg-white shadow-lg border rounded-lg">
                                     @foreach ($this->categories as $category)
@@ -96,7 +130,7 @@
                                                 <div class="content">
                                                     <div class="header">{{ $category->name }}</div>
                                                     <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
-                                                    @foreach ($category->unproducibleProducts as $product)
+                                                    @foreach ($category->unproducibleProducts as $key => $product)
                                                         <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
                                                                                                     x-transition:enter-start="opacity-0 transform scale-60" 
                                                                                                     x-transition:enter-end="opacity-100 transform scale-100" 
@@ -120,14 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    {{-- MALZEMELER BARINI AÇAN BUTON --}}
-                    <div class="absolute right-0 bottom-0 mb-2 mr-2" @click="materials = true" x-show="!materials">
-                        <button wire:click.prevent class="ui circular icon large positive button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
-                            <i class="plus icon"></i>
-                        </button>
-                    </div>
+                    </div>                
                 </div>
             {{-- @endif --}}
             

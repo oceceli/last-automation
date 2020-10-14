@@ -13,6 +13,11 @@ class Form extends Component
 
     public $model;
 
+    /**
+     * Validated and created initiated model's data
+     */
+    public $created;
+
     public $view = null;
 
     public function mount()
@@ -37,9 +42,11 @@ class Form extends Component
     {
         $validated = $this->validate($this->model::rules()['data']);
 
-        if($this->model::create($validated)) {
+        if($created = $this->model::create($validated)) {
             $this->success = true;
+            $this->created = $created;
             // $this->reset('areas');
+            return $this;
         }
 
     }
