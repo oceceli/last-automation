@@ -16,15 +16,19 @@
 </div> --}}
 
 <select {{ $attributes }} wire:model="{{ $model }}">
-    <option class="item" selected >{{ ucfirst(__($placeholder)) }}</option>
+    <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
     @foreach ($collection as $item)
+        @if (strpos($value, '->')) @php $values = explode('->', $value) @endphp
+            <option class="item" value="{{ $item->{$values[0]}->{$values[1]} }}">
+        @else
             <option class="item" value="{{ $item[$value] }}">
-                @foreach ($array = explode(',', $text) as $display)
-                    {{ $item[$display] }} 
-                    @if ($display != end($array)) - @endif
-                @endforeach
-            </option>
-        @endforeach  
+        @endif
+            @foreach ($array = explode(',', $text) as $display)
+                {{ $item[$display] }} 
+                @if ($display != end($array)) - @endif
+            @endforeach
+        </option>
+    @endforeach  
 </select>
 
  
@@ -45,7 +49,7 @@
             ignoreCase: false,
             match: 'text', // text içinde ara
             forceSelection: false, // select açılıp seçim yapmadan blur edildiğinde
-            clearable: true,
+            clearable: "{{ $clearable }}",
             // allowCategorySelection: true,
             // on: 'hover',
             fullTextSearch:'exact',

@@ -11,4 +11,7 @@ return [
     'in_progress' => 'Üretiliyor',
     'is_completed' => 'Tamamlandı',
     'note' => 'Açıklama',
+
+    'header' => 'İş Emri Oluştur',
+    'subheader' => '',
 ];

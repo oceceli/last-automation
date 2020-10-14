@@ -23,16 +23,17 @@ class Form extends BaseForm
     public $in_progress = false;
     public $note;
 
-
+    
 
     protected function passToView()
     {
         return [
-            'products' => $this->products(),
+            //
         ];
     }
 
-    public function products()
+
+    public function getProductsProperty()
     {
         $products = [];
         foreach(Recipe::all() as $recipe) {

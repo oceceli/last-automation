@@ -16,7 +16,7 @@ class Recipe extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['product']; 
+    protected $with = ['product', 'ingredients']; 
 
     /**
      * Validate rules for current model

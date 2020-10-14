@@ -12,4 +12,6 @@ return [
     'is_active' => 'Aktif',
     'producible' => 'Üretilebilir',
 
+    'header' => 'Ürün Oluştur',
+    'subheader' => 'Yeni Ürün Tanımla',
 ];

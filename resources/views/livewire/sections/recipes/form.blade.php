@@ -175,20 +175,8 @@
             {{-- <hr> --}}
         </div>
 
+        <x-form-buttons />
         
-        <div class="mt-8 flex justify-between items-center">
-            <div></div>
-            <div class="ui buttons">
-                <button class="ui basic button labeled icon" type="reset" wire:click="clearFields">
-                    <i class="undo alternate icon"></i>
-                    Temizle
-                </button>
-                <button class="ui right labeled icon positive button" wire:loading.class="disabled loading" wire:target="submit">
-                    <i class="angle right icon"></i>
-                    Kaydet
-                </button>
-            </div>
-        </div>
     </form>
     
 </div>
