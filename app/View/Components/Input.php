@@ -25,7 +25,6 @@ class Input extends Component
         $this->model = $model;
         $this->placeholder = $placeholder;
         $this->type = $type;
-        // if(!$label) $this->label = $placeholder;
         $this->label = $label;
 
     }
