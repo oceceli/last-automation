@@ -7,6 +7,10 @@
             <input type="text"  wire:model="{{ $model }}" placeholder="{{ __($placeholder) }}">
         </div>
     </div>
+    asdf
+    @error($model)
+        <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+    @enderror
 </div>
 
 

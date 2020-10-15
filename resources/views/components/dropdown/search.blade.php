@@ -14,6 +14,9 @@
         </option>
     @endforeach  
 </select>
+@error($model)
+    <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+@enderror
 
 <script>
     $('.ui.dropdown').each(function () {

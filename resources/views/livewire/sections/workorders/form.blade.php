@@ -2,7 +2,7 @@
     <x-page-title icon="project diagram" header="sections/workorders.header" subheader="sections/workorders.subheader" />
     
     <div class="p-4 bg-white shadow rounded-lg">
-        <form class="ui form p-2" wire:submit.prevent="submit">
+        <form class="ui form p-2"  wire:submit.prevent="submit">
 
             <div class="fields equal width">
                 <div class="required field" wire:ignore>
@@ -24,7 +24,6 @@
             <div class="equal width fields" wire:ignore>
                 <x-datepicker model="datetime" label="sections/workorders.datetime"  class="required field" />
             </div>
-            {{ $datetime }}
 
             <div class="fields py-4">
                 <div class="field">

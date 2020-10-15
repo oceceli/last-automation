@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use Carbon\Carbon;
 
 class WorkOrder extends Model
 {
@@ -30,7 +31,7 @@ class WorkOrder extends Model
                 'code' => 'required',
                 'lot_no' => 'required',
                 'amount' => 'required',
-                'datetime' => 'required',
+                'datetime' => 'date',
                 'queue' => 'required',
                 'is_active' => 'required',
                 'in_progress' => 'nullable',
@@ -41,6 +42,18 @@ class WorkOrder extends Model
             ],
         ];
     }
+
+    public function setDatetimeAttribute($value) 
+    {
+        $this->attributes['datetime'] = Carbon::parse($value)->format('d.m.Y');
+    }
+
+    public function getDatetimeAttribute($value)
+    {
+        return $value;
+        // return Carbon::parse($value)->format('d.m.Y');
+    }
+
 
     public function recipe()
     {
