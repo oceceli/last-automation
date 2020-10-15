@@ -2,8 +2,9 @@
     
     <x-table-toolbar :perPage="$perPage" /> 
 
-    <div class="">
-        <table class="ui celled table loading">
+    <div>
+
+        <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
                     <th>Sıra</th>
@@ -41,6 +42,7 @@
         <div class="w-full">
             {{ $data->links('components.tailwind-pagination') }}
         </div>
+        
     </div>
 </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Sections\WorkOrders;
 use App\Http\Livewire\Form as BaseForm;
 use App\Models\Recipe;
 use App\Models\WorkOrder;
+use Carbon\Carbon;
 
 class Form extends BaseForm
 {
@@ -23,6 +24,13 @@ class Form extends BaseForm
     public $in_progress = false;
     public $note;
 
+
+    public function mount() 
+    {
+        parent::mount();
+        $this->datetime = Carbon::tomorrow()->format('d.m.Y');
+    }
+    
     
 
     protected function passToView()

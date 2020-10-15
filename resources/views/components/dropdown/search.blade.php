@@ -1,19 +1,3 @@
-    
-{{-- <div {{ $attributes }}>
-    <input type="hidden">
-    <i class="dropdown icon focus:outline-none"></i>
-    <div class="default text">{{ __($placeholder) }}</div>
-    <div class="menu">
-        @foreach ($collection as $item)
-            <div class="item" data-value="{{ $item[$value] }}">
-                @foreach ($array = explode(',', $text) as $display)
-                    {{ $item[$display] }} 
-                    @if ($display != end($array)) - @endif
-                @endforeach
-            </div>
-        @endforeach
-    </div>
-</div> --}}
 
 <select {{ $attributes }} wire:model="{{ $model }}">
     <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
@@ -31,15 +15,7 @@
     @endforeach  
 </select>
 
- 
-{{-- @prepend('scripts') --}}
 <script>
-    // $(document).ready(function () {
-        // let select = $('.ui .dropdown');
-        // select.dropdown();
-
-    // });
-
     $('.ui.dropdown').each(function () {
         $(this).dropdown({
             preserveHTML: false,
@@ -64,4 +40,3 @@
 
     })
 </script>
-{{-- @endpush --}}

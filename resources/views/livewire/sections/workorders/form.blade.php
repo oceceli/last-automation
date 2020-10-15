@@ -21,9 +21,10 @@
                 <x-input model="queue" label="sections/workorders.queue" placeholder="sections/workorders.queue" class="required field" />                
             </div>
 
-            <div class="equal width fields">
-                <x-input model="datetime" type="date" label="sections/workorders.datetime"  placeholder="sections/workorders.datetime" class="required field" />                
+            <div class="equal width fields" wire:ignore>
+                <x-datepicker model="datetime" label="sections/workorders.datetime"  class="required field" />
             </div>
+            {{ $datetime }}
 
             <div class="fields py-4">
                 <div class="field">
@@ -52,3 +53,5 @@
         </form>
     </div>
 </div>
+
+

@@ -6,6 +6,7 @@ return [
     'saved_successfully' => 'Başarıyla kaydedildi!',
     'dropdown_placeholder' => 'Lütfen seçiniz...',
 
+    'date' => 'Tarih',
 
 
     // Mostly Sidebar ----
