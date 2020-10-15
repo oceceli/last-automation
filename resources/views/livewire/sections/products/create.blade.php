@@ -1,13 +1,6 @@
 <div>
-    <div class="p-2 pb-5">
-        <h3 class="ui horizontal left aligned divider header">
-            <i class="box icon"></i>
-            <div class="content">
-              {{ __('sections/products.header') }}
-              <div class="sub header">{{ __('sections/products.subheader') }}</div>
-            </div>
-        </h3>
-    </div>
+    <x-page-title icon="box" header="sections/products.header" subheader="sections/products.subheader" />
+
     <div class="p-4 bg-white shadow rounded-lg">
         <form class="ui small form p-3" wire:submit.prevent="submit" wire:loading.class="loading">
             <div class="three fields">
