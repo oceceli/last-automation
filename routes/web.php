@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     #automatic #addAfter
+	Route::resource('/units', 'UnitController');
 	Route::resource('/categories', 'CategoryController');
     Route::resource('/products', 'ProductController');
 	Route::resource('/recipes', 'RecipeController');

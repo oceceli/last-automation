@@ -51,6 +51,7 @@
                 @endif
                 <hr>
             </div>
+            
             <x-form-buttons />
         </form>
     </div>

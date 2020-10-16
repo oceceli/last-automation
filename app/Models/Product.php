@@ -38,14 +38,14 @@ class Product extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                'category_id' => 'required',
-                'code' => ['required', 'min:2', 'unique:products,code'],
-                'barcode' => ['required', 'numeric', 'unique:products,barcode'],
-                'name' => ['required', 'min:3'],
-                'shelf_life' => 'required',
-                'producible' => 'required',
-                'is_active' => 'required',
-                'min_threshold' => 'nullable',
+                'category_id' => 'required|integer',
+                'code' => 'required|min:1|unique:products,code',
+                'barcode' => 'required|numeric|unique:products,barcode',
+                'name' => 'required|min:1',
+                'shelf_life' => 'required|numeric',
+                'producible' => 'required|boolean',
+                'is_active' => 'required|boolean',
+                'min_threshold' => 'nullable|numeric',
                 'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships
@@ -54,6 +54,10 @@ class Product extends Model
         ];
     }
 
+    public function units()
+    {
+        return $this->hasMany(Unit::class); 
+    }
 
 
     public function stockmoves()

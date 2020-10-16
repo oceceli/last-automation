@@ -6,7 +6,7 @@
 
         <div class="ui label basic scrolling dropdown">
             <input type="hidden" name="{{ $selectModel }}" wire:model.lazy="{{ $selectModel }}">
-            <div class=" text">{{ __($selectPlaceholder) }}</div>
+            <div class="text default">{{ __($selectPlaceholder) }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
                 @foreach ($selectData as $data)
