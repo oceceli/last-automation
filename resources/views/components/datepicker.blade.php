@@ -1,13 +1,12 @@
 
 <div {{ $attributes }}>
     <label>{{ __($label) }}</label>
-    <div class="ui calendar" id="calendar">
+    <div class="ui calendar">
         <div class="ui input left icon">
             <i class="calendar icon"></i>
             <input type="text"  wire:model="{{ $model }}" placeholder="{{ __($placeholder) }}">
         </div>
     </div>
-    asdf
     @error($model)
         <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
     @enderror
@@ -16,7 +15,7 @@
 
 
 <script>
-    $('#calendar')
+    $('.ui.calendar')
         .calendar({
             monthFirst: false,
             type: 'date',

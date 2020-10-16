@@ -12,8 +12,11 @@
                         <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                     @enderror
                 </div>
-                <x-input model="lot_no" label="sections/workorders.lot_no" placeholder="sections/workorders.lot_no" class="required field" />                
-                <x-input model="amount" label="sections/workorders.amount" placeholder="sections/workorders.amount" class="required field" />                
+                <x-input model="lot_no" label="sections/workorders.lot_no" placeholder="sections/workorders.lot_no" class="required field" />
+
+                {{-- <x-input model="amount" label="sections/workorders.amount" placeholder="sections/workorders.amount" class="required field" />  --}}
+                <x-input-drop inputModel="amount" label="sections/workorders.amount" selectPlaceholder="sections/units.unit"
+                              selectModel="unit_id" :selectData="$this->units" selectValue="id" selectText="name" class="required field" /> 
             </div>
 
             <div class="equal width fields">

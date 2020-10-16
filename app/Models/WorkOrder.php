@@ -27,14 +27,14 @@ class WorkOrder extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                'recipe_id' => 'required',
-                'code' => 'required',
+                'recipe_id' => 'required|min:1',
+                'code' => 'required|integer|min:0', // iş emri no
                 'lot_no' => 'required',
-                'amount' => 'required',
-                'datetime' => 'date',
-                'queue' => 'required',
-                'is_active' => 'required',
-                'in_progress' => 'nullable',
+                'amount' => 'required|numeric|min:0.1',
+                'datetime' => 'required|date',
+                'queue' => 'required|int|min:0',
+                'is_active' => 'required|boolean',
+                'in_progress' => 'nullable|boolean',
                 'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships

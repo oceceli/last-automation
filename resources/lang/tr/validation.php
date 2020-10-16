@@ -156,6 +156,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'amount' => 'miktar',
+        'lot_no' => 'lot no',
+        'code' => 'Kod',
+    ],
 
 ];

@@ -24,6 +24,7 @@ class Form extends BaseForm
     public $in_progress = false;
     public $note;
 
+    public $unit_id;
 
     public function mount() 
     {
@@ -31,12 +32,22 @@ class Form extends BaseForm
         $this->datetime = Carbon::tomorrow()->format('d.m.Y');
     }
     
-    
 
     protected function passToView()
     {
         return [
             //
+        ];
+    }
+
+    public function getUnitsProperty()
+    {
+        return [
+           ['id' => 1, 'name' => 'adet'],
+           ['id' => 2, 'name' => 'g'],
+           ['id' => 3, 'name' => 'kg'],
+           ['id' => 4, 'name' => 'ton'],
+           ['id' => 5, 'name' => 'litre'],
         ];
     }
 
