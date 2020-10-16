@@ -28,4 +28,14 @@ class UnitController extends Controller
         $this->validateData(['store', 'update']);
     }
 
+    public function index()
+    {
+        return view('web.sections.units.index');
+    }
+
+    public function create()
+    {
+        return view('web.sections.units.create');
+    }
+
 }

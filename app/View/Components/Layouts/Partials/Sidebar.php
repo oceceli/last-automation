@@ -26,13 +26,14 @@ class Sidebar extends Component
     {
         return [
             ['name' => 'dashboard', 'label' => 'dashboard', 'icon' => 'icon large dashboard'],
-            ['name' => 'products.index', 'label' => 'products', 'icon' => 'icon large dove'],
-            ['name' => 'products.create', 'label' => 'products-create', 'icon' => 'icon large home'],
-            ['name' => 'work-orders.index', 'label' => 'work-orders', 'icon' => 'icon large home'],
-            ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large home'],
-            ['name' => 'recipes.index', 'label' => 'recipes', 'icon' => 'icon large home'],
-            ['name' => 'recipes.create', 'label' => 'recipes-create', 'icon' => 'icon large home'],
+            ['name' => 'products.index', 'label' => 'products', 'icon' => 'icon large box'],
+            ['name' => 'products.create', 'label' => 'products-create', 'icon' => 'icon large box'],
+            ['name' => 'work-orders.index', 'label' => 'work-orders', 'icon' => 'icon large project diagram'],
+            ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large project diagram'],
+            ['name' => 'recipes.index', 'label' => 'recipes', 'icon' => 'icon large mortar pestle'],
+            ['name' => 'recipes.create', 'label' => 'recipes-create', 'icon' => 'icon large mortar pestle'],
             ['name' => 'stock-moves.index', 'label' => 'stock-moves', 'icon' => 'icon large box'],
+            ['name' => 'units.create', 'label' => 'unit-create', 'icon' => 'icon large weight'],
         ];
     }
 }

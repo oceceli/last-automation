@@ -18,6 +18,8 @@ return [
     'recipes' => 'Reçeteler',
     'recipes-create' => 'Reçete oluştur',
     'stock-moves' => 'Stok Hareketleri',
+    'unit-create' => 'Birim oluştur',
+    'units' => 'Birimler',
 
     'create' => 'oluştur',
     'home' => 'Anasayfa'
