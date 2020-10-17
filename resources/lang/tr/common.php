@@ -7,6 +7,8 @@ return [
     'dropdown_placeholder' => 'Lütfen seçiniz...',
 
     'date' => 'Tarih',
+    'add_new' => 'Yeni Ekle',
+    'remove_all' => 'Hepsini kaldır',
 
 
     // Mostly Sidebar ----

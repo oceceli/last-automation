@@ -49,14 +49,14 @@
                             <x-layouts.partials.topbar/>
                         </div>
 
-                        <div class="px-6 py-3 border-b border-gray-300 shadow bg-gray-50">
+                        <div class="px-6 py-3 border-b shadow bg-gray-50">
                             <x-breadcrumb/>
                         </div>
                         
                         <!-- Page Content -->
                         <div class="overflow-x-hidden flex flex-col flex-1">
                             <div class="p-5 flex-1">
-                                <div class="shadow-lg p-4 bg-gray-50 rounded-lg">{{ $slot }}</div>
+                                <div class="shadow-lg p-4 bg-gray-100 border border-teal-200 rounded-lg">{{ $slot }}</div>
                             </div>
                             <div id="FOOTER" class="bg-white">
                                 <x-layouts.partials.footer/>

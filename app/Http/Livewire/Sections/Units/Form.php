@@ -10,6 +10,13 @@ class Form extends Component
 
     public $product_id;
 
+
+    public function updatedProductId($value)
+    {
+        // dd($value);
+    }
+
+
     public function getProductsProperty()
     {
         return Product::all();
