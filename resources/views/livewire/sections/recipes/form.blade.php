@@ -26,9 +26,6 @@
                 </div>
                 
 
-                
-
-
                 {{-- @if ($currentProduct) --}}
                     <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}">
                         
@@ -135,26 +132,8 @@
                                 </div>
 
                             </div>
-
-
-                                                    
-                                                        
-
-
-                            
                         </div>                
                     </div>
-
-
-
-
-                    {{-- <x-listing>
-                        
-                    </x-listing> --}}
-
-
-
-
                 {{-- @endif --}}
                 
             </div> {{-- segment ending --}}

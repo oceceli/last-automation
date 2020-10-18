@@ -3,11 +3,19 @@
 
     <div class="p-4 bg-white shadow rounded-lg">
         <form class="ui small form p-3" wire:submit.prevent="submit" wire:loading.class="loading">
-            <div class="three fields">
-                <x-input model="code" label="sections/products.code" placeholder="sections/products.code" class="four wide required field" />                
-                <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="nine wide required field" />
-                <x-input model="barcode" label="sections/products.barcode" placeholder="EAN13" class="three wide required field" />
+            <div class="equal width fields">
+                <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="required field" />
+                
             </div>
+            <div class="equal width fields">
+                <x-input model="code" label="sections/products.code" placeholder="sections/products.code" class="required field" />                
+                <x-input model="barcode" label="sections/products.barcode" placeholder="EAN13" class="required field" />
+                <div class="required field" wire:ignore>
+                    <label>{{ ucfirst(__('sections/units.unit')) }}</label>
+                    <x-dropdown.search model="unit" :collection="$this->units" placeholder="sections/units.unit" transition="slide right" class="ui selection dropdown" />
+                </div>
+            </div>
+            
     
             <div class="equal width fields">
                 <x-input model="min_threshold" label="sections/products.min_threshold" placeholder="sections/products.min_threshold"  class="required field" />
@@ -15,12 +23,13 @@
             </div>
             
             <div class="equal width fields">
-                <div class="field" wire:ignore>
+                <div class="required field" wire:ignore>
                     <label>Kategori</label>
                     <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
                         placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="ui search selection dropdown" />
                     <a href="">create_category</a>
                 </div>
+                
             </div>
             
             <div class="fields">
@@ -63,8 +72,8 @@
                 @endif
                 <hr>
 
-            <x-form-buttons />
-            
+                <x-form-buttons />
+            </div>
         </form>
     </div>    
 </div>

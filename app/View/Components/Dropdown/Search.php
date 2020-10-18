@@ -26,7 +26,7 @@ class Search extends Component
      *
      * @return void
      */
-    public function __construct($model, $collection, $value, $text, $placeholder = 'common.dropdown_placeholder', $transition = 'slide', $clearable = false)
+    public function __construct($model, $collection, $value = null, $text = null, $placeholder = 'common.dropdown_placeholder', $transition = 'slide', $clearable = false)
     {
         $this->model = $model;
         $this->collection = $collection;

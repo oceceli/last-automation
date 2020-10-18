@@ -2,12 +2,16 @@
 
 namespace App\Http\Livewire\Sections\Products;
 
+use App\Common\Units\Conversions;
+use App\Http\Livewire\Form as Baseform;
 use App\Models\Category;
 use App\Models\Product;
-use Livewire\Component;
 
-class Create extends Component
+class Create extends Baseform
 {
+    public $view = 'livewire.sections.products.create';
+
+    public $model = Product::class;
 
     public $category_id;
     public $code;
@@ -19,42 +23,29 @@ class Create extends Component
     public $is_active = false;
     public $producible = false;
 
+    public $unit; // unit tablosuna yazılacak
+
     public $success;
 
-    public function mount()
-    {
-        $this->success = false;
-    }
-
-    public function render()
-    {
-        return view('livewire.sections.products.create');
-    }
 
     public function getCategoriesProperty()
     {
         return Category::all();
     }
 
-    public function updated($propertyName)
+    public function getUnitsProperty()
     {
-        $this->validateOnly($propertyName, Product::rules()['data']);
+        return Conversions::units;
     }
 
     public function submit()
     {
-        $validated = $this->validate(Product::rules()['data']);
-
-        if(Product::create($validated)) {
-            $this->success = true;
-            $this->reset('code', 'name', 'barcode', 'min_threshold', 'shelf_life', 'note', 'is_active', 'producible');
+        parent::submit();
+        if($product = $this->created) {
+            Conversions::initUnit($product->id, $this->unit); 
         }
+        
 
-    }
-
-    public function clearFields()
-    {
-        $this->reset();
     }
 
 }

@@ -42,9 +42,8 @@ class Form extends Component
     {
         $validated = $this->validate($this->model::rules()['data']);
 
-        if($created = $this->model::create($validated)) {
+        if($this->created = $this->model::create($validated)) {
             $this->success = true;
-            $this->created = $created;
             // $this->reset('areas');
             return $this;
         }

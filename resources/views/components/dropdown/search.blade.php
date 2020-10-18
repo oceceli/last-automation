@@ -2,16 +2,20 @@
 <select {{ $attributes }} wire:model="{{ $model }}">
     <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
     @foreach ($collection as $item)
-        @if (strpos($value, '->')) @php $values = explode('->', $value) @endphp
-            <option class="item" value="{{ $item->{$values[0]}->{$values[1]} }}">
+        @if ($value !== null)
+            @if (strpos($value, '->')) @php $values = explode('->', $value) @endphp
+                <option class="item" value="{{ $item->{$values[0]}->{$values[1]} }}">
+            @else
+                <option class="item" value="{{ $item[$value] }}">
+            @endif
+                @foreach ($array = explode(',', $text) as $display)
+                    {{ $item[$display] }} 
+                    @if ($display != end($array)) - @endif
+                @endforeach
+            </option>
         @else
-            <option class="item" value="{{ $item[$value] }}">
+            <option class="item" value="{{ $item }}"> {{ $item }} </option>
         @endif
-            @foreach ($array = explode(',', $text) as $display)
-                {{ $item[$display] }} 
-                @if ($display != end($array)) - @endif
-            @endforeach
-        </option>
     @endforeach  
 </select>
 

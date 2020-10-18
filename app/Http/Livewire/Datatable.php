@@ -30,7 +30,7 @@ class Datatable extends Component
      * These columns should not be shown in the table
      */
     public $except = [
-        'created_at', 'updated_at', 'deleted_at', 'id',
+        'created_at', 'updated_at', 'deleted_at', // id
     ];
 
     /**

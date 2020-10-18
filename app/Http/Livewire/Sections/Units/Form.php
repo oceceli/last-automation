@@ -10,11 +10,19 @@ class Form extends Component
 
     public $product_id;
 
+    public $selectedProduct;
+
+    public $unit_id;
+
+    public $fromAmount;
+
 
     public function updatedProductId($value)
     {
-        // dd($value);
+        // $this->reset();
+        $this->selectedProduct = Product::find($value);
     }
+
 
 
     public function getProductsProperty()

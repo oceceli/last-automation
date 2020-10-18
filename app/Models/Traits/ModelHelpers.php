@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 trait ModelHelpers
 {
-    use GlobalHelpers, SoftDeletes;
+    use GlobalHelpers;
 
 
     /**

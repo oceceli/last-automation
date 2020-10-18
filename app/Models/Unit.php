@@ -9,7 +9,7 @@ use App\Models\Traits\ModelHelpers;
 
 class Unit extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers;
+    use HasFactory, ModelHelpers;
 
     protected $guarded = [];
 
@@ -24,6 +24,16 @@ class Unit extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     /**
      * Validate rules for current model
      */
@@ -32,7 +42,10 @@ class Unit extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                'name' => 'required',
+                'parent_id' => 'required|int|min:0',
+                'product_id' => 'required|int|min:1',
+                'name' => 'required|max:20',
+                'multiplier' => 'required|numeric',
             ],
             'relation' => [ // use for many to many relationships
                 //

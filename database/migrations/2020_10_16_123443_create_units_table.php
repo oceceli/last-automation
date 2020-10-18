@@ -15,10 +15,11 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
             $table->string('name');
+            $table->float('multiplier', 8, 2, true);
+            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('product_id');
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }
