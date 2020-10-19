@@ -2,46 +2,96 @@
     <x-page-title icon="weight" header="sections/units.header" subheader="sections/units.subheader" />
     <div class="bg-white p-5 rounded-lg shadow">
 
-        <div class="ui form">
+        <div class="ui small form">
             <div class="equal width fields">
                 <div class="field" wire:ignore>
                     <label>Ürün</label>
                     <x-dropdown.search model="product_id" :collection="$this->products" value="id" text="name,code" transition="slide right" class="ui search selection dropdown" />                    
                 </div>
             </div>
+        </div>
+        
 
+        @if ($selectedProduct)
 
-            
-            @if ($selectedProduct)
-                <div class="border rounded">
-                    {{-- BAŞLIK VE BUTONLAR --}}
-                    <x-title-and-buttons title="'{{ $selectedProduct->name }}'  {{ __('sections/units.units') }}" icon="red weight" class="py-4 px-3 bg-cool-gray-50" >
-                        <x-slot name="buttons">
-                            <button wire:click.prevent @click="materials = true" class="ui icon small teal button" data-tooltip="{{ __('common.add_new') }}">
-                                <i class="plus icon"></i>
-                            </button>
-                            <button wire:click.prevent="clearIngredients" class="ui icon small gray basic button" data-tooltip="{{ __('common.remove_all') }}">
-                                <i class="red trash icon"></i>
-                            </button>
-                        </x-slot>
-                    </x-title-and-buttons>
+            <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}">
+                            
+                {{-- BAŞLIK VE BUTONLAR --}}
+                <x-title-and-buttons title="'{{ $selectedProduct->name }}'  {{ __('sections/units.units') }}" icon="weight" class="py-4 px-3 bg-cool-gray-50" >
+                    <x-slot name="buttons">
+                        <button wire:click.prevent="addNewUnitField" class="ui icon small teal button" data-tooltip="{{ __('common.add_new') }}">
+                            <i class="plus icon"></i>
+                        </button>
+                        <button wire:click.prevent="removeAllUnitFields" class="ui icon small gray basic button" data-tooltip="{{ __('common.remove_all') }}">
+                            <i class="red trash icon"></i>
+                        </button>
+                    </x-slot>
+                </x-title-and-buttons>
 
+                <div class="shadow-inner relative">
+                    {{-- İÇERİK - CARD KISMI   md:h-96 overflow-x-hidden  --}}
+                    <div class="p-5 py-7">
+                        <div class="flex flex-col gap-3">
+                            @if ($unitFields <= 0)
+                            <div class="ui placeholder segment h-full">
+                                <div class="ui icon header">
+                                    {{-- <i class="blue atom left bottom corner icon"></i> --}}
+                                    <i class="weight icon"></i>
+                                    Birim oluşturmak için ekle butonunu kullanın
+                                </div>
+                                <div class="text-sm text-center"></div>
+                            </div>
+                            @else
+                                @for ($i = 0; $i < $unitFields; $i++)
+                                    <div class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
 
-                    <div class="p-4">
-                        <div class="fields">
-                            <x-input model="product_id" label="sections/units.unit" placeholder="Birim adı" class="required field"/>
+                                        <div class="w-16 flex pl-2 rounded-l-lg justify-center items-center shadow-md">
+                                            {{-- image field --}}
+                                            <i class="large teal weight icon"></i>
+                                        </div>
 
-                            <x-input-drop inputModel="fromAmount" label="bu kadarı" selectPlaceholder="sections/units.unit"
-                              selectModel="unit_id" :selectData="$selectedProduct->units" selectValue="id" selectText="name" class="required field" /> 
-
-                            <x-input model="product_id" label="sections/units.unit" placeholder="Birim adı" class="required field"/>
-                        </div>                    
+                                        <div class="flex flex-1 justify-between items-center p-3">
+                                            <div class="ui small form">
+                                                <div class="field flex items-center gap-2">
+                                                    <div class="ui input ">
+                                                        <input type="text" placeholder="Miktar">
+                                                    </div>
+                                                    <select class="ui dropdown select ">
+                                                        <option selected disabled class="text-gray-400">Ana birim</option>
+                                                        @foreach ($selectedProduct->units as $unit)
+                                                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div>
+                                                        {{ $selectedProduct->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="large equals icon"></i>
+                                            </div>
+                                            {{-- inputs --}}
+                                            <div class="field flex gap-2">
+                                                <div class="ui icon input small">
+                                                    <input type="text" placeholder="Miktar">
+                                                    <i class="calculator icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button wire:click.prevent="removeUnitField" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
+                                            <i class="red shadow rounded-full cancel icon"></i>
+                                        </button>
+                                        
+                                    </div>
+                                @endfor
+                            @endif
+                        </div>
 
                     </div>
-                </div>
-            @endif
-
-        </div>
+                </div>                
+            </div>
+        @endif
     </div>
 
 </div>

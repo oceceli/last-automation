@@ -10,7 +10,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
                 @foreach ($selectData as $data)
-                    <div data-value="{{ $data[$selectValue] }}" class="item">{{ $data[$selectText] }}</div>
+                    <div wire:key="{{$loop->index}}" data-value="{{ $data[$selectValue] }}" class="item">{{ $data[$selectText] }}</div>
                 @endforeach
             </div>
         </div>

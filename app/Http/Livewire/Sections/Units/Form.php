@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    public $view = 'livewire.sections.units.form';
 
     public $product_id;
 
@@ -16,6 +17,8 @@ class Form extends Component
 
     public $fromAmount;
 
+    public $unitFields = 5;
+
 
     public function updatedProductId($value)
     {
@@ -23,15 +26,25 @@ class Form extends Component
         $this->selectedProduct = Product::find($value);
     }
 
+    public function addNewUnitField()
+    {
+        $this->unitFields++;
+    }
 
+    public function removeAllUnitFields()
+    {
+        $this->unitFields = 0;
+    }
+
+    public function removeUnitField()
+    {
+        $this->unitFields--;
+    }
 
     public function getProductsProperty()
     {
         return Product::all();
     }
 
-    public function render()
-    {
-        return view('livewire.sections.units.form');
-    }
+   
 }
