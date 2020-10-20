@@ -17,7 +17,13 @@ class Form extends Component
 
     public $fromAmount;
 
-    public $unitFields = 5;
+    // public $unitFields = 5;
+    public $unitFields = [
+        ['multiplier' => 'times', 'amount' => null, 'fromUnit' => null], 
+        ['multiplier' => 'divide', 'amount' => null, 'fromUnit' => null],
+    ];
+
+    // public $multiplier = 'times';
 
 
     public function updatedProductId($value)
@@ -39,6 +45,15 @@ class Form extends Component
     public function removeUnitField()
     {
         $this->unitFields--;
+    }
+
+    public function toggleMultiplier($key)
+    {
+        if($this->unitFields[$key]['multiplier'] === 'times') {
+            $this->unitFields[$key]['multiplier'] = 'divide';
+        } else {
+            $this->unitFields[$key]['multiplier'] = 'times';
+        }
     }
 
     public function getProductsProperty()

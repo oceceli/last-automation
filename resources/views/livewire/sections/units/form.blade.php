@@ -32,7 +32,7 @@
                     {{-- İÇERİK - CARD KISMI   md:h-96 overflow-x-hidden  --}}
                     <div class="p-5 py-7">
                         <div class="flex flex-col gap-3">
-                            @if ($unitFields <= 0)
+                            @if (! $unitFields)
                             <div class="ui placeholder segment h-full">
                                 <div class="ui icon header">
                                     {{-- <i class="blue atom left bottom corner icon"></i> --}}
@@ -42,7 +42,7 @@
                                 <div class="text-sm text-center"></div>
                             </div>
                             @else
-                                @for ($i = 0; $i < $unitFields; $i++)
+                                @foreach ($unitFields as $key => $unitField)
                                     <div class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
 
                                         <div class="w-16 flex pl-2 rounded-l-lg justify-center items-center shadow-md">
@@ -50,33 +50,37 @@
                                             <i class="large teal weight icon"></i>
                                         </div>
 
-                                        <div class="flex flex-1 justify-between items-center p-3">
-                                            <div class="ui small form">
-                                                <div class="field flex items-center gap-2">
-                                                    <div class="ui input ">
-                                                        <input type="text" placeholder="Miktar">
-                                                    </div>
-                                                    <select class="ui dropdown select ">
-                                                        <option selected disabled class="text-gray-400">Ana birim</option>
-                                                        @foreach ($selectedProduct->units as $unit)
-                                                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div>
-                                                        {{ $selectedProduct->name }}
-                                                    </div>
-                                                </div>
+                                        <div class="flex flex-1 gap-3 items-center p-3">
+                                        {{-- <div class="flex flex-1 justify-between items-center p-3"> --}}
+                                            <div class="ui icon input small">
+                                                <input type="text" placeholder="{{ ucfirst(__('sections/units.new_unit_name')) }}">
                                             </div>
-                                            <div>
-                                                <i class="large equals icon"></i>
+                                            <div class="pl-6">
+                                                <i class="equals icon"></i>
                                             </div>
                                             {{-- inputs --}}
-                                            <div class="field flex gap-2">
-                                                <div class="ui icon input small">
-                                                    <input type="text" placeholder="Miktar">
-                                                    <i class="calculator icon"></i>
+                                            <div class="pl-6 flex flex-1 justify-around items-center gap-12">
+                                                <div class="">
+                                                    <h2 class="font-bold text-teal-700">1</h2>
                                                 </div>
+                                                
+                                                <div class="cursor-pointer" wire:click="toggleMultiplier({{ $key }})" data-tooltip="İşlemi değiştir">
+                                                    <i class="large {{ $unitField['multiplier'] }} icon"></i>
+                                                </div>
+                                                
+                                                <div class="">
+                                                    {{-- <i class="calculator icon"></i> --}}
+                                                    <input wire:model="unitFields.{{ $key }}.amount" type="number" placeholder="Miktar" class="font-bold text-xl pb-1 text-teal-700 border-b-2 border-dashed border-teal-200 hover:border-teal-300 focus:border-teal-400 focus:outline-none ">
+                                                </div>
+                                                
+                                                <select wire:model="unitFields.{{ $key }}.fromUnit" class="font-bold text-xl focus:outline-none cursor-pointer">
+                                                    <option selected disabled >Birim</option>
+                                                    @foreach ($selectedProduct->units as $unit)
+                                                        <option class="text-red-500 font-bold" value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
+
                                         </div>
                                         
                                         <button wire:click.prevent="removeUnitField" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
@@ -84,7 +88,7 @@
                                         </button>
                                         
                                     </div>
-                                @endfor
+                                @endforeach
                             @endif
                         </div>
 

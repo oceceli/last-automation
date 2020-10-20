@@ -24,6 +24,14 @@ class Conversions
     }
 
 
+    public static function cevir($from, $to)
+    {
+        if($from == 1) {
+            
+        }
+    }
+
+
     
 
 
