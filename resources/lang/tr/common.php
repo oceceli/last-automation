@@ -9,6 +9,8 @@ return [
     'date' => 'Tarih',
     'add_new' => 'Yeni Ekle',
     'remove_all' => 'Hepsini kaldır',
+    'save' => 'Kaydet',
+    'saved' => 'Kaydedildi',
 
 
     // Mostly Sidebar ----

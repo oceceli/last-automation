@@ -23,7 +23,10 @@ class UnitFactory extends Factory
     {
         return [
             'product_id' => $this->faker->randomDigit,
+            'parent_id' => 1,
             'name' => $this->faker->randomLetter . $this->faker->randomLetter,
+            'multiplier' => $this->faker->boolean(),
+            'factor' => $this->faker->randomNumber(),
         ];
     }
 }

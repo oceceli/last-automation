@@ -45,7 +45,8 @@ class Unit extends Model
                 'parent_id' => 'required|int|min:0',
                 'product_id' => 'required|int|min:1',
                 'name' => 'required|max:20',
-                'multiplier' => 'required|numeric',
+                'multiplier' => 'required|boolean',
+                'factor' => 'required|numeric'
             ],
             'relation' => [ // use for many to many relationships
                 //

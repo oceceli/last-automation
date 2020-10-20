@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Sections\Units;
 
+use App\Common\Units\Conversions;
 use App\Models\Product;
+use App\Models\Unit;
 use Livewire\Component;
 
 class Form extends Component
@@ -13,17 +15,9 @@ class Form extends Component
 
     public $selectedProduct;
 
-    public $unit_id;
-
-    public $fromAmount;
-
-    // public $unitFields = 5;
     public $unitFields = [
-        ['multiplier' => 'times', 'amount' => null, 'fromUnit' => null], 
-        ['multiplier' => 'divide', 'amount' => null, 'fromUnit' => null],
+        ['multiplier' => true, 'factor' => null, 'parent_id' => null, 'name' => null],
     ];
-
-    // public $multiplier = 'times';
 
 
     public function updatedProductId($value)
@@ -34,32 +28,36 @@ class Form extends Component
 
     public function addNewUnitField()
     {
-        $this->unitFields++;
+        $this->unitFields[] = ['multiplier' => true, 'factor' => null, 'parent_id' => null, 'name' => null];
     }
 
     public function removeAllUnitFields()
     {
-        $this->unitFields = 0;
+        $this->unitFields = [];
     }
 
-    public function removeUnitField()
+    public function removeUnitField($key)
     {
-        $this->unitFields--;
+        unset($this->unitFields[$key]);
     }
 
     public function toggleMultiplier($key)
     {
-        if($this->unitFields[$key]['multiplier'] === 'times') {
-            $this->unitFields[$key]['multiplier'] = 'divide';
-        } else {
-            $this->unitFields[$key]['multiplier'] = 'times';
-        }
+        $this->unitFields[$key]['multiplier'] = ! $this->unitFields[$key]['multiplier'];
     }
 
     public function getProductsProperty()
     {
         return Product::all();
     }
+
+    public function submit($index)
+    {
+        $unitField = $this->unitFields[$index];
+        $unitField['product_id'] = $this->selectedProduct->id;
+        Conversions::addUnit($unitField); 
+    }
+
 
    
 }

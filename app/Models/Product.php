@@ -16,7 +16,7 @@ class Product extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = []; 
+    protected $with = ['units']; 
 
 
     // public const theadAttributes = [

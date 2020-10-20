@@ -53,7 +53,7 @@
                                         <div class="flex flex-1 gap-3 items-center p-3">
                                         {{-- <div class="flex flex-1 justify-between items-center p-3"> --}}
                                             <div class="ui icon input small">
-                                                <input type="text" placeholder="{{ ucfirst(__('sections/units.new_unit_name')) }}">
+                                                <input wire:model.lazy="unitFields.{{ $key }}.name" type="text" placeholder="{{ ucfirst(__('sections/units.new_unit_name')) }}">
                                             </div>
                                             <div class="pl-6">
                                                 <i class="equals icon"></i>
@@ -65,25 +65,31 @@
                                                 </div>
                                                 
                                                 <div class="cursor-pointer" wire:click="toggleMultiplier({{ $key }})" data-tooltip="İşlemi değiştir">
-                                                    <i class="large {{ $unitField['multiplier'] }} icon"></i>
+                                                    <i class="large {{ $unitField['multiplier'] == true ? 'times' : 'divide' }} icon"></i>
                                                 </div>
                                                 
                                                 <div class="">
                                                     {{-- <i class="calculator icon"></i> --}}
-                                                    <input wire:model="unitFields.{{ $key }}.amount" type="number" placeholder="Miktar" class="font-bold text-xl pb-1 text-teal-700 border-b-2 border-dashed border-teal-200 hover:border-teal-300 focus:border-teal-400 focus:outline-none ">
+                                                    <input wire:model.lazy="unitFields.{{ $key }}.factor" type="number" placeholder="Miktar" class="font-bold text-xl pb-1 text-teal-700 border-b-2 border-dashed border-teal-200 hover:border-teal-300 focus:border-teal-400 focus:outline-none ">
                                                 </div>
                                                 
-                                                <select wire:model="unitFields.{{ $key }}.fromUnit" class="font-bold text-xl focus:outline-none cursor-pointer">
-                                                    <option selected disabled >Birim</option>
-                                                    @foreach ($selectedProduct->units as $unit)
-                                                        <option class="text-red-500 font-bold" value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                <div>
+                                                    <select wire:model.lazy="unitFields.{{ $key }}.parent_id" class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
+                                                        <option selected class="disabled">Birim</option>
+                                                        @foreach ($selectedProduct->units as $unit)
+                                                            <option class="text-red-500 font-bold" value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                            <div>
+                                                <button wire:click="submit({{ $key }})" class="ui positive tiny button ">{{ __('common.save') }}</button>
                                             </div>
 
                                         </div>
                                         
-                                        <button wire:click.prevent="removeUnitField" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
+                                        <button wire:click.prevent="removeUnitField({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
                                             <i class="red shadow rounded-full cancel icon"></i>
                                         </button>
                                         
