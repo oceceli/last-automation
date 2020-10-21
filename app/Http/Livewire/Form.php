@@ -7,8 +7,6 @@ use Livewire\Component;
 class Form extends Component
 {
 
-    // public $form = [];
-
     public $success;
 
     public $model;
@@ -17,6 +15,7 @@ class Form extends Component
      * Validated and created initiated model's data
      */
     public $created;
+
 
     public $view = null;
 
@@ -38,16 +37,39 @@ class Form extends Component
         $this->validateOnly($propertyName, $this->model::rules()['data']);
     }
 
+
+    /**
+     * 
+     */
     public function submit()
     {
-        $validated = $this->validate($this->model::rules()['data']);
+        // $validated = $this->validation(); // sil
 
-        if($this->created = $this->model::create($validated)) {
+        return $this->create();
+
+    }
+
+    /**
+     * Eloquent create and update operations ***************************
+     */
+    public function create()
+    {
+        if($this->created = $this->model::create($this->validation())) {
             $this->success = true;
-            // $this->reset('areas');
-            return $this;
         }
+    }
 
+    public function update($entity)
+    {
+        if($entity->update($this->validation())) {
+            $this->success = true;
+        }
+    }
+    /******************************************************************/
+
+    public function validation()
+    {
+        return $this->validate($this->model::rules()['data']);
     }
 
     public function clearFields()

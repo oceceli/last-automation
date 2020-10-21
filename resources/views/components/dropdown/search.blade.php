@@ -1,5 +1,5 @@
 
-<select {{ $attributes }} wire:model="{{ $model }}">
+<select {{ $attributes }} wire:model.lazy="{{ $model }}">
     <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
     @foreach ($collection as $item)
         @if ($value !== null)

@@ -8,6 +8,9 @@
                     <div wire:ignore class="required field">
                         <label>{{ __('sections/recipes.recipe_product') }}</label>
                         <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
+                        @error('product_id')
+                            <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+                        @enderror
                     </div>
                     <div class="required field">
                         <label>{{ __('sections/recipes.code') }}</label>

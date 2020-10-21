@@ -74,5 +74,12 @@ class Product extends Model
     {
         return $this->units->where('parent_id', 0)->first();
     }
+
+    public function getRecipeIngredients()
+    {
+        if($this->recipe) {
+            return $this->recipe->ingredients->first();
+        }
+    }
     
 }
