@@ -20,10 +20,10 @@ class Form extends Component
     ];
 
 
-    public function updatedProductId($value)
+    public function updatedProductId($id)
     {
         // $this->reset();
-        $this->selectedProduct = Product::find($value);
+        $this->selectedProduct = Product::find($id);
     }
 
     public function addNewUnitField()
@@ -55,6 +55,8 @@ class Form extends Component
     {
         $unitField = $this->unitFields[$index];
         $unitField['product_id'] = $this->selectedProduct->id;
+        // if($unitField['parent_id'] == null) $unitField['parent_id'] = 0;
+
         Conversions::addUnit($unitField); 
     }
 

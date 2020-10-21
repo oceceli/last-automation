@@ -9,9 +9,13 @@
             <div class="text default">{{ __($selectPlaceholder) }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-                @foreach ($selectData as $data)
-                    <div wire:key="{{$loop->index}}" data-value="{{ $data[$selectValue] }}" class="item">{{ $data[$selectText] }}</div>
-                @endforeach
+                @if (! $selectData)
+                    <div class="item disabled">{{ __('common.empty') }}</div>
+                @else
+                    @foreach ($selectData as $data)
+                        <div wire:key="{{$loop->index}}" data-value="{{ $data[$selectValue] }}" class="item">{{ $data[$selectText] }}</div>
+                    @endforeach
+                @endif
             </div>
         </div>
         

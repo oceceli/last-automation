@@ -69,5 +69,10 @@ class Product extends Model
     {
         return $this->hasOne(Recipe::class);
     }
+
+    public function getBaseUnit()
+    {
+        return $this->units->where('parent_id', 0)->first();
+    }
     
 }

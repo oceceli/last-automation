@@ -29,6 +29,11 @@ class Category extends Model
         return $this->products()->where('producible', false);
     }
 
+    public function producibleProducts()
+    {
+        return $this->products()->where('producible', true);
+    }
+
     /**
      * Validate rules for current model
      */

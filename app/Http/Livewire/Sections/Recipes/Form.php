@@ -12,52 +12,55 @@ class Form extends BaseForm
 {
 
     public $model = Recipe::class;
-    
     public $view = 'livewire.sections.recipes.form';
 
+    /**
+     * Recipe attributes
+     */
     public $product_id;
-
     public $code;
-
-    public $currentProduct;
-
-    public $ingredients = [
-        ['id' => 10, 'name' => 'Tuz', 'code' => 'TZ'],
-        ['id' => 20, 'name' => 'Sodyum Bikarbonat', 'code' => 'SB'],
-    ];
     
-    public $test;
+    /**
+     * Currently selected product as product_id
+     */
+    public $selectedProduct;
+
+    /**
+     * Base unit of product
+     */
+    public $baseUnit;
 
 
-
+    public $ingredients = [];
     public $amount = [];
     public $unit = [];
 
 
-    protected function passToView()
-    {
-        return [
-            //
-        ];
-    }
-
-    // submit hazır DEVAM
+    
     public function submit()
     {
-        if($recipe = parent::submit()->created) {
+        parent::submit();
+        if($recipe = $this->created) {
+
             array_map(function($ingredient, $amount, $unit) use ($recipe){
+                dd($amount);
                 $recipe->ingredients()->attach($ingredient['id'], ['amount' => $amount]);
             }, $this->ingredients, $this->amount, $this->unit);
+
         }
-        // dump($this->amount);
-        // dump($this->ingredients);
-        // dump($this->unit);
     }
 
 
     public function updatedProductId($id)
     {
-        $this->currentProduct = $this->producibleProducts->find($id);
+        $this->reset();
+        $this->selectedProduct = $this->producibleProducts->find($id);
+        // $this->selectedProduct = Product::find($id);
+        
+        $this->baseUnit = $this->selectedProduct->getBaseUnit(); // title unit
+
+        $this->ingredients[] = $this->selectedProduct->recipe->ingredients->first();
+
     }
 
     public function addIngredient($ingredient)
@@ -91,16 +94,11 @@ class Form extends BaseForm
     //     return Product::where('producible', false)->get();
     // }
 
-    public function getUnitsProperty()
-    {
-        return [
-            ['id' => 1, 'name' => 'g'],
-            ['id' => 2, 'name' => 'kg'],
-            ['id' => 3, 'name' => 'ton'],
-            ['id' => 4, 'name' => 'palet'],
-        ];
-        // return Unit::all(); 
-    }
+    // public function getUnitsProperty()
+    // {
+    //     return $this->ingredients[$index]->units;
+    //     // return Unit::all(); 
+    // }
 
     public function random()
     {

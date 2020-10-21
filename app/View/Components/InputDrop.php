@@ -41,7 +41,7 @@ class InputDrop extends Component
      *
      * @return void
      */
-    public function __construct($label, 
+    public function __construct($label = null, 
                                 $inputModel, $inputType = 'text', $placeholder = null, 
                                 $selectModel, $selectData, $selectValue, $selectText, 
                                 $transition = 'slide', $clearable = false, $selectPlaceholder = 'settings')

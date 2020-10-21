@@ -10,6 +10,7 @@ return [
 
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',
+    'includes' => 'içerisinde',
 
     'add_ingredients' => 'İçerik Ekle',
     'remove_ingredients' => 'Tüm içeriği kaldır',

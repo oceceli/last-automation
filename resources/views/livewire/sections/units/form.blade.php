@@ -52,8 +52,9 @@
 
                                         <div class="flex flex-1 gap-3 items-center p-3">
                                         {{-- <div class="flex flex-1 justify-between items-center p-3"> --}}
-                                            <div class="ui icon input small">
-                                                <input wire:model.lazy="unitFields.{{ $key }}.name" type="text" placeholder="{{ ucfirst(__('sections/units.new_unit_name')) }}">
+                                            <div class="">
+                                                {{-- <input wire:model.lazy="unitFields.{{ $key }}.name" type="text" placeholder="{{ ucfirst(__('sections/units.new_unit_name')) }}"> --}}
+                                                <x-input model="unitFields.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input small" />
                                             </div>
                                             <div class="pl-6">
                                                 <i class="equals icon"></i>
@@ -84,7 +85,7 @@
                                                 
                                             </div>
                                             <div>
-                                                <button wire:click="submit({{ $key }})" class="ui positive tiny button ">{{ __('common.save') }}</button>
+                                                <button wire:click="submit({{ $key }})" class="ui positive tiny button pl-2">{{ __('common.save') }}</button>
                                             </div>
 
                                         </div>
@@ -97,10 +98,10 @@
                                 @endforeach
                             @endif
                         </div>
-
                     </div>
                 </div>                
             </div>
+            
         @endif
     </div>
 
