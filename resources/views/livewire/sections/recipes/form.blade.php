@@ -2,6 +2,16 @@
     <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
     {{-- <div class="p-6 bg-white bg-opacity-25 shadow rounded-lg "> --}}
 
+        {{-- Locked butons --}}
+        @if ($locked)
+            <div class="relative">
+                <div class="absolute right-0 top-0 -mt-7 -mr-1 z-10">
+                    <div wire:click="unlock" data-tooltip="{{ __('common.edit') }}">
+                        <i class="large unlock circular icon link animate-pulse text-red-400 hover:text-green-400"></i>
+                    </div>
+                </div>
+            </div>
+        @endif
         <form class="ui form" wire:submit.prevent="submit" wire:loading.class="loading">
             <div class="ui raised teal padded segment">
                 <div class="equal width fields pb-4">
@@ -12,7 +22,11 @@
                             <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                         @enderror
                     </div>
-                    <div class="required field">
+                    @if ($locked)
+                        <div class="required field disabled">
+                    @else
+                        <div class="required field">
+                    @endif
                         <label>{{ __('sections/recipes.code') }}</label>
                         <div class="ui action input">
                             <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
@@ -38,12 +52,14 @@
                             {{-- BAŞLIK VE BUTONLAR --}}
                             <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
                                 <x-slot name="buttons">
-                                    <button wire:click.prevent @click="materials = true" class="ui icon small teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
-                                        <i class="plus icon"></i>
-                                    </button>
-                                    <button wire:click.prevent="clearIngredients" class="ui icon small gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
-                                        <i class="red trash icon"></i>
-                                    </button>
+                                    <div class="ui small icon buttons">
+                                        <button wire:click.prevent @click="materials = true" class="ui teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                            <i class="plus icon"></i>
+                                        </button>
+                                        <button wire:click.prevent="clearIngredients" class="ui gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                            <i class="red trash icon"></i>
+                                        </button>
+                                    </div>
                                 </x-slot>
                             </x-title-and-buttons>
 
@@ -75,12 +91,16 @@
                                                             <div class="text-sm text-gray-500">{{ $ingredient['code'] }}</div>
                                                         </div>
                                                         {{-- inputs --}}
-                                                        <div class="field flex items-center">
-                                                            <x-input-drop inputModel="amount.{{ $key }}" placeholder="sections/recipes.amount" inputType="number" class="ui small input"
-                                                                selectModel="unit.{{ $key }}" :selectData="$ingredients[$key]['units']" 
-                                                                selectValue="id" selectText="name" selectPlaceholder="{{ __('sections/units.unit') }}" />
-                                                                
-                                                        </div>
+                                                        @if ( ! $locked)
+                                                            <div class="field flex items-center">
+                                                                {{-- {{ $amounts[$key] }} --}}
+                                                                <x-input-drop inputModel="amounts.{{ $key }}" placeholder="sections/recipes.amount" inputType="number" class="ui small input"
+                                                                    selectModel="unit.{{ $key }}" :selectData="$ingredients[$key]['units']" 
+                                                                    selectValue="id" selectText="name" selectPlaceholder="{{ __('sections/units.unit') }}" />
+                                                            </div>
+                                                        @else
+                                                            kapalı
+                                                        @endif
                                                     </div>
                                                     
                                                     <button wire:click.prevent="removeIngredient({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">

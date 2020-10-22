@@ -77,8 +77,15 @@ class Product extends Model
 
     public function getRecipeIngredients()
     {
-        if($this->recipe) {
-            return $this->recipe->ingredients->first();
+        if($this->recipe()->exists() && $this->recipe->ingredients()->exists()) {
+            foreach($this->recipe->ingredients as $ingredient) {
+                $ingredients[] = $ingredient;
+                $amounts[] = $ingredient->pivot->amount;
+                // $units[] = $ingredient->pivot->unit;
+            }
+            $array['ingredients'] = $ingredients;
+            $array['amounts'] = $amounts;
+            return $array;
         }
     }
     

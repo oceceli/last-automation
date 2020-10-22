@@ -7,7 +7,7 @@ use Livewire\Component;
 class Form extends Component
 {
 
-    public $success;
+    public $success = false;
 
     public $model;
 
@@ -21,7 +21,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->success = false;
+        // $this->success = false;
     }
 
     public function render()

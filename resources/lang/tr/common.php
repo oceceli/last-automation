@@ -8,6 +8,7 @@ return [
 
     'date' => 'Tarih',
     'add_new' => 'Yeni Ekle',
+    'edit' => 'Düzenle',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
     'saved' => 'Kaydedildi',

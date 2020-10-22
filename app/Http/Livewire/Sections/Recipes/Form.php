@@ -34,8 +34,17 @@ class Form extends BaseForm
      * Refers to ingredient cards, called by indexes
      */
     public $ingredients = [];
-    public $amount = [];
-    public $unit = [];
+    public $amounts = [];
+    public $units = [];
+
+
+    public $locked;
+
+    
+    public function mount()
+    {
+        //
+    }
 
 
     /**
@@ -52,15 +61,14 @@ class Form extends BaseForm
             $this->create();
             $this->syncIngredients($this->created);
         }
-
     }
+
 
     /**
      * Whenever recipe_id attribute updated
      */
     public function updatedProductId($id)
     {
-        $this->reset();
         $this->selectedProduct = $this->producibleProducts->find($id);
         // $this->selectedProduct = Product::find($id);
 
@@ -74,11 +82,31 @@ class Form extends BaseForm
 
         // is selected product already have ingredients
         if($this->selectedProduct->getRecipeIngredients()) {
-            $this->ingredients[] = $this->selectedProduct->getRecipeIngredients();
+            $this->ingredients = $this->selectedProduct->getRecipeIngredients()['ingredients'];
+            $this->amounts = $this->selectedProduct->getRecipeIngredients()['amounts'];
         }
-
+        
+        if($this->selectedProduct->recipe) {
+            $this->locked = true;
+        }
     }
 
+    /**
+     * Just before product_id is updated
+     */
+    public function updatingProductId()
+    {
+        // Clear the forms
+        $this->reset();
+    }
+
+    /**
+     * Unlocks the form for editing
+     */
+    public function unlock()
+    {
+        $this->locked = false;
+    }
 
     /**
      * Ingredients add and remove ********************
@@ -86,12 +114,15 @@ class Form extends BaseForm
     public function addIngredient($ingredient)
     {
         if( ! in_array($ingredient, $this->ingredients))
-            $this->ingredients[] = $ingredient;
+            $this->ingredients[] = $ingredient;        
     }
 
     public function removeIngredient($key)
     {
         unset($this->ingredients[$key]);
+        $this->ingredients = array_values($this->ingredients); // reorder index
+        unset($this->amounts[$key]);
+        $this->amounts = array_values($this->amounts);
     }
 
     public function clearIngredients()
@@ -126,11 +157,34 @@ class Form extends BaseForm
 
     public function syncIngredients($recipe)
     {
-        array_map(function($ingredient, $amount, $unit) use ($recipe){
-            $recipe->ingredients()->attach($ingredient['id'], ['amount' => $amount]);
-        }, $this->ingredients, $this->amount, $this->unit);
+        $ingredients = $this->ingredients;
+        $amounts = $this->amounts;
+        $units = $this->units;
+
+        $IDs = [];
+        $pivot = [];
+        for($i = 0; $i < sizeof($ingredients); $i++) {
+            $IDs[] = $ingredients[$i]['id'];
+            $pivot[] = ['amount' => $amounts[$i]];
+        }
+        $recipe->ingredients()->sync(array_combine($IDs, $pivot));
+
+        // for($i = 0; $i < sizeof($ingredients); $i++) {
+        //     $recipe->ingredients()->sync([$ingredients[$i]['id'] => ['amount' => $amounts[$i]]]);
+        // }
+        // array_map(function($ingredient, $amount, $unit) use ($recipe){
+        //     $recipe->ingredients()->sync([$ingredient['id'] => ['amount' => $amount]]);
+        // }, $this->ingredients, $this->amount, $this->unit);
     }
 
+    // $user->roles()->sync([ 
+    //     1 => ['expires' => true],
+    //     2 => ['expires' => false],
+    // ]);
+
+    /**
+     * Produce a random recipe unique code
+     */
     public function random()
     {
         $string = $this->code;
