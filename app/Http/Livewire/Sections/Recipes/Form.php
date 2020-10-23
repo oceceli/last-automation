@@ -43,7 +43,7 @@ class Form extends BaseForm
     
     public function mount()
     {
-        //
+
     }
 
 
@@ -52,6 +52,7 @@ class Form extends BaseForm
      */
     public function submit()
     {
+        $this->emit('toast');
         // if it already saved in database, just update it
         if($recipe = $this->model::where('product_id', $this->product_id)->first()) {
             $this->update($recipe);

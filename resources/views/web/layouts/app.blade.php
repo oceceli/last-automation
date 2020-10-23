@@ -74,6 +74,11 @@
         @stack('scripts')
 
         @livewireScripts
+
+        <livewire:tools.toaster />
+
+
+        
         
     </body>
 </html>
