@@ -52,7 +52,7 @@ class Form extends BaseForm
      */
     public function submit()
     {
-        $this->emit('toast');
+        $this->emit('toast', 'Hata!', 'Kayıt başarısız oldu!', 'success');
         // if it already saved in database, just update it
         if($recipe = $this->model::where('product_id', $this->product_id)->first()) {
             $this->update($recipe);
@@ -162,6 +162,9 @@ class Form extends BaseForm
         $amounts = $this->amounts;
         $units = $this->units;
 
+        if(! (sizeof($ingredients) == sizeof($amounts))) {
+            //
+        }
         $IDs = [];
         $pivot = [];
         for($i = 0; $i < sizeof($ingredients); $i++) {
@@ -169,19 +172,7 @@ class Form extends BaseForm
             $pivot[] = ['amount' => $amounts[$i]];
         }
         $recipe->ingredients()->sync(array_combine($IDs, $pivot));
-
-        // for($i = 0; $i < sizeof($ingredients); $i++) {
-        //     $recipe->ingredients()->sync([$ingredients[$i]['id'] => ['amount' => $amounts[$i]]]);
-        // }
-        // array_map(function($ingredient, $amount, $unit) use ($recipe){
-        //     $recipe->ingredients()->sync([$ingredient['id'] => ['amount' => $amount]]);
-        // }, $this->ingredients, $this->amount, $this->unit);
     }
-
-    // $user->roles()->sync([ 
-    //     1 => ['expires' => true],
-    //     2 => ['expires' => false],
-    // ]);
 
     /**
      * Produce a random recipe unique code

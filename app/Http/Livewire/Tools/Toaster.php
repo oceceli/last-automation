@@ -9,25 +9,72 @@ class Toaster extends Component
 
     protected $listeners = ['toast' => 'set'];
 
-    public $title;
-    public $message;
-    public $type;
-    public $position;
-    public $pbpos;
+    public $icon;
+    public $class;
+    public $classProgress;
+    public $showMethod;
 
-    public function mount($message = "Kayıt işlemi başarılı oldu...", $title = "Başarılı", 
-        $position = 'bottom right', $type = 'secondary', $pbpos = 'bottom')
-    {
-        $this->message = $message;
-        $this->type = $type;
-        $this->position = $position;
-        $this->title = $title;
-    }
 
-    public function set()
+    public $types = [
+        'success' => [
+            'icon' => 'checkmark',
+            'class' => 'success',
+            'classProgress' => 'success',
+            'showMethod' => 'scale',
+        ],
+        'warning' => [
+            'icon' => 'warning',
+            'class' => 'warning',
+            'classProgress' => 'warning',
+            'showMethod' => 'shake',
+        ],
+        'error' => [
+            'icon' => 'times',
+            'class' => 'error',
+            'classProgress' => 'error',
+            'showMethod' => 'shake',
+        ],
+        'info' => [
+            'icon' => 'info',
+            'class' => 'secondary',
+            'classProgress' => 'teal',
+            'showMethod' => 'slide left',
+        ],
+    ];
+
+    // public $type;
+
+    public function set($title, $message, $type = null, $icon = 'info', $class = 'white', $classProgress = 'red', $showImage = null, $position = 'bottom right', $closeIcon = false, $showMethod = 'scale')
     {
-        $this->dispatchBrowserEvent('stamp-toast');
+
+        if($type && array_key_exists($type, $this->types)) {
+            foreach($this->types[$type] as $key => $value) {
+                $this->$key = $value;
+            }
+        } else {
+            $this->icon = $icon;
+            $this->class = $class;
+            $this->classProgress = $classProgress;
+            $this->showMethod = $showMethod;
+        }
+
+        
+        $this->dispatchBrowserEvent('stamp-toast', [
+            'title' => __($title), 
+            'message' => __($message), 
+            'showImage' => $showImage,
+            
+            'icon' => $this->icon, 
+            'class' => $this->class, 
+            'classProgress' => $this->classProgress, 
+            'showMethod' => $this->showMethod,
+            
+            'position' => $position, 
+            'closeIcon' => $closeIcon, 
+        ]);
+
     }
+    
 
     public function render()
     {

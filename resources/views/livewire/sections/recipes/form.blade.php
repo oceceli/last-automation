@@ -12,7 +12,7 @@
                 </div>
             </div>
         @endif
-        <form class="ui form" wire:submit.prevent="submit" wire:loading.class="loading">
+        <form class="ui form" wire:submit.prevent="submit" >
             <div class="ui raised teal padded segment">
                 <div class="equal width fields pb-4">
                     <div wire:ignore class="required field">
@@ -162,20 +162,6 @@
                 
             </div> {{-- segment ending --}}
             
-            <div>
-                @if ($success)
-                    <div class="ui positive icon message">
-                        <i class="checkmark  icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                <p>{{ __('common.saved_successfully') }}</p>
-                            </div>
-                            <p>{{ __('common.saved_successfully') }}</p>
-                        </div>
-                    </div>
-                @endif
-                {{-- <hr> --}}
-            </div>
 
             <x-form-buttons />
             

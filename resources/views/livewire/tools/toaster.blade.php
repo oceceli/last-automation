@@ -9,20 +9,46 @@
 
 
 <script>
-    // Livewire.on('fireToast', function ()  {
-    window.addEventListener('stamp-toast', function () {
+    window.addEventListener('stamp-toast', function (event) {
         $('body')
         .toast({
-            title: '{{ $title }}',
-            message: '{{ $message }}',
-            showProgress: '{{ $pbpos }}',
-            classProgress: 'teal',
-            class: '{{ $type }}',
-            position: '{{ $position }}',
-        });
-    });
-    
-    // });
+            title: event.detail.title,
+            message: event.detail.message,
 
-        
+            showProgress: 'bottom',
+            classProgress: event.detail.classProgress,
+
+            minDisplayTime: 3000,
+            displayTime: 'auto',
+
+            showIcon: event.detail.icon,
+
+            closeIcon: event.detail.closeIcon,
+            closeOnClick: false,
+
+            class: event.detail.class,
+            position: event.detail.position,
+
+            transition: {
+                showMethod   : event.detail.showMethod,
+                showDuration : 500,
+                hideMethod   : 'fade left',
+                hideDuration : 500,
+                closeEasing  : 'easeOutCubic'
+            },
+
+            showImage: event.detail.showImage,
+            classImage: 'avatar', // mini, tiny, small, avatar
+
+            // classActions: 'left',
+            // actions: [
+            //     {
+            //     text    : 'Wait',
+            //     class   : 'red',
+            //     icon    : 'exclamation',
+            //     click   : function(){}
+            //     },
+            // ],
+        });
+    });        
 </script>
