@@ -1,7 +1,7 @@
 <?php 
 
 return [
-    'unit' => 'birim',
+    'unit' => 'Birim',
     'units' => 'ürününe birim tanımla',
     'new_unit_name' => 'yeni birim adı',
 

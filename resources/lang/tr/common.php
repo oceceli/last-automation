@@ -9,9 +9,25 @@ return [
     'date' => 'Tarih',
     'add_new' => 'Yeni Ekle',
     'edit' => 'Düzenle',
+    'remove' => 'Kaldır',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
-    'saved' => 'Kaydedildi',
+    // 'saved' => 'Kaydedildi',
+
+
+    'saved' => [
+        'title' => 'Başarılı',
+        'standard' => 'Başarıyla kaydedildi!',
+        'changes' => 'Değişiklikler kaydedildi',
+    ],
+
+    'error' => [
+        'title' => 'Hata',
+        'body' => 'Bir hata oluştu!',
+    ],
+
+    'attention' => 'Dikkat!',
+    'somethings_missing' => 'Bir şeyler eksik!',
 
 
     // Mostly Sidebar ----

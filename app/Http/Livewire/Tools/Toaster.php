@@ -24,7 +24,7 @@ class Toaster extends Component
         ],
         'warning' => [
             'icon' => 'warning',
-            'class' => 'warning',
+            'class' => 'orange',
             'classProgress' => 'warning',
             'showMethod' => 'shake',
         ],
@@ -42,7 +42,6 @@ class Toaster extends Component
         ],
     ];
 
-    // public $type;
 
     public function set($title, $message, $type = null, $icon = 'info', $class = 'white', $classProgress = 'red', $showImage = null, $position = 'bottom right', $closeIcon = false, $showMethod = 'scale')
     {
@@ -58,10 +57,9 @@ class Toaster extends Component
             $this->showMethod = $showMethod;
         }
 
-        
         $this->dispatchBrowserEvent('stamp-toast', [
-            'title' => __($title), 
-            'message' => __($message), 
+            'title' => ucfirst(__($title)), 
+            'message' => ucfirst(__($message)), 
             'showImage' => $showImage,
             
             'icon' => $this->icon, 

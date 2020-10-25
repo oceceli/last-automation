@@ -17,7 +17,11 @@ class CreateProductRecipeTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('recipe_id');
+
+            // attachments
+            $table->integer('unit_id');
             $table->integer('amount');
+            
             $table->timestamps();
         });
     }

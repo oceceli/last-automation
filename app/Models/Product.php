@@ -81,10 +81,11 @@ class Product extends Model
             foreach($this->recipe->ingredients as $ingredient) {
                 $ingredients[] = $ingredient;
                 $amounts[] = $ingredient->pivot->amount;
-                // $units[] = $ingredient->pivot->unit;
+                $units[] = $ingredient->pivot->unit_id;
             }
             $array['ingredients'] = $ingredients;
             $array['amounts'] = $amounts;
+            $array['units'] = $units;
             return $array;
         }
     }

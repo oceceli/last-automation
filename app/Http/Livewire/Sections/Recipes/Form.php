@@ -6,6 +6,7 @@ use App\Http\Livewire\Form as BaseForm;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
+use Exception;
 use \Illuminate\Support\Str;
 
 class Form extends BaseForm
@@ -35,35 +36,45 @@ class Form extends BaseForm
      */
     public $ingredients = [];
     public $amounts = [];
-    public $units = [];
+    public $units = []; //ids
 
 
     public $locked;
 
-    
-    public function mount()
-    {
-
-    }
-
+   
 
     /**
      * Submit form and attach ingredients to the recipe
      */
     public function submit()
     {
-        $this->emit('toast', 'Hata!', 'Kayıt başarısız oldu!', 'success');
+        // product should be selected to continue 
+        if( ! $this->product_id) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.please_select_a_product_to_create_recipe', 'warning');
+        }
+
+        // A recipe with no-ingredients making no sense. 
+        if( ! $this->ingredients) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.ingredients_should_be_specified_to_save', 'warning');
+        }
+
+        // count of ingredient cards should be the same with amounts and units arrays
+        if(sizeof($this->ingredients) > sizeof($this->amounts) || sizeof($this->ingredients) > sizeof($this->units)) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.fill_in_amount_and_unit_correctly', 'warning');
+        }
+
         // if it already saved in database, just update it
         if($recipe = $this->model::where('product_id', $this->product_id)->first()) {
             $this->update($recipe);
-            $this->syncIngredients($recipe);
-        } 
-        else {
-            $this->create();
-            $this->syncIngredients($this->created);
+        } else {
+            $recipe = $this->create();
         }
+
+        // finally execute syncing operation
+        $this->syncIngredients($recipe);
     }
 
+    
 
     /**
      * Whenever recipe_id attribute updated
@@ -85,6 +96,7 @@ class Form extends BaseForm
         if($this->selectedProduct->getRecipeIngredients()) {
             $this->ingredients = $this->selectedProduct->getRecipeIngredients()['ingredients'];
             $this->amounts = $this->selectedProduct->getRecipeIngredients()['amounts'];
+            $this->units = $this->selectedProduct->getRecipeIngredients()['units'];
         }
         
         if($this->selectedProduct->recipe) {
@@ -124,6 +136,8 @@ class Form extends BaseForm
         $this->ingredients = array_values($this->ingredients); // reorder index
         unset($this->amounts[$key]);
         $this->amounts = array_values($this->amounts);
+        unset($this->units[$key]);
+        $this->units = array_values($this->units);
     }
 
     public function clearIngredients()
@@ -161,17 +175,20 @@ class Form extends BaseForm
         $ingredients = $this->ingredients;
         $amounts = $this->amounts;
         $units = $this->units;
-
-        if(! (sizeof($ingredients) == sizeof($amounts))) {
-            //
-        }
+        
+        
         $IDs = [];
         $pivot = [];
         for($i = 0; $i < sizeof($ingredients); $i++) {
             $IDs[] = $ingredients[$i]['id'];
-            $pivot[] = ['amount' => $amounts[$i]];
+            $pivot[] = ['amount' => $amounts[$i], 'unit_id' => $units[$i]];
         }
-        $recipe->ingredients()->sync(array_combine($IDs, $pivot));
+        try {
+            $recipe->ingredients()->sync(array_combine($IDs, $pivot));
+        } catch (\Throwable $th) {
+            $this->emit('toast', 'common.error.title', 'sections/recipes.an_error_occurred_while_adding_ingredients', 'error');
+        }
+        $this->emit('toast', 'common.saved.title', 'common.saved.changes', 'success');
     }
 
     /**

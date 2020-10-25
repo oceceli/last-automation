@@ -43,10 +43,7 @@ class Form extends Component
      */
     public function submit()
     {
-        // $validated = $this->validation(); // sil
-
         return $this->create();
-
     }
 
     /**
@@ -56,6 +53,7 @@ class Form extends Component
     {
         if($this->created = $this->model::create($this->validation())) {
             $this->success = true;
+            return $this->created;
         }
     }
 

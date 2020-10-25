@@ -12,7 +12,7 @@
                 </div>
             </div>
         @endif
-        <form class="ui form" wire:submit.prevent="submit" >
+        <form class="ui form" wire:submit.prevent="submit">
             <div class="ui raised teal padded segment">
                 <div class="equal width fields pb-4">
                     <div wire:ignore class="required field">
@@ -21,6 +21,9 @@
                         @error('product_id')
                             <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
                         @enderror
+                        @if ($this->producibleProducts->count() <= 0)
+                            <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> oluşturun...</div>
+                        @endif
                     </div>
                     @if ($locked)
                         <div class="required field disabled">
@@ -53,10 +56,10 @@
                             <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
                                 <x-slot name="buttons">
                                     <div class="ui small icon buttons">
-                                        <button wire:click.prevent @click="materials = true" class="ui teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                        <button wire:click.prevent @click="materials = true" class="ui teal button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
                                             <i class="plus icon"></i>
                                         </button>
-                                        <button wire:click.prevent="clearIngredients" class="ui gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                        <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
                                             <i class="red trash icon"></i>
                                         </button>
                                     </div>
@@ -95,15 +98,20 @@
                                                             <div class="field flex items-center">
                                                                 {{-- {{ $amounts[$key] }} --}}
                                                                 <x-input-drop inputModel="amounts.{{ $key }}" placeholder="sections/recipes.amount" inputType="number" class="ui small input"
-                                                                    selectModel="unit.{{ $key }}" :selectData="$ingredients[$key]['units']" 
+                                                                    selectModel="units.{{ $key }}" :selectData="$ingredients[$key]['units']" 
                                                                     selectValue="id" selectText="name" selectPlaceholder="{{ __('sections/units.unit') }}" />
                                                             </div>
                                                         @else
-                                                            kapalı
+                                                            <div class="flex gap-2 p-2 px-5 justify-between bg-indigo-100 shadow-lg  rounded">
+                                                                <div class="font-bold text-red-600">{{ $amounts[$key] }}</div>
+                                                                <div class="font-bold">{{ $ingredient['units']->find($units[$key])->name }}</div>
+                                                                <div><i class="green vial icon"></i></div>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                     
-                                                    <button wire:click.prevent="removeIngredient({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
+                                                    <button wire:click.prevent="removeIngredient({{ $key }})" :class="{'hidden': $wire.locked}"
+                                                            class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none hover:opacity-100 opacity-50">
                                                         <i class="red shadow rounded-full cancel icon"></i>
                                                     </button>
                                                     
@@ -160,10 +168,10 @@
                     
                 @endif
                 
+                <x-form-buttons />
             </div> {{-- segment ending --}}
             
 
-            <x-form-buttons />
             
         </form>
         
