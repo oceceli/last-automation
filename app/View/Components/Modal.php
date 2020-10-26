@@ -23,7 +23,7 @@ class Modal extends Component
      *
      * @return void
      */
-    public function __construct($header = '', $contentClass = '', $transition = 'fly up', $blurring = false, $inverted = false)
+    public function __construct($header = '', $contentClass = '', $transition = 'fly up', $blurring = true, $inverted = false)
     {
         $this->header = $header;
         $this->contentClass = $contentClass;

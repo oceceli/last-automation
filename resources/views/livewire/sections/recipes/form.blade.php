@@ -125,47 +125,51 @@
                                         <x-slot name="header">
                                             adsf
                                         </x-slot>
-                                        @foreach ($this->categories as $category)
-                                            <div class="relative" x-data="{open: false}">
-                                                <div class="absolute w-full h-9 cursor-pointer text-right" @click="open = !open">
-                                                    <i :class="{'caret down text-teal-800 icon': open, 'caret right icon': !open}"></i>
-                                                </div>
-                                                <div class="ui list">
-                                                    <div class="item">
-                                                        <i class="layer group icon"></i>
-                                                        <div class="content">
-                                                            <div class="header">{{ $category->name }}</div>
-                                                            <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
-                                                            @foreach ($category->unproducibleProducts as $key => $product)
-                                                                <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
-                                                                                                            x-transition:enter-start="opacity-0 transform scale-60" 
-                                                                                                            x-transition:enter-end="opacity-100 transform scale-100" 
-                                                                                                            x-transition:leave="transition ease-in duration-100" 
-                                                                                                            x-transition:leave-start="opacity-100 transform scale-100" 
-                                                                                                            x-transition:leave-end="opacity-0 transform scale-60">
-                                                                    <div class="item" wire:click.prevent="addIngredient({{ $product }})">
-                                                                        <i class="box icon"></i>
-                                                                        <div class="flex justify-between">
-                                                                            <div class="content">
-                                                                                <div class="header">{{ $product->name }}</div>
-                                                                                <div class="description">{{ $product->code }}</div>
-                                                                            </div>
-
-                                                                            @if (in_array($product['id'], array_column($ingredients, 'id')))
-                                                                                <div class="text-green-600 font-bold">
-                                                                                    <span>{{ __('common.added' )}}</span>
-                                                                                    <i class="checkmark icon"></i>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
+                                        <div class="border p-2 rounded-md bg-indigo-50 border-teal-300">
+                                            <div class="p-3 px-5 rounded-md shadow-lg border border-teal-200 bg-teal-100">
+                                                @foreach ($this->categories as $category)
+                                                    <div class="relative" x-data="{open: false}">
+                                                        <div class="absolute w-full h-9 cursor-pointer text-right" @click="open = !open">
+                                                            <i :class="{'caret down text-teal-800 icon': open, 'caret right icon': !open}"></i>
                                                         </div>
+                                                        <div class="ui list">
+                                                            <div class="item">
+                                                                <i class="layer group icon"></i>
+                                                                <div class="content">
+                                                                    <div class="header">{{ $category->name }}</div>
+                                                                    <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                                                                    @foreach ($category->unproducibleProducts as $key => $product)
+                                                                        <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
+                                                                                                                    x-transition:enter-start="opacity-0 transform scale-60" 
+                                                                                                                    x-transition:enter-end="opacity-100 transform scale-100" 
+                                                                                                                    x-transition:leave="transition ease-in duration-100" 
+                                                                                                                    x-transition:leave-start="opacity-100 transform scale-100" 
+                                                                                                                    x-transition:leave-end="opacity-0 transform scale-60">
+                                                                            <div class="item" wire:click.prevent="addIngredient({{ $product }})">
+                                                                                <i class="box icon"></i>
+                                                                                <div class="flex justify-between">
+                                                                                    <div class="content">
+                                                                                        <div class="header">{{ $product->name }}</div>
+                                                                                        <div class="description">{{ $product->code }}</div>
+                                                                                    </div>
+    
+                                                                                    @if (in_array($product['id'], array_column($ingredients, 'id')))
+                                                                                        <div class="text-green-600 font-bold">
+                                                                                            <span>{{ __('common.added' )}}</span>
+                                                                                            <i class="checkmark icon"></i>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>  
                                                     </div>
-                                                </div>  
+                                                @endforeach
                                             </div>
-                                        @endforeach
+                                        </div>
                                     </x-modal>
 
 
