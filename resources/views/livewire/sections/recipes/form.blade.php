@@ -50,7 +50,8 @@
                     @if ( ! $baseUnit)
                         Bu ürüne birim tanımlanmamış...
                     @else
-                        <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}">
+                        {{-- <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}"> --}}
+                        <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{materials : @entangle('modal')}">
                             
                             {{-- BAŞLIK VE BUTONLAR --}}
                             <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
@@ -119,18 +120,15 @@
                                             @endforeach
                                         @endif
                                     </div>
-
-                                    {{-- MALZEMELER BÖLÜMÜ - MATERIALS FIXED --}}
-                                    <x-modal class="tiny" x-show="materials">
-                                        <x-slot name="header">
-                                            adsf
-                                        </x-slot>
-                                        <div class="border p-2 rounded-md bg-indigo-50 border-teal-300">
+                                    {{-- MALZEMELER BÖLÜMÜ - MODAL --}}
+                                    <x-modal class="mini" :active="$modal">
+                                        <x-page-title icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
+                                        <div class="border p-2 rounded-md bg-indigo-50 border-teal-300 border-dashed">
                                             <div class="p-3 px-5 rounded-md shadow-lg border border-teal-200 bg-teal-100">
                                                 @foreach ($this->categories as $category)
-                                                    <div class="relative" x-data="{open: false}">
-                                                        <div class="absolute w-full h-9 cursor-pointer text-right" @click="open = !open">
-                                                            <i :class="{'caret down text-teal-800 icon': open, 'caret right icon': !open}"></i>
+                                                    <div class="relative" x-data="{caret: false}">
+                                                        <div class="absolute w-full h-9 cursor-pointer text-right" @click="caret = !caret">
+                                                            <i :class="{'caret down text-teal-800 icon': caret, 'caret right icon': !caret}"></i>
                                                         </div>
                                                         <div class="ui list">
                                                             <div class="item">
@@ -139,7 +137,7 @@
                                                                     <div class="header">{{ $category->name }}</div>
                                                                     <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
                                                                     @foreach ($category->unproducibleProducts as $key => $product)
-                                                                        <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
+                                                                        <div class="ui animated list selection" x-show="caret" x-transition:enter="transition ease-out duration-500" 
                                                                                                                     x-transition:enter-start="opacity-0 transform scale-60" 
                                                                                                                     x-transition:enter-end="opacity-100 transform scale-100" 
                                                                                                                     x-transition:leave="transition ease-in duration-100" 

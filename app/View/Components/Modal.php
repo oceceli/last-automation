@@ -11,6 +11,7 @@ class Modal extends Component
     public $buttons = ""; // slot 
     public $contentClass;
 
+    public $active;
 
     // javascript part
     public $blurring;
@@ -23,10 +24,12 @@ class Modal extends Component
      *
      * @return void
      */
-    public function __construct($header = '', $contentClass = '', $transition = 'fly up', $blurring = true, $inverted = false)
+    public function __construct($header = '', $contentClass = '', $active = false, $transition = 'fly up', $blurring = true, $inverted = false)
     {
         $this->header = $header;
         $this->contentClass = $contentClass;
+
+        $this->active = $active;
 
         $this->blurring = $blurring;
         $this->inverted = $inverted;

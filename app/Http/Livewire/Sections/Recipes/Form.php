@@ -38,6 +38,7 @@ class Form extends BaseForm
     public $amounts = [];
     public $units = []; //ids
 
+    public $modal = true;
 
     public $locked;
 

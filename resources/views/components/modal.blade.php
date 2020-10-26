@@ -14,7 +14,6 @@
     @endif
 </div>
 
-
 <script>
     $('.ui.modal')
     .modal({

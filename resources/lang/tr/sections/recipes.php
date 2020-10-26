@@ -13,6 +13,7 @@ return [
     'includes' => 'içerisinde',
 
     'add_ingredients' => 'İçerik Ekle',
+    'add_recipe_ingredients' => 'Reçete içeriği ekleyin',
     'remove_ingredients' => 'Tüm içeriği kaldır',
 
 
