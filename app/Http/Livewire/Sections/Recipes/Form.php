@@ -97,11 +97,12 @@ class Form extends BaseForm
             $this->ingredients = $this->selectedProduct->getRecipeIngredients()['ingredients'];
             $this->amounts = $this->selectedProduct->getRecipeIngredients()['amounts'];
             $this->units = $this->selectedProduct->getRecipeIngredients()['units'];
+
         }
         
         if($this->selectedProduct->recipe) {
             $this->locked = true;
-        }
+        } else $this->locked = false;
     }
 
     /**
@@ -124,25 +125,33 @@ class Form extends BaseForm
     /**
      * Ingredients add and remove ********************
      */
-    public function addIngredient($ingredient)
+    public function addIngredient($selectedIngredient)
     {
-        if( ! in_array($ingredient, $this->ingredients))
-            $this->ingredients[] = $ingredient;        
+        $ingredientIDs = collect($this->ingredients)->pluck('id')->toArray();
+        if( ! in_array($selectedIngredient['id'], $ingredientIDs))
+            $this->ingredients[] = $selectedIngredient;   
     }
 
     public function removeIngredient($key)
     {
-        unset($this->ingredients[$key]);
-        $this->ingredients = array_values($this->ingredients); // reorder index
-        unset($this->amounts[$key]);
-        $this->amounts = array_values($this->amounts);
-        unset($this->units[$key]);
-        $this->units = array_values($this->units);
+        if(count($this->ingredients) == 1) {
+            $this->emit('toast', 'Sonuncu', 'Son içeriği siliyorsunuz'); // prompt
+        }
+        else {
+            unset($this->ingredients[$key]);
+            $this->ingredients = array_values($this->ingredients); // reorder index
+            unset($this->amounts[$key]);
+            $this->amounts = array_values($this->amounts);
+            unset($this->units[$key]);
+            $this->units = array_values($this->units);
+        }
     }
 
     public function clearIngredients()
     {
         $this->ingredients = [];
+        $this->amounts = [];
+        $this->units = [];
     }
     /************************************************ */
 

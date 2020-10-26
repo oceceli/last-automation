@@ -76,7 +76,7 @@
         @livewireScripts
 
         <livewire:tools.toaster />
-
+        {{-- <livewire:tools.modal /> --}}
 
         
         

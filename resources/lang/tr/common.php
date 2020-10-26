@@ -9,6 +9,7 @@ return [
     'date' => 'Tarih',
     'add_new' => 'Yeni Ekle',
     'edit' => 'Düzenle',
+    'added' => 'Eklendi',
     'remove' => 'Kaldır',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
