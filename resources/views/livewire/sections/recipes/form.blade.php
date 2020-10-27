@@ -1,5 +1,9 @@
 <div>
-    <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
+    @if (isset($recipe))
+        <x-page-title icon="mortar pestle" header="common.edit" subheader="Şu reçeteyi düzenle" />
+    @else
+        <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
+    @endif
     {{-- <div class="p-6 bg-white bg-opacity-25 shadow rounded-lg "> --}}
 
         {{-- Locked butons --}}
@@ -15,16 +19,19 @@
         <form class="ui form" wire:submit.prevent="submit">
             <div class="ui raised teal padded segment">
                 <div class="equal width fields pb-4">
-                    <div wire:ignore class="required field">
-                        <label>{{ __('sections/recipes.recipe_product') }}</label>
-                        <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
-                        @error('product_id')
-                            <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
-                        @enderror
-                        @if ($this->producibleProducts->count() <= 0)
-                            <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> oluşturun...</div>
-                        @endif
-                    </div>
+                    @if ( !isset($recipe))
+                        <div wire:ignore class="required field">
+                            <label>{{ __('sections/recipes.recipe_product') }}</label>
+                            <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
+                            @error('product_id')
+                                <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+                            @enderror
+                            @if ($this->producibleProducts->count() <= 0)
+                                <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> oluşturun...</div>
+                            @endif
+                        </div>
+                    @endif
+
                     @if ($locked)
                         <div class="required field disabled">
                     @else
@@ -51,13 +58,13 @@
                         Bu ürüne birim tanımlanmamış...
                     @else
                         {{-- <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}"> --}}
-                        <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{materials : @entangle('modal')}">
+                        <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{materials : false}">
                             
                             {{-- BAŞLIK VE BUTONLAR --}}
                             <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
                                 <x-slot name="buttons">
                                     <div class="ui small icon buttons">
-                                        <button wire:click.prevent @click="materials = true" class="ui teal button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                        <button wire:click.prevent @click="materials = true" class="ui teal button" id="button1" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
                                             <i class="plus icon"></i>
                                         </button>
                                         <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
@@ -120,10 +127,11 @@
                                             @endforeach
                                         @endif
                                     </div>
+
                                     {{-- MALZEMELER BÖLÜMÜ - MODAL --}}
-                                    <x-modal class="mini" :active="$modal">
+                                    <div x-show="materials" @click.away="materials = false" class="fixed top-0 right-0 bottom-0 z-10 overflow-x-hidden p-3 bg-white w-3/12 shadow-xl border-l border-teal-200">
                                         <x-page-title icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
-                                        <div class="border p-2 rounded-md bg-indigo-50 border-teal-300 border-dashed">
+                                        <div class=" border p-2 rounded-md bg-indigo-50 border-teal-300 border-dashed">
                                             <div class="p-3 px-5 rounded-md shadow-lg border border-teal-200 bg-teal-100">
                                                 @foreach ($this->categories as $category)
                                                     <div class="relative" x-data="{caret: false}">
@@ -168,23 +176,7 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                    </x-modal>
-
-
-
-                                    {{-- MALZEMELER BÖLÜMÜ - MATERIALS FIXED --}}
-                                    {{-- <div x-show="materials" @click.away="materials = false" class="rounded-lg w-4/12 bg-gray-50 h-96 shadow-lg fixed top-1/4 right-1/4 z-10">
-                                        <div class="overflow-x-hidden h-full p-3">
-                                            <div class="px-4 py-2 bg-white shadow-lg border rounded-lg">
-                                                
-
-                                                foreach burada idi
-
-
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
+                                    </div>
                                 </div>
                             </div>                
                         </div>

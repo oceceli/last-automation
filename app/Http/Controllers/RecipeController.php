@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\RecipeContract;
 use App\Http\Controllers\Traits\DefaultController;
+use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
@@ -36,5 +37,11 @@ class RecipeController extends Controller
     public function index()
     {
         return view('web.sections.recipes.index');
+    }
+
+    public function show($id)
+    {
+        $recipe = Recipe::find($id);
+        return view('web.sections.recipes.show', compact('recipe'));
     }
 }

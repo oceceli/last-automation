@@ -16,6 +16,12 @@ class Form extends BaseForm
     public $view = 'livewire.sections.recipes.form';
 
     /**
+     * Recipe_id comes as a prop, so it is read only mode
+     */
+    public $recipe;
+
+
+    /**
      * Recipe attributes
      */
     public $product_id;
@@ -36,13 +42,21 @@ class Form extends BaseForm
      */
     public $ingredients = [];
     public $amounts = [];
-    public $units = []; //ids
+    public $units = []; //unit ids actually
 
-    public $modal = true;
 
     public $locked;
 
-   
+   /**
+    * Decide if it's read-only mode
+    */
+    public function mount($recipe = null)
+    {
+        if(isset($recipe)) {
+            $this->product_id = $recipe->product->id;
+            $this->updatedProductId($recipe->product->id);
+        } 
+    }
 
     /**
      * Submit form and attach ingredients to the recipe

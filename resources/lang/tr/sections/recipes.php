@@ -7,6 +7,7 @@ return [
     'code' => 'Reçete Kodu',
     'recipe_product' => 'Reçetesi yazılacak ürün',
     'belongs_to' => 'Ait olduğu ürün',
+    'count_of_ingredients' => 'İçindekiler',
 
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',
