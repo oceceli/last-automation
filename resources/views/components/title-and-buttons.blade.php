@@ -8,12 +8,14 @@
             </div>
         </h4>
     </div>
-    <div class="pl-3 flex">
-        {{-- MALZEMELER BARINI AÇAN BUTON --}}
-        <div class="p-2 bg-white shadow-md border rounded-lg">
-            <div class="ui buttons">
-                {{ $buttons }}
+    @if ($buttons)
+        <div class="pl-3 flex">
+            {{-- MALZEMELER BARINI AÇAN BUTON --}}
+            <div class="p-2 bg-white shadow-md border rounded-lg">
+                <div class="ui buttons">
+                    {{ $buttons }}
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 </div>

@@ -50,12 +50,17 @@ class Form extends BaseForm
    /**
     * Decide if it's read-only mode
     */
-    public function mount($recipe = null)
+    public function mount($recipe = null, $locked = null)
     {
         if(isset($recipe)) {
             $this->product_id = $recipe->product->id;
             $this->updatedProductId($recipe->product->id);
-        } 
+        }
+
+        // locked attribute comes from edit blade
+        if(isset($locked)) {
+            $this->locked = $locked; 
+        }
     }
 
     /**
@@ -105,19 +110,19 @@ class Form extends BaseForm
         }
         
         // set baseUnit according to selected product
-        $this->baseUnit = $this->selectedProduct->getBaseUnit(); // title unit
+        $this->baseUnit = $this->selectedProduct->getBaseUnit(); // unit for shown in the title
 
         // is selected product already have ingredients
         if($this->selectedProduct->getRecipeIngredients()) {
+            $this->emit('toast', 'sections/recipes.has_recipe', __('sections/recipes.recipe_found_for', ['product' => $this->selectedProduct->name]), 'info'); // inform user about it
             $this->ingredients = $this->selectedProduct->getRecipeIngredients()['ingredients'];
             $this->amounts = $this->selectedProduct->getRecipeIngredients()['amounts'];
             $this->units = $this->selectedProduct->getRecipeIngredients()['units'];
-
         }
         
         if($this->selectedProduct->recipe) {
             $this->locked = true;
-        } else $this->locked = false;
+        } else $this->unlock();
     }
 
     /**
@@ -181,7 +186,7 @@ class Form extends BaseForm
         return Category::all();
     }
 
-    public function getProducibleProductsProperty()
+    public function getProducibleProductsProperty() 
     {
         return Product::where('producible', true)->get();
     }

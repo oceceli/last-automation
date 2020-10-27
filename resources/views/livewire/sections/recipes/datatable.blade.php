@@ -12,19 +12,37 @@
                     <th>{{ __('sections/recipes.code') }}</th>
                     <th>{{ __('sections/recipes.belongs_to') }}</th>
                     <th>{{ __('sections/recipes.count_of_ingredients') }}</th>
-                    <th>İşlemler</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $key => $recipe)
                     <tr>
                         <td class="right marked collapsing font-bold ">{{ $key+1 }}</td>
-                        <td class=""><a href="{{ route('recipes.show', ['recipe' => $recipe->id]) }}">{{ $recipe->code }}</a></td>
+                        <td class="collapsing">{{ $recipe->code }}</td>
                         <td class="">{{ $recipe->product->name }}</td>
                         <td class="">
-                            <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) '{{ $ingredient->name }}' @endforeach">{{ $recipe->ingredients->count() }}</span>
+                            <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) {{ $ingredient->name }} @endforeach">
+                                {{ __('sections/recipes.different_products', ['number' => $recipe->ingredients->count() ]) }}
+                            </span>
                         </td>
-                        <td>düzenle sil</td>
+                        <td class="collapsing">
+                            <div class="flex gap-4">
+                                <div data-tooltip="{{ __('common.detail') }}">
+                                    <a href="{{ route('recipes.show', ['recipe' => $recipe->id]) }}">
+                                        <i class="circular link blue eye icon"></i>
+                                    </a>
+                                </div>
+                                <div data-tooltip="{{ __('common.edit') }}">
+                                    <a href="{{ route('recipes.edit', ['recipe' => $recipe->id]) }}">
+                                        <i class="bordered orange pen alternate link circular icon"></i>
+                                    </a>
+                                </div>
+                                <div data-tooltip="{{ __('common.delete') }}">
+                                    <i wire:click.prevent="deleteRecipe({{ $recipe->id }})" class="bordered red eraser link circular inverted icon"></i>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

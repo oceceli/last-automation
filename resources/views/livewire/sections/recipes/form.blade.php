@@ -1,6 +1,10 @@
 <div>
     @if (isset($recipe))
-        <x-page-title icon="mortar pestle" header="common.edit" subheader="Şu reçeteyi düzenle" />
+        @if ($locked)
+            <x-page-title icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->name }} ürününe ait reçete" />
+        @else
+            <x-page-title icon="mortar pestle" header="common.edit" subheader="{{ __('sections/recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
+        @endif
     @else
         <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
     @endif
@@ -18,8 +22,10 @@
         @endif
         <form class="ui form" wire:submit.prevent="submit">
             <div class="ui raised teal padded segment">
-                <div class="equal width fields pb-4">
-                    @if ( !isset($recipe))
+                
+                {{-- Üst form alanı --}}
+                @if ( ! isset($recipe))
+                    <div class="equal width fields pb-4">
                         <div wire:ignore class="required field">
                             <label>{{ __('sections/recipes.recipe_product') }}</label>
                             <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
@@ -30,27 +36,41 @@
                                 <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> oluşturun...</div>
                             @endif
                         </div>
-                    @endif
-
-                    @if ($locked)
-                        <div class="required field disabled">
-                    @else
                         <div class="required field">
-                    @endif
-                        <label>{{ __('sections/recipes.code') }}</label>
-                        <div class="ui action input">
-                            <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
-                            <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
-                                <i class="icon random"></i>
-                                {{ __('sections/recipes.random_code') }}
-                            </button>
+                            <label>{{ __('sections/recipes.code') }}</label>
+                            <div class="ui action input">
+                                <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                                <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
+                                    <i class="icon random"></i>
+                                    {{ __('sections/recipes.random_code') }}
+                                </button>
+                            </div>
+                            
+                            @error('code')
+                                <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+                            @enderror
                         </div>
-                        
-                        @error('code')
-                            <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
-                        @enderror
                     </div>
-                </div>
+                @else
+                    @if ( ! $locked)
+                        <div class="field pb-4">
+                            <label>{{ __('sections/recipes.code') }}</label>
+                            <div class="ui action input">
+                                <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                                <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
+                                    <i class="icon random"></i>
+                                    {{ __('sections/recipes.random_code') }}
+                                </button>
+                            </div>
+                            
+                            @error('code')
+                                <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+                            @enderror
+                        </div>
+                    @endif
+                @endif
+                {{-- Üst form alanı --}}
+
                 
 
                 @if ($selectedProduct)
@@ -62,16 +82,18 @@
                             
                             {{-- BAŞLIK VE BUTONLAR --}}
                             <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
-                                <x-slot name="buttons">
-                                    <div class="ui small icon buttons">
-                                        <button wire:click.prevent @click="materials = true" class="ui teal button" id="button1" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
-                                            <i class="plus icon"></i>
-                                        </button>
-                                        <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
-                                            <i class="red trash icon"></i>
-                                        </button>
-                                    </div>
-                                </x-slot>
+                                @if ( ! $locked)
+                                    <x-slot name="buttons">
+                                        <div class="ui small icon buttons">
+                                            <button wire:click.prevent @click="materials = true" class="ui teal button" id="button1" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                                <i class="plus icon"></i>
+                                            </button>
+                                            <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                                <i class="red trash icon"></i>
+                                            </button>
+                                        </div>
+                                    </x-slot>
+                                @endif
                             </x-title-and-buttons>
 
                             <div class="shadow-inner relative">

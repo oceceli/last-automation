@@ -44,4 +44,10 @@ class RecipeController extends Controller
         $recipe = Recipe::find($id);
         return view('web.sections.recipes.show', compact('recipe'));
     }
+
+    public function edit($id)
+    {
+        $recipe = Recipe::find($id);
+        return view('web.sections.recipes.edit', compact('recipe'));
+    }
 }

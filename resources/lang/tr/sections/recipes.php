@@ -2,7 +2,7 @@
 
 return [
     'header' => 'Reçete Oluştur',
-    'subheader' => 'Üretim için reçete oluştur',
+    'subheader' => 'Üretim için reçete oluştur veya düzenle',
 
     'code' => 'Reçete Kodu',
     'recipe_product' => 'Reçetesi yazılacak ürün',
@@ -12,7 +12,11 @@ return [
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',
     'includes' => 'içerisinde',
-
+    'has_recipe' => 'Reçetesi var',
+    'recipe_found_for' => ':product ürününe ait reçete bulundu...',
+    
+    'edit_recipe_of' => ':product ürününe ait reçeteyi düzenle',
+    'different_products' => ':number içerik',
     'add_ingredients' => 'İçerik Ekle',
     'add_recipe_ingredients' => 'Reçete içeriği ekleyin',
     'remove_ingredients' => 'Tüm içeriği kaldır',

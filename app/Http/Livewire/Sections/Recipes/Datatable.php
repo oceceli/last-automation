@@ -13,5 +13,9 @@ class Datatable extends BaseDatatable
     public $model = Recipe::class;
 
 
+    public function deleteRecipe($id)
+    {
+        $this->model::find($id)->delete();
+    }
     
 }

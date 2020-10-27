@@ -11,15 +11,18 @@ class TitleAndButtons extends Component
 
     public $icon;
 
+    public $buttons; // prop
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title, $icon = "settings")
+    public function __construct($title, $icon = "settings", $buttons = null)
     {
         $this->title = $title;
         $this->icon = $icon;
+        $this->buttons = $buttons;
     }
 
     /**

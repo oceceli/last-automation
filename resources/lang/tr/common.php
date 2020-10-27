@@ -11,8 +11,12 @@ return [
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
     'remove' => 'Kaldır',
+    'delete' => 'Sil',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
+    'display' => 'Görüntüle',
+    'detail' => 'Detay',
+    'see_details' => 'Detayları gör',
     // 'saved' => 'Kaydedildi',
 
 
