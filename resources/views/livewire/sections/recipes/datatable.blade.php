@@ -39,7 +39,7 @@
                                     </a>
                                 </div>
                                 <div data-tooltip="{{ __('common.delete') }}">
-                                    <i wire:click.prevent="deleteRecipe({{ $recipe->id }})" class="bordered red eraser link circular inverted icon"></i>
+                                    <i wire:click.prevent="delete({{ $recipe->id }})" class="bordered red eraser link circular inverted icon"></i>
                                 </div>
                             </div>
                         </td>

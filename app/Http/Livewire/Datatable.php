@@ -94,4 +94,10 @@ class Datatable extends Component
 
         auth()->user()->setDatatablePerpage($value);
     }    
+
+
+    public function delete($id)
+    {
+        $this->model::find($id)->delete();
+    }
 }

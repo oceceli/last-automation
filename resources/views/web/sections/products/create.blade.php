@@ -1,5 +1,5 @@
 <x-app-layout>
-	@livewire('sections.products.create')
+	<livewire:sections.products.form>
 </x-app-layout>
 
 

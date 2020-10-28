@@ -7,9 +7,9 @@ use App\Http\Livewire\Form as Baseform;
 use App\Models\Category;
 use App\Models\Product;
 
-class Create extends Baseform
+class Form extends Baseform
 {
-    public $view = 'livewire.sections.products.create';
+    public $view = 'livewire.sections.products.form';
 
     public $model = Product::class;
 
