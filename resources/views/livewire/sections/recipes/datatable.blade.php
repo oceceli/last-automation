@@ -27,7 +27,8 @@
                             </span>
                         </td>
                         <td class="collapsing">
-                            <div class="flex gap-4">
+                            <x-crud-actions modelName="recipe" :modelId="$recipe->id" />
+                            {{-- <div class="flex gap-4">
                                 <div data-tooltip="{{ __('common.detail') }}">
                                     <a href="{{ route('recipes.show', ['recipe' => $recipe->id]) }}">
                                         <i class="circular link blue eye icon"></i>
@@ -41,7 +42,7 @@
                                 <div data-tooltip="{{ __('common.delete') }}">
                                     <i wire:click.prevent="delete({{ $recipe->id }})" class="bordered red eraser link circular inverted icon"></i>
                                 </div>
-                            </div>
+                            </div> --}}
                         </td>
                     </tr>
                 @endforeach

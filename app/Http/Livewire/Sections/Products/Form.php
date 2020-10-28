@@ -30,6 +30,8 @@ class Form extends Baseform
     public $success;
 
 
+    
+
 
 
     public function getCategoriesProperty()
@@ -50,15 +52,5 @@ class Form extends Baseform
         }
     }
 
-    public function submitCategory()
-    {
-        $this->validateOnly('category_name', Category::rules()['data']);
-        if(Category::create(['name' => $this->category_name])) {
-            $this->emit('toast', '', 'common.saved.standard', 'success');
-            $this->reset('category_name');
-        } else {
-            $this->emit('toast', 'common.error.title', 'common.error.unable_to_save');
-        }
-    }
 
 }

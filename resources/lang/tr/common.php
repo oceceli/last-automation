@@ -6,6 +6,8 @@ return [
     'saved_successfully' => 'Başarıyla kaydedildi!',
     'dropdown_placeholder' => 'Lütfen seçiniz...',
 
+    
+
     'date' => 'Tarih',
     'add_new' => 'Yeni Ekle',
     'edit' => 'Düzenle',
@@ -18,6 +20,10 @@ return [
     'detail' => 'Detay',
     'see_details' => 'Detayları gör',
     // 'saved' => 'Kaydedildi',
+
+    'smoothly_saved' => ':model sorunsuzca kaydedildi...', 
+    'smoothly_updated' => ':model sorunsuz bir şekilde güncellendi...',
+    
 
 
     'saved' => [

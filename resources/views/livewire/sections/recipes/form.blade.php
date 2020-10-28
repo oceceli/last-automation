@@ -174,19 +174,21 @@
                                                                                                             x-transition:leave-start="opacity-100 transform scale-100" 
                                                                                                             x-transition:leave-end="opacity-0 transform scale-60">
                                                                     <div class="item" wire:click.prevent="addIngredient({{ $product }})">
-                                                                        <i class="box icon"></i>
-                                                                        <div class="flex justify-between">
-                                                                            <div class="content">
-                                                                                <div class="header">{{ $product->name }}</div>
-                                                                                <div class="description">{{ $product->code }}</div>
-                                                                            </div>
-
-                                                                            @if (in_array($product['id'], array_column($ingredients, 'id')))
-                                                                                <div class="text-green-600 font-bold">
-                                                                                    <span>{{ __('common.added' )}}</span>
-                                                                                    <i class="checkmark icon"></i>
+                                                                        <div class="flex gap-2 items-center hover:bg-yellow-100 rounded px-2 py-1">
+                                                                            <div><i class="box icon"></i></div>
+                                                                            <div class="flex flex-1 justify-between items-center">
+                                                                                <div>
+                                                                                    <div class="header">{{ $product->name }}</div>
+                                                                                    <div class="description">{{ $product->code }}</div>
                                                                                 </div>
-                                                                            @endif
+
+                                                                                @if (in_array($product['id'], array_column($ingredients, 'id')))
+                                                                                    <div class="text-green-600 font-bold">
+                                                                                        <span>{{ __('common.added' )}}</span>
+                                                                                        <i class="checkmark icon"></i>
+                                                                                    </div>
+                                                                                @endif
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

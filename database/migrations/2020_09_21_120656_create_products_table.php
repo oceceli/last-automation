@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('shelf_life');
             $table->boolean('producible');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
             $table->integer('min_threshold')->nullable();
             $table->string('note')->nullable();
             $table->softDeletes();

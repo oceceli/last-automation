@@ -2,6 +2,8 @@
 
 return [
 
+    'category' => 'Kategori',
+
     'category_name' => 'Kategori adı',
 
     'select_a_category' => 'Kategori seçiniz...',

@@ -1,3 +1,3 @@
 <x-app-layout>        
-        <livewire:datatable :modelName="'product'">
+        <livewire:sections.products.datatable />
 </x-app-layout>

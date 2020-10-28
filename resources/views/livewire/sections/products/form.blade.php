@@ -1,4 +1,4 @@
-<div>
+<div x-data="{categoryModal: false}">
     <x-page-title icon="box" header="sections/products.header" subheader="sections/products.subheader" />
 
     <div class="p-4 bg-white shadow rounded-lg">
@@ -27,16 +27,8 @@
                     <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
                     placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="ui search selection dropdown" />
 
-                    <div class="pt-1 text-blue-400 text-xs font-semibold" x-data="{categoryModal: false}">
-                        <span class="cursor-pointer" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
-
-                        <x-custom-modal active="categoryModal" theme="green">
-                            <x-slot name="header">
-                                <x-page-title icon="small layer group" header="sections/categories.create_category" />
-                            </x-slot>
-                            <livewire:sections.categories.form />
-                        </x-custom-modal>
-
+                    <div class="pt-1 text-blue-400 text-sm font-semibold">
+                        <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
                     </div>
                 </div>
                 
@@ -70,4 +62,11 @@
             </div>
         </form>
     </div>    
+
+    <x-custom-modal active="categoryModal" theme="green">
+        <x-slot name="header">
+            <x-page-title icon="small layer group" header="sections/categories.create_category" />
+        </x-slot>
+        <livewire:sections.categories.form />
+    </x-custom-modal>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Common\Helpers\Generic;
 use Livewire\Component;
 
 class Form extends Component
@@ -52,7 +53,8 @@ class Form extends Component
     public function create()
     {
         if($this->created = $this->model::create($this->validation())) {
-            $this->success = true;
+            // $this->success = true;
+            $this->emit('toast', 'common.saved.title', __('common.smoothly_saved', ['model' => __('modelnames.'.strtolower(Generic::removePath($this->model)))]), 'success');
             return $this->created;
         }
     }
@@ -60,7 +62,8 @@ class Form extends Component
     public function update($entity)
     {
         if($entity->update($this->validation())) {
-            $this->success = true;
+            $this->emit('toast', 'common.saved.title', __('common.smoothly_updated', ['model' => __('modelnames.'.strtolower(Generic::removePath($this->model)))]), 'success');
+            // $this->success = true;
         }
     }
     /******************************************************************/
