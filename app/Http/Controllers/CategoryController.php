@@ -29,6 +29,11 @@ class CategoryController extends Controller
         // $this->validateData(['store', 'update']);
     }
 
+    public function create()
+    {
+        return view('web.sections.categories.create');
+    }
+
 
 
 }

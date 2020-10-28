@@ -39,10 +39,9 @@ class Category extends Model
      */
     public static function rules()
     {
-        $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                'name' => 'required',
+                'name' => 'required|unique:categories',
             ],
             'relation' => [ // use for many to many relationships
                 //

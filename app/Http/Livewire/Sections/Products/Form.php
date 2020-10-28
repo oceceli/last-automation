@@ -25,7 +25,11 @@ class Form extends Baseform
 
     public $unit; // unit tablosuna yazılacak
 
+    public $category_name; // category create
+
     public $success;
+
+
 
 
     public function getCategoriesProperty()
@@ -43,6 +47,17 @@ class Form extends Baseform
         parent::submit();
         if($product = $this->created) {
             Conversions::initUnit($product->id, $this->unit); 
+        }
+    }
+
+    public function submitCategory()
+    {
+        $this->validateOnly('category_name', Category::rules()['data']);
+        if(Category::create(['name' => $this->category_name])) {
+            $this->emit('toast', '', 'common.saved.standard', 'success');
+            $this->reset('category_name');
+        } else {
+            $this->emit('toast', 'common.error.title', 'common.error.unable_to_save');
         }
     }
 

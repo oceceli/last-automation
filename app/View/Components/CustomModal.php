@@ -8,16 +8,22 @@ class CustomModal extends Component
 {   
     public $header; // slot is optional
 
+    
     public $active;
+
+    public $theme;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($active = false, $header = null)
+    public function __construct($active = false, $theme = 'teal', $header = null)
     {
         $this->active = $active;
+        $this->theme = $theme;
+
+
         $this->header = $header;
     }
 

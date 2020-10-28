@@ -22,13 +22,15 @@ return [
 
     'saved' => [
         'title' => 'Başarılı',
-        'standard' => 'Başarıyla kaydedildi!',
+        'standard' => 'Kaydedildi',
         'changes' => 'Değişiklikler kaydedildi',
+        'saved_successfully' => 'Başarıyla kaydedildi!',
     ],
 
     'error' => [
         'title' => 'Hata',
         'body' => 'Bir hata oluştu!',
+        'unable_to_save' => 'Kaydedilirken bir hata oluştu!',
     ],
 
     'attention' => 'Dikkat!',
