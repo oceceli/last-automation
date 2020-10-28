@@ -2,7 +2,7 @@
     <x-page-title icon="box" header="sections/products.header" subheader="sections/products.subheader" />
 
     <div class="p-4 bg-white shadow rounded-lg">
-        <form class="ui small form p-3" wire:submit.prevent="submit" wire:loading.class="loading">
+        <form class="ui small form p-3" wire:submit.prevent="submit" >
             <div class="equal width fields">
                 <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="required field" />
                 
@@ -27,7 +27,9 @@
                     <label>Kategori</label>
                     <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
                         placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="ui search selection dropdown" />
-                    <a href="">create_category</a>
+                    <div class="pt-1 text-blue-400 text-xs font-semibold">
+                        <span wire:click.prevent="test" class="cursor-pointer">{{ __('sections/categories.add_new_category') }}</span>
+                    </div>
                 </div>
                 
             </div>
@@ -54,24 +56,8 @@
                 </div>
             </div>
 
-            @if ($producible)
-                <livewire:sections.recipes.form />
-            @endif
             
             <div>
-                @if ($success)
-                    <div class="ui positive icon message">
-                        <i class="checkmark  icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                <p>{{ __('common.saved_successfully') }}</p>
-                            </div>
-                            <p>{{ __('common.saved_successfully') }}</p>
-                        </div>
-                    </div>
-                @endif
-                <hr>
-
                 <x-form-buttons />
             </div>
         </form>

@@ -44,8 +44,6 @@ class Form extends Baseform
         if($product = $this->created) {
             Conversions::initUnit($product->id, $this->unit); 
         }
-        
-
     }
 
 }
