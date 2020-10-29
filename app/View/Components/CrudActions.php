@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Common\Helpers\Generic;
 use Illuminate\View\Component;
 
 class CrudActions extends Component
@@ -17,7 +18,7 @@ class CrudActions extends Component
      */
     public function __construct($modelName, $modelId)
     {
-        $this->modelName = $modelName;
+        $this->modelName = Generic::kebabToSnake($modelName);
         $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
         $this->modelId = $modelId;
     }

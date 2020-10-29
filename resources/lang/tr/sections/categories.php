@@ -2,7 +2,7 @@
 
 return [
 
-    'category' => 'Kategori',
+    'categories' => 'Kategoriler',
 
     'category_name' => 'Kategori adı',
 

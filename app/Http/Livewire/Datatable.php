@@ -98,6 +98,10 @@ class Datatable extends Component
 
     public function delete($id)
     {
-        $this->model::find($id)->delete();
+        if($this->model::find($id)->delete()) {
+            $this->emit('toast', 'crud.deleted', 'crud.content_deleted_smoothly', 'info');
+        } else {
+            $this->emit('toast', 'crud.unable_to_delete', 'crud.something_happened_while_deleting_the_content', 'error');
+        }
     }
 }

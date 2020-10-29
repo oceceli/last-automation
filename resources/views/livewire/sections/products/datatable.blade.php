@@ -10,7 +10,7 @@
                 <tr>
                     <th>Sıra</th>
                     <th>{{ __('sections/products.name') }}</th>
-                    <th>{{ __('sections/categories.category') }}</th>
+                    <th>{{ __('modelnames.category') }}</th>
                     <th>{{ __('sections/products.code') }}</th>
                     <th>{{ __('sections/products.barcode') }}</th>
                     <th>{{ __('sections/products.shelf_life') }}</th>
@@ -33,7 +33,9 @@
                         <td>{{ $context->producible }}</td>
                         <td>{{ $context->is_active }}</td>
                         <td>{{ $context->min_threshold }}</td>
-                        <td>{{ $context->note }}</td>
+                        <td class="truncate w-2/12 max-w-0">
+                            {{ $context->note }}
+                        </td>
 
                         <td class="collapsing">
                             <x-crud-actions modelName="product" :modelId="$context->id" />

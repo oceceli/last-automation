@@ -20,7 +20,10 @@ return [
     'add_ingredients' => 'İçerik Ekle',
     'add_recipe_ingredients' => 'Reçete içeriği ekleyin',
     'remove_ingredients' => 'Tüm içeriği kaldır',
+    'see_recipe' => 'Reçeteyi gör',
+    'there_is_no_content_yet' => 'Henüz içerik eklenmemiş',
 
+    'no_recipe_defined_for_this_product' => 'Bu ürüne reçete tanımlanmamış',
 
     'please_select_a_product_to_create_recipe' => 'Reçetesini oluşturmak istediğiniz ürünü seçin...',
     'fill_in_amount_and_unit_correctly' => 'Lütfen miktar ve birim alanlarını eksiksiz doldurun...',

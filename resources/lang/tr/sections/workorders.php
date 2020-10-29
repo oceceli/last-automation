@@ -14,4 +14,7 @@ return [
 
     'header' => 'İş Emri Oluştur',
     'subheader' => '',
+
+    'no_workorder_found' => 'Hiç iş emri bulunamadı',
+    'create_workorder' => 'iş emri oluşturun',
 ];

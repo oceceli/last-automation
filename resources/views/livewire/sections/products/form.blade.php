@@ -1,5 +1,5 @@
 <div x-data="{categoryModal: false}">
-    <x-page-title icon="box" header="sections/products.header" subheader="sections/products.subheader" />
+    <x-page-header icon="box" header="sections/products.create.header" subheader="sections/products.create.subheader" />
 
     <div class="p-4 bg-white shadow rounded-lg">
         <form class="ui small form p-3" wire:submit.prevent="submit" >
@@ -65,7 +65,7 @@
 
     <x-custom-modal active="categoryModal" theme="green">
         <x-slot name="header">
-            <x-page-title icon="small layer group" header="sections/categories.create_category" />
+            <x-page-header icon="small layer group" header="sections/categories.create_category" />
         </x-slot>
         <livewire:sections.categories.form />
     </x-custom-modal>

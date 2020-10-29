@@ -19,9 +19,11 @@ return [
     'display' => 'Görüntüle',
     'detail' => 'Detay',
     'see_details' => 'Detayları gör',
+    'click_here_link' => 'Buradan',
     // 'saved' => 'Kaydedildi',
 
     'smoothly_saved' => ':model sorunsuzca kaydedildi...', 
+    'context_created' => ':model oluşturuldu...',
     'smoothly_updated' => ':model sorunsuz bir şekilde güncellendi...',
     
 
@@ -56,6 +58,9 @@ return [
     'units' => 'Birimler',
 
     'create' => 'oluştur',
-    'home' => 'Anasayfa'
+    'home' => 'Anasayfa',
+
+    'main' => 'Ana',
+    'base' => 'Temel',
     
 ];

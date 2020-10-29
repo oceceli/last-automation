@@ -1,5 +1,5 @@
 <div>
-    <x-page-title icon="project diagram" header="sections/workorders.header" subheader="sections/workorders.subheader" />
+    <x-page-header icon="project diagram" header="sections/workorders.header" subheader="sections/workorders.subheader" />
     
     <div class="p-4 bg-white shadow rounded-lg">
         <form class="ui form p-2"  wire:submit.prevent="submit">

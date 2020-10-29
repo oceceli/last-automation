@@ -1,12 +1,12 @@
 <div>
     @if (isset($recipe))
         @if ($locked)
-            <x-page-title icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->name }} ürününe ait reçete" />
+            <x-page-header icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->name }} ürününe ait reçete" />
         @else
-            <x-page-title icon="mortar pestle" header="common.edit" subheader="{{ __('sections/recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
+            <x-page-header icon="mortar pestle" header="common.edit" subheader="{{ __('sections/recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
         @endif
     @else
-        <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
+        <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
     @endif
     {{-- <div class="p-6 bg-white bg-opacity-25 shadow rounded-lg "> --}}
 
@@ -15,7 +15,7 @@
             <div class="relative">
                 <div class="absolute right-0 top-0 -mt-7 -mr-1 z-10">
                     <div wire:click="unlock" data-tooltip="{{ __('common.edit') }}">
-                        <i class="large unlock circular icon link animate-pulse text-red-400 hover:text-green-400"></i>
+                        <i class="large unlock alternate circular icon link animate-pulse text-red-400 hover:text-green-400"></i>
                     </div>
                 </div>
             </div>
@@ -80,8 +80,9 @@
                         {{-- <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}"> --}}
                         <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{materials : false}">
                             
+                            {{-- <div class="h-3"></div> --}}
                             {{-- BAŞLIK VE BUTONLAR --}}
-                            <x-title-and-buttons title="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="py-4 px-3 bg-cool-gray-50" >
+                            <x-page-header header="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="pt-4 px-4 bg-cool-gray-50" >
                                 @if ( ! $locked)
                                     <x-slot name="buttons">
                                         <div class="ui small icon buttons">
@@ -94,7 +95,7 @@
                                         </div>
                                     </x-slot>
                                 @endif
-                            </x-title-and-buttons>
+                            </x-page-header>
 
                             <div class="shadow-inner relative">
                                 {{-- İÇERİK - CARD KISMI   md:h-96 overflow-x-hidden  --}}
@@ -153,7 +154,7 @@
                                     {{-- MALZEMELER BÖLÜMÜ - MODAL --}}
                                     <x-custom-modal active="materials">
                                         <x-slot name="header">
-                                            <x-page-title icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
+                                            <x-page-header icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
                                         </x-slot>
                                         @foreach ($this->categories as $category)
                                             <div class="relative" x-data="{caret: false}">

@@ -4,12 +4,14 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class TitleAndButtons extends Component
+class PageHeader extends Component
 {
-
-    public $title;
+    
+    public $header;
 
     public $icon;
+
+    public $subheader;
 
     public $buttons; // prop
 
@@ -18,9 +20,10 @@ class TitleAndButtons extends Component
      *
      * @return void
      */
-    public function __construct($title, $icon = "settings", $buttons = null)
+    public function __construct($header, $subheader = null, $icon = "settings", $buttons = null)
     {
-        $this->title = $title;
+        $this->header = $header;
+        $this->subheader = $subheader;
         $this->icon = $icon;
         $this->buttons = $buttons;
     }
@@ -32,6 +35,7 @@ class TitleAndButtons extends Component
      */
     public function render()
     {
-        return view('components.title-and-buttons');
+        return view('components.page-header');
     }
+    
 }

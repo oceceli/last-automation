@@ -82,6 +82,11 @@ class Generic
         return strtolower(trim(preg_replace('/[A-Z]/', '_\0', $string),'_'));
     }
 
+    public static function kebabToSnake(String $string) : string
+    {
+        return preg_replace('/-/', '_', $string);
+    }
+
 
     public static function removeSnakeID($string) : string 
     {

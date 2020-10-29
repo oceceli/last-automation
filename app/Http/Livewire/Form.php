@@ -54,7 +54,8 @@ class Form extends Component
     {
         if($this->created = $this->model::create($this->validation())) {
             // $this->success = true;
-            $this->emit('toast', 'common.saved.title', __('common.smoothly_saved', ['model' => __('modelnames.'.strtolower(Generic::removePath($this->model)))]), 'success');
+            $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.'.strtolower(Generic::removePath($this->model)))]), 'success');
+            $this->reset();
             return $this->created;
         }
     }

@@ -1,8 +1,9 @@
     <div>
 
+        @if ($data->count() > 0)
         <x-table-toolbar :perPage="$perPage" /> 
 
-        <div class="">
+        <div>
             <table class="ui celled sortable selectable table tablet stackable very compact">
                 <thead>
                     <tr>
@@ -29,51 +30,27 @@
                             {{-- <td>{{ $workOrder->in_progress }}</td> --}}
                             <td>{{ $workOrder->is_active }}</td>
                             {{-- <td class="">Onay<i class="green checkmark icon"></i></td> --}}
-                            <td>düzenle sil</td>
+                            <td class="collapsing">
+                                <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="ui placeholder segment h-full">
+                <div class="ui icon header">
+                    <i class="project diagram icon"></i>
+                    <a href="{{ route('work-orders.create') }}" class="text-blue-600 font-bold focus:outline-none">{{ __('common.click_here_link') }}</a> {{ __('sections/workorders.create_workorder') }}
+                </div>
+                <div class="text-sm font-semibold text-gray-500 text-center">{{ __('sections/workorders.no_workorder_found') }}</div>
+            </div>
+            @endif
            
             <div class="w-full">
                 {{ $data->links('components.tailwind-pagination') }}
             </div>
 
-            <div>
-                test
-            </div>
+            
         </div>
     </div>
-
-    
-    {{-- <div>
-        <p class="text-sm">
-            Toplam <strong class="text-red-800">{{ $total }}</strong> sonuçtan <strong>{{ $firstItem }} - {{ $firstItem + ($count-1) }}</strong> arası gösteriliyor
-        </p>
-    </div> --}}        
-
-
-
-
-
-    {{-- @foreach($data as $key => $model)
-                    <tr>
-                        <td>{{ $key+1 }}</td>
-                        @foreach ($attributes as $attribute)
-                            @if ($model->$attribute == null)
-                                <td><i class="text-red-500 text-sm">{{ __('common.empty') }}</i></td>
-                            @else
-                                @if (strlen($model->$attribute) > 20)
-                                    <td>
-                                        <i class="font-hairline text-yellow-900" data-tooltip="{{ $model->$attribute }}" data-position="top left" data-variation="tiny wide fixed">
-                                            {{ substr($model->$attribute, 0, 20) }}...
-                                        </i>
-                                    </td>
-                                @else
-                                    <td>{{ $model->$attribute }}</td> 
-                                @endif
-                            @endif
-                        @endforeach
-                        <td><div>Düzenle sil falan</div></td>
-                    </tr>
-                    @endforeach --}}
