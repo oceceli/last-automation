@@ -19,6 +19,8 @@
     @endforeach  
 </select>
 
+
+@push('scripts')
 <script>
     $('.ui.dropdown').each(function () {
         $(this).dropdown({
@@ -44,3 +46,4 @@
 
     })
 </script>
+@endpush

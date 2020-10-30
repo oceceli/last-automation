@@ -10,9 +10,19 @@ use App\Models\Product;
 class Form extends Baseform
 {
     public $view = 'livewire.sections.products.form';
-
     public $model = Product::class;
 
+
+    /**
+     * Edit mode
+     */
+    public $product;
+    public $editMode = false;
+
+
+    /**
+     * Attributes
+     */
     public $category_id;
     public $code;
     public $name;
@@ -20,37 +30,65 @@ class Form extends Baseform
     public $min_threshold;
     public $shelf_life;
     public $note;
-    public $is_active = false;
+    public $is_active = true;
     public $producible = false;
 
     public $unit; // unit tablosuna yazılacak
 
-    public $category_name; // category create
+    /**
+     * Refresh the livewire component when category added
+     */    
+    protected $listeners = ['categoryUpdated' => '$refresh'];
 
-    public $success;
+    public function mount($product = null)
+    {
+        // fill the form fields if edit mode on 
+        if($product) {
+            $this->editMode = true;
+            $this->category_id = $product->category_id;
+            $this->code = $product->code;
+            $this->name = $product->name;
+            $this->barcode = $product->barcode;
+            $this->min_threshold = $product->min_threshold;
+            $this->shelf_life = $product->shelf_life;
+            $this->note = $product->note;
+            $this->is_active = (boolean)$product->is_active;
+            $this->producible = (boolean)$product->producible;
+        }
+    }
 
 
-    
-
-
-
+    /**
+     * Computed properties ******************
+     */
     public function getCategoriesProperty()
     {
         return Category::all();
     }
 
+    
     public function getUnitsProperty()
     {
         return Conversions::units;
     }
+    /************************************* */
+
+
 
     public function submit()
     {
-        parent::submit();
-        if($product = $this->created) {
-            Conversions::initUnit($product->id, $this->unit); 
+        if($this->editMode) {
+            $this->update($this->product);
+            Conversions::setBaseUnit($this->product->id, $this->unit); 
+        } else {
+            $this->create();
+            if($product = $this->created) {
+                Conversions::setBaseUnit($product->id, $this->unit); 
+            }
+            $this->reset();
         }
     }
 
 
 }
+

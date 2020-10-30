@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\ProductContract;
 use App\Http\Controllers\Traits\DefaultController;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -43,6 +44,12 @@ class ProductController extends Controller
     public function create()
     {
         return view('web.sections.products.create');
+    }
+
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        return view('web.sections.products.edit', compact('product'));
     }
 
 

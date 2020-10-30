@@ -12,6 +12,10 @@ class Form extends BaseForm
 
     public $name;
 
-    
+    public function submit()
+    {
+        parent::submit();
+        $this->emit('categoryUpdated');
+    }
 
 }

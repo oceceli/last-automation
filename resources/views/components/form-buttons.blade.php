@@ -1,4 +1,4 @@
-<div class="ui mini buttons w-full">
+<div class="ui mini buttons w-full pt-5">
     <button class="ui basic button labeled icon" type="reset" wire:click="clearFields">
         <i class="undo alternate icon"></i>
         Temizle

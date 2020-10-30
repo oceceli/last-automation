@@ -17,7 +17,7 @@ class Conversions
     
     
 
-    public static function initUnit($product_id, $unitName)
+    public static function setBaseUnit($product_id, $unitName)
     {
         if(in_array($unitName, self::units)) {
             Unit::create(['name' => $unitName, 'product_id' => $product_id, 'factor' => 1, 'multiplier' => true, 'parent_id' => 0]);

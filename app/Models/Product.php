@@ -44,7 +44,7 @@ class Product extends Model
                 'name' => 'required|min:1',
                 'shelf_life' => 'required|numeric',
                 'producible' => 'required|boolean',
-                'is_active' => 'required|boolean',
+                'is_active' => 'sometimes|nullable|boolean',
                 'min_threshold' => 'nullable|numeric',
                 'note' => 'nullable',
             ],

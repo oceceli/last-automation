@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Http\Livewire\Form as BaseForm;
+use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
@@ -10,7 +11,6 @@ use Carbon\Carbon;
 class Form extends BaseForm
 {
     public $model = WorkOrder::class;
-    
     public $view = 'livewire.sections.workorders.form';
 
 
@@ -26,29 +26,36 @@ class Form extends BaseForm
 
     public $unit_id;
 
+    // comes from dropdown
+    public $product_id;
+    public $selectedProduct;
+
     public function mount() 
     {
         parent::mount();
         $this->datetime = Carbon::tomorrow()->format('d.m.Y');
     }
-    
 
-    protected function passToView()
+    public function updatingProductId($id)
     {
-        return [
-            //
-        ];
+        $this->selectedProduct = Product::find($id);
+        $this->recipe_id = $this->selectedProduct->recipe->id; // !!! 
+
     }
+    
 
     public function getUnitsProperty()
     {
-        return [
-           ['id' => 1, 'name' => 'adet'],
-           ['id' => 2, 'name' => 'g'],
-           ['id' => 3, 'name' => 'kg'],
-           ['id' => 4, 'name' => 'ton'],
-           ['id' => 5, 'name' => 'litre'],
-        ];
+        if($this->selectedProduct) {
+            return $this->selectedProduct->units;
+        }
+        // return [
+        //    ['id' => 1, 'name' => 'adet'],
+        //    ['id' => 2, 'name' => 'g'],
+        //    ['id' => 3, 'name' => 'kg'],
+        //    ['id' => 4, 'name' => 'ton'],
+        //    ['id' => 5, 'name' => 'litre'],
+        // ];
     }
 
 
@@ -62,6 +69,5 @@ class Form extends BaseForm
         return $products;
     }
 
-    
 
 }

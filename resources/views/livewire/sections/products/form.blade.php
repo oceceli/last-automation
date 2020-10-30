@@ -31,8 +31,11 @@
                         <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
                     </div>
                 </div>
-                
             </div>
+
+            @foreach ($this->categories as $category)
+                {{ $category->name }}
+            @endforeach
             
             <div class="fields">
                 <div class="sixteen wide field">
@@ -42,12 +45,14 @@
             </div>
     
             <div class="fields">
+                @if ($editMode)
                 <div class="field">
                     <div class="ui toggle checkbox">
                         <input wire:model.lazy="is_active" type="checkbox">
                         <label>Aktif</label>
                     </div>
                 </div>
+                @endif
                 <div class="field">
                     <div class="ui toggle checkbox" data-tooltip="Fabrikada üretimi gerçekleştirilecek ürünü belirtir." data-position="top center" data-variation="mini">
                         <input wire:model.lazy="producible" type="checkbox">

@@ -17,7 +17,7 @@
             <div class="relative border rounded-t bg-gray-50 shadow-inner" style="min-height: 60%" x-data="{'materials' : false}">
                             
                 {{-- BAŞLIK VE BUTONLAR --}}
-                <x-page-header title="'{{ $selectedProduct->name }}'  {{ __('sections/units.units') }}" icon="weight" class="py-4 px-3 bg-cool-gray-50" >
+                <x-page-header header="'{{ $selectedProduct->name }}'  {{ __('sections/units.units') }}" icon="weight" class="py-4 px-3 bg-cool-gray-50" >
                     <x-slot name="buttons">
                         <button wire:click.prevent="addNewUnitField" class="ui icon small teal button" data-tooltip="{{ __('common.add_new') }}">
                             <i class="plus icon"></i>
