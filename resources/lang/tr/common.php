@@ -43,6 +43,7 @@ return [
 
     'attention' => 'Dikkat!',
     'somethings_missing' => 'Bir şeyler eksik!',
+    'there_is_nothing_here' => 'Burada hiçbir şey yok!',
 
 
     // Mostly Sidebar ----

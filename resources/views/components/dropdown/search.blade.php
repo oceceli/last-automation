@@ -1,49 +1,60 @@
 
-<select {{ $attributes }} wire:model.lazy="{{ $model }}">
-    <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
-    @foreach ($collection as $item)
-        @if ($value !== null)
-            @if (strpos($value, '->')) @php $values = explode('->', $value) @endphp
-                <option class="item" value="{{ $item->{$values[0]}->{$values[1]} }}">
+<div {{ $attributes->merge(['class' => 'field'])}} wire:ignore>
+    <label>{{ __($label) }}</label>
+    <select class="ui selection dropdown {{ $sClass }}" wire:model.lazy="{{ $model }}">
+        <option class="item" selected value="{{ false }}">{{ ucfirst(__($placeholder)) }}</option>
+        @foreach ($collection as $item)
+            @if ($value !== null)
+                @if (strpos($value, '->')) @php $values = explode('->', $value) @endphp
+                    <option class="item" value="{{ $item->{$values[0]}->{$values[1]} }}">
+                @else
+                    <option class="item" value="{{ $item[$value] }}">
+                @endif
+                    @foreach ($array = explode(',', $text) as $display)
+                        {{ $item[$display] }} 
+                        @if ($display != end($array)) - @endif
+                    @endforeach
+                </option>
             @else
-                <option class="item" value="{{ $item[$value] }}">
+                <option class="item" value="{{ $item }}"> {{ $item }} </option>
             @endif
-                @foreach ($array = explode(',', $text) as $display)
-                    {{ $item[$display] }} 
-                    @if ($display != end($array)) - @endif
-                @endforeach
-            </option>
-        @else
-            <option class="item" value="{{ $item }}"> {{ $item }} </option>
-        @endif
-    @endforeach  
-</select>
+        @endforeach  
+    </select>
+    @error($model)
+        <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
+    @enderror
+</div>
 
 
-@push('scripts')
+
+{{-- @push('scripts') --}}
 <script>
-    $('.ui.dropdown').each(function () {
-        $(this).dropdown({
+    
+    $(document).ready(function() {    
+        $('.ui.selection.dropdown').dropdown({
             preserveHTML: false,
             ignoreDiacritics: true,
             sortSelect: true,
+            // placeholder: '{{ __($placeholder) }}',
             transition: '{{ $transition }}',
             ignoreCase: false,
             match: 'text', // text içinde ara
             forceSelection: false, // select açılıp seçim yapmadan blur edildiğinde
             clearable: "{{ $clearable }}",
+            fullTextSearch:'exact',
             // allowCategorySelection: true,
             // on: 'hover',
-            fullTextSearch:'exact',
-
+            // onChange(value, text, $choice) {
+            //     // @this.set('unit_id', value);
+            // },
+            message: {
+                addResult     : '<b>{term}</b> ekle',
+                count         : '{count} adet seçildi',
+                maxSelections : 'En fazla {maxCount} seçilebilir',
+                noResults     : '{{ __('common.there_is_nothing_here') }}',
+            },
         });
-        // document.addEventListener("livewire:load", () => {
-	    //     Livewire.hook('message.processed', (message, component) => {
-		//         $('.ui .dropdown').dropdown();
-    
-        //     }); 
-        // });
-
-    })
+    });
 </script>
-@endpush
+{{-- @endpush --}}
+

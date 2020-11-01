@@ -9,31 +9,36 @@ class InputDrop extends Component
 
     public $label;
     
+    public $key;
 
     // input
-    public $inputModel; 
+    public $iModel; 
 
-    public $inputType;
+    public $iType;
 
-    public $placeholder;
+    public $iPlaceholder;
 
 
     // select
-    public $selectModel;
+    public $sId;
 
-    public $selectData;
+    public $sModel;
 
-    public $selectValue;
+    public $sData;
 
-    public $selectText;
+    public $sValue;
+
+    public $sText;
 
 
+    public $sTriggerOn;
 
     public $transition;
     
     public $clearable;
     
-    public $selectPlaceholder;
+    public $sPlaceholder;
+
 
 
     /**
@@ -41,28 +46,37 @@ class InputDrop extends Component
      *
      * @return void
      */
-    public function __construct($label = null, 
-                                $inputModel, $inputType = 'text', $placeholder = null, 
-                                $selectModel, $selectData, $selectValue, $selectText, 
-                                $transition = 'slide', $clearable = false, $selectPlaceholder = 'settings')
+    public function __construct($label = null, $key = null,
+                                $iModel, $iType = 'text', $iPlaceholder = null, 
+                                $sId = null, $sModel, $sData, $sValue, $sText, 
+                                $sTriggerOn = false, $transition = 'slide', $clearable = false, $sPlaceholder = 'settings')
     {
         $this->label = $label;
-        $this->inputModel = $inputModel;
-        $this->inputType = $inputType;
+        $this->key = $key;
 
-        $this->placeholder = $placeholder 
-            ? $placeholder
+        $this->iModel = $iModel;
+        $this->iType = $iType;
+
+        $this->iPlaceholder = $iPlaceholder 
+            ? $iPlaceholder
             : $label;
-        // $this->placeholder = $placeholder;
-        
-        $this->selectModel = $selectModel;
-        $this->selectData = $selectData;
-        $this->selectValue = $selectValue;
-        $this->selectText = $selectText;
 
+        // I don't know if $sId unnecessary. We will see
+        if( ! $sId) {
+            $sId = 'uniqueId'.$key; // works if there is only one inputdrop component on the same page, random id didn't work for some reason ??
+        }
+        $this->sId = $sId;
+        $this->sModel = $sModel;
+        $this->sData = $sData;
+        $this->sValue = $sValue;
+        $this->sText = $sText;
+        
+
+        $this->sTriggerOn = $sTriggerOn; // if set, sData should be string. Otherwise it's array.
         $this->transition = $transition;
         $this->clearable = $clearable;
-        $this->selectPlaceholder = $selectPlaceholder;
+        $this->sPlaceholder = $sPlaceholder;
+
     }
 
     /**

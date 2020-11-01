@@ -2,7 +2,9 @@
 
   <div class="flex-1">
       <h4 class="ui horizontal left aligned divider header">
-          <i class="{{ $icon }} icon"></i>
+          @if ($icon)
+            <i class="{{ $icon }} icon"></i>
+          @endif
           <div class="content">
               {{ __($header) }}
               <div class="sub header">{{ __($subheader) }}</div>

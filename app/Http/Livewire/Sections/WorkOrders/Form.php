@@ -30,24 +30,28 @@ class Form extends BaseForm
     public $product_id;
     public $selectedProduct;
 
+    // public $units;
+
     public function mount() 
     {
         parent::mount();
         $this->datetime = Carbon::tomorrow()->format('d.m.Y');
+        
+
     }
 
     public function updatingProductId($id)
     {
         $this->selectedProduct = Product::find($id);
         $this->recipe_id = $this->selectedProduct->recipe->id; // !!! 
-
+        // $this->units = $this->selectedProduct->units->toArray();
     }
     
 
     public function getUnitsProperty()
     {
         if($this->selectedProduct) {
-            return $this->selectedProduct->units;
+            return $this->selectedProduct->units->toArray();
         }
         // return [
         //    ['id' => 1, 'name' => 'adet'],

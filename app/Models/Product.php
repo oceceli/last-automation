@@ -89,5 +89,10 @@ class Product extends Model
             return $array;
         }
     }
+
+    public static function getProduciblesDoesntHaveRecipe()
+    {
+        return self::where('producible', true)->doesntHave('recipe')->get();
+    }
     
 }

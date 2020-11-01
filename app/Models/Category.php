@@ -16,7 +16,7 @@ class Category extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = []; 
+    protected $with = ['products']; 
 
 
     public function products() 
@@ -29,9 +29,19 @@ class Category extends Model
         return $this->products()->where('producible', false);
     }
 
-    public function producibleProducts()
+    // public function producibleProducts()
+    // {
+    //     return $this->products()->where('producible', true);
+    // }
+
+    public static function getCategoriesWithProducts()
     {
-        return $this->products()->where('producible', true);
+        $a =  self::has('products', '>', 0)->get();
+        return $a;
+
+        // ->whereHas('products', function($query){
+        //     $query->where('producible', false);
+        // })
     }
 
     /**

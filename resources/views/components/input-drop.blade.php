@@ -1,64 +1,83 @@
+
 <div {{ $attributes }}>
     <label>{{ __($label)}}</label>
     <div class="ui right labeled input">
 
-        <input type="{{ $inputType }}" placeholder="{{ __($placeholder) }}" wire:model.lazy="{{ $inputModel }}">
+        <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
 
-        <div class="ui label basic scrolling dropdown" id="test"> 
-            <input type="hidden" name="{{ $selectModel }}" wire:model.lazy="{{ $selectModel }}">            
-            <div class="text default">{{ __($selectPlaceholder) }}</div>
+        <div class="ui label basic scrolling dropdown input-dropdown" id="{{ $sId }}" wire:ignore> 
+            <input type="hidden" name="{{ $sModel }}" wire:model.lazy="{{ $sModel }}">            
+            <div class="text default">{{ __($sPlaceholder) }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-                @if (! $selectData)
-                    <div class="item disabled">{{ __('common.empty') }}</div>
-                @else
-                    @foreach ($selectData as $data)
-                        <div wire:key="{{$loop->index}}" data-value="{{ $data[$selectValue] }}" class="item">{{ $data[$selectText] }}</div>
-                    @endforeach
-                @endif
+                {{-- options handling by javascript --}}
             </div>
         </div>
         
-
     </div>
 </div>
 
 
-@push('scripts')
+{{-- @push('scripts') --}}
 <script>
-    $(document).ready(function() {
-        $('#test').dropdown({
-            action: function(text, value) {
-                text = 'sadfkj';
-            },
-            preserveHTML: false,
-            ignoreDiacritics: true,
-            sortSelect: true,
-            transition: '{{ $transition }}',
-            ignoreCase: false,
-            match: 'text', // text içinde ara
-            forceSelection: false, // select açılıp seçim yapmadan blur edildiğinde
-            clearable: "{{ $clearable }}",
-            // placeholder: 'değer',
-            // allowCategorySelection: true,
-            // on: 'hover',
-            fullTextSearch:'exact',
-            onChange(value, text, $choice) {
-                @this.set('unit_id', value);
-            },
-            message: {
-                addResult     : 'Add <b>{term}</b>',
-                count         : '{count} selected',
-                maxSelections : 'Max {maxCount} selections',
-                noResults     : 'No results found.'
-            },
-            
-        });
+    $(document).ready(function() {      // !!! sId'leri kaldır class kullan
+        
+        var values = [];
+
+        @if ($sTriggerOn) 
+            $("{{ $sTriggerOn }}").on('change', function (){
+                values = []; // empty values before update
+                setValues();
+            });
+        @else
+            setValues();
+        @endif
+
+
+
+        function setValues() {
+            @this.call('{{ $sData }}', '{{ $key }}').then(result => {
+                result.forEach(data => {
+                    values.push({
+                        name: data.{{ $sText }},
+                        value: data.{{ $sValue }},
+                        // selected = true;
+                    });
+                }),
+                console.log(values);
+                setDropdown(values);
+            });
+        }
+
+
+
+        function setDropdown(values = null) {
+            $('#{{ $sId }}').dropdown({
+                values: values, // {name: test, value: 1} gibi
+                preserveHTML: false,
+                ignoreDiacritics: true,
+                sortSelect: true,
+                placeholder: '{{ __($sPlaceholder) }}',
+                transition: '{{ $transition }}',
+                ignoreCase: false,
+                match: 'text', // text içinde ara
+                forceSelection: false, // select açılıp seçim yapmadan blur edildiğinde
+                clearable: "{{ $clearable }}",
+                fullTextSearch:'exact',
+                // allowCategorySelection: true,
+                // on: 'hover',
+                // onChange(value, text, $choice) {
+                //     // @this.set('unit_id', value);
+                // },
+                message: {
+                    addResult     : '<b>{term}</b> ekle',
+                    count         : '{count} adet seçildi',
+                    maxSelections : 'En fazla {maxCount} seçilebilir',
+                    noResults     : '{{ __('common.there_is_nothing_here') }}',
+                },
+            });
+        }
+        
     });
-
-
-
-    
-
 </script>
-@endpush
+{{-- @endpush --}}

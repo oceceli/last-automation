@@ -2,12 +2,13 @@
 
 return [
     'header' => 'Reçete Oluştur',
-    'subheader' => 'Üretim için reçete oluştur veya düzenle',
+    'subheader' => 'Üretim için reçete oluştur',
 
     'code' => 'Reçete Kodu',
     'recipe_product' => 'Reçetesi yazılacak ürün',
     'belongs_to' => 'Ait olduğu ürün',
     'count_of_ingredients' => 'İçindekiler',
+    'ingredients' => 'İçindekiler',
 
     'random_code' => 'Rastgele',
     'amount' => 'Miktar',

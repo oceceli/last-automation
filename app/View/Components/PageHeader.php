@@ -20,7 +20,7 @@ class PageHeader extends Component
      *
      * @return void
      */
-    public function __construct($header, $subheader = null, $icon = "settings", $buttons = null)
+    public function __construct($header, $subheader = null, $icon = null, $buttons = null)
     {
         $this->header = $header;
         $this->subheader = $subheader;
