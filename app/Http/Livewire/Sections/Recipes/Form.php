@@ -24,15 +24,15 @@ class Form extends BaseForm
 
     public $cards = [
         [
-            'ingredient' => ['name' => 'Ürün1', 'code' => 'RM121', 'id' => 50, 'units' => ['id' => 5, 'name' => 'cm']],
-            'unit' => ['name' => 'cm', 'id' => 3],
+            'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
+            'unit_id' => 4,
             'amount' => [550],
         ],
         [
-            'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => ['id' => 97, 'name' => 'kg']],
-            'unit' => ['name' => 'cm', 'id' => 3],
+            'ingredient' => ['name' => 'Ürün1', 'code' => 'RM121', 'id' => 50, 'units' => [['id' => 5, 'name' => 'cm'],['id' => 6, 'name' => 'metre']]],
+            'unit_id' => 3,
             'amount' => [550],
-        ]
+        ],
     ];
 
 
@@ -40,7 +40,14 @@ class Form extends BaseForm
 
     public function addCard($ingredient)
     {
+
+        if($this->isInCard($ingredient['id'])) {
+            return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'), 'info');
+        } 
         $this->cards[] = ['ingredient' => $ingredient];
+        // dd($this->cards[$ingredient['id']]['ingredient']['units']);
+
+
     }
     public function removeCard($key)
     {
@@ -52,7 +59,7 @@ class Form extends BaseForm
 
     public function getUnitsOfIngredient($key)
     {
-        return $this->cards[$key]['ingredient']['units'];
+        return ($this->cards[$key]['ingredient']['units']);
     }
 
 
@@ -82,7 +89,14 @@ class Form extends BaseForm
 
     
 
-    
+    /**
+     * 
+     */
+    public function isInCard($ingredientID)
+    {
+        $dimension2 = (array_column($this->cards, 'ingredient'));
+        return in_array($ingredientID, array_column($dimension2, 'id'));
+    }
 
     /**
      * Produce a random recipe unique code

@@ -36,8 +36,7 @@ class Category extends Model
 
     public static function getCategoriesWithProducts()
     {
-        $a =  self::has('products', '>', 0)->get();
-        return $a;
+        return self::has('products', '>', 0)->get();
 
         // ->whereHas('products', function($query){
         //     $query->where('producible', false);

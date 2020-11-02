@@ -29,12 +29,12 @@
                                                 <div class="description">{{ $product->code }}</div>
                                             </div>
 
-                                            {{-- @if (in_array($product['id'], array_column($ingredients, 'id')))
+                                            @if ($this->isInCard($product->id))
                                                 <div class="text-green-600 font-bold">
                                                     <span>{{ __('common.added' )}}</span>
                                                     <i class="checkmark icon"></i>
                                                 </div>
-                                            @endif --}}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

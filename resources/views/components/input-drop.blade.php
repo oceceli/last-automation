@@ -37,6 +37,7 @@
 
         function setValues() {
             @this.call('{{ $sData }}', '{{ $key }}').then(result => {
+                console.log(result);
                 result.forEach(data => {
                     values.push({
                         name: data.{{ $sText }},
@@ -44,7 +45,6 @@
                         // selected = true;
                     });
                 }),
-                console.log(values);
                 setDropdown(values);
             });
         }

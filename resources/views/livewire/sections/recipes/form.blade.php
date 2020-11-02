@@ -64,11 +64,14 @@
 
                                     <div class="field flex items-center">
                                         <x-input-drop iModel="cards.{{ $key }}.amount." iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
-                                            sModel="cards.{{ $key }}.unit" sData="getUnitsOfIngredient" :key="$key"
-                                            sValue="id" sText="name" sPlaceholder="{{ __('sections/units.unit') }}" />
-                                        
+                                            sModel="cards.{{ $key }}.unit_id" sData="getUnitsOfIngredient" :key="$key"
+                                            sValue="id" sText="name" sPlaceholder="{{ __('sections/units.unit') }}" 
+                                        />
                                     </div>
-                                    {{ $key }}
+                                @if (array_key_exists('unit_id', $cards[$key]))
+                                    {{ $cards[$key]['unit_id'] }}
+                                @endif
+                                    
                                 </div>
                                 <button wire:click.prevent="removeCard({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 bg-white focus:outline-none opacity-75 hover:opacity-100">
                                     <i class="red shadow rounded-full cancel icon"></i>

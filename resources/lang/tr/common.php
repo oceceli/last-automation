@@ -19,6 +19,7 @@ return [
     'display' => 'Görüntüle',
     'detail' => 'Detay',
     'see_details' => 'Detayları gör',
+    'already_exist' => 'Zaten var',
     'click_here_link' => 'Buradan',
     // 'saved' => 'Kaydedildi',
 
