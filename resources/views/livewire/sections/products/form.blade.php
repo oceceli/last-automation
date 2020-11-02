@@ -22,16 +22,23 @@
             </div>
             
             <div class="equal width fields">
-                <div class="required field" wire:ignore>
-                    <label>Kategori</label>
-                    <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
-                    placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="ui search selection dropdown" />
+                {{-- <div class="required field" wire:ignore>
+                    <label>Kategori</label> --}}
+                    {{-- <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
+                    placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="" /> --}}
 
-                    <div class="pt-1 text-blue-400 text-sm font-semibold">
-                        <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
-                    </div>
+                    <x-dropdown model="category_id" dataSource="categories" value="id" text="name" sClass="search" 
+                        placeholder="sections/categories.select_a_category" 
+                    />
+                    
+
+                    {{-- </div> --}}
+                    
+                    
                 </div>
-            </div>
+                        <div class="pt-1 text-blue-400 text-sm font-semibold">
+                            <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
+                        </div>
 
             @foreach ($this->categories as $category)
                 {{ $category->name }}

@@ -35,6 +35,8 @@ class Form extends Baseform
 
     public $unit; // unit tablosuna yazılacak
 
+    public $categories;
+
     /**
      * Refresh the livewire component when category added
      */    
@@ -55,16 +57,18 @@ class Form extends Baseform
             $this->is_active = (boolean)$product->is_active;
             $this->producible = (boolean)$product->producible;
         }
+
+        $this->categories = Category::all();
     }
 
 
     /**
      * Computed properties ******************
      */
-    public function getCategoriesProperty()
-    {
-        return Category::all();
-    }
+    // public function getCategoriesProperty()
+    // {
+    //     return Category::all();
+    // }
 
     
     public function getUnitsProperty()

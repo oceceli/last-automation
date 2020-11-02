@@ -64,9 +64,9 @@
                                     </div>
 
                                     <div class="field flex items-center">
-                                        <x-input-drop iModel="cards.{{ $key }}.amount." iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
-                                            sModel="cards.{{ $key }}.unit_id" sData="cards.{{ $key }}.ingredient.units" :key="$key"
-                                            sValue="id" sText="name" sPlaceholder="{{ __('sections/units.unit') }}" 
+                                        <x-dropdown iModel="cards.{{ $key }}.amount." iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
+                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="primary"
+                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
                                         />
                                     </div>
                                 @if (array_key_exists('unit_id', $cards[$key]))

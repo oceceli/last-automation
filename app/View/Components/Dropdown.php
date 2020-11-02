@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class InputDrop extends Component
+class Dropdown extends Component
 {
 
     public $label;
@@ -18,17 +18,16 @@ class InputDrop extends Component
 
     // select
     public $sId;
-    public $sModel;
-    public $sData;
-    public $sValue;
-    public $sText;
+    public $model;
+    public $dataSource;
+    public $value;
+    public $text;
     public $sClass;
 
-
-    public $sTriggerOn;
+    public $triggerOn;
     public $transition;
     public $clearable;
-    public $sPlaceholder;
+    public $placeholder;
 
 
 
@@ -38,9 +37,9 @@ class InputDrop extends Component
      * @return void
      */
     public function __construct($label = null, $key = null,
-                                $iModel, $iType = 'text', $iPlaceholder = null, 
-                                $sId = null, $sModel, $sData, $sValue, $sText, $sClass = null,
-                                $sTriggerOn = false, $transition = 'slide', $clearable = false, $sPlaceholder = 'settings')
+                                $iModel = null, $iType = 'text', $iPlaceholder = null, 
+                                $sId = null, $model, $dataSource, $value, $text, $sClass = null,
+                                $triggerOn = false, $transition = 'slide', $clearable = false, $placeholder = 'settings')
     {
         $this->label = $label;
         $this->key = $key;
@@ -52,22 +51,21 @@ class InputDrop extends Component
             ? $iPlaceholder
             : $label;
 
-        // I don't know if $sId unnecessary. We will see
         if( ! $sId) {
             $sId = 'uniqueId'.$key; // works if there is only one inputdrop component on the same page, random id didn't work for some reason ??
         }
         $this->sId = $sId;
-        $this->sModel = $sModel;
-        $this->sData = $sData;
-        $this->sValue = $sValue;
-        $this->sText = $sText;
+        $this->model = $model;
+        $this->dataSource = $dataSource;
+        $this->value = $value;
+        $this->text = $text;
         $this->sClass = $sClass;
         
 
-        $this->sTriggerOn = $sTriggerOn; // if set, sData should be string. Otherwise it's array.
+        $this->triggerOn = $triggerOn; // if set, dataSource should be string. Otherwise it's array.
         $this->transition = $transition;
         $this->clearable = $clearable;
-        $this->sPlaceholder = $sPlaceholder;
+        $this->placeholder = $placeholder;
 
     }
 
@@ -78,6 +76,6 @@ class InputDrop extends Component
      */
     public function render()
     {
-        return view('components.input-drop');
+        return view('components.dropdown');
     }
 }

@@ -1,23 +1,22 @@
 
-<div {{ $attributes }}>
+<div {{ $attributes->merge(['class' => 'field']) }} wire:ignore>
     <label>{{ __($label)}}</label>
 
     @if ($iModel)
     <div class="ui right labeled input">
         <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
-        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}" wire:ignore> 
+        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}"> 
     @else
-    <div class="ui right labeled input">
-        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}" wire:ignore> 
+    <div>
+        <div class="ui selection {{ $sClass }} scrolling dropdown" id="{{ $sId }}"> 
     @endif
-            <input type="hidden" name="{{ $sModel }}" wire:model.lazy="{{ $sModel }}">            
-            <div class="text default">{{ __($sPlaceholder) }}</div>
+            <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
+            <div class="text default">{{ __($placeholder) }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
                 {{-- options handling by javascript --}}
             </div>
         </div>
-        
     </div>
 </div>
 
@@ -28,8 +27,8 @@
         
         var values = [];
 
-        @if ($sTriggerOn) 
-            $("{{ $sTriggerOn }}").on('change', function (){
+        @if ($triggerOn) 
+            $("{{ $triggerOn }}").on('change', function (){
                 values = []; // empty values before update
                 setValues();
             });
@@ -39,16 +38,21 @@
 
 
         function setValues() {
-            let data = @this.get('{{ $sData }}');
-
-            data.forEach(data => {
-                values.push({
-                    name: data.{{ $sText }},
-                    value: data.{{ $sValue }},
-                    selected :  @this.get('{{ $sModel }}') == data.{{ $sValue }},
+            let data = @this.get('{{ $dataSource }}');
+            console.log(data);
+            
+            if(data != null) {
+                data.forEach(data => {
+                    values.push({
+                        name: data.{{ $text }},
+                        value: data.{{ $value }},
+                        selected :  @this.get('{{ $model }}') == data.{{ $value }},
+                    });
                 });
-            });
-            console.log(values);
+            } else {
+                console.log('dataSource yanlış!');
+            }
+            // console.log(values);
             setDropdown(values);
         }
 
@@ -60,7 +64,7 @@
                 preserveHTML: false,
                 ignoreDiacritics: true,
                 sortSelect: true,
-                placeholder: '{{ __($sPlaceholder) }}',
+                placeholder: '{{ __($placeholder) }}',
                 transition: '{{ $transition }}',
                 ignoreCase: false,
                 match: 'text', // text içinde ara
