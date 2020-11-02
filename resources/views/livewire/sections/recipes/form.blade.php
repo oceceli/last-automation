@@ -9,9 +9,7 @@
                 <div class="ui small form">
                     <div class="equal width fields">
                         <x-dropdown.search model="product_id" label="sections/recipes.recipe_product" :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" />
-                        @if ($this->producibles->count() <= 0)
-                            <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> oluşturun...</div>
-                        @endif
+                        
                         <x-input action model="code" label="sections/recipes.code" placeholder="sections/recipes.code" class="required">
                             <x-slot name="button">
                                 <button wire:click.prevent="random" class="ui teal right labeled icon button" >
@@ -21,6 +19,9 @@
                             </x-slot>
                         </x-input>
                     </div>
+                    @if ($this->producibles->count() <= 0)
+                        <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> başlayın...</div>
+                    @endif
                 </div> 
             </div>
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
@@ -64,12 +65,12 @@
 
                                     <div class="field flex items-center">
                                         <x-input-drop iModel="cards.{{ $key }}.amount." iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
-                                            sModel="cards.{{ $key }}.unit_id" sData="getUnitsOfIngredient" :key="$key"
+                                            sModel="cards.{{ $key }}.unit_id" sData="cards.{{ $key }}.ingredient.units" :key="$key"
                                             sValue="id" sText="name" sPlaceholder="{{ __('sections/units.unit') }}" 
                                         />
                                     </div>
                                 @if (array_key_exists('unit_id', $cards[$key]))
-                                    {{ $cards[$key]['unit_id'] }}
+                                    unit_id = {{ $cards[$key]['unit_id'] }}
                                 @endif
                                     
                                 </div>

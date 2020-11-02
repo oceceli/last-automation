@@ -25,12 +25,12 @@ class Form extends BaseForm
     public $cards = [
         [
             'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-            'unit_id' => 4,
+            'unit_id' => 97,
             'amount' => [550],
         ],
         [
             'ingredient' => ['name' => 'Ürün1', 'code' => 'RM121', 'id' => 50, 'units' => [['id' => 5, 'name' => 'cm'],['id' => 6, 'name' => 'metre']]],
-            'unit_id' => 3,
+            'unit_id' => 6,
             'amount' => [550],
         ],
     ];
@@ -57,10 +57,10 @@ class Form extends BaseForm
 
 
 
-    public function getUnitsOfIngredient($key)
-    {
-        return ($this->cards[$key]['ingredient']['units']);
-    }
+    // public function getUnitsOfIngredient($key)
+    // {
+    //     return ($this->cards[$key]['ingredient']['units']);
+    // }
 
 
 

@@ -8,35 +8,26 @@ class InputDrop extends Component
 {
 
     public $label;
-    
     public $key;
 
     // input
     public $iModel; 
-
     public $iType;
-
     public $iPlaceholder;
 
 
     // select
     public $sId;
-
     public $sModel;
-
     public $sData;
-
     public $sValue;
-
     public $sText;
+    public $sClass;
 
 
     public $sTriggerOn;
-
     public $transition;
-    
     public $clearable;
-    
     public $sPlaceholder;
 
 
@@ -48,7 +39,7 @@ class InputDrop extends Component
      */
     public function __construct($label = null, $key = null,
                                 $iModel, $iType = 'text', $iPlaceholder = null, 
-                                $sId = null, $sModel, $sData, $sValue, $sText, 
+                                $sId = null, $sModel, $sData, $sValue, $sText, $sClass = null,
                                 $sTriggerOn = false, $transition = 'slide', $clearable = false, $sPlaceholder = 'settings')
     {
         $this->label = $label;
@@ -70,6 +61,7 @@ class InputDrop extends Component
         $this->sData = $sData;
         $this->sValue = $sValue;
         $this->sText = $sText;
+        $this->sClass = $sClass;
         
 
         $this->sTriggerOn = $sTriggerOn; // if set, sData should be string. Otherwise it's array.

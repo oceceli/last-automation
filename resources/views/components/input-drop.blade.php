@@ -1,11 +1,15 @@
 
 <div {{ $attributes }}>
     <label>{{ __($label)}}</label>
+
+    @if ($iModel)
     <div class="ui right labeled input">
-
         <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
-
-        <div class="ui label basic scrolling dropdown input-dropdown" id="{{ $sId }}" wire:ignore> 
+        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}" wire:ignore> 
+    @else
+    <div class="ui right labeled input">
+        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}" wire:ignore> 
+    @endif
             <input type="hidden" name="{{ $sModel }}" wire:model.lazy="{{ $sModel }}">            
             <div class="text default">{{ __($sPlaceholder) }}</div>
             <i class="dropdown icon"></i>
@@ -20,7 +24,7 @@
 
 {{-- @push('scripts') --}}
 <script>
-    $(document).ready(function() {      // !!! sId'leri kaldır class kullan
+    $(document).ready(function() {
         
         var values = [];
 
@@ -34,19 +38,18 @@
         @endif
 
 
-
         function setValues() {
-            @this.call('{{ $sData }}', '{{ $key }}').then(result => {
-                console.log(result);
-                result.forEach(data => {
-                    values.push({
-                        name: data.{{ $sText }},
-                        value: data.{{ $sValue }},
-                        // selected = true;
-                    });
-                }),
-                setDropdown(values);
+            let data = @this.get('{{ $sData }}');
+
+            data.forEach(data => {
+                values.push({
+                    name: data.{{ $sText }},
+                    value: data.{{ $sValue }},
+                    selected :  @this.get('{{ $sModel }}') == data.{{ $sValue }},
+                });
             });
+            console.log(values);
+            setDropdown(values);
         }
 
 
