@@ -20,11 +20,13 @@ class Dropdown extends Component
     public $sId;
     public $model;
     public $dataSource;
+    public $dataSourceFunction;
     public $value;
     public $text;
     public $sClass;
 
     public $triggerOn;
+    public $triggerOnEvent;
     public $transition;
     public $clearable;
     public $placeholder;
@@ -38,8 +40,8 @@ class Dropdown extends Component
      */
     public function __construct($label = null, $key = null,
                                 $iModel = null, $iType = 'text', $iPlaceholder = null, 
-                                $sId = null, $model, $dataSource, $value, $text, $sClass = null,
-                                $triggerOn = false, $transition = 'slide', $clearable = false, $placeholder = 'settings')
+                                $sId = null, $model, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
+                                $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = 'settings')
     {
         $this->label = $label;
         $this->key = $key;
@@ -57,12 +59,14 @@ class Dropdown extends Component
         $this->sId = $sId;
         $this->model = $model;
         $this->dataSource = $dataSource;
+        $this->dataSourceFunction = $dataSourceFunction;
         $this->value = $value;
         $this->text = $text;
         $this->sClass = $sClass;
         
 
         $this->triggerOn = $triggerOn; // if set, dataSource should be string. Otherwise it's array.
+        $this->triggerOnEvent = $triggerOnEvent;
         $this->transition = $transition;
         $this->clearable = $clearable;
         $this->placeholder = $placeholder;

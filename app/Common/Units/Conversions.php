@@ -9,10 +9,10 @@ class Conversions
 {
 
     const units = [
-        'Adet',
-        'Gram',
-        'Cm',
-        'Litre',
+        ['text' => 'Adet'],
+        ['text' => 'Gram'],
+        ['text' => 'Cm'],
+        ['text' => 'Litre'],
     ];
     
     

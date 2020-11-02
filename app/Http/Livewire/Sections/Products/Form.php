@@ -35,12 +35,9 @@ class Form extends Baseform
 
     public $unit; // unit tablosuna yazılacak
 
-    public $categories;
-
-    /**
-     * Refresh the livewire component when category added
-     */    
-    protected $listeners = ['categoryUpdated' => '$refresh'];
+    // public $categories;
+ 
+    protected $listeners = ['categoryUpdated'];
 
     public function mount($product = null)
     {
@@ -57,18 +54,22 @@ class Form extends Baseform
             $this->is_active = (boolean)$product->is_active;
             $this->producible = (boolean)$product->producible;
         }
-
-        $this->categories = Category::all();
+        // $this->categories = Category::all()->toArray();
     }
 
+    
+    public function categoryUpdated($category_id)
+    {
+        $this->category_id = $category_id;
+    }
 
     /**
      * Computed properties ******************
      */
-    // public function getCategoriesProperty()
-    // {
-    //     return Category::all();
-    // }
+    public function getCategoriesProperty()
+    {
+        return Category::all()->toArray();
+    }
 
     
     public function getUnitsProperty()

@@ -1,7 +1,6 @@
 <div>
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
-    <x-content>
-        <div class="border border-orange-200 rounded-md flex flex-col">
+    <x-content theme="orange">
 
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
@@ -64,7 +63,7 @@
                                     </div>
 
                                     <div class="field flex items-center">
-                                        <x-dropdown iModel="cards.{{ $key }}.amount." iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
+                                        <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
                                             model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="primary"
                                             value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
                                         />
@@ -93,8 +92,6 @@
 
 
 
-        </div>
-        <x-form-buttons />
 
     </x-content>
 </div>

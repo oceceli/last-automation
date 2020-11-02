@@ -14,8 +14,8 @@ class Form extends BaseForm
 
     public function submit()
     {
-        parent::submit();
-        $this->emit('categoryUpdated');
+        $this->create();
+        $this->emit('categoryUpdated', $this->created->id);
     }
 
 }

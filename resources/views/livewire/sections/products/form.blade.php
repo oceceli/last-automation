@@ -1,18 +1,19 @@
 <div x-data="{categoryModal: false}">
     <x-page-header icon="box" header="sections/products.create.header" subheader="sections/products.create.subheader" />
 
-    <div class="p-4 bg-white shadow rounded-lg">
-        <form class="ui small form p-3" wire:submit.prevent="submit" >
+    <x-content>
+        <form class="ui small form p-6" wire:submit.prevent="submit" >
             <div class="equal width fields">
                 <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="required field" />
             </div>
             <div class="equal width fields">
                 <x-input model="code" label="sections/products.code" placeholder="sections/products.code" class="required field" />                
                 <x-input model="barcode" label="sections/products.barcode" placeholder="EAN13" class="required field" />
-                <div class="required field" wire:ignore>
-                    <label>{{ ucfirst(__('sections/units.unit')) }}</label>
-                    <x-dropdown.search model="unit" :collection="$this->units" placeholder="sections/units.unit" transition="slide right" class="ui selection dropdown" />
-                </div>
+
+                <x-dropdown model="unit" dataSourceFunction="getUnitsProperty" value="text" text="text" sId="units"
+                    label="sections/units.unit" placeholder="sections/units.unit" transition="slide down" class="required field"
+                />
+
             </div>
             
     
@@ -22,27 +23,15 @@
             </div>
             
             <div class="equal width fields">
-                {{-- <div class="required field" wire:ignore>
-                    <label>Kategori</label> --}}
-                    {{-- <x-dropdown.search model="category_id" :collection="$this->categories" value="id" 
-                    placeholder="sections/categories.select_a_category" text="name" transition="slide right" class="" /> --}}
+                <x-dropdown model="category_id" dataSourceFunction="getCategoriesProperty" value="id" text="name" sId="categories" sClass="search" triggerOnEvent="categoryUpdated"
+                    label="modelnames.category" placeholder="sections/categories.select_a_category" transition="slide down">
+                    <div class="pt-1 text-blue-400 text-sm font-semibold">
+                        <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
+                    </div>
+                </x-dropdown>
+            </div>
+            
 
-                    <x-dropdown model="category_id" dataSource="categories" value="id" text="name" sClass="search" 
-                        placeholder="sections/categories.select_a_category" 
-                    />
-                    
-
-                    {{-- </div> --}}
-                    
-                    
-                </div>
-                        <div class="pt-1 text-blue-400 text-sm font-semibold">
-                            <span class="cursor-pointer hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
-                        </div>
-
-            @foreach ($this->categories as $category)
-                {{ $category->name }}
-            @endforeach
             
             <div class="fields">
                 <div class="sixteen wide field">
@@ -68,12 +57,8 @@
                 </div>
             </div>
 
-            
-            <div>
-                <x-form-buttons />
-            </div>
         </form>
-    </div>    
+    </x-content>    
 
     <x-custom-modal active="categoryModal" theme="green">
         <x-slot name="header">
