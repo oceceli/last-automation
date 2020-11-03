@@ -13,18 +13,21 @@ class PageHeader extends Component
 
     public $subheader;
 
-    public $buttons; // prop
+    public $customHeader; // slot
+    public $buttons; // slot
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($header, $subheader = null, $icon = null, $buttons = null)
+    public function __construct($header = null, $subheader = null, $icon = null, $customHeader = null, $buttons = null)
     {
         $this->header = $header;
         $this->subheader = $subheader;
         $this->icon = $icon;
+
+        $this->customHeader = $customHeader;
         $this->buttons = $buttons;
     }
 

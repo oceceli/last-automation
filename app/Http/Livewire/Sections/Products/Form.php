@@ -54,7 +54,6 @@ class Form extends Baseform
             $this->is_active = (boolean)$product->is_active;
             $this->producible = (boolean)$product->producible;
         }
-        // $this->categories = Category::all()->toArray();
     }
 
     
@@ -79,19 +78,23 @@ class Form extends Baseform
     /************************************* */
 
 
-
     public function submit()
     {
         if($this->editMode) {
             $this->update($this->product);
-            Conversions::setBaseUnit($this->product->id, $this->unit); 
+            $this->createUnit($this->product->id, $this->unit); 
         } else {
             $this->create();
             if($product = $this->created) {
-                Conversions::setBaseUnit($product->id, $this->unit); 
+                $this->createUnit($product->id, $this->unit); 
             }
             $this->reset();
         }
+    }
+
+    public function createUnit($product_id, $unitName)
+    {
+        Conversions::setBaseUnit($product_id, $unitName);
     }
 
 

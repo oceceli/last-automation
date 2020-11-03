@@ -21,6 +21,7 @@ return [
     'see_details' => 'Detayları gör',
     'already_exist' => 'Zaten var',
     'click_here_link' => 'Buradan',
+    'add_from_here' => 'Buradan ekleyin',
     // 'saved' => 'Kaydedildi',
 
     'smoothly_saved' => ':model sorunsuzca kaydedildi...', 

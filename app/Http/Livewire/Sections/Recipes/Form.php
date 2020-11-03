@@ -13,26 +13,23 @@ class Form extends BaseForm
     public $model = Recipe::class;
     public $view = 'livewire.sections.recipes.form';
 
+    public $selectedProduct;
+
     /**
      * Recipe attributes *******************************
      */
     public $product_id;
     public $code;
 
-    // public $test;
-    // public $test2;
+    
 
+    public $SPUnit_id;
     public $cards = [
-        [
-            'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-            'unit_id' => 97,
-            'amount' => [550],
-        ],
-        [
-            'ingredient' => ['name' => 'Ürün1', 'code' => 'RM121', 'id' => 50, 'units' => [['id' => 5, 'name' => 'cm'],['id' => 6, 'name' => 'metre']]],
-            'unit_id' => 6,
-            'amount' => [550],
-        ],
+        // [
+        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
+        //     'unit_id' => 97,
+        //     'amount' => [550],
+        // ],
     ];
 
 
@@ -55,12 +52,11 @@ class Form extends BaseForm
         // $this->cards = array_values($this->cards);
     }
 
+    public function getUnitsOfProductProperty()
+    {
+        return $this->selectedProduct->units->toArray();
+    }
 
-
-    // public function getUnitsOfIngredient($key)
-    // {
-    //     return ($this->cards[$key]['ingredient']['units']);
-    // }
 
 
 
@@ -82,7 +78,16 @@ class Form extends BaseForm
 
 
 
+    /**
+     * Lifecycle hooks ********************************
+     */
 
+    public function updatedProductId($id)
+    {
+        $this->selectedProduct = $this->getProduciblesProperty()->find($id);
+    }
+    
+     /********************************************** */
 
 
 

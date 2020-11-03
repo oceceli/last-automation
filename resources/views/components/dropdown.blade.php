@@ -6,7 +6,7 @@
     @if ($iModel)
     <div class="ui right labeled small input">
         <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
-        <div class="ui label {{ $sClass }} scrolling dropdown" id="{{ $sId }}"> 
+        <div class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
             <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
             <div class="text default">{{ __($placeholder) }}</div>
             <i class="dropdown icon"></i>
@@ -16,7 +16,7 @@
         </div>
     </div>
     @else
-    <div class="ui selection {{ $sClass }} scrolling dropdown" id="{{ $sId }}"> 
+    <div class="{{ $sClass }} ui @if( ! $basic) selection scrolling @endif dropdown" id="{{ $sId }}"> 
         <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
         <div class="text default">{{ __($placeholder) }}</div>
         <i class="dropdown icon"></i>

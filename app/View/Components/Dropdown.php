@@ -31,7 +31,7 @@ class Dropdown extends Component
     public $clearable;
     public $placeholder;
 
-
+    public $basic;
 
     /**
      * Create a new component instance.
@@ -41,7 +41,8 @@ class Dropdown extends Component
     public function __construct($label = null, $key = null,
                                 $iModel = null, $iType = 'text', $iPlaceholder = null, 
                                 $sId = null, $model, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
-                                $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = 'settings')
+                                $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = 'settings',
+                                $basic = false)
     {
         $this->label = $label;
         $this->key = $key;
@@ -70,6 +71,8 @@ class Dropdown extends Component
         $this->transition = $transition;
         $this->clearable = $clearable;
         $this->placeholder = $placeholder;
+
+        $this->basic = $basic;
 
     }
 

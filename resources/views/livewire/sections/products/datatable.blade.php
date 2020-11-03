@@ -14,31 +14,45 @@
                     <th>{{ __('sections/products.code') }}</th>
                     <th>{{ __('sections/products.barcode') }}</th>
                     <th>{{ __('sections/products.shelf_life') }}</th>
-                    <th>{{ __('sections/products.producible') }}</th>
-                    <th>{{ __('sections/products.is_active') }}</th>
                     <th>{{ __('sections/products.min_threshold') }}</th>
                     <th>{{ __('sections/products.note') }}</th>
+                    <th>{{ __('sections/products.producible') }}</th>
+                    <th>{{ __('sections/products.is_active') }}</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $key => $context)
+                @foreach ($data as $key => $product)
                     <tr>
                         <td>{{ $key+1 }}</td>
-                        <td>{{ $context->name }}</td>
-                        <td>{{ $context->category->name }}</td>
-                        <td>{{ $context->code }}</td>
-                        <td>{{ $context->barcode }}</td>
-                        <td>{{ $context->shelf_life }}</td>
-                        <td>{{ $context->producible }}</td>
-                        <td>{{ $context->is_active }}</td>
-                        <td>{{ $context->min_threshold }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->category->name }}</td>
+                        <td>{{ $product->code }}</td>
+                        <td>{{ $product->barcode }}</td>
+                        <td>{{ $product->shelf_life }}</td>
+                        <td>{{ $product->min_threshold }}</td>
                         <td class="truncate w-2/12 max-w-0">
-                            {{ $context->note }}
+                            {{ $product->note }}
+                        </td>
+                        <td>
+                            <div class="flex items-center justify-center">
+                                <div class="ui slider checkbox">
+                                    <input type="checkbox" wire:model.lazy="producible.{{ $key }}">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center justify-center">
+                                <div class="ui checkbox">
+                                    <input type="checkbox" wire:model.lazy="is_active.{{ $key }}">
+                                    <label></label>
+                                </div>
+                            </div>
                         </td>
 
                         <td class="collapsing">
-                            <x-crud-actions modelName="product" :modelId="$context->id" />
+                            <x-crud-actions modelName="product" :modelId="$product->id" />
                         </td>
 
                     </tr>

@@ -54,7 +54,20 @@ class Product extends Model
         ];
     }
 
-    public function units()
+    /**
+     * Mutator and accessors **************************************
+     */
+    public function getIsActiveAttribute($value) 
+    {
+        return $value == 1 ? true : false;
+    }
+    public function getProducibleAttribute($value)
+    {
+        return $value == 1 ? true : false;
+    }
+    /*********************************************************** */
+
+    public function units() 
     {
         return $this->hasMany(Unit::class); 
     }
@@ -94,5 +107,6 @@ class Product extends Model
     {
         return self::where('producible', true)->doesntHave('recipe')->get();
     }
+    
     
 }

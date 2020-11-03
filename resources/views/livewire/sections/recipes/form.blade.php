@@ -30,11 +30,22 @@
 
             
             {{-- INGREDIENTS ---------------------------------------------------------------------------}}
+            @if ( ! empty($product_id))
             <div x-data="{materials: false}" class="p-6">
-                <x-page-header icon="blue book" header="sections/recipes.ingredients">
+                <x-page-header>
+                    <x-slot name="customHeader">
+                        <div class="flex gap-3">
+                            <span class="font-bold">1</span>
+                            <x-dropdown model="SPUnit_id" dataSourceFunction="getUnitsOfProductProperty" value="id" text="name" sId="unitsOfSP"
+                                placeholder="sections/units.unit" triggerOn="#selectProduct" basic>
+                            </x-dropdown>
+                            <span class="font-bold text-red-700">{{ $selectedProduct->name }}</span>
+                            <span class="text-gray-600">{{ __('sections/recipes.includes') }}</span>
+                        </div>
+                    </x-slot>
                     <x-slot name="buttons">
                         <div class="ui small icon buttons">
-                            <button wire:click.prevent @click="materials = true" class="ui mini teal button" id="button1" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
+                            <button wire:click.prevent @click="materials = true" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
                                 <i class="plus icon"></i>
                             </button>
                             <button wire:click.prevent="" class="ui mini gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}" data-variation="mini">
@@ -45,9 +56,11 @@
                 </x-page-header>
                 
                 <div class="p-4 rounded-md border border-blue-200">
-
+                    @if (empty($cards))
+                        @include('web.sections.recipes.placeholder')
+                    @else
+                    {{-- CARDS ------------------------------------}}
                     <div class="flex flex-col gap-6">
-                        {{-- CARDS ------------------------------------}}
                         @foreach ($cards as $key => $card)
                             <div class="relative flex border shadow rounded-lg bg-white border-blue-100 hover:border-blue-300">
 
@@ -65,28 +78,27 @@
                                     <div class="field flex items-center">
                                         <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
                                             model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="primary"
-                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
-                                        />
+                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                        </x-dropdown>
                                     </div>
-                                @if (array_key_exists('unit_id', $cards[$key]))
-                                    unit_id = {{ $cards[$key]['unit_id'] }}
-                                @endif
-                                    
                                 </div>
+
                                 <button wire:click.prevent="removeCard({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 bg-white focus:outline-none opacity-75 hover:opacity-100">
                                     <i class="red shadow rounded-full cancel icon"></i>
                                 </button>
 
                             </div>
                         @endforeach
-                        {{-- CARDS ------------------------------------}}
                     </div>
-
-
+                    {{-- CARDS ------------------------------------}}
+                    @endif
                 </div>
+
                 {{-- MALZEMELER BÖLÜMÜ - MODAL ----------------------------}}
                 @include('web.sections.recipes.materials')
+
             </div>
+            @endif
             {{-- INGREDIENTS ---------------------------------------------------------------------------}}
 
 

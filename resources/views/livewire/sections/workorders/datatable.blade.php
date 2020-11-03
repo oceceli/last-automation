@@ -37,20 +37,20 @@
                     @endforeach
                 </tbody>
             </table>
-            @else
-            <div class="ui placeholder segment h-full">
-                <div class="ui icon header">
-                    <i class="project diagram icon"></i>
-                    <a href="{{ route('work-orders.create') }}" class="text-blue-600 font-bold focus:outline-none">{{ __('common.click_here_link') }}</a> {{ __('sections/workorders.create_workorder') }}
-                </div>
-                <div class="text-sm font-semibold text-gray-500 text-center">{{ __('sections/workorders.no_workorder_found') }}</div>
-            </div>
-            @endif
-           
+            
             <div class="w-full">
                 {{ $data->links('components.tailwind-pagination') }}
             </div>
-
+            
             
         </div>
+        @else
+        <div class="ui placeholder segment h-full">
+            <div class="ui icon header">
+                <i class="project diagram icon"></i>
+                <a href="{{ route('work-orders.create') }}" class="text-blue-600 font-bold focus:outline-none">{{ __('common.click_here_link') }}</a> {{ __('sections/workorders.create_workorder') }}
+            </div>
+            <div class="text-sm font-semibold text-gray-500 text-center">{{ __('sections/workorders.no_workorder_found') }}</div>
+        </div>
+        @endif
     </div>
