@@ -27,6 +27,7 @@ return [
 
     'no_recipe_defined_for_this_product' => 'Bu ürüne reçete tanımlanmamış',
     'this_ingredient_already_added' => 'Bu içerik reçeteye eklenmiş',
+    'a_product_cannot_have_itself_as_a_ingredient' => 'Reçeteye ürünün kendisi eklenemez!',
 
     'please_select_a_product_to_create_recipe' => 'Reçetesini oluşturmak istediğiniz ürünü seçin...',
     'fill_in_amount_and_unit_correctly' => 'Lütfen miktar ve birim alanlarını eksiksiz doldurun...',

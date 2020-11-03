@@ -11,7 +11,9 @@ return [
     'note' => 'Açıklama',
     'is_active' => 'Aktif',
     'producible' => 'Üretilebilir',
+
     'count_years' => ':count yıl',
+    'defined_base_unit_for_the_product' => ':product için tanımlanmış temel birim',
 
     'create' => [
         'header' => 'Ürün Oluştur',

@@ -14,6 +14,7 @@ class Form extends BaseForm
     public $view = 'livewire.sections.recipes.form';
 
     public $selectedProduct;
+    public $spBaseUnit;
 
     /**
      * Recipe attributes *******************************
@@ -23,12 +24,11 @@ class Form extends BaseForm
 
     
 
-    public $SPUnit_id;
     public $cards = [
         // [
         //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-        //     'unit_id' => 97,
-        //     'amount' => [550],
+        //     'unit_id' => 8,
+        //     'amount' => 550,
         // ],
     ];
 
@@ -37,10 +37,16 @@ class Form extends BaseForm
 
     public function addCard($ingredient)
     {
-
+        // Abort if ingredient is already in card
         if($this->isInCard($ingredient['id'])) {
             return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'), 'info');
         } 
+
+        // Abort if ingredient is $selectedProduct
+        if($ingredient['id'] == $this->selectedProduct->id) {
+            return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
+        }
+
         $this->cards[] = ['ingredient' => $ingredient];
         // dd($this->cards[$ingredient['id']]['ingredient']['units']);
 
@@ -49,15 +55,13 @@ class Form extends BaseForm
     public function removeCard($key)
     {
         unset($this->cards[$key]);
+        dd($this->cards);
         // $this->cards = array_values($this->cards);
     }
-
-    public function getUnitsOfProductProperty()
+    public function removeAllCards()
     {
-        return $this->selectedProduct->units->toArray();
+        $this->cards = [];
     }
-
-
 
 
     /**
@@ -84,23 +88,91 @@ class Form extends BaseForm
 
     public function updatedProductId($id)
     {
+        // set selected product property when product_id changed 
         $this->selectedProduct = $this->getProduciblesProperty()->find($id);
+
+        //
+        $this->spBaseUnit = $this->selectedProduct->getBaseUnit();
     }
-    
-     /********************************************** */
+    /********************************************** */
 
 
-
-
-    
 
     /**
-     * 
+     * Submit form and attach ingredients to the recipe
+     */
+    public function submit()
+    {
+        // a product have to be selected to continue 
+        if(empty($this->product_id)) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.please_select_a_product_to_create_recipe', 'warning');
+        }
+
+        // count of ingredient, unit_id and amount fields have to be filled before save
+        if ( ! $this->isCardsStable()) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.fill_in_amount_and_unit_correctly', 'warning');
+        }
+        
+
+        // if it already saved in database, just update it
+        if($recipe = $this->model::where('product_id', $this->product_id)->first()) {
+            $this->update($recipe);
+        } else {
+            $recipe = $this->create();
+        }
+
+        // finally execute syncing operation
+        if( ! empty($this->cards)) {
+            $this->syncIngredients($recipe);
+        }
+    }
+
+    /**
+     * Sync ingredients of recipe
+     */
+    public function syncIngredients($recipe)
+    {
+        $cards = $this->cards;
+        
+        $IDs = [];
+        $pivot = [];
+        for($i = 0; $i < sizeof($cards); $i++) {
+            // $IDs[] = $ingredients[$i]['id'];
+            $IDs[] = $cards[$i]['ingredient']['id'];
+            // $pivot[] = ['amount' => $amounts[$i], 'unit_id' => $units[$i]];
+            $pivot[] = ['amount' => $cards[$i]['amount'], 'unit_id' => $cards[$i]['unit_id']];
+        }
+        try {
+            $recipe->ingredients()->sync(array_combine($IDs, $pivot));
+        } catch (\Throwable $th) {
+            $this->emit('toast', 'common.error.title', 'sections/recipes.an_error_occurred_while_adding_ingredients', 'error');
+        }
+        $this->emit('toast', 'common.saved.title', 'common.saved.changes', 'success');
+    }
+
+
+
+
+
+
+
+
+    /**
+     * return if given ingredient id is already in cards
      */
     public function isInCard($ingredientID)
     {
         $dimension2 = (array_column($this->cards, 'ingredient'));
         return in_array($ingredientID, array_column($dimension2, 'id'));
+    }
+
+    public function isCardsStable()
+    {
+        return $this->columnCount('unit_id') == $this->columnCount('ingredient') && $this->columnCount('ingredient') == $this->columnCount('amount');       
+    }
+    public function columnCount($column)
+    {
+        return count(array_column($this->cards, $column));
     }
 
     /**

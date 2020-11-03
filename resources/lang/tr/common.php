@@ -45,6 +45,7 @@ return [
 
     'attention' => 'Dikkat!',
     'somethings_missing' => 'Bir şeyler eksik!',
+    'somethings_wrong' => 'Bir şeyler yanlış',
     'there_is_nothing_here' => 'Burada hiçbir şey yok!',
 
 

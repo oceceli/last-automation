@@ -32,29 +32,8 @@
             {{-- INGREDIENTS ---------------------------------------------------------------------------}}
             @if ( ! empty($product_id))
             <div x-data="{materials: false}" class="p-6">
-                <x-page-header>
-                    <x-slot name="customHeader">
-                        <div class="flex gap-3">
-                            <span class="font-bold">1</span>
-                            <x-dropdown model="SPUnit_id" dataSourceFunction="getUnitsOfProductProperty" value="id" text="name" sId="unitsOfSP"
-                                placeholder="sections/units.unit" triggerOn="#selectProduct" basic>
-                            </x-dropdown>
-                            <span class="font-bold text-red-700">{{ $selectedProduct->name }}</span>
-                            <span class="text-gray-600">{{ __('sections/recipes.includes') }}</span>
-                        </div>
-                    </x-slot>
-                    <x-slot name="buttons">
-                        <div class="ui small icon buttons">
-                            <button wire:click.prevent @click="materials = true" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
-                                <i class="plus icon"></i>
-                            </button>
-                            <button wire:click.prevent="" class="ui mini gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}" data-variation="mini">
-                                <i class="red trash icon"></i>
-                            </button>
-                        </div>
-                    </x-slot>
-                </x-page-header>
-                
+                @include('web.sections.recipes.ingredientHeader')     
+
                 <div class="p-4 rounded-md border border-blue-200">
                     @if (empty($cards))
                         @include('web.sections.recipes.placeholder')
@@ -77,7 +56,7 @@
 
                                     <div class="field flex items-center">
                                         <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
-                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="primary"
+                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="basic"
                                             value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
                                         </x-dropdown>
                                     </div>
