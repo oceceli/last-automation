@@ -14,49 +14,69 @@ class Form extends Component
 
     public $selectedProduct;
 
-    public $unitFields = [
-        ['multiplier' => true, 'factor' => null, 'parent_id' => null, 'name' => null],
+    public $cards = [
+        ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null],
     ];
 
-
+    /**
+     * Whenever product updated
+     */
     public function updatedProductId($id)
     {
-        // $this->reset();
+        $this->reset();
         $this->selectedProduct = Product::find($id);
     }
 
-    public function addNewUnitField()
+    /**
+     * Add a card for new unit assigment
+     */
+    public function addNewCard()
     {
-        $this->unitFields[] = ['multiplier' => true, 'factor' => null, 'parent_id' => null, 'name' => null];
+        $this->cards[] = ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null];
     }
 
-    public function removeAllUnitFields()
+    /**
+     * Remove all cards
+     */
+    public function removeAllCards()
     {
-        $this->unitFields = [];
+        $this->cards = [];
     }
 
-    public function removeUnitField($key)
+    /**
+     * Remove specified unit card field
+     */
+    public function removeCard($key)
     {
-        unset($this->unitFields[$key]);
+        unset($this->cards[$key]);
     }
 
-    public function toggleMultiplier($key)
+    /**
+     * Toggles the operator
+     */
+    public function toggleOperator($key)
     {
-        $this->unitFields[$key]['multiplier'] = ! $this->unitFields[$key]['multiplier'];
+        $this->cards[$key]['operator'] = ! $this->cards[$key]['operator'];
     }
 
+    /**
+     * Get all products for unit assigment 
+     */
     public function getProductsProperty()
     {
-        return Product::all();
+        return Product::all()->toArray();
     }
 
+    /**
+     * Submits the form
+     */
     public function submit($index)
     {
-        $unitField = $this->unitFields[$index];
-        $unitField['product_id'] = $this->selectedProduct->id;
-        // if($unitField['parent_id'] == null) $unitField['parent_id'] = 0;
+        $card = $this->cards[$index];
+        $card['product_id'] = $this->selectedProduct->id;
 
-        Conversions::addUnit($unitField); 
+        Conversions::addUnit($card); 
+        $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
     }
 
 

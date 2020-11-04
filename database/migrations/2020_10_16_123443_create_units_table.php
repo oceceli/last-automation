@@ -16,7 +16,8 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('multiplier');
+            $table->string('abbreviation');
+            $table->boolean('operator');
             $table->float('factor', 8, 2, true);
             $table->unsignedBigInteger('parent_id');
             $table->unsignedBigInteger('product_id');

@@ -9,15 +9,18 @@ class Content extends Component
 
     public $theme;
 
+    public $buttons;
+
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($theme = null)
+    public function __construct($theme = null, $buttons = false)
     {
         $this->theme = $theme;
+        $this->buttons = $buttons;
     }
 
     /**

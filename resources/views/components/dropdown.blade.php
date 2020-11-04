@@ -38,17 +38,19 @@
     $(document).ready(function() {
         
         var values = [];
+        var sId = '#{{ $sId }}';
 
         // pupulate the options initially
         fetchValues();
 
-    
+        
+
         /**
          * if an event specified, populate the select with new options
          */
         @if ($triggerOnEvent)
-            Livewire.on('{{ $triggerOnEvent }}', function(){
-                console.log("{{ $triggerOnEvent }} event triggered!");
+            livewire.on('{{ $triggerOnEvent }}', function(){
+                console.log("{{ $triggerOnEvent }} event triggered for {{ $sId }}!");
                 values = []; // empty values before update
                 fetchValues();
             });
@@ -58,7 +60,7 @@
         /**
          * Populate select options on any dom update. class or id
          */
-         @if ($triggerOn) 
+        @if ($triggerOn) 
             $("{{ $triggerOn }}").on('change', function (){
                 values = []; // empty values before update
                 fetchValues();
@@ -71,12 +73,20 @@
          * 
          */
         function fetchValues() {
+            
+        
+            if($(sId).length < 1) { // if dom deleted
+                console.warn(sId + " already deleted");
+                sId = null;
+                return;
+            }
+            
             @if($dataSource)
                 let data = @this.get('{{ $dataSource }}');
                 setValues(data);
             @else 
                 @this.call('{{ $dataSourceFunction }}').then(data => {
-                    console.log('{{ $dataSourceFunction }} function populating the {{ $sId }} dropdown');
+                    console.log('{{ $dataSourceFunction }} function populating the' + sId + ' dropdown');
                     setValues(data);
                 });
             @endif
@@ -95,13 +105,13 @@
                 populate(values);
             } else {
                 const style = 'font-size: 10px; color: orange;';
-                console.log('%c {{ $sId }} dataSource yanlış ya da tetik bekleniyor', style);
+                console.log('%c' + sId + ' dataSource yanlış ya da tetik bekleniyor', style);
             }
         }
 
 
         function populate(values = null) {
-            $('#{{ $sId }}').dropdown({
+            $(sId).dropdown({
                 values: values, // {name: test, value: 1} gibi
                 preserveHTML: false,
                 ignoreDiacritics: true,
@@ -126,7 +136,7 @@
                 },
             });
             const style = 'font-size: 10px; color: green;';
-            console.log('%c {{ $sId }} population completed!', style);
+            console.log('%c' + sId + ' population completed!', style);
         }
         
     });

@@ -30,6 +30,16 @@ class Form extends BaseForm
         //     'unit_id' => 8,
         //     'amount' => 550,
         // ],
+        // [
+        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
+        //     'unit_id' => 8,
+        //     'amount' => 550,
+        // ],
+        // [
+        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
+        //     'unit_id' => 8,
+        //     'amount' => 550,
+        // ],
     ];
 
 
@@ -50,13 +60,12 @@ class Form extends BaseForm
         $this->cards[] = ['ingredient' => $ingredient];
         // dd($this->cards[$ingredient['id']]['ingredient']['units']);
 
-
     }
     public function removeCard($key)
     {
         unset($this->cards[$key]);
-        dd($this->cards);
-        // $this->cards = array_values($this->cards);
+        $this->cards = array_values($this->cards);
+        $this->emit('aCardDeleted');
     }
     public function removeAllCards()
     {

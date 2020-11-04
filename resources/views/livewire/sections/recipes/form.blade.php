@@ -53,14 +53,17 @@
                                         <div class="font-bold">{{ $card['ingredient']['name'] }}</div>
                                         <div class="text-sm text-gray-500">{{ $card['ingredient']['code'] }}</div>
                                     </div>
-
+                                    @if(! empty($cards[$key]['unit_id']))
+                                        {{ $cards[$key]['unit_id']}}
+                                    @endif
                                     <div class="field flex items-center">
                                         <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
                                             model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="basic"
-                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                            triggerOnEvent="aCardDeleted" value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
                                         </x-dropdown>
                                     </div>
                                 </div>
+                               
 
                                 <button wire:click.prevent="removeCard({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 bg-white focus:outline-none opacity-75 hover:opacity-100">
                                     <i class="red shadow rounded-full cancel icon"></i>
