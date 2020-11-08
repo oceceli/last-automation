@@ -1,6 +1,6 @@
 <div>
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
-    <x-content theme="orange">
+    <x-content theme="orange" buttons>
 
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}

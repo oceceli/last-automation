@@ -33,7 +33,7 @@ class Form extends Baseform
     public $is_active = true;
     public $producible = false;
 
-    public $unit; // unit tablosuna yazılacak
+    public $unit_id; // unit tablosuna yazılacak static
 
     // public $categories;
  
@@ -82,19 +82,19 @@ class Form extends Baseform
     {
         if($this->editMode) {
             $this->update($this->product);
-            $this->createUnit($this->product->id, $this->unit); 
+            $this->createUnit($this->product->id, $this->unit_id); 
         } else {
             $this->create();
             if($product = $this->created) {
-                $this->createUnit($product->id, $this->unit); 
+                $this->createUnit($product->id, $this->unit_id); 
             }
             $this->reset();
         }
     }
 
-    public function createUnit($product_id, $unitName)
+    public function createUnit($product_id, $unit_id)
     {
-        Conversions::setBaseUnit($product_id, $unitName);
+        Conversions::setBaseUnit($product_id, $unit_id);
     }
 
 

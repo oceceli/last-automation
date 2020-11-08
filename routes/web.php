@@ -26,7 +26,8 @@ Route::middleware('auth')->group(function () {
 	Route::resource('/categories', 'CategoryController');
     Route::resource('/products', 'ProductController');
 	Route::resource('/recipes', 'RecipeController');
-	Route::resource('/work-orders', 'WorkOrderController');
+    Route::get('/work-orders/daily', 'WorkOrderController@daily')->name('work-orders.daily');
+    Route::resource('/work-orders', 'WorkOrderController');
     Route::resource('/stock-moves', 'StockMoveController');
     
     Route::resource('/roles', 'RoleController');

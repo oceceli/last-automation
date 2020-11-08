@@ -9,7 +9,7 @@ use App\Models\Recipe;
 use Exception;
 use \Illuminate\Support\Str;
 
-class Form extends BaseForm
+class FormYedek extends BaseForm
 {
 
     public $model = Recipe::class;

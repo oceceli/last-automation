@@ -16,7 +16,7 @@ class Recipe extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['product', 'ingredients']; 
+    protected $with = ['ingredients']; 
 
     /**
      * Validate rules for current model
@@ -43,11 +43,6 @@ class Recipe extends Model
     public function ingredients()
     {
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id');
-    }
-
-    public function workorders()
-    {
-        return $this->hasMany(WorkOrder::class);
     }
     
 }

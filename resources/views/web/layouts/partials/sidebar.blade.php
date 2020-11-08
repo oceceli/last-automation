@@ -21,7 +21,7 @@
                 <i class="large link circular building outline icon"></i>
                 <i class="large link circular store icon"></i>
                 <i class="large link circular address card icon"></i>
-                <i class="large link circular loading setting icon"></i>
+                <i class="large link circular setting icon"></i>
                 <i class="large link circular settings book icon"></i>
             </div>
         </div>

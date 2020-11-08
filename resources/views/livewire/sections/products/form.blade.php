@@ -1,7 +1,7 @@
 <div x-data="{categoryModal: false}">
     <x-page-header icon="box" header="sections/products.create.header" subheader="sections/products.create.subheader" />
 
-    <x-content>
+    <x-content buttons>
         <form class="ui small form p-6" wire:submit.prevent="submit" >
             <div class="equal width fields">
                 <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="required field" />
@@ -10,7 +10,7 @@
                 <x-input model="code" label="sections/products.code" placeholder="sections/products.code" class="required field" />                
                 <x-input model="barcode" label="sections/products.barcode" placeholder="EAN13" class="required field" />
 
-                <x-dropdown model="unit" dataSourceFunction="getUnitsProperty" value="text" text="text" sId="units"
+                <x-dropdown model="unit_id" dataSourceFunction="getUnitsProperty" value="id" text="name" sId="units"
                     label="sections/units.unit" placeholder="sections/units.unit" transition="slide down" class="required field"
                 />
 

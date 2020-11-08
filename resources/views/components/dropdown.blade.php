@@ -4,7 +4,7 @@
     <label>{{ __($label)}}</label>
 
     @if ($iModel)
-    <div class="ui right labeled small input">
+    <div class="ui right labeled input">
         <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
         <div class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
             <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            

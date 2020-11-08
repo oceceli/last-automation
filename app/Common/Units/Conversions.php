@@ -9,25 +9,33 @@ class Conversions
 {
 
     const units = [
-        ['text' => 'Adet'],
-        ['text' => 'Gram'],
-        ['text' => 'Cm'],
-        ['text' => 'Litre'],
+        ['id' => 1, 'name' => 'Adet', 'abbreviation' => 'adet'],
+        ['id' => 2, 'name' => 'Gram', 'abbreviation' => 'gr'],
+        ['id' => 3, 'name' => 'Santimetre', 'abbreviation' => 'cm'],
+        ['id' => 4, 'name' => 'Litre', 'abbreviation' => 'lt'],
     ];
     
     
 
-    public static function setBaseUnit($product_id, $unitName)
+    public static function setBaseUnit($product_id, $unit_id)
     {
-        if(in_array($unitName, array_column(self::units, 'text'))) {
-            Unit::create(['name' => $unitName, 'product_id' => $product_id, 'factor' => 1, 'multiplier' => true, 'parent_id' => 0]);
-        } else dd("unit kaydedilemedi!");
+        array_map(function($index) use ($product_id, $unit_id){
+            if($index['id'] == $unit_id) {
+                Unit::create(['name' => $index['name'], 'abbreviation' => $index['abbreviation'], 'product_id' => $product_id, 'factor' => 1, 'operator' => true, 'parent_id' => 0]);
+                return true;
+            }
+        }, self::units);
+        
     }
 
 
     public static function addUnit(array $data)
     {
-        $validator = Validator::validate($data, Unit::rules()['data']);
+        try {
+            Validator::validate($data, Unit::rules()['data']); 
+        } catch (\Throwable $th) {
+            return false;
+        }        
         Unit::create($data);
     }
 

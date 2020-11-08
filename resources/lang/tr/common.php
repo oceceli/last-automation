@@ -47,6 +47,8 @@ return [
     'somethings_missing' => 'Bir şeyler eksik!',
     'somethings_wrong' => 'Bir şeyler yanlış',
     'there_is_nothing_here' => 'Burada hiçbir şey yok!',
+    'note' => 'Not',
+    'optional' => 'İsteğe bağlı',
 
 
     // Mostly Sidebar ----
@@ -60,11 +62,15 @@ return [
     'stock-moves' => 'Stok Hareketleri',
     'unit-create' => 'Birim oluştur',
     'units' => 'Birimler',
+    'work-orders-daily' => 'Günlük iş emri',
 
     'create' => 'oluştur',
     'home' => 'Anasayfa',
 
     'main' => 'Ana',
     'base' => 'Temel',
+    'status' => 'Durum',
+    'suspended' => 'Askıya alındı',
+    'today' => 'Bugün',
     
 ];

@@ -17,7 +17,7 @@ class WorkOrder extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['recipe']; 
+    // protected $with = ['product']; 
 
     /**
      * Validate rules for current model
@@ -27,7 +27,8 @@ class WorkOrder extends Model
         $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                'recipe_id' => 'required|min:1',
+                'product_id' => 'required|min:1',
+                'unit_id' => 'required|min:1',
                 'code' => 'required|integer|min:0', // iş emri no
                 'lot_no' => 'required',
                 'amount' => 'required|numeric|min:0.1',
@@ -50,16 +51,52 @@ class WorkOrder extends Model
 
     public function getDatetimeAttribute($value)
     {
-        return $value;
-        // return Carbon::parse($value)->format('d.m.Y');
+        return Carbon::parse($value)->format('d.m.Y');
     }
 
 
-    public function recipe()
+    public function product()
     {
-        return $this->belongsTo(Recipe::class);
+        return $this->belongsTo(Product::class);
     }
 
-    
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function setIsActiveAttribute($value)
+    {
+        $this->attributes['is_active'] = (boolean)$value;
+    }
+    public function getIsActiveAttribute($value)
+    {
+        return (boolean)$value;
+    }
+
+    public function isCompleted()
+    {
+        return $this->is_completed;
+    }
+    public function isNotCompleted()
+    {
+        return !$this->isCompleted();
+    }
+    public function inProgress()
+    {
+        return $this->in_progress;
+    }
+
+
+
+
+
+    /**
+     * Static helpers ******************************
+     */
+    public static function getTodaysList()
+    {
+        return self::where('datetime', Carbon::today()->format('d.m.Y'))->get(); // ve yalnızca aktif olanlar
+    }
 
 }

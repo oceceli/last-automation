@@ -36,12 +36,23 @@ class WorkOrderController extends Controller
     public function show($id)
     {
         $workOrder = $this->repository->fetch($id);
-        return view('web.sections.workorders.show', ['workOrder' => $workOrder]);
+        return view('web.sections.workorders.show', compact('workOrder'));
+    }
+
+    public function edit($id)
+    {
+        $workOrder = $this->repository->fetch($id);
+        return view('web.sections.workorders.edit', compact('workOrder'));
     }
 
     public function create()
     {
         return view('web.sections.workorders.create');
+    }
+
+    public function daily()
+    {
+        return view('web.sections.workorders.daily');
     }
 
 }

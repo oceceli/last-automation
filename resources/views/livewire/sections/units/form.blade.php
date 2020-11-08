@@ -8,7 +8,7 @@
                     <x-dropdown label="{{ __('modelnames.product') }}"
                         placeholder="{{ __('common.dropdown_placeholder') }}" model="product_id"
                         dataSourceFunction="getProductsProperty" sId="selectProduct" sClass="search" value="id"
-                        text="name" placeholder="{{ __('sections/units.unit') }}">
+                        text="name">
                     </x-dropdown>
                 </div>
             </div>

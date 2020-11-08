@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Http\Livewire\Form as BaseForm;
 use App\Models\Product;
-use App\Models\Recipe;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
 
@@ -14,28 +13,32 @@ class Form extends BaseForm
     public $view = 'livewire.sections.workorders.form';
 
 
-    public $recipe_id;
+    public $product_id;
     public $lot_no;
     public $amount;
     public $datetime;
     public $code;
     public $queue;
-    public $is_active = false;
+    public $is_active = true;
     public $in_progress = false;
     public $note;
 
     public $unit_id;
 
     // comes from dropdown
-    public $product_id;
     public $selectedProduct;
 
-    // public $units;
+    // edit mode
+    public $editMode = false;
+    public $workOrder;
 
-    public function mount() 
+    public function mount($workOrder = null) 
     {
-        parent::mount();
-        $this->datetime = Carbon::tomorrow()->format('d.m.Y');
+        if($workOrder) {
+            $this->setEditMode($workOrder);
+        } else {
+            $this->datetime = Carbon::tomorrow()->format('d.m.Y');
+        }
         
 
     }
@@ -43,7 +46,7 @@ class Form extends BaseForm
     public function updatingProductId($id)
     {
         $this->selectedProduct = Product::find($id);
-        $this->recipe_id = $this->selectedProduct->recipe->id; // !!! 
+        // $this->recipe_id = $this->selectedProduct->recipe->id; // !!! 
         // $this->units = $this->selectedProduct->units->toArray();
     }
     
@@ -53,24 +56,32 @@ class Form extends BaseForm
         if($this->selectedProduct) {
             return $this->selectedProduct->units->toArray();
         }
-        // return [
-        //    ['id' => 1, 'name' => 'adet'],
-        //    ['id' => 2, 'name' => 'g'],
-        //    ['id' => 3, 'name' => 'kg'],
-        //    ['id' => 4, 'name' => 'ton'],
-        //    ['id' => 5, 'name' => 'litre'],
-        // ];
     }
 
 
     public function getProductsProperty()
     {
-        $products = [];
-        foreach(Recipe::all() as $recipe) {
-            if($recipe->product)
-                $products[] = $recipe->product;
-        }
-        return $products;
+        return Product::has('recipe')->get()->toArray();
+    }
+
+
+    /**
+     * Sets the attributes for editing
+     */
+    public function setEditMode($workOrder)
+    {
+        $this->editMode = true;
+        $this->workOrder = $workOrder;
+
+        $this->product_id = $workOrder->product_id;
+        $this->lot_no = $workOrder->lot_no;
+        $this->amount = $workOrder->amount;
+        $this->datetime = $workOrder->datetime;
+        $this->code = $workOrder->code;
+        $this->queue = $workOrder->queue;
+        $this->is_active = $workOrder->is_active;
+        $this->in_progress = $workOrder->in_progress;
+        $this->note = $workOrder->note;
     }
 
 

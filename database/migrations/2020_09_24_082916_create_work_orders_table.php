@@ -15,7 +15,8 @@ class CreateWorkOrdersTable extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('recipe_id');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('unit_id');
             $table->string('lot_no');
             $table->integer('amount');
             $table->dateTime('datetime');

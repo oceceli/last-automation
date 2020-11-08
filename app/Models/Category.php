@@ -57,5 +57,10 @@ class Category extends Model
             ],
         ];
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
     
 }

@@ -16,7 +16,7 @@ class Product extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['units']; 
+    protected $with = ['units', 'recipe', 'workorders']; 
 
 
     // public const theadAttributes = [
@@ -72,7 +72,6 @@ class Product extends Model
         return $this->hasMany(Unit::class); 
     }
 
-
     public function stockmoves()
     {
         return $this->hasMany(StockMove::class);
@@ -86,6 +85,11 @@ class Product extends Model
     public function getBaseUnit()
     {
         return $this->units->where('parent_id', 0)->first();
+    }
+
+    public function workorders()
+    {
+        return $this->hasMany(WorkOrder::class);
     }
 
     public function getRecipeIngredients()
@@ -106,6 +110,16 @@ class Product extends Model
     public static function getProduciblesDoesntHaveRecipe()
     {
         return self::where('producible', true)->doesntHave('recipe')->get();
+    }
+
+    public function getCodeAttribute($value)
+    {
+        return strtoupper($value);
+    }
+    
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
     }
     
     

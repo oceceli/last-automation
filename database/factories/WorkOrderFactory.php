@@ -24,6 +24,7 @@ class WorkOrderFactory extends Factory
     {
         return [
             'recipe_id' => 1,
+            'unit_id' => $this->faker->randomNumber(),
             'lot_no' => $this->faker->ean8,
             'amount' => $this->faker->randomNumber(),
             'datetime' => now(),

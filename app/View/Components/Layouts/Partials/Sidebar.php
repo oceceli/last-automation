@@ -34,6 +34,7 @@ class Sidebar extends Component
             ['name' => 'recipes.create', 'label' => 'recipes-create', 'icon' => 'icon large mortar pestle'],
             ['name' => 'stock-moves.index', 'label' => 'stock-moves', 'icon' => 'icon large box'],
             ['name' => 'units.create', 'label' => 'unit-create', 'icon' => 'icon large weight'],
+            ['name' => 'work-orders.daily', 'label' => 'work-orders-daily', 'icon' => 'icon large industry'],
         ];
     }
 }

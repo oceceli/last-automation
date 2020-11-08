@@ -6,6 +6,7 @@
             <i class="circular link blue eye icon"></i>
         </a>
     </div>
+    @if (!$onlyShow)
     <div data-tooltip="{{ __('common.edit') }}">
         <a href="{{ route("$pluralModelName.edit", ["$modelName" => $modelId]) }}">
             <i class="bordered orange pen alternate link circular icon"></i>
@@ -14,4 +15,6 @@
     <div data-tooltip="{{ __('common.delete') }}">
         <i wire:click.prevent="delete({{ $modelId }})" class="bordered red eraser link circular inverted icon"></i>
     </div>
+    @endif
+    {{ $slot }}
 </div>
