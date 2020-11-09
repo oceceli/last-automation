@@ -11,6 +11,8 @@ class CrudActions extends Component
     public $pluralModelName;
     public $modelId;
 
+    public $gray;
+
     public $onlyShow;
 
     /**
@@ -18,13 +20,14 @@ class CrudActions extends Component
      *
      * @return void
      */
-    public function __construct($modelName, $modelId, $onlyShow = false)
+    public function __construct($modelName, $modelId, $onlyShow = false, $gray = false)
     {
         $this->modelName = Generic::kebabToSnake($modelName);
         $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
         $this->modelId = $modelId;
 
         $this->onlyShow = $onlyShow;
+        $this->gray = $gray;
     }
 
     /**

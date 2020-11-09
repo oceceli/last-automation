@@ -122,5 +122,4 @@ class Product extends Model
         return ucwords($value);
     }
     
-    
 }

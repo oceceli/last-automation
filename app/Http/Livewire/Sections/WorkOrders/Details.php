@@ -30,6 +30,7 @@ class Details extends Component
 
     public function updatingIsActive($value)
     {
+        // if work order is not completed, then should change the is_active column // backend security
         if($this->workOrder->isNotCompleted() && is_bool($value)) {
             $this->workOrder->update(['is_active' => $value]);
             $value 

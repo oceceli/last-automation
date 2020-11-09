@@ -9,13 +9,14 @@ use Livewire\Component;
 class Today extends Component
 {
 
-    public $today;
+    public $todayDate; // just date of today
     public $todaysList;
+
 
 
     public function mount()
     {
-        $this->today = Carbon::now()->format('d.m.Y');
+        $this->todayDate = Carbon::now()->format('d.m.Y - D');
         $this->todaysList = WorkOrder::getTodaysList();
     }
 

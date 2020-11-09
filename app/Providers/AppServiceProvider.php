@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Localization Carbon çalışmıyor ???
+        // \Carbon\Carbon::setLocale($this->app->getLocale());
     }
 
     /**
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //   
+        //
     }
 
 }

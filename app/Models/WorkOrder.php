@@ -96,7 +96,7 @@ class WorkOrder extends Model
      */
     public static function getTodaysList()
     {
-        return self::where('datetime', Carbon::today()->format('d.m.Y'))->get(); // ve yalnızca aktif olanlar
+        return self::where('datetime', Carbon::today()->format('d.m.Y'))->get(); // ve yalnızca aktif olanları al
     }
 
 }
