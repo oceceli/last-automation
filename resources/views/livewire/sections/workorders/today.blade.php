@@ -1,4 +1,4 @@
-<div>
+<div>{{ $test }}
     <x-page-header icon="settings" header="sections/workorders.daily_work_orders" />
     <x-content theme="green">
         <div class="p-4">
@@ -32,12 +32,6 @@
                                 <td>{{ $workOrder->product->name }}</td>
                                 <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</td>
                                 <td class="">{{ $workOrder->lot_no }}</td>
-                                {{-- <td>
-                                    <span>{{ $workOrder->datetime }}</span>
-                                    <span class="font-bold">(bugün)</span>
-                                </td> --}}
-                                {{-- <td>{{ $workOrder->in_progress }}</td> --}}
-                                {{-- <td>{{ $workOrder->is_active }}</td> --}}
                                 <td class="center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing selectable">
@@ -69,16 +63,16 @@
                                 <td class="">{{ $workOrder->lot_no }}</td>
                                 <td class="center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
-                                {{-- <td>
-                                    <span>{{ $workOrder->datetime }}</span>
-                                    <span class="font-bold">(bugün)</span>
-                                </td> --}}
-                                {{-- <td>{{ $workOrder->in_progress }}</td> --}}
-                                
-                                {{-- <td class="">Onay<i class="green checkmark icon"></i></td> --}}
                                 <td class="collapsing">
                                     @if(!$workOrder->inProgress())
-                                        <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id" />
+                                        <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
+                                            <div data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                                <i wire:click.prevent="" class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
+                                            </div>
+                                            <x-custom-modal>
+                                                <x-input model="test" placeholder="gir" />
+                                            </x-custom-modal>
+                                        </x-crud-actions>
                                     @elseif($workOrder->is_active)
                                         <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
                                     @else

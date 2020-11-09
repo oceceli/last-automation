@@ -1,6 +1,11 @@
 <?php
 
 return [
+    // icons
+    'wo_complete_icon' => 'green checkmark',
+
+
+
     'product_id' => 'Reçete no ???',
     'lot_no' => 'Lot No',
     'amount' => 'Miktar',
@@ -38,6 +43,7 @@ return [
     'wo_status' => 'Durum',
     'wo_suspended' => 'İş emri askıya alındı',
     'wo_unsuspended' => 'İş emri üretimi bekliyor',
+    'wo_complete' => 'Bitir',
 
     'waiting_for_production' => 'Üretim bekleniyor...',
 ];
