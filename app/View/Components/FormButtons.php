@@ -6,14 +6,19 @@ use Illuminate\View\Component;
 
 class FormButtons extends Component
 {
+
+    public $clear;
+    public $submit;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($clear = 'clearFields', $submit = 'submit')
     {
-        //
+        $this->clear = $clear;
+        $this->submit = $submit;
     }
 
     /**

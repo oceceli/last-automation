@@ -12,7 +12,8 @@ class Today extends Component
     public $todayDate; // just date of today
     public $todaysList;
 
-    public $test;
+    public $totalProduced;
+    public $waste; 
 
 
     public function mount()
@@ -21,9 +22,14 @@ class Today extends Component
         $this->todaysList = WorkOrder::getTodaysList();
     }
 
-    public function testfunction()
+    public function submitProductionCompleted()
     {
-        dd("tıkıladın0");
+        
+    }
+
+    public function clearFields()
+    {
+        $this->reset('totalProduced', 'waste');
     }
 
     public function render()

@@ -25,7 +25,6 @@ class Conversions
                 return true;
             }
         }, self::units);
-        
     }
 
 

@@ -23,10 +23,13 @@ class StockMove extends Model
      */
     public static function rules()
     {
-        $id = self::getRequestID(); // use for unique keys on update event
+        // $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
-                //
+                'product_id' => 'required|min:1',
+                'direction' => 'required|boolean',
+                'amount' => 'required|numeric',
+                'date' => 'required|date',
             ],
             'relation' => [ // use for many to many relationships
                 //

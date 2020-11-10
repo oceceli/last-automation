@@ -1,4 +1,4 @@
-<div>{{ $test }}
+<div>
     <x-page-header icon="settings" header="sections/workorders.daily_work_orders" />
     <x-content theme="green">
         <div class="p-4">
@@ -61,18 +61,31 @@
                                 <td>{{ $workOrder->product->name }}</td>
                                 <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</td>
                                 <td class="">{{ $workOrder->lot_no }}</td>
-                                <td class="center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
+                                <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing">
                                     @if(!$workOrder->inProgress())
-                                        <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
-                                            <div data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
-                                                <i wire:click.prevent="" class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
-                                            </div>
-                                            <x-custom-modal>
-                                                <x-input model="test" placeholder="gir" />
+                                        <div x-data="{wo_complete: true}">
+                                            <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
+                                                <div @click="wo_complete = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                                    <i wire:click.prevent="" class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
+                                                </div>
+                                            </x-crud-actions>
+                                            <x-custom-modal active="wo_complete">
+                                                <x-slot name="header">
+                                                    <x-page-header>
+                                                        <x-slot name="customHeader">
+                                                            <span class="font-semibold text-teal-800">{{ $workOrder->product->name }}</span>
+                                                        </x-slot>
+                                                    </x-page-header>
+                                                </x-slot>
+                                                <div class="ui mini form">
+                                                    <x-input label="Toplam" model="totalProduced" placeholder="Toplam üretilen miktar" />
+                                                    <x-input label="Fire" model="waste" placeholder="Fire miktarı" />
+                                                    <x-form-buttons submit="submitProductionCompleted" />
+                                                </div>
                                             </x-custom-modal>
-                                        </x-crud-actions>
+                                        </div>
                                     @elseif($workOrder->is_active)
                                         <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
                                     @else
