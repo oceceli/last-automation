@@ -59,7 +59,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $workOrder->product->name }}</td>
-                                <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</td>
+                                <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}
+                                    {{ $workOrder->convertedAmount() }}
+                                </td>
                                 <td class="">{{ $workOrder->lot_no }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>

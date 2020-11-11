@@ -20,10 +20,10 @@ class Form extends Component
 
     public $view = null;
 
-    public function mount()
-    {
-        // $this->success = false;
-    }
+    // public function mount()
+    // {
+    //     // $this->success = false;
+    // }
 
     public function render()
     {

@@ -23,7 +23,7 @@ class WorkOrderFactory extends Factory
     public function definition()
     {
         return [
-            'recipe_id' => 1,
+            'product_id' => 1,
             'unit_id' => $this->faker->randomNumber(),
             'lot_no' => $this->faker->ean8,
             'amount' => $this->faker->randomNumber(),

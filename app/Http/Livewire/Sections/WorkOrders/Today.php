@@ -11,6 +11,7 @@ class Today extends Component
 
     public $todayDate; // just date of today
     public $todaysList;
+    
 
     public $totalProduced;
     public $waste; 

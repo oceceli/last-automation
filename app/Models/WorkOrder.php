@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Common\Units\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -85,6 +86,12 @@ class WorkOrder extends Model
     public function inProgress()
     {
         return $this->in_progress;
+    }
+
+    public function convertedAmount()
+    {
+        $a = Conversions::convertToBase($this->product_id, $this->unit_id, $this->amount);
+        dd($a);
     }
 
 

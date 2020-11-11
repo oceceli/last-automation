@@ -39,15 +39,12 @@ class Form extends BaseForm
         } else {
             $this->datetime = Carbon::tomorrow()->format('d.m.Y');
         }
-        
-
     }
 
-    public function updatingProductId($id)
+    public function updatedProductId($id)
     {
-        $this->selectedProduct = Product::find($id);
-        // $this->recipe_id = $this->selectedProduct->recipe->id; // !!! 
-        // $this->units = $this->selectedProduct->units->toArray();
+        $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
+        $this->emit('woProductChanged'); // fill the units
     }
     
 

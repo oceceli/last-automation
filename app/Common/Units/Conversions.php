@@ -2,6 +2,7 @@
 
 namespace App\Common\Units;
 
+use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,6 +37,33 @@ class Conversions
             return false;
         }        
         Unit::create($data);
+    }
+
+    /**
+     * Convert given unit to product's base unit. 
+     */
+    public static function convertToBase($product_id, $unit_id, $amount)
+    {
+        // find product
+        // get units of product 
+        // ask if given unit belongs to that product; if it's not, return @error 
+        // find given unit
+        // get product's base unit ($product->units ... parent 0)
+        // ask if given unit is already base of the product, if so @return it as is.
+        
+        $product = Product::find($product_id);
+        $unitsOfProduct = $product->units;
+        if( ! $unit = $unitsOfProduct->find($unit_id))
+            dd('verilen birim bu ürüne ait değil!');
+        
+        $unit;
+        $baseUnit = $product->getBaseUnit();
+
+        
+
+        dump($baseUnit);
+        
+
     }
 
 

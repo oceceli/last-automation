@@ -17,7 +17,7 @@
                 <x-input model="lot_no" label="sections/workorders.lot_no" placeholder="sections/workorders.lot_no" class="required field" />
 
                 <x-dropdown iModel="amount" iPlaceholder="sections/recipes.amount" label="sections/workorders.amount"
-                    model="unit_id" triggerOn="#selectProduct" dataSourceFunction="getUnitsProperty" sId="asfdsadfsafd" sClass="basic"
+                    model="unit_id" initnone triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
                     value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
                 />
             </div>

@@ -28,7 +28,7 @@
     @error($model)
         <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
     @enderror
-    {{ $slot }}
+    {{-- {{ $slot }} --}}
 
 </div>
 
@@ -40,8 +40,11 @@
         var values = [];
         var sId = '#{{ $sId }}';
 
+        
         // pupulate the options initially
-        fetchValues();
+        @if( ! $initnone)
+            fetchValues();
+        @endif
 
         
 
@@ -86,7 +89,7 @@
                 setValues(data);
             @else 
                 @this.call('{{ $dataSourceFunction }}').then(data => {
-                    console.log('{{ $dataSourceFunction }} function populating the' + sId + ' dropdown');
+                    console.log('{{ $dataSourceFunction }} function populating the ' + sId + ' dropdown');
                     setValues(data);
                 });
             @endif
@@ -105,7 +108,7 @@
                 populate(values);
             } else {
                 const style = 'font-size: 10px; color: orange;';
-                console.log('%c' + sId + ' dataSource yanlış ya da tetik bekleniyor', style);
+                console.log('%c' + sId + ' dataSource yanlış!', style);
             }
         }
 
