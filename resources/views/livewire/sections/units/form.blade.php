@@ -15,17 +15,16 @@
         </div>
 
 
-
         @if ($selectedProduct)
             <div class="px-5 pb-5">
 
                 @include('web.sections.units.unitsHeader')
 
-                <div class="relative border rounded-t" style="min-height: 60%"
+                <div class="relative rounded-t" style="min-height: 60%"
                     x-data="{'materials' : false}">
 
                        
-                        <div class="p-5 py-7">
+                        <div class="px-2 py-7">
                             <div class="flex flex-col gap-3">
                                 @if ( ! $cards)
                                     <div class="ui placeholder segment h-full">

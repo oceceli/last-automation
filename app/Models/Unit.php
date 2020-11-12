@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 
@@ -39,11 +38,15 @@ class Unit extends Model
         return $this->parent_id == 0;
     }
 
-
-    public static function getBaseUnit($productId)
+    /**
+     * Get unit name ucfirst 
+     */
+    public function getNameAttribute($value)
     {
-        return self::where(['product_id' => $productId, 'parent_id' => 0])->first();
+        return ucfirst($value);
     }
+    
+    
     
 
     /**
@@ -65,6 +68,12 @@ class Unit extends Model
                 //
             ],
         ];
+    }
+
+
+    public static function getBaseUnit($productId)
+    {
+        return self::where(['product_id' => $productId, 'parent_id' => 0])->first();
     }
     
 }

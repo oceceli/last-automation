@@ -38,6 +38,7 @@ class Conversions
             return false;
         }        
         Unit::create($data);
+        return true;
     }
 
     /**
@@ -45,12 +46,6 @@ class Conversions
      */
     private static function converttttt($product_id, $unit_id, $amount)
     {
-        // find product
-        // get units of product 
-        // ask if given unit belongs to that product; if it's not, return @error 
-        // find given unit
-        // get product's base unit ($product->units ... parent 0)
-        // ask if given unit is already base of the product, if so @return it as is.
         $product = Product::find($product_id);
         $unitsOfProduct = $product->units;
         if( ! $unit = $unitsOfProduct->find($unit_id))
@@ -59,10 +54,10 @@ class Conversions
     }
 
 
-    public static function toBase($amount, $unit)
+    public static function toBase($unit, $amount = 1)
     {
         if($unit->isBase()) {
-            return ['unit' => $unit, 'amount' => $amount];
+            return self::output($unit, $amount);
         }
 
         $parent = $unit->parent;
@@ -70,25 +65,32 @@ class Conversions
             ? $amount * $unit->factor
             : $amount / $unit->factor;
         
-        return self::toBase($newAmount, $parent);
+        return self::toBase($parent, $newAmount);
     }
 
 
 
-    public static function convert($amount, $from, $to)
+    public static function convert($amount, $from, $target)
     {
-        if( ! $from instanceof Unit)
+        if( ! $from instanceof Unit && is_numeric($from))
             $from = Instantiator::make('unit', $from);
-        if( ! $to instanceof Unit)
-            $to = Instantiator::make('unit', $to);
+        if( ! $target instanceof Unit && is_numeric($target))
+            $target = Instantiator::make('unit', $target);
 
 
-        $from_toBase = self::toBase($amount, $from);
-        $to_toBase = self::toBase(1, $to);
+        $fromBase = self::toBase($from, $amount);
+        $targetBase = self::toBase($target);
 
-        $result = $to_toBase['amount'] / $from_toBase['amount'];
+        $convertedAmount = $targetBase['amount'] / $fromBase['amount'];
 
-        dd($result . ' ' . $to->name); 
+        return self::output($target, $convertedAmount);
+
+        // dd($convertedAmount . ' ' . $targetBase['unit']->name); 
+    }
+
+    public static function output($unit, $amount)
+    {
+        return ['unit' => $unit, 'amount' => $amount];
     }
 
     

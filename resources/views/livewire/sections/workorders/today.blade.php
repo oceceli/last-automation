@@ -59,8 +59,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $workOrder->product->name }}</td>
-                                <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}
-                                    {{ $workOrder->convertedAmount() }}
+                                <td>
+                                    <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
+                                    <span class="text-sm text-gray-500">({{ $workOrder->convertedAmount() }} {{ $workOrder->convertedUnit()->name }})</span>
                                 </td>
                                 <td class="">{{ $workOrder->lot_no }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->queue }}</td>

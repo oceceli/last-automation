@@ -9,4 +9,6 @@ return [
 
     'header' => 'Birim Oluştur',
     'subheader' => 'Ürünler için ölçü birimleri oluştur',
+    
+    'please_fulfill_all_fields_carefully' => 'Lütfen tüm alanları eksiksiz doldurun',
 ];

@@ -88,12 +88,18 @@ class WorkOrder extends Model
         return $this->in_progress;
     }
 
+    private function convertToBase()
+    {
+        return Conversions::convert($this->amount, $this->unit, $this->product->getBaseUnit());
+    }
+
+    public function convertedUnit()
+    {
+        return $this->convertToBase()['unit'];
+    }
     public function convertedAmount()
     {
-        // $a = Conversions::convert($this->amount, $this->unit_id, $this->product->getBaseUnit()->id);
-        dump($this->product->units);
-        $a = Conversions::convert($this->amount, $this->unit_id, $this->product->units->find(7));
-        dd($a);
+        return $this->convertToBase()['amount'];
     }
 
 

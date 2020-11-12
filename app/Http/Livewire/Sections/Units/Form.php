@@ -18,6 +18,8 @@ class Form extends Component
         ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null],
     ];
 
+
+
     /**
      * Whenever product updated
      */
@@ -72,12 +74,26 @@ class Form extends Component
      */
     public function submit($index)
     {
+        // $this->ensureCardFulfilled($index);
         $card = $this->cards[$index];
         $card['product_id'] = $this->selectedProduct->id;
 
-        Conversions::addUnit($card); 
+        if( ! Conversions::addUnit($card)) {
+            return $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
+        }
         $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
     }
+
+    // private function ensureCardFulfilled($index)
+    // {
+    //     $this->validate([
+    //         "cards.$index.parent_id" => 'required|int|min:0',
+    //         "cards.$index.name" => 'required|max:20',
+    //         "cards.$index.abbreviation" => 'required|max:10',
+    //         "cards.$index.operator" => 'required|boolean',
+    //         "cards.$index.factor" => 'required|numeric',
+    //     ]);
+    // }
 
 
    
