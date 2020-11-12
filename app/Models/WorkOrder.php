@@ -90,7 +90,9 @@ class WorkOrder extends Model
 
     public function convertedAmount()
     {
-        $a = Conversions::convertToBase($this->product_id, $this->unit_id, $this->amount);
+        // $a = Conversions::convert($this->amount, $this->unit_id, $this->product->getBaseUnit()->id);
+        dump($this->product->units);
+        $a = Conversions::convert($this->amount, $this->unit_id, $this->product->units->find(7));
         dd($a);
     }
 

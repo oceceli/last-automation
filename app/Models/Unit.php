@@ -34,11 +34,17 @@ class Unit extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
+    public function isBase()
+    {
+        return $this->parent_id == 0;
+    }
+
 
     public static function getBaseUnit($productId)
     {
         return self::where(['product_id' => $productId, 'parent_id' => 0])->first();
     }
+    
 
     /**
      * Validate rules for current model

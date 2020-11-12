@@ -2,6 +2,7 @@
 
 namespace App\Common\Units;
 
+use App\Common\Factories\Instantiator;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
@@ -42,7 +43,7 @@ class Conversions
     /**
      * Convert given unit to product's base unit. 
      */
-    public static function convertToBase($product_id, $unit_id, $amount)
+    private static function converttttt($product_id, $unit_id, $amount)
     {
         // find product
         // get units of product 
@@ -50,22 +51,47 @@ class Conversions
         // find given unit
         // get product's base unit ($product->units ... parent 0)
         // ask if given unit is already base of the product, if so @return it as is.
-        
         $product = Product::find($product_id);
         $unitsOfProduct = $product->units;
         if( ! $unit = $unitsOfProduct->find($unit_id))
             dd('verilen birim bu ürüne ait değil!');
         
-        $unit;
-        $baseUnit = $product->getBaseUnit();
-
-        
-
-        dump($baseUnit);
-        
-
     }
 
+
+    public static function toBase($amount, $unit)
+    {
+        if($unit->isBase()) {
+            return ['unit' => $unit, 'amount' => $amount];
+        }
+
+        $parent = $unit->parent;
+        $newAmount = $unit->operator 
+            ? $amount * $unit->factor
+            : $amount / $unit->factor;
+        
+        return self::toBase($newAmount, $parent);
+    }
+
+
+
+    public static function convert($amount, $from, $to)
+    {
+        if( ! $from instanceof Unit)
+            $from = Instantiator::make('unit', $from);
+        if( ! $to instanceof Unit)
+            $to = Instantiator::make('unit', $to);
+
+
+        $from_toBase = self::toBase($amount, $from);
+        $to_toBase = self::toBase(1, $to);
+
+        $result = $to_toBase['amount'] / $from_toBase['amount'];
+
+        dd($result . ' ' . $to->name); 
+    }
+
+    
 
     
 
