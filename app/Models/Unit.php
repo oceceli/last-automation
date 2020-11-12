@@ -59,7 +59,7 @@ class Unit extends Model
             'data' => [
                 'parent_id' => 'required|int|min:0',
                 'product_id' => 'required|int|min:1',
-                'name' => 'required|max:20',
+                'name' => 'required|max:30',
                 'abbreviation' => 'required|max:10',
                 'operator' => 'required|boolean',
                 'factor' => 'required|numeric'

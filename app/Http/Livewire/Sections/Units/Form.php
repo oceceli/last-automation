@@ -27,6 +27,20 @@ class Form extends Component
     {
         $this->reset();
         $this->selectedProduct = Product::find($id);
+        $this->cards = $this->selectedProduct->units->toArray();
+    }
+
+    public function isLocked($card)
+    {
+        return array_key_exists('id', $card);
+    }
+    public function getUnit($card)
+    {
+        // 
+    }
+    public function unlockCard($key)
+    {
+        unset($this->cards[$key]['id']);
     }
 
     /**
@@ -74,14 +88,12 @@ class Form extends Component
      */
     public function submit($index)
     {
-        // $this->ensureCardFulfilled($index);
         $card = $this->cards[$index];
         $card['product_id'] = $this->selectedProduct->id;
 
-        if( ! Conversions::addUnit($card)) {
-            return $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
-        }
-        $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
+        Conversions::addUnit($card) 
+            ? $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success')
+            : $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
     }
 
     // private function ensureCardFulfilled($index)
