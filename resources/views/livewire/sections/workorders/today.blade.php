@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($todaysList as $key => $workOrder)
+                    @foreach ($workOrders as $key => $workOrder)
                         @if ($workOrder->isCompleted())
                             <tr class="left green marked text-green-400">
                                 <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
@@ -83,7 +83,10 @@
                                                     </x-page-header>
                                                 </x-slot>
                                                 <div class="ui mini form">
-                                                    <x-input label="Toplam" model="totalProduced" placeholder="Toplam üretilen miktar" />
+                                                    <x-dropdown label="Toplam" iModel="totalProduced" iPlaceholder="Toplam üretilen miktar" 
+                                                        model="unit_id" value="id" text="name" initnone :collection="$workOrder->product->units->toArray()"
+                                                    />
+                                                    {{-- <x-input label="Toplam" model="totalProduced" placeholder="Toplam üretilen miktar" /> --}}
                                                     <x-input label="Fire" model="waste" placeholder="Fire miktarı" />
                                                     <x-form-buttons submit="submitProductionCompleted" />
                                                 </div>

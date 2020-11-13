@@ -10,18 +10,25 @@ class Today extends Component
 {
 
     public $todayDate; // just date of today
-    public $todaysList;
+    public $workOrders;
+
+    public $unit_id;
+
+    
     
 
     public $totalProduced;
     public $waste; 
+    
 
 
     public function mount()
     {
         $this->todayDate = Carbon::now()->format('d.m.Y - D');
-        $this->todaysList = WorkOrder::getTodaysList();
+        $this->workOrders = WorkOrder::getTodaysList();
     }
+
+    
 
     public function submitProductionCompleted()
     {

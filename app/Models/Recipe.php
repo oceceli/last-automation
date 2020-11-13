@@ -44,5 +44,6 @@ class Recipe extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id');
     }
+
     
 }

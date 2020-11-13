@@ -88,11 +88,13 @@ class WorkOrder extends Model
         return $this->in_progress;
     }
 
+    /**
+     * Workorder units 
+     */
     private function convertToBase()
     {
         return Conversions::convert($this->amount, $this->unit, $this->product->getBaseUnit());
     }
-
     public function convertedUnit()
     {
         return $this->convertToBase()['unit'];

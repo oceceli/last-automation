@@ -84,7 +84,11 @@
                 return;
             }
             
-            @if($dataSource)
+            @if($collection)
+                var data = {{ json_encode($collection) }};
+                console.log(data);
+                setValues(data);
+            @elseif($dataSource)
                 let data = @this.get('{{ $dataSource }}');
                 setValues(data);
             @else 

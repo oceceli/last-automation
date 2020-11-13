@@ -19,6 +19,7 @@ class Dropdown extends Component
     // select
     public $sId;
     public $model;
+    public $collection;
     public $dataSource;
     public $dataSourceFunction;
     public $value;
@@ -41,7 +42,7 @@ class Dropdown extends Component
      */
     public function __construct($label = null, $key = null,
                                 $iModel = null, $iType = 'text', $iPlaceholder = null, 
-                                $sId = null, $model, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
+                                $sId = null, $model, $collection = null, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
                                 $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = 'settings',
                                 $basic = false, $initnone = false)
     {
@@ -60,6 +61,7 @@ class Dropdown extends Component
         }
         $this->sId = $sId;
         $this->model = $model;
+        $this->collection = $collection;
         $this->dataSource = $dataSource;
         $this->dataSourceFunction = $dataSourceFunction;
         $this->value = $value;

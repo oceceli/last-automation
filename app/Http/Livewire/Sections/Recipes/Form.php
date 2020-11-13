@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sections\Recipes;
 
+use App\Common\Units\Conversions;
 use App\Http\Livewire\Form as BaseForm;
 use \Illuminate\Support\Str;
 use App\Models\Category;
@@ -41,6 +42,8 @@ class Form extends BaseForm
         //     'amount' => 550,
         // ],
     ];
+
+    
 
 
 
@@ -85,6 +88,11 @@ class Form extends BaseForm
     public function getCategoriesProperty()
     {
         return Category::getCategoriesWithProducts();
+    }
+
+    public function getConverted($card)
+    {
+        return Conversions::toBase($card['unit_id'], $card['amount']);
     }
 
     /************************************************ */

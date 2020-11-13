@@ -56,6 +56,9 @@ class Conversions
 
     public static function toBase($unit, $amount = 1)
     {
+        if( ! $unit instanceof Unit && is_numeric($unit))
+            $unit = Instantiator::make('unit', $unit);
+
         if($unit->isBase()) {
             return self::output($unit, $amount);
         }
@@ -80,8 +83,10 @@ class Conversions
 
         $fromBase = self::toBase($from, $amount);
         $targetBase = self::toBase($target);
-
-        $convertedAmount = $targetBase['amount'] / $fromBase['amount'];
+        
+        $convertedAmount = ! $target->isBase()
+            ? $fromBase['amount'] / $targetBase['amount']
+            : $fromBase['amount'];
 
         return self::output($target, $convertedAmount);
 
