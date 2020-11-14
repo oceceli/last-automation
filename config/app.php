@@ -230,6 +230,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // mine
+        'Stock' => App\Common\Facades\Stock::class,
+        'Conversions' => App\Common\Facades\Conversions::class,
+
     ],
 
 ];

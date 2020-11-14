@@ -34,6 +34,7 @@ class Dropdown extends Component
 
     public $basic;
     public $initnone;
+    
 
     /**
      * Create a new component instance.
@@ -61,6 +62,7 @@ class Dropdown extends Component
         }
         $this->sId = $sId;
         $this->model = $model;
+        // $this->collection = json_encode($collection);
         $this->collection = $collection;
         $this->dataSource = $dataSource;
         $this->dataSourceFunction = $dataSourceFunction;

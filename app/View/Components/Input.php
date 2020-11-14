@@ -15,23 +15,25 @@ class Input extends Component
     
     public $type;
 
-    public $showErrors;
+    public $disableErrors;
     
     public $action;
+    public $innerLabel;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = false, $showErrors = true)
+    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = null, $innerLabel = null, $disableErrors = false)
     {
         $this->model = $model;
         $this->placeholder = $placeholder;
         $this->type = $type;
         $this->label = $label;
-        $this->showErrors = $showErrors;
+        $this->disableErrors = $disableErrors;
         $this->action = $action;
+        $this->innerLabel = $innerLabel;
     }
 
     /**

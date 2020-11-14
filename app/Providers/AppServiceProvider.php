@@ -17,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Localization Carbon çalışmıyor ???
         // \Carbon\Carbon::setLocale($this->app->getLocale());
+        $this->app->bind('Stock', \App\Common\StockMoves\Stock::class);
+        $this->app->bind('Conversions', \App\Common\Units\Conversions::class);
     }
 
     /**
@@ -26,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 
 }

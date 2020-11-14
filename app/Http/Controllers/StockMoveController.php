@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\StockMoveContract;
 use App\Http\Controllers\Traits\DefaultController;
+use App\Models\StockMove;
 
 class StockMoveController extends Controller
 {
@@ -30,7 +31,7 @@ class StockMoveController extends Controller
 
     public function index()
     {
-        return $this->repository->all();
+        return view('web.sections.stockmoves.index');
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Common\Units\Conversions;
+use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -93,7 +93,7 @@ class WorkOrder extends Model
      */
     private function convertToBase()
     {
-        return Conversions::convert($this->amount, $this->unit, $this->product->getBaseUnit());
+        return Conversions::toBase($this->unit, $this->amount);
     }
     public function convertedUnit()
     {

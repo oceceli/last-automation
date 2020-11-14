@@ -68,13 +68,13 @@
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing">
                                     @if(!$workOrder->inProgress())
-                                        <div x-data="{wo_complete: true}">
+                                        <div x-data="{wo_complete_modal: false}">
                                             <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
-                                                <div @click="wo_complete = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                                <div @click="wo_complete_modal = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
                                                     <i wire:click.prevent="" class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
                                                 </div>
                                             </x-crud-actions>
-                                            <x-custom-modal active="wo_complete">
+                                            <x-custom-modal active="wo_complete_modal">
                                                 <x-slot name="header">
                                                     <x-page-header>
                                                         <x-slot name="customHeader">
@@ -83,12 +83,15 @@
                                                     </x-page-header>
                                                 </x-slot>
                                                 <div class="ui mini form">
-                                                    <x-dropdown label="Toplam" iModel="totalProduced" iPlaceholder="Toplam üretilen miktar" 
-                                                        model="unit_id" value="id" text="name" initnone :collection="$workOrder->product->units->toArray()"
+                                                    <x-dropdown label="Toplam" iModel="totalProduced" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" :key="$key" sClass="black"
+                                                        model="unit_id" value="id" text="name" :collection="$workOrder->product->units" placeholder="{{__('modelnames.unit')}}"
                                                     />
-                                                    {{-- <x-input label="Toplam" model="totalProduced" placeholder="Toplam üretilen miktar" /> --}}
-                                                    <x-input label="Fire" model="waste" placeholder="Fire miktarı" />
-                                                    <x-form-buttons submit="submitProductionCompleted" />
+                                                    <x-input label="{{ __('stockmoves.waste') }}" model="waste" placeholder="{{ __('stockmoves.waste_amount')}}">
+                                                        <x-slot name="innerLabel">
+                                                            @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
+                                                        </x-slot>
+                                                    </x-input>
+                                                    <x-form-buttons submit="submitProductionCompleted({{ $workOrder->id }})"  />
                                                 </div>
                                             </x-custom-modal>
                                         </div>
