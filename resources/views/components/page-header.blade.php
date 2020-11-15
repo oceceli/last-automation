@@ -4,7 +4,7 @@
       <h4 class="ui horizontal left aligned divider header">
         @if ($header || $icon)
             @if ($icon)
-            <i class="{{ $icon }} icon"></i>
+                <i class="{{ $icon }} icon"></i>
             @endif
             <div class="content">
                 {{ __($header) }}

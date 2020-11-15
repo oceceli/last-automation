@@ -9,6 +9,7 @@ return [
     
 
     'date' => 'Tarih',
+    'datetime' => 'Tarih',
     'add_new' => 'Yeni Ekle',
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
@@ -60,6 +61,7 @@ return [
     'recipes' => 'Reçeteler',
     'recipes-create' => 'Reçete oluştur',
     'stock-moves' => 'Stok Hareketleri',
+    'stock-moves-create' => 'Yeni Stok Hareketi',
     'unit-create' => 'Birim oluştur',
     'units' => 'Birimler',
     'work-orders-daily' => 'Günlük iş emri',

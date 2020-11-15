@@ -4,7 +4,7 @@ return [
     'product' => 'ürün',
     'category_id' => 'Kategori',
     'name' => 'Ürün Adı',
-    'code' => 'Kod',
+    'code' => 'Ürün Kodu',
     'barcode' => 'Barkod',
     'min_threshold' => 'Min. Stok',
     'shelf_life' => 'Raf Ömrü',

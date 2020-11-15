@@ -6,7 +6,13 @@ use App\Models\StockMove;
 
 class Stock 
 {
-
+    public function types()
+    {
+        return [
+            ['value' => 'production', 'text' => __("stockmoves.production")],
+            ['value' => 'manual_entry', 'text' => __("stockmoves.manual_entry")],
+        ];
+    }
 
     public function moveInProd($product, $amount)
     {

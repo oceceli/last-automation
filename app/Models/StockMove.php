@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use Carbon\Carbon;
 
 class StockMove extends Model
 {
@@ -16,7 +17,7 @@ class StockMove extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = []; 
+    protected $with = ['product']; 
 
     /**
      * Validate rules for current model
@@ -30,7 +31,7 @@ class StockMove extends Model
                 'type' => 'required|max:30',
                 'direction' => 'required|boolean',
                 'amount' => 'required|numeric',
-                'date' => 'required|date',
+                'datetime' => 'required|date',
             ],
             'relation' => [ // use for many to many relationships
                 //
@@ -42,5 +43,21 @@ class StockMove extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function setDatetimeAttribute($datetime)
+    {
+        $this->attributes['datetime'] = Carbon::parse($datetime); // ???
+    }
+    public function getDatetimeAttribute($datetime)
+    {
+        return Carbon::parse($datetime)->format('d.m.Y H:i:s');
+    }
+
+    // public function getDirectionAttribute($value)
+    // {
+    //     return $value
+    //         ? 'Giriş'
+    //         : 'Çıkış';
+    // }
     
 }

@@ -3,14 +3,16 @@
     <x-content theme="green">
         <div class="p-4">
             <div class="flex justify-between">
-                <div class="font-bold">
+                <div class="font-bold text-sm">
                     @if ($this->inProduction)
-                        <i class="green link circle icon animate-pulse"></i>
+                        <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
+                            <i class="green link circle icon animate-pulse"></i>
+                        </span>
                         <span>{{ $this->inProduction->product->name }} - </span>
                         <span class="text-gray-400">{{ __('sections/workorders.started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}</span>
                     @else
                         <i class="yellow outline circle icon"></i>
-                        <span class="text-gray-400 cursor-default">Beklemede</span>
+                        <span class="text-gray-400 cursor-default">{{ __('sections/workorders.on_hold') }}</span>
                     @endif
                 </div>
                 <div>
@@ -36,7 +38,8 @@
                     @foreach ($workOrders as $key => $workOrder)
                         @if ($workOrder->isCompleted())
                             <tr class="left green marked text-green-600 bg-teal-50 font-bold">
-                                <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
+                                <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
+                                        data-variation="mini" data-position="top left">
                                     <i class="large green checkmark icon"></i>
                                 </td>
                                 <td>{{ $workOrder->product->name }}</td>
@@ -112,7 +115,7 @@
                                             </div>
                                         </x-crud-actions>
                                     @else
-                                        <x-crud-actions modelName="work-order" gray :modelId="$workOrder->id" />
+                                        <x-crud-actions onlyShow modelName="work-order" gray :modelId="$workOrder->id" />
                                     @endif
                                 </td>
                             </tr>

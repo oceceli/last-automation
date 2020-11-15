@@ -117,6 +117,13 @@ class WorkOrder extends Model
         
     }
 
+    public function completedAt()
+    {
+        return $this->is_completed
+            ? $this->updated_at->diffForHumans() // ???
+            : false;
+    }
+
     /**
      * Get work-orders of today
      */

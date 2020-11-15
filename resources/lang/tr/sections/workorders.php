@@ -39,6 +39,7 @@ return [
     'production_is_completed' => 'Üretim tamamlandı',
     // 'see_production_results' => 'Üretim sonuçlarını gör',
     'production_continues' => 'Üretim sürüyor',
+    'on_hold' => 'Beklemede',
 
     'wo_status' => 'Durum',
     'wo_suspended' => 'İş emri askıya alındı',

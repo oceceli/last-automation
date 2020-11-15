@@ -53,7 +53,8 @@ class Today extends Component
         $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
 
         Stock::moveInProd($workOrder['product'], $baseTotal);
-        Stock::moveOutProd($workOrder['product'], $baseWaste);
+        if($baseWaste > 0)
+            Stock::moveOutProd($workOrder['product'], $baseWaste);
 
     }
 

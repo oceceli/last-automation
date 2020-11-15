@@ -34,4 +34,15 @@ class StockMoveController extends Controller
         return view('web.sections.stockmoves.index');
     }
 
+    public function show($id)
+    {
+        $stockMove = StockMove::find($id);
+        return view('web.sections.stockmoves.show', compact('stockMove'));
+    }
+
+    public function create()
+    {
+        return view('web.sections.stockmoves.create');
+    }
+
 }
