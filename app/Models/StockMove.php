@@ -27,6 +27,7 @@ class StockMove extends Model
         return [
             'data' => [
                 'product_id' => 'required|min:1',
+                'type' => 'required|max:30',
                 'direction' => 'required|boolean',
                 'amount' => 'required|numeric',
                 'date' => 'required|date',

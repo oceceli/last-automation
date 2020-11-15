@@ -2,7 +2,7 @@
 
 return [
     // icons
-    'wo_complete_icon' => 'green checkmark',
+    'wo_complete_icon' => 'red share',
 
 
 
@@ -44,6 +44,9 @@ return [
     'wo_suspended' => 'İş emri askıya alındı',
     'wo_unsuspended' => 'İş emri üretimi bekliyor',
     'wo_complete' => 'Bitir',
+    'wo_start' => 'İşi başlat',
 
     'waiting_for_production' => 'Üretim bekleniyor...',
+    'started_at_time' => ':time başladı',
+    'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
 ];

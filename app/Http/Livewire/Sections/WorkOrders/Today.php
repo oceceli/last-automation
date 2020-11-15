@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
+use App\Common\Facades\Conversions;
 use App\Common\Facades\Stock;
 use App\Models\Unit;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Today extends Component
@@ -23,7 +23,7 @@ class Today extends Component
     public $selectedUnit;
 
     public $rules = [
-        'unit_id' => 'required|min:1',
+        'unit_id' => 'required|integer|min:1',
         'totalProduced' => 'required|numeric',
         'waste' => 'nullable|numeric',
     ];
@@ -42,12 +42,36 @@ class Today extends Component
     }
     
 
-    public function submitProductionCompleted($key)
+    public function submitProductionCompleted($id)
     {
         $this->validate();
-        Stock::test();
+        $workOrder = $this->workOrders->find($id);
+        
+        $workOrder->end();
+
+        $baseTotal = Conversions::toBase($this->selectedUnit, $this->totalProduced)['amount'];
+        $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
+
+        Stock::moveInProd($workOrder['product'], $baseTotal);
+        Stock::moveOutProd($workOrder['product'], $baseWaste);
+
+    }
+
+    public function startJob($id)
+    {
+        if( ! WorkOrder::getInProgress()) {
+            $workOrder = $this->workOrders->find($id);
+            $workOrder->start();
+        } else {
+            $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+        }
+        
     }
     
+    public function getInProductionProperty()
+    {
+        return WorkOrder::getInProgress();
+    }
 
     public function updated($propertyName)
     {

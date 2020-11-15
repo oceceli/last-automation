@@ -2,13 +2,23 @@
     <x-page-header icon="settings" header="sections/workorders.daily_work_orders" />
     <x-content theme="green">
         <div class="p-4">
-            <div class="flex">
+            <div class="flex justify-between">
+                <div class="font-bold">
+                    @if ($this->inProduction)
+                        <i class="green link circle icon animate-pulse"></i>
+                        <span>{{ $this->inProduction->product->name }} - </span>
+                        <span class="text-gray-400">{{ __('sections/workorders.started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}</span>
+                    @else
+                        <i class="yellow outline circle icon"></i>
+                        <span class="text-gray-400 cursor-default">Beklemede</span>
+                    @endif
+                </div>
                 <div>
                     {{-- <label class="font-bold">{{ __('common.date') }}:</label> --}}
                     <span class="font-bold text-gray-500">{{ $todayDate }}</span>
                 </div>
             </div>
-            <table class="ui celled sortable very compact unstackable table">
+            <table class="ui sortable compact unstackable table">
                 <thead>
                     <tr>
                         <th>{{ __('sections/workorders.wo_status') }}</th>
@@ -25,7 +35,7 @@
                 <tbody>
                     @foreach ($workOrders as $key => $workOrder)
                         @if ($workOrder->isCompleted())
-                            <tr class="left green marked text-green-400">
+                            <tr class="left green marked text-green-600 bg-teal-50 font-bold">
                                 <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
                                     <i class="large green checkmark icon"></i>
                                 </td>
@@ -35,18 +45,17 @@
                                 <td class="center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing selectable">
-                                    <span class="text-green-800">{sayı} {baseUnit}</span>
-                                    <span data-tooltip="{{ __('common.see_details') }}" data-variation="mini">
-                                        <i class="link teal eye icon"></i>
+                                    <span class="px-2 shadow rounded bg-white" data-tooltip="{{ __('common.see_details') }}" data-variation="mini" data-position="top right">
+                                        <a class="text-teal-600 text-lg" href="{{ route('work-orders.show', ['work_order' => $workOrder]) }}">{{ round($workOrder->convertedAmount(),2) }} {{ $workOrder->convertedUnit()->name }}</a>
                                     </span>
                                 </td>
                             </tr>
                         @else
-                            <tr class="@if(!$workOrder->inProgress()) left olive marked @elseif($workOrder->is_active) left primary marked @else left grey marked text-gray-400 @endif">
+                            <tr class="@if($workOrder->inProgress()) left red marked font-bold bg-yellow-50 @elseif($workOrder->is_active) left primary marked @else left grey marked text-gray-400 @endif">
                                 <td class="center aligned collapsing">
-                                    @if(!$workOrder->inProgress())
+                                    @if($workOrder->inProgress())
                                         <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
-                                            <i class="large loading olive cog icon"></i>
+                                            <i class="large loading red cog icon"></i>
                                         </span>
                                     @elseif($workOrder->is_active)
                                         <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
@@ -61,13 +70,13 @@
                                 <td>{{ $workOrder->product->name }}</td>
                                 <td>
                                     <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
-                                    <span class="text-sm text-gray-500">({{ $workOrder->convertedAmount() }} {{ $workOrder->convertedUnit()->name }})</span>
+                                    <span class="text-sm text-gray-500">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
                                 </td>
                                 <td class="">{{ $workOrder->lot_no }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing">
-                                    @if(!$workOrder->inProgress())
+                                    @if($workOrder->inProgress())
                                         <div x-data="{wo_complete_modal: false}">
                                             <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
                                                 <div @click="wo_complete_modal = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
@@ -82,7 +91,7 @@
                                                         </x-slot>
                                                     </x-page-header>
                                                 </x-slot>
-                                                <div class="ui mini form">
+                                                <form class="ui mini form" wire:submit.prevent="submitProductionCompleted({{ $workOrder->id }})">
                                                     <x-dropdown label="Toplam" iModel="totalProduced" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" :key="$key" sClass="black"
                                                         model="unit_id" value="id" text="name" :collection="$workOrder->product->units" placeholder="{{__('modelnames.unit')}}"
                                                     />
@@ -91,12 +100,17 @@
                                                             @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
                                                         </x-slot>
                                                     </x-input>
-                                                    <x-form-buttons submit="submitProductionCompleted({{ $workOrder->id }})"  />
-                                                </div>
+                                                    <button class="text-green-500">gönder</button>
+                                                    {{-- <x-form-buttons submit="submitProductionCompleted({{ $workOrder->id }})"  /> --}}
+                                                </form>
                                             </x-custom-modal>
                                         </div>
                                     @elseif($workOrder->is_active)
-                                        <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
+                                        <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
+                                            <div data-tooltip="{{ __('sections/workorders.wo_start') }}" data-variation="mini">
+                                                <i wire:click.prevent="startJob({{ $workOrder->id }})" class="red power link icon"></i>
+                                            </div>
+                                        </x-crud-actions>
                                     @else
                                         <x-crud-actions modelName="work-order" gray :modelId="$workOrder->id" />
                                     @endif

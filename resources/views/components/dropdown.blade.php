@@ -17,7 +17,7 @@
             </div>
         </div>
         @else
-        <div class="{{ $sClass }} ui @if( ! $basic) selection scrolling @endif dropdown" id="{{ $sId }}" wire:ignore> 
+        <div class="{{ $sClass }} ui @if( ! $basic) selection scrolling @endif dropdown" id="{{ $sId }}" wire:ignore wire:loading.class="double loading" wire:target="{{ $triggerOn }}, {{ $triggerOnEvent }}"> 
             <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
             <div class="text default">{{ __($placeholder) }}</div>
             <i class="dropdown icon"></i>
@@ -31,7 +31,7 @@
     {{-- <template x-if="$wire.{{ $model }}"> 
         <div id="modelEmpty">sadf</div>
     </template> --}}
-    {{-- {{ $slot }} --}}
+    {{ $slot }}
 
     @error($iModel)
         <span class="text-red-500">{{ucfirst($message)}}</span>

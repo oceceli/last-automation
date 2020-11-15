@@ -18,14 +18,14 @@ class WorkOrder extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    // protected $with = ['product']; 
+    // protected $with = ['product'];
 
     /**
      * Validate rules for current model
      */
     public static function rules()
     {
-        $id = self::getRequestID(); // use for unique keys on update event
+        // $id = self::getRequestID(); // use for unique keys on update event
         return [
             'data' => [
                 'product_id' => 'required|min:1',
@@ -83,10 +83,55 @@ class WorkOrder extends Model
     {
         return !$this->isCompleted();
     }
+
+
     public function inProgress()
     {
         return $this->in_progress;
     }
+
+    /**
+     * Put selected work-order into production 
+     */
+    public function start()
+    {
+        $this->update(['in_progress' => true]);
+    }
+
+    /**
+     * Put selected work-order out of production and mark as completed
+     */
+    public function end()
+    {
+        $this->update(['in_progress' => false, 'is_completed' => true]);
+    }
+
+    /**
+     * Return updated_at date if production started
+     */
+    public function startedAt()
+    {
+        return $this->inProgress()
+            ? $this->updated_at // ???
+            : false;
+        
+    }
+
+    /**
+     * Get work-orders of today
+     */
+    public static function getTodaysList()
+    {
+        return self::where('datetime', Carbon::today()->format('d.m.Y'))
+            ->orderBy('queue', 'asc')
+            ->get(); // ve yalnızca aktif olanları al
+    }
+
+    public static function getInProgress()
+    {
+        return (self::where('in_progress', true)->first());
+    }
+
 
     /**
      * Workorder units 
@@ -108,12 +153,6 @@ class WorkOrder extends Model
 
 
 
-    /**
-     * Static helpers ******************************
-     */
-    public static function getTodaysList()
-    {
-        return self::where('datetime', Carbon::today()->format('d.m.Y'))->get(); // ve yalnızca aktif olanları al
-    }
+    
 
 }

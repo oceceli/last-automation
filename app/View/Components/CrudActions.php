@@ -14,13 +14,14 @@ class CrudActions extends Component
     public $gray;
 
     public $onlyShow;
+    public $addClass;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($modelName, $modelId, $onlyShow = false, $gray = false)
+    public function __construct($modelName, $modelId, $onlyShow = false, $gray = false, $addClass = null)
     {
         $this->modelName = Generic::kebabToSnake($modelName);
         $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
@@ -28,6 +29,7 @@ class CrudActions extends Component
 
         $this->onlyShow = $onlyShow;
         $this->gray = $gray;
+        $this->addClass = $addClass;
     }
 
     /**

@@ -2,16 +2,19 @@
 
 namespace App\Common\StockMoves;
 
+use App\Models\StockMove;
+
 class Stock 
 {
 
-    public function test()
+
+    public function moveInProd($product, $amount)
     {
-        dd("test başarılı!");
+        StockMove::create(['product_id' => $product['id'], 'type' => 'production', 'direction' => true, 'amount' => $amount, 'datetime' => now()]);
     }
 
-    public function newMove($product)
+    public function moveOutProd($product, $amount)
     {
-        
+        StockMove::create(['product_id' => $product['id'], 'type' => 'production', 'direction' => false, 'amount' => $amount, 'datetime' => now()]);
     }
 }
