@@ -2,7 +2,7 @@
 
 return [
     // icons
-    'wo_complete_icon' => 'red share',
+    'wo_complete_icon' => 'red power',
 
 
 

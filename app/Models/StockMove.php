@@ -53,11 +53,5 @@ class StockMove extends Model
         return Carbon::parse($datetime)->format('d.m.Y H:i:s');
     }
 
-    // public function getDirectionAttribute($value)
-    // {
-    //     return $value
-    //         ? 'Giriş'
-    //         : 'Çıkış';
-    // }
     
 }

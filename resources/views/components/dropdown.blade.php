@@ -96,9 +96,9 @@
             }
             
             @if($collection)
-                // var data = @json($collection);
+                var data = @json($collection);
                 // var data =  {!! json_encode($collection) !!};
-                var data = <?php echo json_encode($collection) ?>;
+                // var data = <?php echo json_encode($collection) ?>;
                 setValues(data);
             @elseif($dataSource)
                 let data = @this.get('{{ $dataSource }}');

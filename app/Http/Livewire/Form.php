@@ -25,6 +25,8 @@ class Form extends Component
     //     // $this->success = false;
     // }
 
+    protected $validate = true;
+
     public function render()
     {
         if($this->view)
@@ -35,7 +37,8 @@ class Form extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, $this->model::rules()['data']);
+        if($this->validate)
+            $this->validateOnly($propertyName, $this->model::rules()['data']);
     }
 
 

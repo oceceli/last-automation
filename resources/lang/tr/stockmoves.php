@@ -9,12 +9,12 @@ return [
 
     // types
     'production' => 'Üretim',
-    'manual_entry' => 'Elle giriş',
+    'manual' => 'Manuel',
     
 
     'waste' => 'Fire',
     'waste_amount' => 'Fire miktarı',
     'total_produced_amount' => 'Toplam üretilen miktar',
-    'stock_enterance' => 'Giriş',
-    'stock_decrease' => 'Çıkış',
+    'stock_entry' => 'Stok girişi',
+    'stock_decrease' => 'Stok çıkışı',
 ];

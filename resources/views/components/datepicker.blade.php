@@ -1,10 +1,11 @@
 
-<div {{ $attributes }}>
+<div {{ $attributes->merge(['class' => 'field']) }} wire:ignore>
     <label>{{ __($label) }}</label>
-    <div class="ui calendar">
+    <div class="ui calendar" id="{{ $dId }}">
         <div class="ui input left icon">
             <i class="calendar icon"></i>
-            <input type="text"  wire:model="{{ $model }}" placeholder="{{ __($placeholder) }}">
+            <input type="datetime" placeholder="{{ __($placeholder) }}">
+            {{-- wire:model="{{ $model }}" --}}
         </div>
     </div>
     @error($model)
@@ -15,15 +16,27 @@
 
 
 <script>
-    $('.ui.calendar')
+    $('#{{ $dId }}')
         .calendar({
             monthFirst: false,
-            type: 'date',
+            type: '{{ $type }}',
+            today: true,
+            touchReadonly: false,
+            @if($initialDate)
+                initialDate: new Date('{{ $initialDate }}'),
+            @endif
+            @if($disabledDays)
+                disabledDaysOfWeek: [{{ $disabledDays }}],
+            @endif
+            // initialDate: null,
+            startMode: 'day',
+            // inline: true,
             ampm: false,
-            // initialDate: new Date(),
             // disabledDaysOfWeek: [5, 6],
             onSelect: function(date, mode) {
-                @this.set('datetime', date.toLocaleDateString("tr-TR"));
+                console.log(new Date(date + 'z'));
+                @this.set('{{ $model }}', new Date(date + 'z')); // 'z' timezone olayları ile ilgili
+                // .toLocaleDateString("tr-TR")
             },
             formatter: {
                 date: function (date, settings) {
@@ -37,9 +50,9 @@
             text: {
                 days: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Pzr'],
                 months: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-                monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Ek', 'Kas', 'Ara'],
-                today: 'Bugün\'Bgn',
-                now: 'Şu an',
+                monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Ekim', 'Kas', 'Ara'],
+                today: 'Bugün',
+                now: 'Şimdi',
                 am: 'AM',
                 pm: 'PM'
             },

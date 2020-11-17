@@ -11,16 +11,19 @@ class Content extends Component
 
     public $buttons;
 
+    public $noBorder;
+
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($theme = null, $buttons = false)
+    public function __construct($theme = null, $buttons = false, $noBorder = false)
     {
         $this->theme = $theme;
         $this->buttons = $buttons;
+        $this->noBorder = $noBorder;
     }
 
     /**

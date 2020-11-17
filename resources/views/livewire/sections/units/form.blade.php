@@ -1,5 +1,5 @@
 <div>
-    <x-page-header icon="weight" header="sections/units.header" subheader="sections/units.subheader" />
+    <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
     <x-content theme="red">
 
         <div class="p-4 shadow-md">

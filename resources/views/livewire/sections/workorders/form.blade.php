@@ -27,7 +27,7 @@
             </div>
 
             <div class="equal width fields" wire:ignore>
-                <x-datepicker model="datetime" label="sections/workorders.datetime"  class="required field" />
+                <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="sections/workorders.datetime"   class="required field" />
             </div>
             <div class="equal width fields">
                 <div class="field">

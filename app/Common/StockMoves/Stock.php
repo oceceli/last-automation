@@ -10,7 +10,15 @@ class Stock
     {
         return [
             ['value' => 'production', 'text' => __("stockmoves.production")],
-            ['value' => 'manual_entry', 'text' => __("stockmoves.manual_entry")],
+            ['value' => 'manual', 'text' => __("stockmoves.manual")],
+        ];
+    }
+
+    public function directions()
+    {
+        return [
+            ['value' => 1, 'text' => __("stockmoves.stock_entry")],
+            ['value' => 0, 'text' => __("stockmoves.stock_decrease")],
         ];
     }
 

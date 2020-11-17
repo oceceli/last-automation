@@ -61,7 +61,7 @@ return [
     'recipes' => 'Reçeteler',
     'recipes-create' => 'Reçete oluştur',
     'stock-moves' => 'Stok Hareketleri',
-    'stock-moves-create' => 'Yeni Stok Hareketi',
+    'stock-moves-create' => 'Stok girişi',
     'unit-create' => 'Birim oluştur',
     'units' => 'Birimler',
     'work-orders-daily' => 'Günlük iş emri',
