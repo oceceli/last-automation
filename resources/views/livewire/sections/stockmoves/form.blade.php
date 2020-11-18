@@ -26,12 +26,16 @@
                             <div class="flex-1 pt-3 px-5">
                                 <div class="equal width fields">
                                     <x-dropdown placeholder="{{ __('modelnames.product') }}" sClass="search"
-                                                model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="name" :key="$key">
+                                                model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="name" :key="'selectProduct'.$key">
                                     </x-dropdown>
-                                    <x-input model="cards.{{ $key }}.amount" placeholder="{{ __('stockmoves.amount') }}" innerLabel="asdf">
-                                    </x-input>    
+                                    {{-- <x-input model="cards.{{ $key }}.amount" placeholder="{{ __('stockmoves.amount') }}" innerLabel="asdf">
+                                    </x-input>     --}}
+                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('stockmoves.amount') }}" iType="number"
+                                                initnone triggerOnEvent="sm_product_selected{{$key}}" model="cards.{{ $key }}.unit_id" dataSource="units.{{ $key }}"
+                                                :key="'units'.$key" value="id" text="name" placeholder="{{ __('modelnames.unit') }}">
+                                        
+                                    </x-dropdown>
                                     <x-datepicker model="cards.{{ $key }}.datetime" type="date" initialDate="{{ $card['datetime'] }}" :key="$key" />
-                                    {{ Carbon\Carbon::parse($card['datetime'])->format('d.m.Y - H:i:s') }}
                                 </div>
                             </div>
                         </div>

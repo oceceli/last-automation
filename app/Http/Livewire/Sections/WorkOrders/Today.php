@@ -52,9 +52,14 @@ class Today extends Component
         $baseTotal = Conversions::toBase($this->selectedUnit, $this->totalProduced)['amount'];
         $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
 
-        Stock::moveInProd($workOrder['product'], $baseTotal);
+        if($baseTotal > 0) {
+            Stock::moveInProduction($workOrder, $baseTotal);
+        } else {
+            $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
+        }
+
         if($baseWaste > 0)
-            Stock::moveOutProd($workOrder['product'], $baseWaste);
+            Stock::moveOutProduction($workOrder, $baseWaste);
 
     }
 

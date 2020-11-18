@@ -90,6 +90,7 @@
             
         
             if($(sId).length < 1) { // if dom deleted
+                @this.call('render');
                 console.warn(sId + " already deleted");
                 sId = null;
                 return;

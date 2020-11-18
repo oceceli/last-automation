@@ -64,7 +64,7 @@
                                     <div class="flex gap-2 items-center">
                                         <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
                                             model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="basic"
-                                            triggerOnEvent="aCardDeleted" value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                            triggerOnEvent="aCardDeleted{{ $key }}" value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
                                         </x-dropdown>
                                     </div>
                                 </div>

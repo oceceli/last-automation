@@ -20,6 +20,8 @@ class WorkOrder extends Model
      */
     // protected $with = ['product'];
 
+    protected $casts = ['datetime' => 'date'];
+
     /**
      * Validate rules for current model
      */
@@ -45,6 +47,21 @@ class WorkOrder extends Model
         ];
     }
 
+    public function stockMoves()
+    {
+        return $this->morphMany('App\Models\StockMove', 'stockable');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
     public function setDatetimeAttribute($value) 
     {
         $this->attributes['datetime'] = Carbon::parse($value)->format('d.m.Y');
@@ -56,15 +73,6 @@ class WorkOrder extends Model
     }
 
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function unit()
-    {
-        return $this->belongsTo(Unit::class);
-    }
 
     public function setIsActiveAttribute($value)
     {
@@ -124,12 +132,18 @@ class WorkOrder extends Model
             : false;
     }
 
+    public function isToday()
+    {
+        return $this->datetime == Carbon::today()->format('d.m.Y');
+    }
+
     /**
      * Get work-orders of today
      */
     public static function getTodaysList()
     {
         return self::where('datetime', Carbon::today()->format('d.m.Y'))
+            ->orWhere('in_progress', true)
             ->orderBy('queue', 'asc')
             ->get(); // ve yalnızca aktif olanları al
     }

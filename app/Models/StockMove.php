@@ -17,26 +17,39 @@ class StockMove extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['product']; 
+    // protected $with = ['product']; 
 
     /**
      * Validate rules for current model
      */
-    public static function rules()
+    // public static function rules()
+    // {
+    //     // $id = self::getRequestID(); // use for unique keys on update event
+    //     return [
+    //         'data' => [
+    //             'product_id' => 'required|min:1|integer',
+    //             'stockable_id' => 'required|min:1|integer',
+    //             'stockable_type' => 'required|max:30',
+    //             'direction' => 'required|boolean',
+    //             'amount' => 'required|numeric',
+    //             'datetime' => 'required|date',
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
+
+    public function stockable()
     {
-        // $id = self::getRequestID(); // use for unique keys on update event
-        return [
-            'data' => [
-                'product_id' => 'required|min:1',
-                'type' => 'required|max:30',
-                'direction' => 'required|boolean',
-                'amount' => 'required|numeric',
-                'datetime' => 'required|date',
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
+        return $this->morphTo();
+    }
+
+    public function isProduction()
+    {
+        if($this->stockable_type === "App\Models\WorkOrder") 
+            return true;
+        return false;
     }
 
     public function product() 

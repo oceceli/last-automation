@@ -16,10 +16,13 @@ class CreateStockMovesTable extends Migration
         Schema::create('stock_moves', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->string('type');
+            // $table->string('type');
             $table->boolean('direction');
             $table->integer('amount');
             $table->date('datetime');
+
+            $table->string('stockable_type')->nullable();
+            $table->bigInteger('stockable_id')->nullable();
     
             $table->softDeletes();
             $table->timestamps();

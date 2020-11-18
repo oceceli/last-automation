@@ -68,7 +68,7 @@ class Form extends BaseForm
     {
         unset($this->cards[$key]);
         $this->cards = array_values($this->cards);
-        $this->emit('aCardDeleted');
+        $this->emit('aCardDeleted'.$key);
     }
     public function removeAllCards()
     {

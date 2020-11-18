@@ -9,7 +9,6 @@ use App\Models\StockMove;
 
 class Form extends BaseForm
 {
-
     public $model = StockMove::class;
     public $view = 'livewire.sections.stockmoves.form';
     public $validate = false;
@@ -21,46 +20,66 @@ class Form extends BaseForm
     // public $amount;
     // public $datetime;
 
-    public $cards = [
-        // [
-        //     'product_id' => 1,
-        //     // 'type' => 'manual_entry',
-        //     'direction' => 1,
-        //     'amount' => 500,
-        //     'datetime' => '16.11.2020',
-        // ],
+    public $cards = [];
+    public $units = [];
+
+    protected $rules = [
+        'cards.*' => 'array',
+        'cards.*.product_id' => 'required|min:1|integer',
+        'cards.*.direction' => 'required|boolean',
+        'cards.*.amount' => 'required|numeric',
+        'cards.*.datetime' => 'nullable|date',
+
+        'cards.*.unit_id' => 'required|integer',
     ];
+    
+    protected $validationAttributes = [
+        'cards.*.amount' => 'Deneme'
+    ];
+
 
     public function addCard()
     {
         $this->cards[] = [
             'product_id' => null,
-            // 'type' => 'manual',
             'direction' => 1,
             'amount' => null,
             'datetime' => date('d.m.Y H:i:s'),
+            'unit_id' => null,            
         ];
     }
-
+    
+    public function getProductsProperty()
+    {
+        return Product::all();
+    }
 
     public function toggleDirection($key)
     {
         $this->cards[$key]['direction'] = ! $this->cards[$key]['direction'];
     }
 
-    public function getProductsProperty()
+    /**
+     * Nested product_id on updated event 
+     * Fill out the units dropdown based on selected product 
+     */
+    public function updatedCards($id, $location)
     {
-        return Product::all();
+        if(strpos($location, 'product_id')) {
+            $index = strtok($location, '.');
+            $this->units[$index] = $this->getProductsProperty()->find($id)->units;
+            $this->emit('sm_product_selected'.$index);
+        }
     }
 
-    public function getDirectionsProperty()
-    {
-        return Stock::directions();
-    }
 
-    // public function getTypesProperty()
-    // { 
-    //     return Stock::types();
-    // }
+    public function submit()
+    {
+        $this->validate();
+        foreach($this->cards as $card) {
+            Stock::newMove($card['product_id'], $card['direction'], $card['amount'], $card['datetime']);
+        }
+        dd("submitted");
+    }
 
 }

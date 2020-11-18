@@ -50,4 +50,6 @@ return [
     'waiting_for_production' => 'Üretim bekleniyor...',
     'started_at_time' => ':time başladı',
     'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
+    'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
+    'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
 ];

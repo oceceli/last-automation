@@ -37,7 +37,7 @@
                 <tbody>
                     @foreach ($workOrders as $key => $workOrder)
                         @if ($workOrder->isCompleted())
-                            <tr class="left green marked text-green-600 bg-teal-50 font-bold">
+                            <tr class="left green marked text-green-600 bg-teal-50 ">
                                 <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
                                         data-variation="mini" data-position="top left">
                                     <i class="large green checkmark icon"></i>
@@ -54,12 +54,18 @@
                                 </td>
                             </tr>
                         @else
-                            <tr class="@if($workOrder->inProgress()) left red marked font-bold bg-yellow-50 @elseif($workOrder->is_active) left primary marked @else left grey marked text-gray-400 @endif">
+                            <tr class="@if($workOrder->inProgress()) warning font-bold @elseif($workOrder->is_active) @else  text-gray-400 @endif">
                                 <td class="center aligned collapsing">
                                     @if($workOrder->inProgress())
-                                        <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
-                                            <i class="large loading red cog icon"></i>
-                                        </span>
+                                            @if ( ! $workOrder->isToday())
+                                                <span data-tooltip="{{ __('sections/workorders.this_work_order_is_not_finished_in_time_should_end_now')}}" data-variation="mini" data-position="top left">
+                                                    <i class="large red attention icon"></i>
+                                                </span>
+                                            @else
+                                                <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
+                                                    <i class="large loading red cog icon"></i>
+                                                </span>
+                                            @endif
                                     @elseif($workOrder->is_active)
                                         <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
                                             <i class="large primary clock outline icon"></i>
