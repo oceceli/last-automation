@@ -14,6 +14,8 @@ class StockMove extends Model
 
     protected $guarded = [];
 
+    protected $casts = ['datetime' => 'date'];
+
     /**
      * Eagerload relationships when retrieving the model
      */
@@ -47,7 +49,7 @@ class StockMove extends Model
 
     public function isProduction()
     {
-        if($this->stockable_type === "App\Models\WorkOrder") 
+        if($this->stockable_type === "App\Models\WorkOrder") // veritabanına type adında yeni bir column oluştur
             return true;
         return false;
     }
@@ -63,7 +65,7 @@ class StockMove extends Model
     }
     public function getDatetimeAttribute($datetime)
     {
-        return Carbon::parse($datetime)->format('d.m.Y H:i:s');
+        return Carbon::parse($datetime)->format('d.m.Y H:i:s'); // ??
     }
 
     

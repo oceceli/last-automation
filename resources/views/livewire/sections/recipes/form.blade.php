@@ -36,7 +36,7 @@
 
                 <div class="p-4 rounded-md border border-blue-200">
                     @if (empty($cards))
-                        @include('web.sections.recipes.placeholder')
+                        @include('web.sections.recipes.recipePlaceholder')
                     @else
                     {{-- CARDS ------------------------------------}}
                     <div class="flex flex-col gap-6">

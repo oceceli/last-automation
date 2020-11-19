@@ -9,7 +9,7 @@
     <x-content buttons >
         <div class="p-6 bg-cool-gray-50 shadow-inner rounded-md">
             <form class="ui tiny form flex flex-col gap-6">
-                @foreach ($cards as $key => $card)
+                @forelse ($cards as $key => $card)
                     <div class="shadow-md rounded-md bg-white">
                         <div class="flex flex-col md:flex-row rounded-md">
                             <div wire:click.prevent="toggleDirection({{ $key }})" class="shadow md:rounded-l-md p-8 md:p-5 cursor-pointer @if($card['direction']) bg-teal-100 @else bg-red-100 @endif">
@@ -40,7 +40,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <x-placeholder icon="blue truck packing" header="{{ __('stockmoves.you_can_add_or_subtract_stocks_manually') }}">
+                        <span>{{ __('stockmoves.use_add_button_on_the_top_right_corner') }}</span>
+                    </x-placeholder>
+                @endforelse
             </form>
         </div>
     </x-content>

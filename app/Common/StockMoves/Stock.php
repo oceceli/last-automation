@@ -2,68 +2,128 @@
 
 namespace App\Common\StockMoves;
 
+use App\Common\Factories\Instantiator;
 use App\Models\StockMove;
 
 class Stock 
 {
-    // public function types()
-    // {
-    //     return [
-    //         ['value' => 'production', 'text' => __("stockmoves.production")],
-    //         ['value' => 'manual', 'text' => __("stockmoves.manual")],
-    //     ];
-    // }
+    private $productId;
+    private $direction;
+    private $amount;
+    private $datetime;
 
-    // public function directions()
-    // {
-    //     return [
-    //         ['value' => 1, 'text' => __("stockmoves.stock_entry")],
-    //         ['value' => 0, 'text' => __("stockmoves.stock_decrease")],
-    //     ];
-    // }
+    private $stockableType;
+    private $stockableId;
 
-    public function moveInProduction($workOrder, $amount, $date = null)
+
+
+     /**
+     *  Gets a workorder/workorder_id as parameter, creates a new stockmove in positive way(gross)
+     */
+    public function productionGross($workOrder, $amount, $datetime = null)
     {
-        if(!$date) $date = now();
-        $workOrder->stockMoves()->create(
-            [
-                'product_id' => $workOrder->product_id, 
-                'direction' => true, 
-                'amount' => $amount, 
-                'datetime' => $date
-            ]
-        );
+        $this->instantiate($workOrder);
+        $this->prepare($workOrder->product_id, $amount, true, $datetime)->persist($workOrder);
     }
 
-    public function moveOutProduction($workOrder, $amount, $date = null)
+    /**
+     *  Gets a workorder/workorder_id as parameter, creates a new stockmove in negative way(waste)
+     */
+    public function productionWaste($workOrder, $amount, $datetime = null)
     {
-        if(!$date) $date = now();
-        $workOrder->stockMoves()->create(
-            [
-                'product_id' => $workOrder->product_id, 
-                'direction' => false, 
-                'amount' => $amount, 
-                'datetime' => $date
-            ]
-        );
+        $this->instantiate($workOrder);
+        $this->prepare($workOrder->product_id, $amount, false, $datetime)->persist($workOrder);
     }
 
-    // public function manualStock($data)
-    // {
-    //     return $this->newMove($data['product_id'], $data['direction'], $data['amount'], $data['datetime']);
-    // }
-
-    public function newMove($productId, $direction, $amount, $datetime, $stockableType = 'manual')
+    public function decreasedIngredient($workOrder, $ingredientId, $amount, $datetime = null)
     {
-        StockMove::create(
-            [
-                'product_id' => $productId,
-                'direction' => $direction,
-                'amount' => $amount,
-                'datetime' => $datetime,
-                'stockable_type' => $stockableType,
-            ]
-        );
+        $this->instantiate($workOrder);
+        $this->prepare($ingredientId, $amount, false, $datetime)->persist($workOrder);
     }
+
+    /**
+     * Create a positive move manually
+     */
+    public function moveIn($productId, $amount, $datetime, $stockableType = 'manual')
+    {
+        $this->prepare($productId, $amount, true, $datetime, $stockableType)->persist();
+    }
+
+    /**
+     * Create a negative move manually
+     */
+    public function moveOut($productId, $amount, $datetime, $stockableType = 'manual')
+    {
+        $this->prepare($productId, $amount, false, $datetime, $stockableType)->persist();
+    }
+    
+    /**
+     * Create a move manually
+     */
+    public function newMove($productId, $amount, $direction, $datetime, $stockableType = 'manual')
+    {
+        $this->prepare($productId, $amount, $direction, $datetime, $stockableType)->persist();
+    }
+
+
+    /**
+     * Prepare properties to be persisted
+     */
+    private function prepare($productId, $amount, $direction, $datetime = null, $stockableType = null, $stockableId = null)
+    {
+        $this->productId = $productId;
+        $this->direction = $direction;
+        $this->amount = $amount;
+        if($datetime)
+            $this->datetime = $datetime;
+        else $this->datetime = now();
+
+        $this->stockableType = $stockableType;
+        $this->stockableId = $stockableId;
+        
+        return $this;
+    }
+
+    /**
+     * The data that will be persisted
+     */
+    private function data()
+    {
+       return  [
+            'product_id' => $this->productId,
+            'direction' => $this->direction,
+            'amount' => $this->amount,
+            'datetime' => $this->datetime,
+        ];
+    }
+
+    /**
+     * Persist to database
+     * @param mixed|null $related the initiated model that has to many stockmove relation 
+     */
+    private function persist($related = null)
+    {
+        if($related) {
+            $related->stockMoves()->create($this->data());
+        } else {
+            StockMove::create(array_merge($this->data(), [
+                'stockable_type' => $this->stockableType,
+                'stockable_id' => $this->stockableId,
+            ]));
+        }
+    }
+
+    private function instantiate(&$workOrder)
+    {
+        if( ! $workOrder instanceof \App\Models\WorkOrder && is_numeric($workOrder))
+            $workOrder = Instantiator::make('workOrder', $workOrder);
+    }
+
+    
+
+   
+
+
+    
 
 }

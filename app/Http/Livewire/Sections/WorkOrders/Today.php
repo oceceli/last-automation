@@ -16,9 +16,11 @@ class Today extends Component
     public $workOrders;
 
 
+    // modal form, it will go to the stockmoves table
     public $unit_id;
     public $totalProduced;
     public $waste = 0; 
+    // public $datetime; // daha sonra forma ekleyebilirim. Üretim bitiş zamanı 'şu an' harici de seçilebilir mi?
 
     public $selectedUnit;
 
@@ -29,6 +31,8 @@ class Today extends Component
     ];
     
 
+// stok giriş çıkış işlemlerinizi buradan yapabilirsiniz
+// Lütfen ekle butonunu kullanın 
 
     public function mount()
     {
@@ -45,23 +49,32 @@ class Today extends Component
     public function submitProductionCompleted($id)
     {
         $this->validate();
-        $workOrder = $this->workOrders->find($id);
-        
-        $workOrder->end();
-
         $baseTotal = Conversions::toBase($this->selectedUnit, $this->totalProduced)['amount'];
         $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
 
-        if($baseTotal > 0) {
-            Stock::moveInProduction($workOrder, $baseTotal);
-        } else {
-            $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
+        $workOrder = $this->workOrders->find($id);
+        
+        // $workOrder->end();
+
+        foreach($workOrder->product->recipe->ingredients as $ingredient) {
+            $unitId = $ingredient->pivot->unit_id;
+            $amount = $ingredient->pivot->amount;
+
+            $totalDecrease = $baseTotal * Conversions::toBase($unitId, $amount)['amount'];
+            Stock::decreasedIngredient($workOrder, $ingredient->id, $totalDecrease);
         }
 
-        if($baseWaste > 0)
-            Stock::moveOutProduction($workOrder, $baseWaste);
 
+        $baseTotal > 0 
+            ? Stock::productionGross($workOrder, $baseTotal)
+            : $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
+
+        $baseWaste > 0 
+            ? Stock::productionWaste($workOrder, $baseWaste) 
+            : null;
     }
+
+
 
     public function startJob($id)
     {

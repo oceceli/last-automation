@@ -18,7 +18,7 @@ class WorkOrder extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    // protected $with = ['product'];
+    protected $with = ['product'];
 
     protected $casts = ['datetime' => 'date'];
 
@@ -50,6 +50,10 @@ class WorkOrder extends Model
     public function stockMoves()
     {
         return $this->morphMany('App\Models\StockMove', 'stockable');
+    }
+    public function getStockableTypeAttribute()
+    {
+        return 'App\Models\StockMove';
     }
 
     public function product()

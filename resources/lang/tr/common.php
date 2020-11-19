@@ -23,6 +23,7 @@ return [
     'already_exist' => 'Zaten var',
     'click_here_link' => 'Buradan',
     'add_from_here' => 'Buradan ekleyin',
+    'use_add_button' => 'Ekle butonunu kullanın',
     // 'saved' => 'Kaydedildi',
 
     'smoothly_saved' => ':model sorunsuzca kaydedildi...', 

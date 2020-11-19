@@ -20,7 +20,7 @@
                     <span class="font-bold text-gray-500">{{ $todayDate }}</span>
                 </div>
             </div>
-            <table class="ui sortable compact unstackable table">
+            <table class="ui sortable compact unstackable table basic">
                 <thead>
                     <tr>
                         <th>{{ __('sections/workorders.wo_status') }}</th>

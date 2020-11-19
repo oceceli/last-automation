@@ -16,7 +16,7 @@ class Product extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['units', 'recipe', 'workorders']; 
+    protected $with = ['units', 'recipe']; 
 
 
     // public const theadAttributes = [
@@ -80,6 +80,13 @@ class Product extends Model
     public function recipe()
     {
         return $this->hasOne(Recipe::class);
+    }
+    /**
+     * A bridge for the recipe ingredients 
+     */
+    public function getIngredientsAttribute()
+    {
+        return $this->recipe->ingredients;
     }
 
     public function getBaseUnit()
