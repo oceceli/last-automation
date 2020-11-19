@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
         // \Carbon\Carbon::setLocale($this->app->getLocale());
         $this->app->bind('Stock', \App\Common\StockMoves\Stock::class);
         $this->app->bind('Conversions', \App\Common\Units\Conversions::class);
+        $this->app->bind('Production', \App\Common\Production\Production::class);
     }
 
     /**

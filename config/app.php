@@ -233,6 +233,7 @@ return [
         // mine
         'Stock' => App\Common\Facades\Stock::class,
         'Conversions' => App\Common\Facades\Conversions::class,
+        'Production' => App\Common\Facades\Production::class,
 
     ],
 

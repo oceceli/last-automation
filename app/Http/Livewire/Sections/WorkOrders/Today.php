@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Common\Facades\Conversions;
+use App\Common\Facades\Production;
 use App\Common\Facades\Stock;
 use App\Models\Unit;
 use App\Models\WorkOrder;
@@ -64,7 +65,6 @@ class Today extends Component
             Stock::decreasedIngredient($workOrder, $ingredient->id, $totalDecrease);
         }
 
-
         $baseTotal > 0 
             ? Stock::productionGross($workOrder, $baseTotal)
             : $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
@@ -75,7 +75,9 @@ class Today extends Component
     }
 
 
-
+    /**
+     * Put workorder in progress 
+     */
     public function startJob($id)
     {
         if( ! WorkOrder::getInProgress()) {
