@@ -32,6 +32,7 @@ class StockMove extends Model
     //             'product_id' => 'required|min:1|integer',
     //             'stockable_id' => 'required|min:1|integer',
     //             'stockable_type' => 'required|max:30',
+    //             'type' => 'required|max:30',
     //             'direction' => 'required|boolean',
     //             'amount' => 'required|numeric',
     //             'datetime' => 'required|date',

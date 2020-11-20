@@ -8,6 +8,7 @@ use App\Models\StockMove;
 class Stock 
 {
     private $productId;
+    private $type;
     private $direction;
     private $amount;
     private $datetime;
@@ -23,7 +24,7 @@ class Stock
     public function productionGross($workOrder, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, true, $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, true, 'production', $datetime)->persist($workOrder);
     }
 
     /**
@@ -32,46 +33,47 @@ class Stock
     public function productionWaste($workOrder, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, false, $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, false, 'waste', $datetime)->persist($workOrder);
     }
 
     public function decreasedIngredient($workOrder, $ingredientId, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $amount, false, $datetime)->persist($workOrder);
+        $this->prepare($ingredientId, $amount, false, 'decreased_ingredient', $datetime)->persist($workOrder);
     }
 
     /**
      * Create a positive move manually
      */
-    public function moveIn($productId, $amount, $datetime, $stockableType = 'manual')
+    public function moveIn($productId, $amount, $datetime)
     {
-        $this->prepare($productId, $amount, true, $datetime, $stockableType)->persist();
+        $this->prepare($productId, $amount, true, 'manual', $datetime)->persist();
     }
 
     /**
      * Create a negative move manually
      */
-    public function moveOut($productId, $amount, $datetime, $stockableType = 'manual')
+    public function moveOut($productId, $amount, $datetime)
     {
-        $this->prepare($productId, $amount, false, $datetime, $stockableType)->persist();
+        $this->prepare($productId, $amount, false, 'manual', $datetime)->persist();
     }
     
     /**
-     * Create a move manually
+     * Make a move
      */
-    public function newMove($productId, $amount, $direction, $datetime, $stockableType = 'manual')
+    public function newMove($productId, $amount, $direction, $type, $datetime, $stockableType = null, $stockableId = null)
     {
-        $this->prepare($productId, $amount, $direction, $datetime, $stockableType)->persist();
+        $this->prepare($productId, $amount, $direction, $type, $datetime, $stockableType, $stockableId)->persist();
     }
 
 
     /**
-     * Prepare properties to be persisted
+     * Prepare properties to push database
      */
-    private function prepare($productId, $amount, $direction, $datetime = null, $stockableType = null, $stockableId = null)
+    private function prepare($productId, $amount, $direction, $type, $datetime = null, $stockableType = null, $stockableId = null)
     {
         $this->productId = $productId;
+        $this->type = $type;
         $this->direction = $direction;
         $this->amount = $amount;
         if($datetime)
@@ -85,12 +87,13 @@ class Stock
     }
 
     /**
-     * The data that will be persisted
+     * The data that will be pushed
      */
     private function data()
     {
        return  [
             'product_id' => $this->productId,
+            'type' => $this->type,
             'direction' => $this->direction,
             'amount' => $this->amount,
             'datetime' => $this->datetime,

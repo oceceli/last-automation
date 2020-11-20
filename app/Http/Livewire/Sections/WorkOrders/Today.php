@@ -55,23 +55,28 @@ class Today extends Component
 
         $workOrder = $this->workOrders->find($id);
         
-        // $workOrder->end();
+        $workOrder->end();
 
-        foreach($workOrder->product->recipe->ingredients as $ingredient) {
-            $unitId = $ingredient->pivot->unit_id;
-            $amount = $ingredient->pivot->amount;
+        if($baseTotal > 0) {
+            if($baseWaste > $baseTotal) 
+                return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
+            
+            foreach($workOrder->product->recipe->ingredients as $ingredient) {
+                $ingreUnitId = $ingredient->pivot->unit_id;
+                $ingreAmount = $ingredient->pivot->amount;
+    
+                $totalDecrease = $baseTotal * Conversions::toBase($ingreUnitId, $ingreAmount)['amount'];
+                Stock::decreasedIngredient($workOrder, $ingredient->id, $totalDecrease);
+            }
 
-            $totalDecrease = $baseTotal * Conversions::toBase($unitId, $amount)['amount'];
-            Stock::decreasedIngredient($workOrder, $ingredient->id, $totalDecrease);
+            Stock::productionGross($workOrder, $baseTotal);
+            if($baseWaste > 0) 
+                Stock::productionWaste($workOrder, $baseWaste);
+        } else {
+            $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
         }
 
-        $baseTotal > 0 
-            ? Stock::productionGross($workOrder, $baseTotal)
-            : $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
 
-        $baseWaste > 0 
-            ? Stock::productionWaste($workOrder, $baseWaste) 
-            : null;
     }
 
 

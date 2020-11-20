@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($workOrders as $key => $workOrder)
+                    @forelse ($workOrders as $key => $workOrder)
                         @if ($workOrder->isCompleted())
                             <tr class="left green marked text-green-600 bg-teal-50 ">
                                 <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
@@ -126,7 +126,15 @@
                                 </td>
                             </tr>
                         @endif
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="10">
+                                <x-placeholder icon="blue settings" header="{{ __('sections/workorders.daily_production') }}">
+                                    {{ __('sections/workorders.there_is_no_any_schuled_work_today') }}
+                                </x-placeholder>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

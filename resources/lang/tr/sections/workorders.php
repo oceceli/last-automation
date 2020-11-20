@@ -1,10 +1,16 @@
 <?php
 
 return [
-    // icons
+    // icons ******************* 
     'wo_complete_icon' => 'red power',
+    'wo_completed_icon' => 'green checkmark',
+    'wo_in_progress_icon' => 'red loading cog',
+    'wo_active_icon' => 'primary clock outline',
+    'wo_inactive_icon' => 'grey ban icon',
+    // icons ******************* 
 
-
+    // details
+    'production_completed' => 'Üretim tamamlandı',
 
     'product_id' => 'Reçete no ???',
     'lot_no' => 'Lot No',
@@ -16,6 +22,8 @@ return [
     'in_progress' => 'Üretiliyor',
     'is_completed' => 'Tamamlandı',
     'note' => 'Açıklama',
+
+    'daily_production' => 'Günlük üretim',
 
     'create' => [
         'header' => 'İş Emri Oluştur',
@@ -52,4 +60,6 @@ return [
     'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
     'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
     'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
+
+    'there_is_no_any_schuled_work_today' => 'Bugün için bir iş programı oluşturulmadı',
 ];

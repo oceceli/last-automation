@@ -20,7 +20,8 @@
                     <tr class="@if($stockMove->direction) positive @else negative @endif">
                         <td class="collapsing center aligned">{{ $key+1 }}</td>
                         <td class="one wide center aligned">
-                            @if ($stockMove->isProduction())
+                            {{ $stockMove->type }}
+                            {{-- @if ($stockMove->isProduction())
                                 <a href="{{ route('work-orders.show', ['work_order' => $stockMove->stockable->id] )}}" style="color: inherit;">
                                     <div class="p-1 bg-white rounded-md shadow hover:shadow-md font-bold leading-5 transition ease-in-out duration-200 hover:bg-gray-50">
                                         {{ __('stockmoves.production') }}
@@ -28,7 +29,7 @@
                                 </a>
                             @else
                                 <span>{{ __("stockmoves.manual") }}</span>
-                            @endif
+                            @endif --}}
                         </td>
                         <td class="font-bold">
                             <span>{{ $stockMove->product->code }}</span>
