@@ -53,13 +53,12 @@ class Today extends Component
         $baseTotal = Conversions::toBase($this->selectedUnit, $this->totalProduced)['amount'];
         $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
 
-        $workOrder = $this->workOrders->find($id);
-        
-        $workOrder->end();
-
         if($baseTotal > 0) {
             if($baseWaste > $baseTotal) 
                 return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
+
+            $workOrder = $this->workOrders->find($id);
+            $workOrder->end();
             
             foreach($workOrder->product->recipe->ingredients as $ingredient) {
                 $ingreUnitId = $ingredient->pivot->unit_id;
@@ -85,7 +84,7 @@ class Today extends Component
      */
     public function startJob($id)
     {
-        if( ! WorkOrder::getInProgress()) {
+        if( ! WorkOrder::getInProgress()) { // düzelt burayı !!!
             $workOrder = $this->workOrders->find($id);
             $workOrder->start();
         } else {

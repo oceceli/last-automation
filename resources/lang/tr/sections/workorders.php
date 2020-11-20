@@ -2,10 +2,10 @@
 
 return [
     // icons ******************* 
-    'wo_complete_icon' => 'red power',
-    'wo_completed_icon' => 'green checkmark',
-    'wo_in_progress_icon' => 'red loading cog',
-    'wo_active_icon' => 'primary clock outline',
+    'wo_complete_icon' => 'power',
+    'wo_completed_icon' => 'checkmark',
+    'wo_in_progress_icon' => 'loading cog',
+    'wo_active_icon' => 'clock outline',
     'wo_inactive_icon' => 'grey ban icon',
     // icons ******************* 
 

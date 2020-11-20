@@ -10,7 +10,7 @@ return [
 
     'date' => 'Tarih',
     'datetime' => 'Tarih',
-    'add_new' => 'Yeni Ekle',
+    'add_new' => 'Ekle',
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
     'remove' => 'Kaldır',
@@ -66,6 +66,8 @@ return [
     'unit-create' => 'Birim oluştur',
     'units' => 'Birimler',
     'work-orders-daily' => 'Günlük iş emri',
+    'total' => 'Toplam',
+    'waste' => 'Fire',
 
     'create' => 'oluştur',
     'home' => 'Anasayfa',

@@ -22,4 +22,6 @@ return [
     'use_add_button_on_the_top_right_corner' => 'Sağ üstteki ekle butonunu kullanın',
 
     'waste_cannot_be_greater_than_total_amount' => 'Fire, toplam üretimden fazla olamaz!',
+
+    'any_stockmove_will_be_projected_here' => 'Stoğa ekleme çıkarma yapıldıkça burada görüntülenecek',
 ];

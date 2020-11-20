@@ -9,13 +9,12 @@ class Details extends Component
 {
     // model
     public $workOrder;
+    public $productionResults;
 
     // attribute
-    public $is_active;
+    public $status;
 
-    // relational
-    public $product;
-    // public $unit;
+    public $statusColor;
 
     
 
@@ -23,22 +22,23 @@ class Details extends Component
     public function mount($workOrder)
     {
         $this->workOrder = $workOrder;
-        $this->is_active = $workOrder->is_active;
-        $this->product = $workOrder->product;
+        $this->productionResults = $this->workOrder->getProductionResults();
+
+        $this->status = $workOrder->isActive();
+        $this->statusColor = $workOrder->statusColor;
+        // $this->product = $workOrder->product;
         // $this->unit = Unit::find($workOrder->unit_id);
     }
 
-    public function updatingIsActive($value)
+    public function updatingStatus($value)
     {
-        // if work order is not completed, then should change the is_active column // backend security
-        if($this->workOrder->isNotCompleted() && is_bool($value)) {
-            $this->workOrder->update(['is_active' => $value]);
-            $value 
-                ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
-                : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
-        }
-        
+        $this->workOrder->setActivation($value);
+        $this->statusColor = $this->workOrder->statusColor;
+        $value 
+            ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
+            : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
     }
+
 
     public function render()
     {

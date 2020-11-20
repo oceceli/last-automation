@@ -19,8 +19,7 @@ class Form extends BaseForm
     public $datetime;
     public $code;
     public $queue;
-    public $is_active = true;
-    public $in_progress = false;
+    public $status = 'active';
     public $note;
 
     public $unit_id;
@@ -76,8 +75,8 @@ class Form extends BaseForm
         $this->datetime = $workOrder->datetime;
         $this->code = $workOrder->code;
         $this->queue = $workOrder->queue;
-        $this->is_active = $workOrder->is_active;
-        $this->in_progress = $workOrder->in_progress;
+        // $this->is_active = $workOrder->is_active;
+        // $this->in_progress = $workOrder->in_progress;
         $this->note = $workOrder->note;
     }
 

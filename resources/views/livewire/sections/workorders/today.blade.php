@@ -1,5 +1,17 @@
 <div>
-    <x-page-header icon="settings" header="sections/workorders.daily_work_orders" />
+    <div x-data="{wo_modal: false}">
+        <x-page-header icon="settings" header="sections/workorders.daily_work_orders">
+            <x-slot name="buttons">
+                <button @click="wo_modal = true" class="ui icon mini teal button"
+                    data-tooltip="{{ __('common.add_new') }}" data-variation="mini">
+                    <i class="white plus icon"></i>
+                </button>
+            </x-slot>
+        </x-page-header>
+        <x-custom-modal active="wo_modal">
+            <livewire:sections.work-orders.form>
+        </x-custom-modal>
+    </div>
     <x-content theme="green">
         <div class="p-4">
             <div class="flex justify-between">
@@ -54,9 +66,9 @@
                                 </td>
                             </tr>
                         @else
-                            <tr class="@if($workOrder->inProgress()) warning font-bold @elseif($workOrder->is_active) @else  text-gray-400 @endif">
+                            <tr class="@if($workOrder->isInProgress()) warning font-bold @elseif($workOrder->isActive()) @else  text-gray-400 @endif">
                                 <td class="center aligned collapsing">
-                                    @if($workOrder->inProgress())
+                                    @if($workOrder->isInProgress())
                                             @if ( ! $workOrder->isToday())
                                                 <span data-tooltip="{{ __('sections/workorders.this_work_order_is_not_finished_in_time_should_end_now')}}" data-variation="mini" data-position="top left">
                                                     <i class="large red attention icon"></i>
@@ -66,7 +78,7 @@
                                                     <i class="large loading red cog icon"></i>
                                                 </span>
                                             @endif
-                                    @elseif($workOrder->is_active)
+                                    @elseif($workOrder->isActive())
                                         <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
                                             <i class="large primary clock outline icon"></i>
                                         </span>
@@ -85,7 +97,7 @@
                                 <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                 <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                 <td class="collapsing">
-                                    @if($workOrder->inProgress())
+                                    @if($workOrder->isInProgress())
                                         <div x-data="{wo_complete_modal: false}">
                                             <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id">
                                                 <div @click="wo_complete_modal = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
@@ -114,7 +126,7 @@
                                                 </form>
                                             </x-custom-modal>
                                         </div>
-                                    @elseif($workOrder->is_active)
+                                    @elseif($workOrder->isActive())
                                         <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
                                             <div data-tooltip="{{ __('sections/workorders.wo_start') }}" data-variation="mini">
                                                 <i wire:click.prevent="startJob({{ $workOrder->id }})" class="red play link icon"></i>

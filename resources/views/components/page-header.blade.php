@@ -18,7 +18,7 @@
 
   @if ($buttons)
       <div class="pl-4 flex">
-          <div class="p-2 bg-white shadow-md border rounded-lg">
+          <div class="shadow rounded-md">
               <div class="ui buttons">
                   {{ $buttons }}
               </div>

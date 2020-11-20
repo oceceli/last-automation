@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $key => $stockMove)
+                @forelse ($data as $key => $stockMove)
                     <tr class="@if($stockMove->direction) positive @else negative @endif">
                         <td class="collapsing center aligned">{{ $key+1 }}</td>
                         <td class="one wide center aligned">
@@ -51,7 +51,15 @@
                         </td>
 
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="10">
+                            <x-placeholder icon="red truck packing" header="{{ __('common.empty') }}">
+                                {{ __('stockmoves.any_stockmove_will_be_projected_here') }}
+                            </x-placeholder>
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         

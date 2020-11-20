@@ -14,7 +14,7 @@
                 
                 <div class="text-right">
                     <label class="text-gray-500">{{ __('sections/workorders.datetime') }}:</label>
-                    @if ($workOrder->is_active)
+                    @if ($workOrder->isActive())
                         <u class="text-green-500 font-bold">{{ $workOrder->datetime }}</u>
                     @else
                         <s class="text-red-500 font-bold">{{ $workOrder->datetime }}</s>
@@ -70,11 +70,11 @@
                         @if ($workOrder->isCompleted())
                             <span class="text-green-500">Üretim sonuçlandı!</span>
                         @else
-                            @if ($workOrder->inProgress())
+                            @if ($workOrder->isInProgress())
                                 <i class="circular green loading cog link icon"></i>
                                 <span>{{ __('sections/workorders.production_continues') }}</span>
                             @else
-                                @if ($workOrder->is_active)
+                                @if ($workOrder->isActive())
                                     <span class="text-yellow-500">{{ __('sections/workorders.waiting_for_production') }}</span>
                                 @else
                                     <span class="text-red-600">{{ __('common.suspended') }}</span>
@@ -82,11 +82,11 @@
                             @endif
                         @endif
                     </div>
-                    @if ($workOrder->isNotCompleted() && ! $workOrder->inProgress())
+                    @if ($workOrder->isNotCompleted() && ! $workOrder->isInProgress())
                     <div>
                         <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
                         <div class="ui toggle checkbox">
-                            <input type="checkbox" wire:model="is_active">
+                            <input type="checkbox" wire:model="status">
                             <label></label>
                         </div>
                     </div>
@@ -102,3 +102,16 @@
         </div>
     </div>
 </div>
+
+
+
+
+@if ($workOrder->isNotCompleted() && ! $workOrder->isInProgress())
+        <div>
+            <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
+            <div class="ui toggle checkbox">
+                <input type="checkbox" wire:model="status">
+                <label></label>
+            </div>
+        </div>
+        @endif

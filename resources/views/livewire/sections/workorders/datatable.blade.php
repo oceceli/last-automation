@@ -35,7 +35,7 @@
                                 <span class="font-bold">(bugün)</span>
                             </td>
                             {{-- <td>{{ $workOrder->in_progress }}</td> --}}
-                            {{-- <td>{{ $workOrder->is_active }}</td> --}}
+                            {{-- <td>{{ $workOrder->isActive() }}</td> --}}
                             <td class="collapsing selectable">
                                 <span class="text-green-800">{sayı} {baseUnit}</span>
                                 <span data-tooltip="{{ __('common.see_details') }}" data-variation="mini">
@@ -44,13 +44,13 @@
                             </td>
                         </tr>
                     @else
-                        <tr class="@if($workOrder->inProgress()) left teal marked @elseif($workOrder->is_active) left primary marked @else left grey marked text-gray-400 @endif">
+                        <tr class="@if($workOrder->isInProgress()) left teal marked @elseif($workOrder->isActive()) left primary marked @else left grey marked text-gray-400 @endif">
                             <td class="center aligned collapsing">
-                                @if($workOrder->inProgress())
+                                @if($workOrder->isInProgress())
                                     <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
                                         <i class="large loading cog icon"></i>
                                     </span>
-                                @elseif($workOrder->is_active)
+                                @elseif($workOrder->isActive())
                                     <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
                                         <i class="large primary clock outline icon"></i>
                                     </span>
@@ -73,9 +73,9 @@
                             
                             {{-- <td class="">Onay<i class="green checkmark icon"></i></td> --}}
                             <td class="collapsing">
-                                @if($workOrder->inProgress())
+                                @if($workOrder->isInProgress())
                                     <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id" />
-                                @elseif($workOrder->is_active)
+                                @elseif($workOrder->isActive())
                                     <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
                                 @else
                                     <x-crud-actions modelName="work-order" gray :modelId="$workOrder->id" />
@@ -92,7 +92,7 @@
         </div>
 
         {{-- <div class="ui toggle checkbox">
-            <input wire:model.lazy="is_active" type="checkbox">
+            <input wire:model.lazy="isActive()" type="checkbox">
             <label>Aktif</label>
         </div> --}}
         

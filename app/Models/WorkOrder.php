@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use App\Common\Facades\Conversions;
+use App\Common\Facades\Production;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use App\Models\Traits\WorkOrderQueries;
 use Carbon\Carbon;
 
 class WorkOrder extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers;
+    use HasFactory, SoftDeletes, ModelHelpers, WorkOrderQueries;
 
     protected $guarded = [];
 
@@ -37,8 +39,10 @@ class WorkOrder extends Model
                 'amount' => 'required|numeric|min:0.1',
                 'datetime' => 'required|date',
                 'queue' => 'required|int|min:0',
-                'is_active' => 'required|boolean',
-                'in_progress' => 'nullable|boolean',
+                'status' => 'required|max:15',
+                // 'is_active' => 'required|boolean',
+                // 'in_progress' => 'nullable|boolean',
+                // 'is_completed' => 'nullable|boolean',
                 'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships
@@ -51,10 +55,10 @@ class WorkOrder extends Model
     {
         return $this->morphMany('App\Models\StockMove', 'stockable');
     }
-    public function getStockableTypeAttribute()
-    {
-        return 'App\Models\StockMove';
-    }
+    // public function getStockableTypeAttribute()
+    // {
+    //     return 'App\Models\StockMove';
+    // }
 
     public function product()
     {
@@ -66,6 +70,7 @@ class WorkOrder extends Model
         return $this->belongsTo(Unit::class);
     }
 
+
     public function setDatetimeAttribute($value) 
     {
         $this->attributes['datetime'] = Carbon::parse($value)->format('d.m.Y');
@@ -76,30 +81,47 @@ class WorkOrder extends Model
         return Carbon::parse($value)->format('d.m.Y');
     }
 
-
-
-    public function setIsActiveAttribute($value)
+    /**
+     * $workOrder->statusColor
+     */
+    public function getStatusColorAttribute()
     {
-        $this->attributes['is_active'] = (boolean)$value;
+        return [
+            'active' => 'blue',
+            'inactive' => 'gray',
+            'in_progress' => 'yellow',
+            'completed' => 'green',
+        ][$this->status] ?? null;
     }
-    public function getIsActiveAttribute($value)
-    {
-        return (boolean)$value;
-    }
+
 
     public function isCompleted()
     {
-        return $this->is_completed;
+        return $this->status === 'completed';
     }
     public function isNotCompleted()
     {
         return !$this->isCompleted();
     }
 
-
-    public function inProgress()
+    public function isActive()
     {
-        return $this->in_progress;
+        return $this->status === 'active';
+    }
+
+    public function setActivation($value)
+    { 
+        // if work order is not completed, then should change the is_active column
+        if($this->isNotCompleted() && is_bool($value)) {
+            $value
+                ? $this->update(['status' => 'active'])
+                : $this->update(['status' => 'inactive']);
+        }
+    }
+
+    public function isInProgress() : bool
+    {
+        return $this->status === 'in_progress';
     }
 
     /**
@@ -107,7 +129,7 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        $this->update(['in_progress' => true]);
+        $this->update(['status' => 'in_progress']);
     }
 
     /**
@@ -115,7 +137,19 @@ class WorkOrder extends Model
      */
     public function end()
     {
-        $this->update(['in_progress' => false, 'is_completed' => true]);
+        $this->update(['status' => 'completed']);
+        // $this->update(['in_progress' => false, 'is_completed' => true]);
+    }
+
+    public function getProductionResults()
+    {
+        if($this->isCompleted()) {
+            return [
+                'gross' => $this->getGross(),
+                'waste' => $this->getWaste(),
+                'net' => $this->net(),
+            ];
+        }
     }
 
     /**
@@ -123,7 +157,7 @@ class WorkOrder extends Model
      */
     public function startedAt()
     {
-        return $this->inProgress()
+        return $this->isInProgress()
             ? $this->updated_at // ???
             : false;
         
@@ -131,15 +165,17 @@ class WorkOrder extends Model
 
     public function completedAt()
     {
-        return $this->is_completed
+        return $this->isCompleted()
             ? $this->updated_at->diffForHumans() // ???
             : false;
     }
 
-    public function isToday()
+    public function isToday() // ??? patlamış olabilir
     {
         return $this->datetime == Carbon::today()->format('d.m.Y');
     }
+
+
 
     /**
      * Get work-orders of today
@@ -147,14 +183,14 @@ class WorkOrder extends Model
     public static function getTodaysList()
     {
         return self::where('datetime', Carbon::today()->format('d.m.Y'))
-            ->orWhere('in_progress', true)
+            ->orWhere('status', 'in_progress')
             ->orderBy('queue', 'asc')
-            ->get(); // ve yalnızca aktif olanları al
+            ->get();
     }
 
     public static function getInProgress()
     {
-        return (self::where('in_progress', true)->first());
+        return self::where('status', 'in_progress')->first();
     }
 
 
