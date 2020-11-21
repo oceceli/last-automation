@@ -7,8 +7,8 @@
             {{ $header }}
         </div>
         @endif
-        <div class="px-4 py-2">
-            <div class="px-4 py-2 rounded-md shadow-md border border-{{ $theme }}-200 bg-white">
+        <div class="px-4 pt-6 py-2">
+            <div class="rounded-md shadow-md border border-{{ $theme }}-200 bg-white">
                 {{ $slot }} 
             </div>
         </div>

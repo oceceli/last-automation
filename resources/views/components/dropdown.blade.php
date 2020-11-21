@@ -1,6 +1,6 @@
 
-<div {{ $attributes->merge(['class' => 'field']) }} >
-    <div class="field @if($errors->has($model) || $errors->has($iModel)) error @endif">
+<div class="field">
+    <div {{ $attributes->merge(['class' => 'field']) }}>
 
         <label>{{ __($label)}}</label>
     

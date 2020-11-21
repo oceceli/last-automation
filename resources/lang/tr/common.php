@@ -11,6 +11,7 @@ return [
     'date' => 'Tarih',
     'datetime' => 'Tarih',
     'add_new' => 'Ekle',
+    'add_note' => 'Not ekle',
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
     'remove' => 'Kaldır',
