@@ -13,26 +13,44 @@
             <x-label-value label="{{ __('sections/workorders.queue') }}" value="{{ $workOrder->queue }}"                                hover="{{ $statusColor }}" />
         </div>
 
-        @if ($workOrder->isCompleted())
-            <div class="p-3 m-4 select-text rounded border relative">
-                <div class="font-bold text-lg">
-                    <span>{{ __('common.total') }}:</span>
-                    <span>{{ $productionResults['gross'] }}</span> 
-                    <span class="text-sm text-gray-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
+        <div class="p-3 m-4 rounded shadow-md border leading-8 cursor-default">
+            @if ($workOrder->isCompleted())
+                <div class="flex flex-col justify-between gap-2">
+                    <div class="border-b pb-2">
+                        <div>
+                            <i class="calculator icon"></i>
+                            <span class=>{{ __('common.total') }}:</span>
+                            <span class="font-bold text-green-600">{{ $productionResults['gross'] }}</span> 
+                            <span class="text-sm text-green-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
+                        </div>
+                        <div>
+                            <i class="trash icon"></i>
+                            <span>{{ __('common.waste') }}:</span> 
+                            <span class="font-bold text-red-600">{{ $productionResults['waste'] }}</span> 
+                            <span class="text-sm text-red-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="edit icon"></i>
+                        <span>Net stoğa eklenen:</span> 
+                        <u class="font-bold text-green-600 text-lg">{{ $productionResults['net'] }}</u>
+                        <span class="text-sm text-green-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
+                    </div>
                 </div>
-                <div class="font-bold text-lg">
-                    <span>{{ __('common.waste') }}:</span> 
-                    <span>{{ $productionResults['waste'] }}</span> 
-                    <span class="text-sm text-gray-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
-                </div>
-                <div class="font-bold text-lg">
-                    <span>Net stoğa eklenen:</span> 
-                    <span>{{ $productionResults['net'] }}</span>
-                    <span class="text-sm text-gray-600">{{ $workOrder->product->getBaseUnit()->name }}</span>
-                </div>
-            </div>
-        @endif
-    
+            @elseif($workOrder->isInProgress())
+                <span data-tooltip="{{ $this->inProduction->startedAt()->format('H:i:s') }}" data-variation="mini" data-position="top left">
+                    <span class="font-bold text-yellow-500">{{ __('sections/workorders.production_started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}...</span>
+                </span>
+            @elseif($workOrder->isActive())
+                <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
+                // DEVAMMM
+            @endif
+        </div>
+
+
+
+
+        
         
     </div>
     @if ($workOrder->note)
@@ -42,6 +60,5 @@
         </div>
     @endif
 
-
-
 </div>
+

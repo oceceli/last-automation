@@ -13,7 +13,17 @@ module.exports = {
 
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
+        // extend: {
+        //     scale: ['focus-within'],
+        // }
     },
 
     plugins: [require('@tailwindcss/ui')],
+
+    experimental: 'all',
+
+    future: {
+        removeDeprecatedGapUtilities: true,
+        purgeLayersByDefault: false,
+    },
 };

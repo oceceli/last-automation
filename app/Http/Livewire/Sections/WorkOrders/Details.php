@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Models\Unit;
+use App\Models\WorkOrder;
 use Livewire\Component;
 
 class Details extends Component
@@ -37,6 +38,11 @@ class Details extends Component
         $value 
             ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
             : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
+    }
+
+    public function getInProductionProperty()
+    {
+        return WorkOrder::getInProgress();
     }
 
 

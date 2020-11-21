@@ -1,5 +1,4 @@
 <x-app-layout>
-
 	<div>
 		<x-page-header icon="box" header="sections/products.create.header" subheader="sections/products.create.subheader" />
 		<x-content theme="blue">
