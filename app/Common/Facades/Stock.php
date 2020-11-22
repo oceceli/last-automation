@@ -5,12 +5,12 @@ namespace App\Common\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \App\Common\StockMoves\Stock productionGross($workOrder, $amount, $datetime = null)
- * @method static \App\Common\StockMoves\Stock productionWaste($workOrder, $amount, $datetime = null)
- * @method static \App\Common\StockMoves\Stock moveIn($productId, $amount, $datetime, $stockableType = 'manual')
- * @method static \App\Common\StockMoves\Stock moveOut($productId, $amount, $datetime, $stockableType = 'manual')
- * @method static \App\Common\StockMoves\Stock newMove($productId, $amount, $direction, $datetime, $stockableType = 'manual')
- * @method static \App\Common\StockMoves\Stock decreasedIngredient($workOrder, $ingredientId, $amount, $datetime = null)
+ * @method static \App\Common\StockMoves\Stock productionGross($workOrder, $amount, $unitId, $datetime = null)
+ * @method static \App\Common\StockMoves\Stock productionWaste($workOrder, $amount, $unitId, $datetime = null)
+ * @method static \App\Common\StockMoves\Stock moveIn($productId, $amount, $unitId, $datetime, $stockableType = 'manual')
+ * @method static \App\Common\StockMoves\Stock moveOut($productId, $amount, $unitId, $datetime, $stockableType = 'manual')
+ * @method static \App\Common\StockMoves\Stock newMove($productId, $amount, $unitId, $direction, $datetime, $stockableType = 'manual')
+ * @method static \App\Common\StockMoves\Stock decreasedIngredient($workOrder, $ingredientId, $amount, $unitId, $datetime = null)
  *
  * @see \Illuminate\Contracts\Foundation\Application
  */

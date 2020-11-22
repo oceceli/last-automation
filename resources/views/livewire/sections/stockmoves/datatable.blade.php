@@ -35,14 +35,15 @@
                             <span>{{ $stockMove->product->code }}</span>
                             <span class="text-sm text-gray-400 font-semibold">{{ $stockMove->product->name }}</span>
                         </td>
-                        <td>
+                        <td class="cursor-default">
                             @if ($stockMove->direction) 
                                 <span data-tooltip="{{ __('stockmoves.stock_entry') }}" data-variation="mini"><i class="green plus icon"></i></span>
                             @else 
                                 <span data-tooltip="{{ __('stockmoves.stock_decrease') }}" data-variation="mini"><i class="red minus icon"></i></span>
                             @endif
                             <span class="font-bold">{{ round($stockMove->amount, 2) }}</span>
-                            <span class="text-sm">{{ $stockMove->product->getBaseUnit()->name }}</span>
+                            <span class="text-sm">{{ $stockMove->unit->name }}</span>
+                            <span class="text-xs text-ease">({{ $stockMove->convertToBase()['amount'] }} {{ $stockMove->convertToBase()['unit']->name }})</span>
                         </td>
                         <td class="text-sm">{{ $stockMove->datetime }}</td>
 

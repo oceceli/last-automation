@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,7 @@ class StockMove extends Model
     //     return [
     //         'data' => [
     //             'product_id' => 'required|min:1|integer',
+    //             'unit_id' => 'required|min:1|integer',
     //             'stockable_id' => 'required|min:1|integer',
     //             'stockable_type' => 'required|max:30',
     //             'type' => 'required|max:30',
@@ -49,9 +51,14 @@ class StockMove extends Model
         return $this->morphTo();
     }
 
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
     public function isProduction()
     {
-        if($this->stockable_type === "App\Models\WorkOrder") // veritabanına type adında yeni bir column oluştur
+        if($this->stockable_type === "App\Models\WorkOrder") // veritabanına type adında yeni bir column oluştur | oluşturdum efendim!
             return true;
         return false;
     }
@@ -61,14 +68,19 @@ class StockMove extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function setDatetimeAttribute($datetime)
+    public function convertToBase()
     {
-        $this->attributes['datetime'] = Carbon::parse($datetime); // ???
+        return Conversions::toBase($this->unit, $this->amount);
     }
-    public function getDatetimeAttribute($datetime)
-    {
-        return Carbon::parse($datetime)->format('d.m.Y H:i:s'); // ??
-    }
+
+    // public function setDatetimeAttribute($datetime)
+    // {
+    //     $this->attributes['datetime'] = Carbon::parse($datetime); // ???
+    // }
+    // public function getDatetimeAttribute($datetime)
+    // {
+    //     return Carbon::parse($datetime)->format('d.m.Y H:i:s'); // ??
+    // }
 
     
 }

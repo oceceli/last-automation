@@ -30,8 +30,8 @@ class Today extends Component
 
     public $rules = [
         'unit_id' => 'required|integer|min:1',
-        'production_gross' => 'required|numeric',
-        'production_waste' => 'nullable|numeric',
+        'production_gross' => 'required|numeric|gt:production_waste',
+        'production_waste' => 'nullable|numeric|lt:production_gross',
     ];
     
 
@@ -58,31 +58,19 @@ class Today extends Component
     public function submitWoCompleted()
     {
         $this->validate();
-        $baseTotal = Conversions::toBase($this->selectedUnit, $this->production_gross)['amount'];
-        $baseWaste = Conversions::toBase($this->selectedUnit, $this->production_waste)['amount'];
 
-        if($baseTotal > 0) {
-            if($baseWaste > $baseTotal) 
-                return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
+        $workOrder = $this->woCompleteData;
 
-            $workOrder = $this->woCompleteData;
-            $workOrder->end();
-            
-            foreach($workOrder->product->recipe->ingredients as $ingredient) {
-                $ingreUnitId = $ingredient->pivot->unit_id;
-                $ingreAmount = $ingredient->pivot->amount;
-    
-                $totalDecrease = $baseTotal * Conversions::toBase($ingreUnitId, $ingreAmount)['amount'];
-                Stock::decreasedIngredient($workOrder, $ingredient->id, $totalDecrease);
-            }
+        // if($this->production_waste > $this->production_gross)
+        //     return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
 
-            Stock::productionGross($workOrder, $baseTotal);
-            if($baseWaste > 0) 
-                Stock::productionWaste($workOrder, $baseWaste);
-            
-        } else {
-            $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
-        }
+        $workOrder->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id);
+
+
+
+
+        // $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
+        
 
         $this->clearFields();
     }

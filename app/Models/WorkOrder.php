@@ -138,7 +138,7 @@ class WorkOrder extends Model
     /**
      * Put selected work-order out of production and mark as completed
      */
-    public function end()
+    public function markAsCompleted()
     {
         if($this->isInProgress())
             $this->update(['status' => 'completed']);

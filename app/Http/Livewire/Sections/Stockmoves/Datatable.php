@@ -10,6 +10,5 @@ class Datatable extends BaseDatatable
     public $model = StockMove::class;
     public $view = 'livewire.sections.stockmoves.datatable';
     
-    
 
 }

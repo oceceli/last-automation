@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -93,6 +94,7 @@ class Product extends Model
     {
         return $this->units->where('parent_id', 0)->first();
     }
+
 
     public function workorders()
     {

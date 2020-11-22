@@ -12,9 +12,10 @@ class Conversions
 
     const units = [
         ['id' => 1, 'name' => 'Adet', 'abbreviation' => 'adet'],
-        ['id' => 2, 'name' => 'Gram', 'abbreviation' => 'gr'],
-        ['id' => 3, 'name' => 'Santimetre', 'abbreviation' => 'cm'],
-        ['id' => 4, 'name' => 'Litre', 'abbreviation' => 'lt'],
+        ['id' => 2, 'name' => 'Kilogram', 'abbreviation' => 'kg'],
+        ['id' => 3, 'name' => 'Gram', 'abbreviation' => 'gr'],
+        ['id' => 4, 'name' => 'Santimetre', 'abbreviation' => 'cm'],
+        ['id' => 5, 'name' => 'Litre', 'abbreviation' => 'lt'],
     ];
     
     

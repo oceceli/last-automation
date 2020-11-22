@@ -11,6 +11,7 @@ class Stock
     private $type;
     private $direction;
     private $amount;
+    private $unitId;
     private $datetime;
 
     private $stockableType;
@@ -21,61 +22,64 @@ class Stock
      /**
      *  Gets a workorder/workorder_id as parameter, creates a new stockmove in positive way(gross)
      */
-    public function productionGross($workOrder, $amount, $datetime = null)
+    public function productionGross($workOrder, $amount, $unitId, $datetime = null)
     {
+        if($amount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, true, 'production_gross', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, $unitId, true, 'production_gross', $datetime)->persist($workOrder);
     }
 
     /**
      *  Gets a workorder/workorder_id as parameter, creates a new stockmove in negative way(waste)
      */
-    public function productionWaste($workOrder, $amount, $datetime = null)
+    public function productionWaste($workOrder, $amount, $unitId, $datetime = null)
     {
+        if($amount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, false, 'production_waste', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, $unitId, false, 'production_waste', $datetime)->persist($workOrder);
     }
 
-    public function decreasedIngredient($workOrder, $ingredientId, $amount, $datetime = null)
+    public function decreasedIngredient($workOrder, $ingredientId, $amount, $unitId, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $amount, false, 'production_ingredient', $datetime)->persist($workOrder);
+        $this->prepare($ingredientId, $amount, $unitId, false, 'production_ingredient', $datetime)->persist($workOrder);
     }
 
     /**
      * Create a positive move manually
      */
-    public function moveIn($productId, $amount, $datetime)
+    public function moveIn($productId, $amount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, true, 'manual', $datetime)->persist();
+        $this->prepare($productId, $amount, $unitId, true, 'manual', $datetime)->persist();
     }
 
     /**
      * Create a negative move manually
      */
-    public function moveOut($productId, $amount, $datetime)
+    public function moveOut($productId, $amount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, false, 'manual', $datetime)->persist();
+        $this->prepare($productId, $amount, $unitId, false, 'manual', $datetime)->persist();
     }
     
     /**
      * Make a move
      */
-    public function newMove($productId, $amount, $direction, $datetime, $type = 'manual', $stockableType = null, $stockableId = null)
+    public function newMove($productId, $amount, $unitId, $direction, $datetime, $type = 'manual', $stockableType = null, $stockableId = null)
     {
-        $this->prepare($productId, $amount, $direction, $type, $datetime, $stockableType, $stockableId)->persist();
+        $this->prepare($productId, $amount, $unitId, $direction, $type, $datetime, $stockableType, $stockableId)->persist();
     }
 
 
     /**
      * Prepare properties to push database
      */
-    private function prepare($productId, $amount, $direction, $type, $datetime = null, $stockableType = null, $stockableId = null)
+    private function prepare($productId, $amount, $unitId, $direction, $type, $datetime = null, $stockableType = null, $stockableId = null)
     {
         $this->productId = $productId;
         $this->type = $type;
         $this->direction = $direction;
         $this->amount = $amount;
+        $this->unitId = $unitId;
         if($datetime)
             $this->datetime = $datetime;
         else $this->datetime = now();
@@ -96,6 +100,7 @@ class Stock
             'type' => $this->type,
             'direction' => $this->direction,
             'amount' => $this->amount,
+            'unit_id' => $this->unitId,
             'datetime' => $this->datetime,
         ];
     }

@@ -24,6 +24,7 @@ class StockMoveFactory extends Factory
     {
         return [
             'product_id' => $this->faker->numberBetween(1, 30),
+            'unit_id' => $this->faker->number,
             'type' => 'manual',
             'direction' => $this->faker->boolean(),
             'amount' => $this->faker->numberBetween(),
