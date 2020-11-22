@@ -32,6 +32,7 @@ class CrudActions extends Component
 
         $this->show = $show;
         $this->edit = $edit;
+        $this->delete = $delete;
 
         $this->gray = $gray;
         $this->addClass = $addClass;

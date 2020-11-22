@@ -74,11 +74,11 @@
                             {{-- <td class="">Onay<i class="green checkmark icon"></i></td> --}}
                             <td class="collapsing">
                                 @if($workOrder->isInProgress())
-                                    <x-crud-actions onlyShow modelName="work-order" :modelId="$workOrder->id" />
+                                    <x-crud-actions show modelName="work-order" :modelId="$workOrder->id" />
                                 @elseif($workOrder->isActive())
-                                    <x-crud-actions modelName="work-order" :modelId="$workOrder->id" />
+                                    <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" />
                                 @else
-                                    <x-crud-actions modelName="work-order" gray :modelId="$workOrder->id" />
+                                    <x-crud-actions show edit delete modelName="work-order" gray :modelId="$workOrder->id" />
                                 @endif
                             </td>
                         </tr>

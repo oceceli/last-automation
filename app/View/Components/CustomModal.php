@@ -9,6 +9,7 @@ class CustomModal extends Component
     public $header; // slot is optional
     public $active;
     public $theme;
+    public $padding;
     public $position;
     public $positions = [
         'right' => 'top-0 right-0 bottom-0',
@@ -23,12 +24,13 @@ class CustomModal extends Component
      *
      * @return void
      */
-    public function __construct($active = null, $theme = 'teal', $header = null, $position = 'right')
+    public function __construct($active = null, $theme = 'teal', $padding = null, $header = null, $position = 'right')
     {
         $this->header = $header;
         $this->active = $active;
         $this->theme = $theme;
         $this->position = $this->positions[$position];
+        if($padding) $this->padding = 'px-6 py-4';
     }
 
     /**

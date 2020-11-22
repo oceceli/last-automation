@@ -52,7 +52,7 @@
                         </td>
 
                         <td class="collapsing">
-                            <x-crud-actions modelName="product" :modelId="$product->id" />
+                            <x-crud-actions edit show delete modelName="product" :modelId="$product->id" />
                         </td>
 
                     </tr>

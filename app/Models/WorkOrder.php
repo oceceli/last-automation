@@ -140,16 +140,16 @@ class WorkOrder extends Model
      */
     public function end()
     {
-        $this->update(['status' => 'completed']);
-        // $this->update(['in_progress' => false, 'is_completed' => true]);
+        if($this->isInProgress())
+            $this->update(['status' => 'completed']);
     }
 
     public function getProductionResults()
     {
         if($this->isCompleted()) {
             return [
-                'gross' => $this->getGross(),
-                'waste' => $this->getWaste(),
+                'gross' => $this->getProductionGross(),
+                'waste' => $this->getProductionWaste(),
                 'net' => $this->net(),
             ];
         }

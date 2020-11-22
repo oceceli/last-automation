@@ -5,7 +5,7 @@ namespace App\Models\Traits;
 
 trait WorkOrderQueries 
 {
-    public function getGross()
+    public function getProductionGross()
     {
         $gross = $this->stockMoves()->where('type', 'production_gross')->get();
         if($gross->isEmpty())
@@ -13,7 +13,7 @@ trait WorkOrderQueries
         return $gross->first()->amount;
     }
 
-    public function getWaste()
+    public function getProductionWaste()
     {
         $waste = $this->stockmoves()->where('type', 'production_waste')->get();
         if($waste->isEmpty())
@@ -23,7 +23,7 @@ trait WorkOrderQueries
 
     public function net()
     {
-        return $this->getGross() - $this->getWaste();
+        return $this->getProductionGross() - $this->getProductionWaste();
     }
 
     

@@ -17,20 +17,21 @@ class Today extends Component
     public $workOrders;
 
     public $woCompleteModal;
+    public $woCompleteData;
 
 
     // modal form, it will go to the stockmoves table
     public $unit_id;
-    public $totalProduced;
-    public $waste = 0; 
+    public $production_gross;
+    public $production_waste = 0; 
     // public $datetime; // daha sonra forma ekleyebilirim. Üretim bitiş zamanı 'şu an' harici de seçilebilir mi?
 
     public $selectedUnit;
 
     public $rules = [
         'unit_id' => 'required|integer|min:1',
-        'totalProduced' => 'required|numeric',
-        'waste' => 'nullable|numeric',
+        'production_gross' => 'required|numeric',
+        'production_waste' => 'nullable|numeric',
     ];
     
 
@@ -43,23 +44,28 @@ class Today extends Component
         $this->workOrders = WorkOrder::getTodaysList();
     }
 
+    public function woCompleteRequest($id)
+    {
+        $this->woCompleteModal = true;
+        $this->woCompleteData = $this->workOrders->find($id);
+    }
+
     public function updatedUnitId($id)
     {
         $this->selectedUnit = Unit::find($id);
     }
     
-
-    public function submitProductionCompleted($id)
+    public function submitWoCompleted()
     {
         $this->validate();
-        $baseTotal = Conversions::toBase($this->selectedUnit, $this->totalProduced)['amount'];
-        $baseWaste = Conversions::toBase($this->selectedUnit, $this->waste)['amount'];
+        $baseTotal = Conversions::toBase($this->selectedUnit, $this->production_gross)['amount'];
+        $baseWaste = Conversions::toBase($this->selectedUnit, $this->production_waste)['amount'];
 
         if($baseTotal > 0) {
             if($baseWaste > $baseTotal) 
                 return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
 
-            $workOrder = $this->workOrders->find($id);
+            $workOrder = $this->woCompleteData;
             $workOrder->end();
             
             foreach($workOrder->product->recipe->ingredients as $ingredient) {
@@ -73,11 +79,12 @@ class Today extends Component
             Stock::productionGross($workOrder, $baseTotal);
             if($baseWaste > 0) 
                 Stock::productionWaste($workOrder, $baseWaste);
+            
         } else {
             $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
         }
 
-
+        $this->clearFields();
     }
 
 
@@ -105,7 +112,7 @@ class Today extends Component
 
     public function clearFields()
     {
-        $this->reset('totalProduced', 'waste', 'unit_id', 'selectedUnit');
+        $this->reset('production_gross', 'production_waste', 'unit_id', 'selectedUnit', 'woCompleteModal');
     }
 
     public function render()

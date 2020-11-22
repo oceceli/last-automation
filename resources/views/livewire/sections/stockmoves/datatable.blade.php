@@ -47,7 +47,7 @@
                         <td class="text-sm">{{ $stockMove->datetime }}</td>
 
                         <td class="collapsing">
-                            <x-crud-actions modelName="stock-move" :modelId="$stockMove->id" />
+                            <x-crud-actions edit show delete modelName="stock-move" :modelId="$stockMove->id" />
                         </td>
 
                     </tr>

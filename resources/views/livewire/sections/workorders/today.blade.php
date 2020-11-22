@@ -9,12 +9,12 @@
                     <div class="font-bold text-sm">
                         @if ($this->inProgress)
                             <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
-                                <i class="green link circle icon animate-pulse"></i>
+                                <i class="{{ $this->inProgress->statusColor }} link circle icon animate-pulse"></i>
                             </span>
                             <span>{{ $this->inProgress->product->name }} - </span>
                             <span class="text-gray-400">{{ __('sections/workorders.started_at_time', ['time' => $this->inProgress->startedAt()->diffForHumans()]) }}</span>
                         @else
-                            <i class="yellow outline circle icon"></i>
+                            <i class="red  circle icon"></i>
                             <span class="text-gray-400 cursor-default">{{ __('sections/workorders.on_hold') }}</span>
                         @endif
                     </div>
@@ -89,26 +89,11 @@
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
-                                        <div wire:key="{{ $workOrder->id }}" x-cloak x-data="{woCompleteModal: false}">
-                                            <x-crud-actions show modelName="work-order" :modelId="$workOrder->id">
-                                                <div @click="woCompleteModal = true" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
-                                                    <i wire:click.prevent="" class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
-                                                </div>
-                                            </x-crud-actions>
-                                            <x-custom-modal active="woCompleteModal">
-                                                <form class="ui mini form p-5" wire:submit.prevent="submitProductionCompleted({{ $workOrder->id }})">
-                                                    <x-dropdown label="Toplam" iModel="totalProduced" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" :key="$key" sClass="black"
-                                                        model="unit_id" value="id" text="name" :collection="$workOrder->product->units" placeholder="{{__('modelnames.unit')}}"
-                                                    />
-                                                    <x-input label="{{ __('stockmoves.waste') }}" model="waste" placeholder="{{ __('stockmoves.waste_amount')}}">
-                                                        <x-slot name="innerLabel">
-                                                            @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
-                                                        </x-slot>
-                                                    </x-input>
-                                                    <button class="text-green-500">gönder</button>
-                                                </form>
-                                            </x-custom-modal>
-                                        </div>
+                                        <x-crud-actions show modelName="work-order" :modelId="$workOrder->id">
+                                            <div wire:key="{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                                <i class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
+                                            </div>
+                                        </x-crud-actions>
                                     </td>
                                 </tr>
 
@@ -169,10 +154,30 @@
                 </tbody>
 
             </table>
-            
         </div>
     </x-content>
+
+    @if ($woCompleteModal)
+        <div x-data="{woCompleteModal: @entangle('woCompleteModal')}">
+            <x-custom-modal active="woCompleteModal">
+                <form class="ui mini form p-5" wire:submit.prevent="submitWoCompleted()">
+                    <x-dropdown label="Toplam" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
+                        model="unit_id" value="id" text="name" :collection="$woCompleteData->product->units" placeholder="{{__('modelnames.unit')}}"
+                    />
+                    <x-input label="{{ __('stockmoves.waste') }}" model="production_waste" placeholder="{{ __('stockmoves.waste_amount')}}">
+                        <x-slot name="innerLabel">
+                            @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
+                        </x-slot>
+                    </x-input>
+                    <button class="text-green-500">gönder</button>
+                </form>
+            </x-custom-modal>
+        </div>
+    @endif
+
 </div>
+
+
 <style>
     [x-cloak] { display: none; }
 </style>

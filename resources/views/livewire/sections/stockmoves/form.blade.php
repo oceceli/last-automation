@@ -6,7 +6,7 @@
             </button>
         </x-slot>
     </x-page-header>
-    <x-content buttons >
+    <x-content >
         <div class="p-6 bg-cool-gray-50 shadow-inner rounded-md">
             <form class="ui tiny form flex flex-col gap-6">
                 @forelse ($cards as $key => $card)

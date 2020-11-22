@@ -1,4 +1,4 @@
-<x-custom-modal active="materials">
+<x-custom-modal active="materials" padding>
     <x-slot name="header">
         <x-page-header icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
     </x-slot>
