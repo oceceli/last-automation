@@ -15,4 +15,5 @@
   .red {
     @apply text-red-500 hover:text-red-800;
   }
+  /* tests */
 }

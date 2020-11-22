@@ -23,7 +23,7 @@ class CustomModal extends Component
      *
      * @return void
      */
-    public function __construct($active = false, $theme = 'teal', $header = null, $position = 'right')
+    public function __construct($active = null, $theme = 'teal', $header = null, $position = 'right')
     {
         $this->header = $header;
         $this->active = $active;

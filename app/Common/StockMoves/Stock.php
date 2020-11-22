@@ -24,7 +24,7 @@ class Stock
     public function productionGross($workOrder, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, true, 'production', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, true, 'production_gross', $datetime)->persist($workOrder);
     }
 
     /**
@@ -33,13 +33,13 @@ class Stock
     public function productionWaste($workOrder, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, false, 'waste', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, false, 'production_waste', $datetime)->persist($workOrder);
     }
 
     public function decreasedIngredient($workOrder, $ingredientId, $amount, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $amount, false, 'decreased_ingredient', $datetime)->persist($workOrder);
+        $this->prepare($ingredientId, $amount, false, 'production_ingredient', $datetime)->persist($workOrder);
     }
 
     /**
@@ -61,7 +61,7 @@ class Stock
     /**
      * Make a move
      */
-    public function newMove($productId, $amount, $direction, $type, $datetime, $stockableType = null, $stockableId = null)
+    public function newMove($productId, $amount, $direction, $datetime, $type = 'manual', $stockableType = null, $stockableId = null)
     {
         $this->prepare($productId, $amount, $direction, $type, $datetime, $stockableType, $stockableId)->persist();
     }

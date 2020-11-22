@@ -129,7 +129,10 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        $this->update(['status' => 'in_progress']);
+        if($this->isActive() && ! $this->inProgressCurrently()) {
+            $this->update(['status' => 'in_progress']);
+            return true;
+        }
     }
 
     /**
@@ -188,7 +191,7 @@ class WorkOrder extends Model
             ->get();
     }
 
-    public static function getInProgress()
+    public static function inProgressCurrently()
     {
         return self::where('status', 'in_progress')->first();
     }

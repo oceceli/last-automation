@@ -12,8 +12,11 @@ class CrudActions extends Component
     public $modelId;
 
     public $gray;
-
-    public $onlyShow;
+    
+    public $show;
+    public $edit;
+    public $delete;
+    
     public $addClass;
 
     /**
@@ -21,13 +24,15 @@ class CrudActions extends Component
      *
      * @return void
      */
-    public function __construct($modelName, $modelId, $onlyShow = false, $gray = false, $addClass = null)
+    public function __construct($modelName, $modelId, $show = false, $edit = false, $delete = false, $gray = false, $addClass = null)
     {
         $this->modelName = Generic::kebabToSnake($modelName);
         $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
         $this->modelId = $modelId;
 
-        $this->onlyShow = $onlyShow;
+        $this->show = $show;
+        $this->edit = $edit;
+
         $this->gray = $gray;
         $this->addClass = $addClass;
     }

@@ -16,6 +16,8 @@ class Today extends Component
     public $todayDate; // just date of today
     public $workOrders;
 
+    public $woCompleteModal;
+
 
     // modal form, it will go to the stockmoves table
     public $unit_id;
@@ -80,22 +82,20 @@ class Today extends Component
 
 
     /**
-     * Put workorder in progress 
+     * Set workorder as in progress 
      */
     public function startJob($id)
     {
-        if( ! WorkOrder::getInProgress()) { // düzelt burayı !!!
-            $workOrder = $this->workOrders->find($id);
-            $workOrder->start();
-        } else {
-            $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
-        }
+        $workOrder = $this->workOrders->find($id);
+        $workOrder->start() 
+            ? null
+            : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
         
     }
     
-    public function getInProductionProperty()
+    public function getInProgressProperty()
     {
-        return WorkOrder::getInProgress();
+        return WorkOrder::inProgressCurrently();
     }
 
     public function updated($propertyName)

@@ -42,7 +42,7 @@ class Details extends Component
 
     public function getInProductionProperty()
     {
-        return WorkOrder::getInProgress();
+        return WorkOrder::inProgressCurrently();
     }
 
 

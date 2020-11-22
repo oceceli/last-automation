@@ -1,5 +1,5 @@
 
-<div x-show="{{ $active }}">
+<div x-show="{{ $active }}" x-cloak>
     <div class="fixed bottom-0 right-0 top-0 left-0 bg-black opacity-25 z-10" @click="{{ $active }} = false"></div>
     <div {{ $attributes->merge(['class' => 'fixed '. $position .' z-20 overflow-x-hidden bg-white shadow-xl max-w-screen-md'])}} style="min-width: 500px">
         @if ($header)

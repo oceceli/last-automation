@@ -36,7 +36,7 @@ class WorkOrderController extends Controller
     public function show($id)
     {
         $workOrder = $this->repository->fetch($id);
-        return view('web.sections.workorders.show', compact('workOrder'));
+        return view('web.sections.workorders.show.index', compact('workOrder'));
     }
 
     public function edit($id)
@@ -52,7 +52,7 @@ class WorkOrderController extends Controller
 
     public function daily()
     {
-        return view('web.sections.workorders.daily');
+        return view('web.sections.workorders.daily.index');
     }
 
 }

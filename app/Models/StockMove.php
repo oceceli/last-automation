@@ -15,6 +15,7 @@ class StockMove extends Model
     protected $guarded = [];
 
     protected $casts = ['datetime' => 'date'];
+    
 
     /**
      * Eagerload relationships when retrieving the model

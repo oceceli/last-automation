@@ -1,6 +1,6 @@
 <div class="rounded-md bg-{{ $statusColor }}-50 shadow-md">
 
-    @include('web.sections.workorders.detailsHeadstick')
+    @include('web.sections.workorders.show.detailsHeadstick')
     
 
 
@@ -46,13 +46,9 @@
                 // DEVAMMM
             @endif
         </div>
-
-
-
-
-        
-        
     </div>
+
+    
     @if ($workOrder->note)
         <div class="p-3 border-t shadow rounded-b-md">
             <i class="{{ $statusColor }} comment outline alternate icon"></i>
