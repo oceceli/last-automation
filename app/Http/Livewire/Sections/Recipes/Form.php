@@ -67,8 +67,8 @@ class Form extends BaseForm
     public function removeCard($key)
     {
         unset($this->cards[$key]);
-        $this->cards = array_values($this->cards);
-        $this->emit('aCardDeleted'.$key);
+        // $this->cards = array_values($this->cards);
+        // $this->emit('aCardDeleted'.$key); triggerOnEvent="aCardDeleted{{ $key }}" 
     }
     public function removeAllCards()
     {

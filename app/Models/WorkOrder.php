@@ -197,20 +197,20 @@ class WorkOrder extends Model
     }
 
 
-    /**
-     * Workorder units 
-     */
-    private function convertToBase()
+    
+    public function unitIsAlreadyBase()
     {
-        return Conversions::toBase($this->unit, $this->amount);
+        return Conversions::toBase($this->unit, $this->amount)['unit'] == $this->unit;
     }
-    public function convertedUnit()
+
+    public function convertedBaseUnit()
     {
-        return $this->convertToBase()['unit'];
+        return Conversions::toBase($this->unit, $this->amount)['unit'];
     }
-    public function convertedAmount()
+
+    public function convertedBaseAmount()
     {
-        return $this->convertToBase()['amount'];
+        return Conversions::toBase($this->unit, $this->amount)['amount'];
     }
 
 

@@ -38,6 +38,7 @@ class StockMove extends Model
     //             'type' => 'required|max:30',
     //             'direction' => 'required|boolean',
     //             'amount' => 'required|numeric',
+    //             'lot_number' => 'required|numeric',
     //             'datetime' => 'required|date',
     //         ],
     //         'relation' => [ // use for many to many relationships
@@ -66,6 +67,12 @@ class StockMove extends Model
     public function product() 
     {
         return $this->belongsTo(Product::class);
+    }
+
+
+    public function unitIsAlreadyBase()
+    {
+        return Conversions::toBase($this->unit, $this->amount)['unit'] == $this->unit;
     }
 
     public function convertToBase()

@@ -53,7 +53,9 @@
                                     <td>{{ $workOrder->product->name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
-                                        <span class="text-sm text-gray-500">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                        @if ( ! $workOrder->unitIsAlreadyBase())
+                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
+                                        @endif
                                     </td>
                                     <td class="">{{ $workOrder->lot_no }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
@@ -61,7 +63,7 @@
                                     <td class="collapsing selectable">
                                         <span class="px-2 shadow rounded bg-white" data-tooltip="{{ __('common.see_details') }}" data-variation="mini" data-position="top right">
                                             <a class="text-teal-600 text-lg" href="{{ route('work-orders.show', ['work_order' => $workOrder]) }}">
-                                                {{ round($workOrder->getProductionResults()['gross'],2) }} {{ $workOrder->convertedUnit()->name }}
+                                                {{ round($workOrder->getProductionResults()['gross'],2) }} {{ $workOrder->convertedBaseUnit()->name }}
                                             </a>
                                         </span>
                                     </td>
@@ -83,7 +85,9 @@
                                     <td>{{ $workOrder->product->name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
-                                        <span class="text-sm text-gray-500">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                        @if ( ! $workOrder->unitIsAlreadyBase())
+                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
+                                        @endif
                                     </td>
                                     <td class="">{{ $workOrder->lot_no }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
@@ -107,7 +111,9 @@
                                     <td>{{ $workOrder->product->name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
-                                        <span class="text-sm text-gray-500">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                        @if ( ! $workOrder->unitIsAlreadyBase())
+                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
+                                        @endif
                                     </td>
                                     <td class="">{{ $workOrder->lot_no }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
@@ -131,7 +137,9 @@
                                     <td>{{ $workOrder->product->name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
-                                        <span class="text-sm text-gray-500">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                        @if ( ! $workOrder->unitIsAlreadyBase())
+                                            <span class="text-xs text-ease">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                        @endif
                                     </td>
                                     <td class="">{{ $workOrder->lot_no }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>

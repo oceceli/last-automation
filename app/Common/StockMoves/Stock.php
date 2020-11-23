@@ -11,6 +11,7 @@ class Stock
     private $type;
     private $direction;
     private $amount;
+    private $lotNumber;
     private $unitId;
     private $datetime;
 
@@ -26,7 +27,7 @@ class Stock
     {
         if($amount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, $unitId, true, 'production_gross', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, $unitId, true, 'production_gross', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
     /**
@@ -36,13 +37,13 @@ class Stock
     {
         if($amount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, $unitId, false, 'production_waste', $datetime)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $amount, $unitId, false, 'production_waste', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
     public function decreasedIngredient($workOrder, $ingredientId, $amount, $unitId, $datetime = null)
     {
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $amount, $unitId, false, 'production_ingredient', $datetime)->persist($workOrder);
+        $this->prepare($ingredientId, $amount, $unitId, false, 'production_ingredient', $datetime, 'değiştir')->persist($workOrder);
     }
 
     /**
@@ -50,7 +51,7 @@ class Stock
      */
     public function moveIn($productId, $amount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, $unitId, true, 'manual', $datetime)->persist();
+        $this->prepare($productId, $amount, $unitId, true, 'manual', $datetime, 'değiştir movein out')->persist();
     }
 
     /**
@@ -58,27 +59,28 @@ class Stock
      */
     public function moveOut($productId, $amount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, $unitId, false, 'manual', $datetime)->persist();
+        $this->prepare($productId, $amount, $unitId, false, 'manual', $datetime, 'değiştir movein out')->persist();
     }
     
     /**
      * Make a move
      */
-    public function newMove($productId, $amount, $unitId, $direction, $datetime, $type = 'manual', $stockableType = null, $stockableId = null)
+    public function newMove($productId, $amount, $unitId, $direction, $datetime, $lotNumber, $type = 'manual', $stockableType = null, $stockableId = null)
     {
-        $this->prepare($productId, $amount, $unitId, $direction, $type, $datetime, $stockableType, $stockableId)->persist();
+        $this->prepare($productId, $amount, $unitId, $direction, $type, $datetime, $lotNumber, $stockableType, $stockableId)->persist();
     }
 
 
     /**
      * Prepare properties to push into database
      */
-    private function prepare($productId, $amount, $unitId, $direction, $type, $datetime = null, $stockableType = null, $stockableId = null)
+    private function prepare($productId, $amount, $unitId, $direction, $type, $datetime = null, $lotNumber, $stockableType = null, $stockableId = null)
     {
         $this->productId = $productId;
         $this->type = $type;
         $this->direction = $direction;
         $this->amount = $amount;
+        $this->lotNumber = $lotNumber;
         $this->unitId = $unitId instanceof \App\Models\Unit
             ? $unitId->id
             : $unitId;
@@ -102,6 +104,7 @@ class Stock
             'type' => $this->type,
             'direction' => $this->direction,
             'amount' => $this->amount,
+            'lot_number' => $this->lotNumber,
             'unit_id' => $this->unitId,
             'datetime' => $this->datetime,
         ];

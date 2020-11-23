@@ -6,6 +6,7 @@ return [
     'type' => 'Tip',
     'direction' => 'Yön',
     'amount' => 'Miktar',
+    'lot_number' => 'Lot no',
 
     // types
     'production' => 'Üretim',

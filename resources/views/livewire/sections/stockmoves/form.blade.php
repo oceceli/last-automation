@@ -7,11 +7,11 @@
         </x-slot>
     </x-page-header>
     <x-content >
-        <div class="p-6 bg-cool-gray-50 shadow-inner rounded-md">
+        <div class="p-6 bg-cool-gray-50 rounded-md">
             <form class="ui tiny form flex flex-col gap-6">
                 @forelse ($cards as $key => $card)
-                    <div class="shadow-md rounded-md bg-white">
-                        <div class="flex flex-col md:flex-row rounded-md">
+                    <div wire:key="{{ $key }}" class="shadow-md rounded-md bg-white">
+                        <div class="flex flex-col md:flex-row rounded-md relative">
                             <div wire:click.prevent="toggleDirection({{ $key }})" class="shadow md:rounded-l-md p-8 md:p-5 cursor-pointer @if($card['direction']) bg-teal-100 @else bg-red-100 @endif">
                                 @if ($card['direction'])
                                     <span class="" data-tooltip="{{ __('stockmoves.stock_entry') }}" data-variation="mini">
@@ -24,20 +24,27 @@
                                 @endif
                             </div>
                             <div class="flex-1 pt-3 px-5">
-                                <div class="equal width fields">
-                                    <x-dropdown wire:key="{{ $key }}" placeholder="{{ __('modelnames.product') }}" sClass="search"
+                                <div class="four fields">
+                                    <x-dropdown placeholder="{{ __('modelnames.product') }}" sClass="search"
                                                 model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="name" :key="'selectProduct'.$key">
                                     </x-dropdown>
-                                    {{-- <x-input model="cards.{{ $key }}.amount" placeholder="{{ __('stockmoves.amount') }}" innerLabel="asdf">
-                                    </x-input>     --}}
-                                    <x-dropdown wire:key="{{ $key }}" iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('stockmoves.amount') }}" iType="number"
+                                    @if ($card['lotNumberAreaType'] === 'input')
+                                        <x-input model="cards.{{ $key }}.lot_number" placeholder="{{ __('stockmoves.lot_number') }}"  />
+                                    @endif
+                                    {{-- @elseif($card['lotNumberAreaType'] === 'dropdown')
+                                        <x-dropdown placeholder="{{ __('stockmoves.lot_number') }}" sClass="search"
+                                                     model="cards.{{ $key }}.lot_number " :collection="$this->products" value="id" text="name" :key="'lotNumber'.$key">
+                                        </x-dropdown> --}}
+                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('stockmoves.amount') }}" iType="number" sClass="basic" 
                                                 initnone triggerOnEvent="sm_product_selected{{$key}}" model="cards.{{ $key }}.unit_id" dataSource="units.{{ $key }}"
                                                 :key="'units'.$key" value="id" text="name" placeholder="{{ __('modelnames.unit') }}">
-                                        
                                     </x-dropdown>
                                     <x-datepicker model="cards.{{ $key }}.datetime" type="date" initialDate="{{ $card['datetime'] }}" :key="$key" />
                                 </div>
                             </div>
+                            <button wire:click.prevent="removeCard({{ $key }})" class="focus:outline-none absolute top-0 right-0 -mt-2 -mr-3 hover:opacity-100 opacity-50">
+                                <i class="red shadow rounded-full cancel icon"></i>
+                            </button>
                         </div>
                     </div>
                 @empty
@@ -45,6 +52,7 @@
                         <span>{{ __('stockmoves.use_add_button_on_the_top_right_corner') }}</span>
                     </x-placeholder>
                 @endforelse
+                
             <x-form-buttons />
             </form>
         </div>

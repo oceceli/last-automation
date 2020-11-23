@@ -65,11 +65,11 @@ class Conversions
         }
 
         $parent = $unit->parent;
-        $newAmount = $unit->operator 
+        $convertedAmount = $unit->operator 
             ? $amount * $unit->factor
             : $amount / $unit->factor;
         
-        return self::toBase($parent, $newAmount);
+        return self::toBase($parent, $convertedAmount);
     }
 
 

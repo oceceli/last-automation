@@ -15,13 +15,8 @@ class Form extends BaseForm
     public $validate = false;
 
 
-    // public $product_id;
-    // public $type = 'manual_entry';
-    // public $direction;
-    // public $amount;
-    // public $datetime;
-
     public $cards = [];
+
     public $units = [];
 
     protected $rules = [
@@ -38,6 +33,11 @@ class Form extends BaseForm
         'cards.*.amount' => 'Deneme'
     ];
 
+    public function mount()
+    {
+        parent::mount();
+        $this->addCard();
+    }
 
     public function addCard()
     {
@@ -45,9 +45,17 @@ class Form extends BaseForm
             'product_id' => null,
             'direction' => 1,
             'amount' => null,
+            'lot_number' => null,
             'datetime' => date('d.m.Y H:i:s'),
-            'unit_id' => null,            
+            'unit_id' => null,       
+            
+            'lotNumberAreaType' => 'input',
         ];
+    }
+
+    public function removeCard($key)
+    {
+        unset($this->cards[$key]);
     }
     
     public function getProductsProperty()
@@ -57,7 +65,12 @@ class Form extends BaseForm
 
     public function toggleDirection($key)
     {
-        $this->cards[$key]['direction'] = ! $this->cards[$key]['direction'];
+        $currentDirection = $this->cards[$key]['direction'];
+        $this->cards[$key]['direction'] = ! $currentDirection;
+
+        $this->cards[$key]['lotNumberAreaType'] = $currentDirection 
+                                ? 'dropdown' // ??? 
+                                : 'input';
     }
 
     /**
@@ -79,7 +92,7 @@ class Form extends BaseForm
         $this->validate();
         foreach($this->cards as $card) {
             // $amount = Conversions::toBase($card['unit_id'], $card['amount'])['amount']; // stockMove, birimi kullanıcının kaydettiği şekilde göstermiyor, eklemedim. Base'e döndürüyoruz. Haberin olsun
-            Stock::newMove($card['product_id'], $card['amount'], $card['unit_id'], $card['direction'], $card['datetime']);
+            Stock::newMove($card['product_id'], $card['amount'], $card['unit_id'], $card['direction'], $card['datetime'], $card['lot_number']);
         }
         $this->emit('toast', __('common.saved.title'), __('common.saved.standard'), 'success');
     }

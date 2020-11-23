@@ -11,6 +11,7 @@
                     <th class="center aligned">{{ __('stockmoves.type') }}</th>
                     <th>{{ __('sections/products.code') }}</th>
                     <th>{{ __('stockmoves.amount') }}</th>
+                    <th>{{ __('stockmoves.lot_number') }}</th>
                     <th>{{ __('common.datetime') }}</th>
                     <th></th>
                 </tr>
@@ -33,7 +34,7 @@
                         </td>
                         <td class="font-bold">
                             <span>{{ $stockMove->product->code }}</span>
-                            <span class="text-sm text-gray-400 font-semibold">{{ $stockMove->product->name }}</span>
+                            <span class="text-sm text-ease">{{ $stockMove->product->name }}</span>
                         </td>
                         <td class="cursor-default">
                             @if ($stockMove->direction) 
@@ -43,8 +44,11 @@
                             @endif
                             <span class="font-bold">{{ round($stockMove->amount, 2) }}</span>
                             <span class="text-sm">{{ $stockMove->unit->name }}</span>
-                            <span class="text-xs text-ease">({{ $stockMove->convertToBase()['amount'] }} {{ $stockMove->convertToBase()['unit']->name }})</span>
+                            @if ( ! $stockMove->unitIsAlreadyBase())
+                                <span class="text-xs text-ease">({{ $stockMove->convertToBase()['amount'] }} {{ $stockMove->convertToBase()['unit']->name }})</span>
+                            @endif
                         </td>
+                        <td>{{ $stockMove->lot_number }}</td>
                         <td class="text-sm">{{ $stockMove->datetime }}</td>
 
                         <td class="collapsing">

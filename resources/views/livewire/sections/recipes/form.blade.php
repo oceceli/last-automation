@@ -41,7 +41,7 @@
                     {{-- CARDS ------------------------------------}}
                     <div class="flex flex-col gap-6">
                         @foreach ($cards as $key => $card)
-                            <div class="relative flex border shadow rounded-lg bg-white border-blue-100 hover:border-blue-300">
+                            <div wire:key="{{ $key }}" class="relative flex border shadow rounded-lg bg-white border-blue-100 hover:border-blue-300">
 
                                 {{-- image field --}}
                                 <div class="flex w-16 pl-2 rounded-l-lg shadow-md justify-center items-center">
@@ -63,8 +63,8 @@
                                     
                                     <div class="flex gap-2 items-center">
                                         <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
-                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :key="$key" sClass="basic"
-                                            triggerOnEvent="aCardDeleted{{ $key }}" value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :sId="'unit'.$key" sClass="basic"
+                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
                                         </x-dropdown>
                                     </div>
                                 </div>
