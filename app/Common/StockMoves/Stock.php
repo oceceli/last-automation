@@ -71,7 +71,7 @@ class Stock
 
 
     /**
-     * Prepare properties to push database
+     * Prepare properties to push into database
      */
     private function prepare($productId, $amount, $unitId, $direction, $type, $datetime = null, $stockableType = null, $stockableId = null)
     {
@@ -79,7 +79,9 @@ class Stock
         $this->type = $type;
         $this->direction = $direction;
         $this->amount = $amount;
-        $this->unitId = $unitId;
+        $this->unitId = $unitId instanceof \App\Models\Unit
+            ? $unitId->id
+            : $unitId;
         if($datetime)
             $this->datetime = $datetime;
         else $this->datetime = now();

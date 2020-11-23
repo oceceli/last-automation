@@ -44,9 +44,12 @@
             @elseif($workOrder->isActive())
                 <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
                 @foreach ($workOrder->necessaryIngredients as $necessary)
-                    {{ $necessary['ingredient']->name }} {{ $necessary['amount'] }} {{ $necessary['unit_id'] }} 
+                    <div>
+                        <span class="text-ease">{{ $necessary['ingredient']->name }}: </span> 
+                        <span>{{ $necessary['amount'] }} </span>
+                        <span>{{ $necessary['unit']->name }}</span>
+                    </div>
                 @endforeach
-                DEVAMMM
             @endif
         </div>
     </div>

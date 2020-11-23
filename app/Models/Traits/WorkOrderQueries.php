@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Common\Facades\Conversions;
 use App\Common\Facades\Stock;
+use App\Models\Unit;
 use Exception;
 
 trait WorkOrderQueries // production olsun bu !!!
@@ -39,14 +40,13 @@ trait WorkOrderQueries // production olsun bu !!!
     {
         if($productionWaste > $productionGross) return;
         
-
         Stock::productionGross($this, $productionGross, $unitId);
         Stock::productionWaste($this, $productionWaste, $unitId);
 
         $this->markAsCompleted();
 
         foreach($this->necessaryIngredients as $necessary) {
-            Stock::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount'], $necessary['unit_id']);
+            Stock::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount'], $necessary['unit']);
         }
 
     }
@@ -59,7 +59,7 @@ trait WorkOrderQueries // production olsun bu !!!
             $totalDecrease[] = [
                 'ingredient' => $ingredient,
                 'amount' => $workOrderGross['amount'] * $ingredient->pivot->amount,
-                'unit_id' => $ingredient->pivot->unit_id,
+                'unit' => Unit::find($ingredient->pivot->unit_id),
             ];
         }
         return collect($totalDecrease);
@@ -71,4 +71,4 @@ trait WorkOrderQueries // production olsun bu !!!
 
 
 // $workOrderGross = Conversions::toBase($this->unit, $this->amount);
-// $actualGrossAmount = Conversions::toBase($unitId, $productionGross); // DEVAM
+// $actualGrossAmount = Conversions::toBase($unitId, $productionGross); 

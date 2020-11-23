@@ -15,11 +15,11 @@
                             <div wire:click.prevent="toggleDirection({{ $key }})" class="shadow md:rounded-l-md p-8 md:p-5 cursor-pointer @if($card['direction']) bg-teal-100 @else bg-red-100 @endif">
                                 @if ($card['direction'])
                                     <span class="" data-tooltip="{{ __('stockmoves.stock_entry') }}" data-variation="mini">
-                                        <i class="link green big angle double up icon"></i>
+                                        <i class="link green big plus icon"></i>
                                     </span>
                                 @else
                                     <span class="" data-tooltip="{{ __('stockmoves.stock_decrease') }}" data-variation="mini">
-                                        <i class="link red big angle double down icon"></i>
+                                        <i class="link red big minus icon"></i>
                                     </span>
                                 @endif
                             </div>

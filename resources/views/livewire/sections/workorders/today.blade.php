@@ -89,7 +89,7 @@
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
-                                        <x-crud-actions show modelName="work-order" :modelId="$workOrder->id">
+                                        <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id">
                                             <div wire:key="{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
                                                 <i class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
                                             </div>
