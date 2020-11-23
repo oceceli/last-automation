@@ -26,6 +26,7 @@ class Form extends BaseForm
 
     // comes from dropdown
     public $selectedProduct;
+    public $recipeOfSelectedProduct;
 
     // edit mode
     public $editMode = false;
@@ -44,6 +45,7 @@ class Form extends BaseForm
     {
         $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
         $this->emit('woProductChanged'); // fill the units
+        $this->recipeOfSelectedProduct = $this->selectedProduct->recipe;
     }
     
 
