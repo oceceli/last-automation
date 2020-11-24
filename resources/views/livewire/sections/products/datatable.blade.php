@@ -16,14 +16,14 @@
                     <th>{{ __('sections/products.shelf_life') }}</th>
                     <th>{{ __('sections/products.min_threshold') }}</th>
                     <th>{{ __('sections/products.note') }}</th>
-                    <th>{{ __('sections/products.producible') }}</th>
+                    {{-- <th>{{ __('sections/products.producible') }}</th> --}}
                     <th>{{ __('sections/products.is_active') }}</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $key => $product)
-                    <tr>
+                    <tr wire:key="{{ $key }}">
                         <td>{{ $key+1 }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category->name }}</td>
@@ -42,14 +42,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        {{-- <td>
                             <div class="flex items-center justify-center">
                                 <div class="ui checkbox">
                                     <input type="checkbox" wire:model.lazy="is_active.{{ $key }}">
                                     <label></label>
                                 </div>
                             </div>
-                        </td>
+                        </td> --}}
 
                         <td class="collapsing">
                             <x-crud-actions edit show delete modelName="product" :modelId="$product->id" />

@@ -13,7 +13,7 @@ class Datatable extends BaseDatatable
 
     public $productsOnPage;
 
-    public $is_active;
+    public $is_active; // bozuk
     public $producible;
     
 

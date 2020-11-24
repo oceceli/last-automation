@@ -41,7 +41,7 @@ class Product extends Model
             'data' => [
                 'category_id' => 'required|integer',
                 'code' => 'required|min:1|unique:products,code',
-                'barcode' => 'required|numeric|unique:products,barcode',
+                'barcode' => 'nullable|numeric|unique:products,barcode',
                 'name' => 'required|min:1',
                 'shelf_life' => 'required|numeric',
                 'producible' => 'required|boolean',
@@ -93,6 +93,10 @@ class Product extends Model
     public function getBaseUnit()
     {
         return $this->units->where('parent_id', 0)->first();
+    }
+    public function getBaseUnitAttribute()
+    {
+        return $this->getBaseUnit();
     }
 
 

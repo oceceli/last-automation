@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('code')->unique();
-            $table->integer('barcode')->unique();
+            $table->integer('barcode')->unique()->nullable();
             $table->string('name'); 
             $table->integer('shelf_life');
             $table->boolean('producible');
