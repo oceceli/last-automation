@@ -67,6 +67,9 @@ return [
     'unit-create' => 'Birim oluştur',
     'units' => 'Birimler',
     'work-orders-daily' => 'Günlük iş emri',
+    'inventory' => 'Envanter',
+
+
     'total' => 'Toplam',
     'waste' => 'Fire',
 

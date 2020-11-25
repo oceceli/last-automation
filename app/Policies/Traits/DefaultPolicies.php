@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
  */
 trait DefaultPolicies
 {
-    use GlobalHelpers, HandlesAuthorization;
+    use HandlesAuthorization;
 
 
     private $model;

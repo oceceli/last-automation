@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use App\Models\Traits\StockCalculations;
 use Carbon\Carbon;
 
 class StockMove extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
+    use StockCalculations;
 
     protected $guarded = [];
 
@@ -42,7 +44,7 @@ class StockMove extends Model
     //             'datetime' => 'required|date',
     //         ],
     //         'relation' => [ // use for many to many relationships
-    //             //
+    //
     //         ],
     //     ];
     // }
