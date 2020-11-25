@@ -4,7 +4,7 @@
 
     <div>
 
-        <table class="ui celled sortable table tablet stackable very compact">
+        {{-- <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
                     <th>Sıra</th>
@@ -21,7 +21,12 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
+
+        <x-table>
+            
+        </x-table>
+
        
         <div class="w-full">
             {{ $data->links('components.tailwind-pagination') }}
