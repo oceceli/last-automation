@@ -30,20 +30,16 @@ class Form extends BaseForm
         //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
         //     'unit_id' => 8,
         //     'amount' => 550,
-        // ],
-        // [
-        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-        //     'unit_id' => 8,
-        //     'amount' => 550,
-        // ],
-        // [
-        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-        //     'unit_id' => 8,
-        //     'amount' => 550,
+        //     'literal' => false,
         // ],
     ];
 
-    
+    protected $rules = [
+        'cards.*' => 'array',
+        'cards.*.unit_id' => 'required|integer',
+        'cards.*.amount' => 'required|numeric',
+        'cards.*.literal' => 'required|boolean',
+    ]; 
 
 
 
@@ -60,7 +56,12 @@ class Form extends BaseForm
             return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
 
-        $this->cards[] = ['ingredient' => $ingredient];
+        $this->cards[] = [
+            'ingredient' => $ingredient,
+            'unit_id' => null,
+            'amount' => null,
+            'literal' => false, 
+        ];
         // dd($this->cards[$ingredient['id']]['ingredient']['units']);
 
     }
@@ -73,6 +74,23 @@ class Form extends BaseForm
     public function removeAllCards()
     {
         $this->cards = [];
+    }
+
+    public function toggleLiteral($key)
+    {
+        $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
+    }
+
+    // is unit calculation available for representation 
+    // public function isUnitCalcAvailable($card)
+    // {
+    //     return isset($card['unit_id']) && isset($card['amount']);
+    // }
+
+    public function calculatedUnit($card)
+    {
+        if(isset($card['unit_id']) && isset($card['amount']))
+            return $this->getConverted($card)['amount'] . ' ' . $this->getConverted($card)['unit']->name;
     }
 
 
@@ -92,7 +110,8 @@ class Form extends BaseForm
 
     public function getConverted($card)
     {
-        return Conversions::toBase($card['unit_id'], $card['amount']);
+        // if($card['unit_id'])
+            return Conversions::toBase($card['unit_id'], $card['amount']);
     }
 
     /************************************************ */
@@ -120,15 +139,17 @@ class Form extends BaseForm
      */
     public function submit()
     {
+        $this->validate();
+
         // a product have to be selected to continue 
         if(empty($this->product_id)) {
             return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.please_select_a_product_to_create_recipe', 'warning');
         }
 
         // count of ingredient, unit_id and amount fields have to be filled before save
-        if ( ! $this->isCardsStable()) {
-            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.fill_in_amount_and_unit_correctly', 'warning');
-        }
+        // if ( ! $this->isCardsStable()) {
+        //     return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.fill_in_amount_and_unit_correctly', 'warning');
+        // }
         
 
         // if it already saved in database, just update it
@@ -154,10 +175,8 @@ class Form extends BaseForm
         $IDs = [];
         $pivot = [];
         for($i = 0; $i < sizeof($cards); $i++) {
-            // $IDs[] = $ingredients[$i]['id'];
             $IDs[] = $cards[$i]['ingredient']['id'];
-            // $pivot[] = ['amount' => $amounts[$i], 'unit_id' => $units[$i]];
-            $pivot[] = ['amount' => $cards[$i]['amount'], 'unit_id' => $cards[$i]['unit_id']];
+            $pivot[] = ['amount' => $cards[$i]['amount'], 'unit_id' => $cards[$i]['unit_id'], 'literal' => $cards[$i]['literal']];
         }
         try {
             $recipe->ingredients()->sync(array_combine($IDs, $pivot));
@@ -183,14 +202,14 @@ class Form extends BaseForm
         return in_array($ingredientID, array_column($dimension2, 'id'));
     }
 
-    public function isCardsStable()
-    {
-        return $this->columnCount('unit_id') == $this->columnCount('ingredient') && $this->columnCount('ingredient') == $this->columnCount('amount');       
-    }
-    public function columnCount($column)
-    {
-        return count(array_column($this->cards, $column));
-    }
+    // public function isCardsStable()
+    // {
+    //     return $this->columnCount('unit_id') == $this->columnCount('ingredient') && $this->columnCount('ingredient') == $this->columnCount('amount');       
+    // }
+    // public function columnCount($column)
+    // {
+    //     return count(array_column($this->cards, $column));
+    // }
 
     /**
      * Produce a random recipe unique code

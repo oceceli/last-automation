@@ -5,12 +5,11 @@ namespace App\Models\Traits;
 use App\Common\Facades\Conversions;
 use App\Common\Facades\Stock;
 use App\Models\Unit;
-use Exception;
 
 trait WorkOrderQueries // production olsun bu !!!
 {
-    private $baseGrossAmount;
-    private $baseWasteAmount;
+    private $productionGross;
+    // private $productionWaste;
     
     
 
@@ -39,7 +38,10 @@ trait WorkOrderQueries // production olsun bu !!!
     public function saveProductionResults($productionGross, $productionWaste, $unitId)
     {
         if($productionWaste > $productionGross) return;
-        
+
+        $this->productionGross = $productionGross;
+
+
         Stock::productionGross($this, $productionGross, $unitId);
         Stock::productionWaste($this, $productionWaste, $unitId);
 
@@ -48,22 +50,40 @@ trait WorkOrderQueries // production olsun bu !!!
         foreach($this->necessaryIngredients as $necessary) {
             Stock::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount'], $necessary['unit']);
         }
-
     }
 
     public function getNecessaryIngredientsAttribute()
     {
         $workOrderGross = Conversions::toBase($this->unit, $this->amount);
-
+        
         foreach($this->product->recipe->ingredients as $ingredient) {
-            $totalDecrease[] = [
+            $totalDecrase[] = [
                 'ingredient' => $ingredient,
-                'amount' => $workOrderGross['amount'] * $ingredient->pivot->amount,
+                'amount' => $this->productionGross && $ingredient->pivot->literal
+                                ? $workOrderGross['amount'] * $ingredient->pivot->amount // arıza
+                                : $this->productionGross * $ingredient->pivot->amount,
                 'unit' => Unit::find($ingredient->pivot->unit_id),
             ];
         }
-        return collect($totalDecrease);
+        return $totalDecrase;
     }
+
+
+    // public function getTotalPlannedIngredientsAttribute()
+    // {
+    //     $workOrderGross = Conversions::toBase($this->unit, $this->amount);
+
+    //     foreach($this->product->recipe->ingredients as $ingredient) {
+    //         $totalNecessaries[] = [
+    //             'ingredient' => $ingredient,
+    //             'amount' => $workOrderGross['amount'] * $ingredient->pivot->amount,
+    //             'unit' => Unit::find($ingredient->pivot->unit_id),
+    //         ];
+    //     }
+    //     return collect($totalNecessaries);
+    // }
+
+    
 
     
 }

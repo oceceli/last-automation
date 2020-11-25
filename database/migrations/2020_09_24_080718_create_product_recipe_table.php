@@ -21,6 +21,7 @@ class CreateProductRecipeTable extends Migration
             // attachments
             $table->integer('unit_id');
             $table->integer('amount');
+            $table->boolean('literal');
             
             $table->timestamps();
         });
