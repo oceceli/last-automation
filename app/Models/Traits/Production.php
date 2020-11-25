@@ -6,7 +6,7 @@ use App\Common\Facades\Conversions;
 use App\Common\Facades\Stock;
 use App\Models\Unit;
 
-trait WorkOrderQueries // production olsun bu !!!
+trait Production // production olsun bu !!!
 {
     private $productionGross;
     // private $productionWaste;
@@ -59,29 +59,14 @@ trait WorkOrderQueries // production olsun bu !!!
         foreach($this->product->recipe->ingredients as $ingredient) {
             $totalDecrase[] = [
                 'ingredient' => $ingredient,
-                'amount' => $this->productionGross && $ingredient->pivot->literal
-                                ? $workOrderGross['amount'] * $ingredient->pivot->amount // arıza
-                                : $this->productionGross * $ingredient->pivot->amount,
+                'amount' => $this->isCompleted() && ! $ingredient->pivot->literal
+                                ? $this->productionGross * $ingredient->pivot->amount
+                                : $workOrderGross['amount'] * $ingredient->pivot->amount, 
                 'unit' => Unit::find($ingredient->pivot->unit_id),
             ];
         }
         return $totalDecrase;
     }
-
-
-    // public function getTotalPlannedIngredientsAttribute()
-    // {
-    //     $workOrderGross = Conversions::toBase($this->unit, $this->amount);
-
-    //     foreach($this->product->recipe->ingredients as $ingredient) {
-    //         $totalNecessaries[] = [
-    //             'ingredient' => $ingredient,
-    //             'amount' => $workOrderGross['amount'] * $ingredient->pivot->amount,
-    //             'unit' => Unit::find($ingredient->pivot->unit_id),
-    //         ];
-    //     }
-    //     return collect($totalNecessaries);
-    // }
 
     
 

@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use App\Common\Facades\Conversions;
-use App\Common\Facades\Production;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
-use App\Models\Traits\WorkOrderQueries;
+use App\Models\Traits\Production;
 use Carbon\Carbon;
 
 class WorkOrder extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers, WorkOrderQueries;
+    use HasFactory, SoftDeletes, ModelHelpers, Production;
 
     protected $guarded = [];
 

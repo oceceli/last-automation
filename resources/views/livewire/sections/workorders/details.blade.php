@@ -44,7 +44,6 @@
             @elseif($workOrder->isActive())
                 <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
 
-                {{ dd($workOrder->necessaryIngredients)}} 
                 @foreach ($workOrder->necessaryIngredients as $necessary)
                     <div>
                         <span class="text-ease">{{ $necessary['ingredient']->name }}: </span> 

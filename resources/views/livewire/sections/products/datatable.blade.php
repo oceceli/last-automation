@@ -34,22 +34,22 @@
                         <td class="truncate w-2/12 max-w-0">
                             {{ $product->note }}
                         </td>
-                        <td>
+                        {{-- <td>
                             <div class="flex items-center justify-center">
                                 <div class="ui slider checkbox">
                                     <input type="checkbox" wire:model.lazy="producible.{{ $key }}">
                                     <label></label>
                                 </div>
                             </div>
-                        </td>
-                        {{-- <td>
+                        </td> --}}
+                        <td>
                             <div class="flex items-center justify-center">
                                 <div class="ui checkbox">
                                     <input type="checkbox" wire:model.lazy="is_active.{{ $key }}">
                                     <label></label>
                                 </div>
                             </div>
-                        </td> --}}
+                        </td>
 
                         <td class="collapsing">
                             <x-crud-actions edit show delete modelName="product" :modelId="$product->id" />
