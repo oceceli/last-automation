@@ -3,7 +3,7 @@
 namespace App\Models\Traits;
 
 use App\Common\Facades\Conversions;
-use App\Common\Facades\Stock;
+use App\Common\Facades\Moves;
 use App\Models\Unit;
 
 trait Production // production olsun bu !!!
@@ -42,13 +42,13 @@ trait Production // production olsun bu !!!
         $this->productionGross = $productionGross;
 
 
-        Stock::productionGross($this, $productionGross, $unitId);
-        Stock::productionWaste($this, $productionWaste, $unitId);
+        Moves::productionGross($this, $productionGross, $unitId);
+        Moves::productionWaste($this, $productionWaste, $unitId);
 
         $this->markAsCompleted();
 
         foreach($this->necessaryIngredients as $necessary) {
-            Stock::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount'], $necessary['unit']);
+            Moves::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount'], $necessary['unit']);
         }
     }
 

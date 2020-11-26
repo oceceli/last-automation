@@ -13,7 +13,6 @@ use Carbon\Carbon;
 class StockMove extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
-    use StockCalculations;
 
     protected $guarded = [];
 

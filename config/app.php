@@ -231,9 +231,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // mine
-        'Stock' => App\Common\Facades\Stock::class,
+        'Moves' => App\Common\Facades\Moves::class,
         'Conversions' => App\Common\Facades\Conversions::class,
-        // 'Production' => App\Common\Facades\Production::class,
+        'StockCalculations' => App\Common\Facades\StockCalculations::class,
 
     ],
 

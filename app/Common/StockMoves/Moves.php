@@ -5,7 +5,7 @@ namespace App\Common\StockMoves;
 use App\Common\Factories\Instantiator;
 use App\Models\StockMove;
 
-class Stock 
+class Moves 
 {
     private $productId;
     private $type;

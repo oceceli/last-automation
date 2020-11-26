@@ -4,33 +4,30 @@
 
     <div>
 
-        {{-- <table class="ui celled sortable table tablet stackable very compact">
+        <x-table>
             <thead>
                 <tr>
-                    <th>Sıra</th>
-                    <th>test</th>
-                    <th>İşlemler</th>
+                    <th>ürün</th>
+                    <th>Stok miktarı</th>
+                    <th>Son giriş</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($data as $key => $model)
+                {{-- @foreach ($stockMoves as $calc)
                 <tr>
-                    <td>{{ $key+1 }}</td>
-                    <td>test</td>
-                    <td><div>Düzenle sil falan</div></td>
+                    <td>{{ $calc->product->name }}</td>
+                    <td>{{ $calc->total_amount }}</td>
+                    <td>{{ $calc->last_entry }}</td>
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
-        </table> --}}
-
-        <x-table>
-            
         </x-table>
 
        
-        <div class="w-full">
+        {{-- <div class="w-full">
             {{ $data->links('components.tailwind-pagination') }}
-        </div>
+        </div> --}}
         
     </div>
 </div>

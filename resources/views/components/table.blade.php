@@ -1,5 +1,6 @@
 <table class="ui celled sortable table tablet stackable very compact">
-    <thead>
+    {{ $slot }}
+    {{-- <thead>
         <tr>
             <th>Sıra</th>
             <th>test</th>
@@ -12,5 +13,5 @@
             <td>test</td>
             <td><div>Düzenle sil falan</div></td>
         </tr>
-    </tbody>
+    </tbody> --}}
 </table>

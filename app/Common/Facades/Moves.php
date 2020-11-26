@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @see \Illuminate\Contracts\Foundation\Application
  */
 
-class Stock extends Facade
+class Moves extends Facade
 {
 
     /**
@@ -25,6 +25,6 @@ class Stock extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Stock';
+        return 'Moves';
     }
 }
