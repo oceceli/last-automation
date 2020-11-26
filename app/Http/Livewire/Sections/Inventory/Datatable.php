@@ -11,8 +11,12 @@ class Datatable extends BaseDatatable
     public $model = StockMove::class;
     protected $view = 'livewire.sections.inventory.datatable';
 
+
+    public $stocks;
+
+
     public function mount()
     {
-        StockCalculations::calculateTotal();
-    }    
+        $this->stocks = StockCalculations::total();
+    }
 }

@@ -8,19 +8,19 @@
             <thead>
                 <tr>
                     <th>ürün</th>
-                    <th>Stok miktarı</th>
-                    <th>Son giriş</th>
-                    <th></th>
+                    <th>mevcut stok</th>
+                    <th>son hareket</th>
+                    {{-- <th></th> --}}
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($stockMoves as $calc)
+                @foreach ($stocks as $stock)
                 <tr>
-                    <td>{{ $calc->product->name }}</td>
-                    <td>{{ $calc->total_amount }}</td>
-                    <td>{{ $calc->last_entry }}</td>
+                    <td>{{ $stock['product']->name }}</td>
+                    <td>{{ $stock['total'] }} {{ $stock['product']->baseUnit->name}}</td>
+                    <td>{{ $stock['last_entry'] }}</td>
                 </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </x-table>
 

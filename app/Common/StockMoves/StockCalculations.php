@@ -7,23 +7,39 @@ use App\Models\StockMove;
 
 class StockCalculations
 {
-    public function calculateTotal()
+    public function total()
     {
         foreach (Product::all() as $product) {
-            $a[] = [
+            $stocks[] = [
                 'product' => $product,
-                'total' => StockMove::where(['product_id' => $product->id])->sum('base_amount'),
+                'total' => $this->positiveMoves($product->id) - $this->negativeMoves($product->id),
+                'last_entry' => $this->lastEntry($product->id),
             ];
         }
-        dd(($a));
+        return $stocks;
     }
 
-    private function upDirectionAmount($productId)
+    private function positiveMoves($productId)
     {
         return StockMove::where([
             'product_id' => $productId,
             'direction' => true,
-        ]);
+        ])->sum('base_amount');
+    }
+
+    private function negativeMoves($productId)
+    {
+        return StockMove::where([
+            'product_id' => $productId,
+            'direction' => false,
+        ])->sum('base_amount');
+    }
+
+    private function lastEntry($productId)
+    {
+        $last = StockMove::where('product_id', $productId)
+            ->latest()->first();
+        if($last) return $last->updated_at->diffForHumans();
     }
 
 
@@ -31,7 +47,7 @@ class StockCalculations
     
     public function calculateTotallllll()
     {
-        $products = Product::wherehas('stockmoves')->where('producible', 1)->get();
+        $products = Product::wherehas('stockmoves')->where('producible', 1)->first();
         foreach ($products as $product) {
             $a[] = [
                 'product' => $product,
