@@ -71,9 +71,14 @@ class StockMove extends Model
     }
 
 
-    public function unitIsAlreadyBase()
+    // public function unitIsAlreadyBase()
+    // {
+    //     return Conversions::toBase($this->unit, $this->amount)['unit'] == $this->unit;
+    // }
+
+    public function getUnitNameAttribute()
     {
-        return Conversions::toBase($this->unit, $this->amount)['unit'] == $this->unit;
+        return $this->product->getBaseUnit()->name;
     }
 
     public function convertToBase()

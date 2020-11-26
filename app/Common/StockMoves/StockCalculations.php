@@ -15,7 +15,7 @@ class StockCalculations
         // }
         $a = StockMove::where('product_id', 2)
                     ->where('direction', true)
-                    ->sum('amount');
+                    ->sum('base_amount');
         dd($a);
     }
 

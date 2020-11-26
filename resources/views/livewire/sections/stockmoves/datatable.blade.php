@@ -42,11 +42,11 @@
                             @else 
                                 <span data-tooltip="{{ __('stockmoves.stock_decrease') }}" data-variation="mini"><i class="red minus icon"></i></span>
                             @endif
-                            <span class="font-bold">{{ round($stockMove->amount, 2) }}</span>
-                            <span class="text-sm">{{ $stockMove->unit->name }}</span>
-                            @if ( ! $stockMove->unitIsAlreadyBase())
+                            <span class="font-bold">{{ round($stockMove->base_amount, 2) }}</span>
+                            <span class="text-sm">{{ $stockMove->unitName }}</span>
+                            {{-- @if ( ! $stockMove->unitIsAlreadyBase())
                                 <span class="text-xs text-ease">({{ $stockMove->convertToBase()['amount'] }} {{ $stockMove->convertToBase()['unit']->name }})</span>
-                            @endif
+                            @endif --}}
                         </td>
                         <td>{{ $stockMove->lot_number }}</td>
                         <td class="text-sm">{{ $stockMove->datetime }}</td>

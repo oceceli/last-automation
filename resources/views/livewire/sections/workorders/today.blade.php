@@ -12,7 +12,7 @@
                                 <i class="{{ $this->inProgress->statusColor }} link circle icon animate-pulse"></i>
                             </span>
                             <span>{{ $this->inProgress->product->name }} - </span>
-                            <span class="text-gray-400">{{ __('sections/workorders.started_at_time', ['time' => $this->inProgress->startedAt()->diffForHumans()]) }}</span>
+                            <span class="text-ease">{{ __('sections/workorders.started_at_time', ['time' => $this->inProgress->startedAt()->diffForHumans()]) }}</span>
                         @else
                             <i class="red  circle icon"></i>
                             <span class="text-gray-400 cursor-default">{{ __('sections/workorders.on_hold') }}</span>
@@ -63,7 +63,7 @@
                                     <td class="collapsing selectable">
                                         <span class="px-2 shadow rounded bg-white" data-tooltip="{{ __('common.see_details') }}" data-variation="mini" data-position="top right">
                                             <a class="text-teal-600 text-lg" href="{{ route('work-orders.show', ['work_order' => $workOrder]) }}">
-                                                {{ round($workOrder->getProductionResults()['gross'],2) }} {{ $workOrder->convertedBaseUnit()->name }}
+                                                {{ round($workOrder->getProductionResults()['net'],2) }} {{ $workOrder->product->baseUnit->name }}
                                             </a>
                                         </span>
                                     </td>

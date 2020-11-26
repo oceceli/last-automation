@@ -143,16 +143,7 @@ class WorkOrder extends Model
             $this->update(['status' => 'completed']);
     }
 
-    public function getProductionResults()
-    {
-        if($this->isCompleted()) {
-            return [
-                'gross' => $this->getProductionGross(),
-                'waste' => $this->getProductionWaste(),
-                'net' => $this->net(),
-            ];
-        }
-    }
+    
 
     /**
      * Return updated_at date if production started

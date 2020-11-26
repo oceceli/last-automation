@@ -10,9 +10,8 @@ class Moves
     private $productId;
     private $type;
     private $direction;
-    private $amount;
+    private $baseAmount;
     private $lotNumber;
-    private $unitId;
     private $datetime;
 
     private $stockableType;
@@ -23,74 +22,74 @@ class Moves
      /**
      *  Gets a workorder/workorder_id as parameter, creates a new stockmove in positive way(gross)
      */
-    public function productionGross($workOrder, $amount, $unitId, $datetime = null)
+    public function saveProductionGross($workOrder, $baseAmount, $datetime = null)
     {
-        if($amount <= 0) return;
+        if($baseAmount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, $unitId, true, 'production_gross', $datetime, $workOrder->lot_no)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $baseAmount, true, 'production_gross', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
     /**
      *  Gets a workorder/workorder_id as parameter, creates a new stockmove in negative way(waste)
      */
-    public function productionWaste($workOrder, $amount, $unitId, $datetime = null)
+    public function saveProductionWaste($workOrder, $baseAmount, $datetime = null)
     {
-        if($amount <= 0) return;
+        if($baseAmount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($workOrder->product_id, $amount, $unitId, false, 'production_waste', $datetime, $workOrder->lot_no)->persist($workOrder);
+        $this->prepare($workOrder->product_id, $baseAmount, false, 'production_waste', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
-    public function decreasedIngredient($workOrder, $ingredientId, $amount, $unitId, $datetime = null)
+    public function decreasedIngredient($workOrder, $ingredientId, $baseAmount, $datetime = null)
     {
+        if($baseAmount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $amount, $unitId, false, 'production_ingredient', $datetime, 'değiştir')->persist($workOrder);
+        $this->prepare($ingredientId, $baseAmount, false, 'production_ingredient', $datetime, 'değiştir')->persist($workOrder);
     }
 
     /**
      * Create a positive move manually
      */
-    public function moveIn($productId, $amount, $unitId, $datetime)
+    public function moveIn($productId, $baseAmount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, $unitId, true, 'manual', $datetime, 'değiştir movein out')->persist();
+        $this->prepare($productId, $baseAmount, $unitId, true, 'manual', $datetime, 'değiştir movein out')->persist();
     }
 
     /**
      * Create a negative move manually
      */
-    public function moveOut($productId, $amount, $unitId, $datetime)
+    public function moveOut($productId, $baseAmount, $unitId, $datetime)
     {
-        $this->prepare($productId, $amount, $unitId, false, 'manual', $datetime, 'değiştir movein out')->persist();
+        $this->prepare($productId, $baseAmount, $unitId, false, 'manual', $datetime, 'değiştir movein out')->persist();
     }
     
     /**
      * Make a move
      */
-    public function newMove($productId, $amount, $unitId, $direction, $datetime, $lotNumber, $type = 'manual', $stockableType = null, $stockableId = null)
+    public function newMove($productId, $baseAmount, $unitId, $direction, $datetime, $lotNumber, $type = 'manual', $stockableType = null, $stockableId = null)
     {
-        $this->prepare($productId, $amount, $unitId, $direction, $type, $datetime, $lotNumber, $stockableType, $stockableId)->persist();
+        $this->prepare($productId, $baseAmount, $unitId, $direction, $type, $datetime, $lotNumber, $stockableType, $stockableId)->persist();
     }
 
 
     /**
      * Prepare properties to push into database
      */
-    private function prepare($productId, $amount, $unitId, $direction, $type, $datetime = null, $lotNumber, $stockableType = null, $stockableId = null)
+    private function prepare($productId, $baseAmount, $direction, $type, $datetime = null, $lotNumber, $stockableType = null, $stockableId = null)
     {
         $this->productId = $productId;
         $this->type = $type;
         $this->direction = $direction;
-        $this->amount = $amount;
+        $this->baseAmount = $baseAmount;
         $this->lotNumber = $lotNumber;
-        $this->unitId = $unitId instanceof \App\Models\Unit
-            ? $unitId->id
-            : $unitId;
+        // $this->unitId = $unitId instanceof \App\Models\Unit
+        //     ? $unitId->id
+        //     : $unitId;
         if($datetime)
             $this->datetime = $datetime;
         else $this->datetime = now();
 
         $this->stockableType = $stockableType;
         $this->stockableId = $stockableId;
-        
         return $this;
     }
 
@@ -103,9 +102,9 @@ class Moves
             'product_id' => $this->productId,
             'type' => $this->type,
             'direction' => $this->direction,
-            'amount' => $this->amount,
+            'base_amount' => $this->baseAmount,
             'lot_number' => $this->lotNumber,
-            'unit_id' => $this->unitId,
+            // 'unit_id' => $this->unitId,
             'datetime' => $this->datetime,
         ];
     }

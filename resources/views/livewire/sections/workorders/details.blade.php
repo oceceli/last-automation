@@ -48,7 +48,7 @@
                     <div>
                         <span class="text-ease">{{ $necessary['ingredient']->name }}: </span> 
                         <span>{{ $necessary['amount'] }} </span>
-                        <span>{{ $necessary['unit']->name }}</span>
+                        <span>{{ $necessary['ingredient']->baseUnit->name }}</span>
                     </div>
                 @endforeach
             @endif
