@@ -17,6 +17,7 @@ class Datatable extends BaseDatatable
 
     public function mount()
     {
-        $this->stocks = StockCalculations::total();
+        dump(StockCalculations::test());
+        // $this->stocks = StockCalculations::total();
     }
 }

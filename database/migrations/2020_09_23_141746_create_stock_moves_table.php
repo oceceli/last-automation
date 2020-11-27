@@ -18,7 +18,7 @@ class CreateStockMovesTable extends Migration
             $table->unsignedBigInteger('product_id');
             // $table->unsignedBigInteger('unit_id');
             $table->string('type');
-            $table->string('lot_number');
+            $table->string('lot_number')->unique();
             $table->boolean('direction'); 
             $table->integer('base_amount');
             $table->date('datetime');

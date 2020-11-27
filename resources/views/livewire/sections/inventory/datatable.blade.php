@@ -9,18 +9,18 @@
                 <tr>
                     <th>ürün</th>
                     <th>mevcut stok</th>
-                    <th>son hareket</th>
+                    <th class="text-sm">son hareket</th>
                     {{-- <th></th> --}}
                 </tr>
             </thead>
             <tbody>
-                @foreach ($stocks as $stock)
+                {{-- @foreach ($stocks as $stock)
                 <tr>
-                    <td>{{ $stock['product']->name }}</td>
-                    <td>{{ $stock['total'] }} {{ $stock['product']->baseUnit->name}}</td>
-                    <td>{{ $stock['last_entry'] }}</td>
+                    <td class="text-ease">{{ $stock['product']->name }}</td>
+                    <td class="text-ease">{{ $stock['total'] }} {{ $stock['product']->baseUnit->name}}</td>
+                    <td class="text-ease text-sm collapsing">{{ $stock['last_entry'] }}</td>
                 </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </x-table>
 
