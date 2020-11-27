@@ -49,25 +49,25 @@ class Moves
     /**
      * Create a positive move manually
      */
-    public function moveIn($productId, $baseAmount, $unitId, $datetime)
+    public function moveIn($productId, $baseAmount, $datetime)
     {
-        $this->prepare($productId, $baseAmount, $unitId, true, 'manual', $datetime, 'değiştir movein out')->persist();
+        $this->prepare($productId, $baseAmount, true, 'manual', $datetime, 'değiştir movein out')->persist();
     }
 
     /**
      * Create a negative move manually
      */
-    public function moveOut($productId, $baseAmount, $unitId, $datetime)
+    public function moveOut($productId, $baseAmount, $datetime)
     {
-        $this->prepare($productId, $baseAmount, $unitId, false, 'manual', $datetime, 'değiştir movein out')->persist();
+        $this->prepare($productId, $baseAmount, false, 'manual', $datetime, 'değiştir movein out')->persist();
     }
     
     /**
      * Make a move
      */
-    public function newMove($productId, $baseAmount, $unitId, $direction, $datetime, $lotNumber, $type = 'manual', $stockableType = null, $stockableId = null)
+    public function newMove($productId, $baseAmount, $direction, $datetime, $lotNumber, $type = 'manual', $stockableType = null, $stockableId = null)
     {
-        $this->prepare($productId, $baseAmount, $unitId, $direction, $type, $datetime, $lotNumber, $stockableType, $stockableId)->persist();
+        $this->prepare($productId, $baseAmount, $direction, $type, $datetime, $lotNumber, $stockableType, $stockableId)->persist();
     }
 
 

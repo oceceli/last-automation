@@ -6,6 +6,7 @@ use App\Common\Facades\Moves;
 use App\Http\Livewire\Form as BaseForm;
 use App\Models\Product;
 use App\Models\StockMove;
+use App\Common\Facades\Conversions;
 
 class Form extends BaseForm
 {
@@ -13,10 +14,12 @@ class Form extends BaseForm
     public $view = 'livewire.sections.stockmoves.form';
     public $validate = false;
 
+    public $test = true;
 
     public $cards = [];
 
-    public $units = [];
+    public $units = []; // for dropdown 
+    public $lotNumbers = []; // for dropdown 
 
     protected $rules = [
         'cards.*' => 'array',
@@ -29,7 +32,10 @@ class Form extends BaseForm
     ];
     
     protected $validationAttributes = [
-        'cards.*.amount' => 'Deneme'
+        'cards.*.product_id' => 'Ürün',
+        'cards.*.direction' => 'Yön',
+        'cards.*.amount' => 'Miktar',
+        'cards.*.datetime' => 'Tarih',
     ];
 
     public function mount()
@@ -42,14 +48,19 @@ class Form extends BaseForm
     {
         $this->cards[] = [
             'product_id' => null,
-            'direction' => 1,
+            'direction' => 0,
             'amount' => null,
             'lot_number' => null,
             'datetime' => date('d.m.Y H:i:s'),
             'unit_id' => null,       
             
-            'lotNumberAreaType' => 'input',
+            'lotNumberAreaType' => 'dropdown',
         ];
+    }
+
+    public function lotNumbers($productId)
+    {
+        return StockMove::where('product_id', $productId)->pluck('lot_number')->toArray(); 
     }
 
     public function removeCard($key)
@@ -70,6 +81,7 @@ class Form extends BaseForm
         $this->cards[$key]['lotNumberAreaType'] = $currentDirection 
                                 ? 'dropdown' // ??? 
                                 : 'input';
+        $this->cards[$key]['lot_number'] = null; // empty lot number 
     }
 
     /**
@@ -81,6 +93,7 @@ class Form extends BaseForm
         if(strpos($location, 'product_id')) {
             $index = strtok($location, '.');
             $this->units[$index] = $this->getProductsProperty()->find($id)->units;
+            $this->lotNumbers[$index] = $this->lotNumbers($id);
             $this->emit('sm_product_selected'.$index);
         }
     }
@@ -90,8 +103,8 @@ class Form extends BaseForm
     {
         $this->validate();
         foreach($this->cards as $card) {
-            // $amount = Conversions::toBase($card['unit_id'], $card['amount'])['amount']; // stockMove, birimi kullanıcının kaydettiği şekilde göstermiyor, eklemedim. Base'e döndürüyoruz. Haberin olsun
-            Moves::newMove($card['product_id'], $card['amount'], $card['unit_id'], $card['direction'], $card['datetime'], $card['lot_number']);
+            $amount = Conversions::toBase($card['unit_id'], $card['amount'])['amount']; // stockMove, birimi kullanıcının kaydettiği şekilde göstermiyor, eklemedim. Base'e döndürüyoruz. Haberin olsun
+            Moves::newMove($card['product_id'], $amount, $card['direction'], $card['datetime'], $card['lot_number']);
         }
         $this->emit('toast', __('common.saved.title'), __('common.saved.standard'), 'success');
     }

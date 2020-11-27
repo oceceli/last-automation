@@ -28,17 +28,20 @@
                                     <x-dropdown placeholder="{{ __('modelnames.product') }}" sClass="search"
                                                 model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="name" :key="'selectProduct'.$key">
                                     </x-dropdown>
-                                    @if ($card['lotNumberAreaType'] === 'input')
-                                        <x-input model="cards.{{ $key }}.lot_number" placeholder="{{ __('stockmoves.lot_number') }}"  />
-                                    @endif
-                                    {{-- @elseif($card['lotNumberAreaType'] === 'dropdown')
-                                        <x-dropdown placeholder="{{ __('stockmoves.lot_number') }}" sClass="search"
-                                                     model="cards.{{ $key }}.lot_number " :collection="$this->products" value="id" text="name" :key="'lotNumber'.$key">
-                                        </x-dropdown> --}}
                                     <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('stockmoves.amount') }}" iType="number" sClass="basic" 
                                                 initnone triggerOnEvent="sm_product_selected{{$key}}" model="cards.{{ $key }}.unit_id" dataSource="units.{{ $key }}"
                                                 :key="'units'.$key" value="id" text="name" placeholder="{{ __('modelnames.unit') }}">
                                     </x-dropdown>
+                                    @if ($card['lotNumberAreaType'] === 'input')
+                                        <x-input model="cards.{{ $key }}.lot_number" placeholder="{{ __('stockmoves.lot_number') }}"  />
+                                    @elseif($card['lotNumberAreaType'] === 'dropdown')
+                                        <div class="field pt-1">
+                                            <x-select model="cards.{{ $key }}.lot_number" :collection="$lotNumbers" :collectionKey="$key" value="text"  />
+                                        </div>
+                                        {{-- <x-dropdown model="cards.{{ $key }}.lot_number" initnone triggerOnEvent="sm_product_selected{{$key}}" dataSource="lotNumbers.{{ $key }}" 
+                                            placeholder="{{ __('stockmoves.lot_number') }}" value="id" text="id">
+                                        </x-dropdown> --}}
+                                    @endif
                                     <x-datepicker model="cards.{{ $key }}.datetime" type="date" initialDate="{{ $card['datetime'] }}" :key="$key" />
                                 </div>
                             </div>
