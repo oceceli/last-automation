@@ -1,4 +1,4 @@
-<table class="ui celled sortable table tablet stackable very compact">
+<table {{ $attributes->merge(['class' => 'ui celled sortable table tablet stackable very compact'])}}>
     {{ $slot }}
     {{-- <thead>
         <tr>

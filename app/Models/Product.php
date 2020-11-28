@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Common\Facades\Conversions;
+use App\Models\Traits\HasInventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +11,7 @@ use App\Models\Traits\ModelHelpers;
 class Product extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
+    use HasInventory;
 
     protected $guarded = [];
 
@@ -134,5 +135,7 @@ class Product extends Model
     {
         return ucwords($value);
     }
+
+    
     
 }

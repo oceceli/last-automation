@@ -26,8 +26,8 @@ class ScenarioSeeder extends Seeder
 
 
         // products
-        $rmd02 = $this->cProduct($diyaplus->id, 'adet', 'DİYAPLUS C50', 'rmd02', '8699645662869', true);
         $rm004 = $this->cProduct($bazik->id, 'adet', 'ren bikar bazik 6lt', 'rm004', '8699645660025', true);
+        $rmd02 = $this->cProduct($diyaplus->id, 'adet', 'DİYAPLUS C50', 'rmd02', '8699645662869', true);
         $rm001 = $this->cProduct($bazik->id, 'adet', 'ren bikar bazik 10lt', 'rm001', '8699645660018', true);
         $rm026 = $this->cProduct($acet->id, 'adet', 'K2 Ca 1,25', 'rm026', '8699645660698', true);
         $rm029 = $this->cProduct($acet->id, 'adet', 'K2 Ca 1,75 Mg 1,0 Ac 8 10Lt', 'rm029', '8699645660902', true);

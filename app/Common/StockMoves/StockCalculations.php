@@ -4,67 +4,50 @@ namespace App\Common\StockMoves;
 
 use App\Models\Product;
 use App\Models\StockMove;
+use App\Models\Unit;
 
 class StockCalculations
 {
-    // public function total() // constructora taşı
-    // {
-    //     foreach (Product::all() as $product) {
-    //         $stocks[] = [
-    //             'product' => $product,
-    //             'total' => $this->positiveMoves($product->id) - $this->negativeMoves($product->id),
-    //             'last_entry' => $this->lastEntry($product->id),
-    //         ];
-    //     }
-    //     return $stocks;
-    // }
 
-    public function test()
+
+    public function getCurrentStockAmountOfProduct($productId)
     {
-        foreach (Product::all() as $product) {
-            $stocks[] = [
-                'product' => $product,
-                'total' => $this->positiveMoves($product->id) - $this->negativeMoves($product->id),
-                'lot_numbers' => $this->getLots($product->id),
-                'last_entry' => $this->lastEntry($product->id),
+        return array_sum(array_column($this->lotNumbersAndAmounts($productId), 'amount'));
+    }
+
+
+    public function lotNumbersAndAmounts($productId)
+    {        
+        $lotNumbers = StockMove::where('product_id', $productId)
+            ->distinct()
+            ->get(['lot_number'])
+            ->pluck('lot_number')
+            ->toArray();
+
+        foreach($lotNumbers as $lotNumber) {
+            $array[] = [
+                'lot_number' => $lotNumber,
+                'amount' => $this->getCurrentAmountBasedOnLotNumber($lotNumber),
+                'unit' => $this->getUnit($productId),
             ];
         }
-        return $stocks;
+        return isset($array) ? $array : [];
     }
 
-    // private function istediğimYapı()
-    // {
-    //     return collect([
-    //         'product' => App\Model\Product::class,
-    //         'total' => $this->positiveMoves(2) - $this->negativeMoves(2),
-    //         'lot_numbers' => [
-    //             '201100401' => 450,
-    //             '201100402' => 800,
-    //             '201153825' => 1200,
-    //         ]
-    //     ]);
-    // }
-
-    private function getLots($productId)
+    
+    private function getCurrentAmountBasedOnLotNumber($lotNumber)
     {
-        $lots = StockMove::where('product_id', 2)->pluck('lot_number')->all();
-        $uniqueLots = array_values(array_unique($lots));
-        foreach($uniqueLots as $lotNumber) {
-            $a[$lotNumber] = StockMove::where([
-                'lot_number' => $lotNumber,
-                'direction' => true,
-            ])->sum('base_amount'); 
-        }
-        foreach($uniqueLots as $lotNumber) {
-            $b[$lotNumber] = StockMove::where([
-                'lot_number' => $lotNumber,
-                'direction' => false,
-            ])->sum('base_amount'); 
-        }
-        dd($this->lot($uniqueLots[0], 1) - $this->lot($uniqueLots[0], 0)); // BURADAN DEVAM ET
+        return $this->lotQuery($lotNumber, true) - $this->lotQuery($lotNumber, false);
     }
 
-    private function lot($lotNumber, $direction)
+    private function getUnit($productId)
+    {
+        return Unit::where('product_id', $productId)->first();
+    }
+
+    
+    
+    private function lotQuery($lotNumber, $direction)
     {
         return StockMove::where([
             'lot_number' => $lotNumber,
@@ -74,50 +57,27 @@ class StockCalculations
 
 
 
-    private function positiveMoves($productId)
-    {
-        return StockMove::where([
-            'product_id' => $productId,
-            'direction' => true,
-        ])->sum('base_amount');
-    }
-
-    private function negativeMoves($productId)
-    {
-        return StockMove::where([
-            'product_id' => $productId,
-            'direction' => false,
-        ])->sum('base_amount');
-    }
-
     private function lastEntry($productId)
     {
         $last = StockMove::where('product_id', $productId)
             ->latest()->first();
-        if($last) return $last->updated_at->diffForHumans();
+        return $last = $last->updated_at->diffForHumans();
+        // if($last) return $last->updated_at->diffForHumans();
     }
 
 
-
-
-
-
-    // private function totalProductionGross($productId)
+    // public function total()
     // {
-    //     return StockMove::where([
-    //             'product_id' => $productId, 
-    //             'direction' => true,
-    //             'type' => 'production_gross',
-    //         ]) ->sum('base_amount');
+    //     foreach (Product::all() as $product) {
+    //         $stocks[] = [
+    //             'product' => $product,
+    //             'total' => $this->getCurrentStockAmountOfProduct($product->id),
+    //             'lot_numbers' => $this->lotNumbersAndAmounts($product->id),
+    //             'last_move' => $this->lastEntry($product->id),
+    //         ];
+    //     }
+    //     return $stocks;
     // }
 
-    // private function totalProductionWaste($productId)
-    // {
-    //     return StockMove::where([
-    //             'product_id' => $productId, 
-    //             'direction' => false,
-    //             'type' => 'production_waste',
-    //         ])->sum('base_amount');
-    // }
 
 }

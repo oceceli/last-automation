@@ -24,10 +24,12 @@ class CrudActions extends Component
      *
      * @return void
      */
-    public function __construct($modelName, $modelId, $show = false, $edit = false, $delete = false, $gray = false, $addClass = null)
+    public function __construct($modelName = null, $modelId = null, $show = false, $edit = false, $delete = false, $gray = false, $addClass = null)
     {
-        $this->modelName = Generic::kebabToSnake($modelName);
-        $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
+        if($modelName) {
+            $this->modelName = Generic::kebabToSnake($modelName);
+            $this->pluralModelName = \Illuminate\Support\Str::plural($modelName);
+        }
         $this->modelId = $modelId;
 
         $this->show = $show;
