@@ -28,7 +28,7 @@ class StockMoveFactory extends Factory
             'type' => 'manual',
             'direction' => $this->faker->boolean(),
             'amount' => $this->faker->numberBetween(),
-            'date' => now() + $this->faker->numberBetween(0,10),
+            'datetime' => now() + $this->faker->numberBetween(0,10),
         ];
     }
 }

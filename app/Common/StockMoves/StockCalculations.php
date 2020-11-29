@@ -30,7 +30,7 @@ class StockCalculations
         foreach($lotNumbers as $lotNumber) {
             $array[] = [
                 'lot_number' => $lotNumber,
-                'amount' => $this->getCurrentAmountBasedOnLotNumber($lotNumber),
+                'amount' => $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId),
                 'unit' => $this->getUnit($productId),
             ];
         }
@@ -38,9 +38,9 @@ class StockCalculations
     }
 
     
-    private function getCurrentAmountBasedOnLotNumber($lotNumber)
+    private function getCurrentAmountBasedOnLotNumber($lotNumber, $productId)
     {
-        return $this->lotQuery($lotNumber, true) - $this->lotQuery($lotNumber, false);
+        return $this->lotQuery($lotNumber, $productId, true) - $this->lotQuery($lotNumber, $productId, false);
     }
 
     private function getUnit($productId)
@@ -50,9 +50,10 @@ class StockCalculations
 
     
     
-    private function lotQuery($lotNumber, $direction)
+    private function lotQuery($lotNumber, $productId, $direction)
     {
         return StockMove::where([
+            'product_id' => $productId,
             'lot_number' => $lotNumber,
             'direction' => $direction,
         ])->sum('base_amount');
@@ -60,12 +61,12 @@ class StockCalculations
 
 
 
-    private function lastEntry($productId)
+    public function lastMove($productId)
     {
         $last = StockMove::where('product_id', $productId)
             ->latest()->first();
-        return $last = $last->updated_at->diffForHumans();
-        // if($last) return $last->updated_at->diffForHumans();
+        // return $last = $last->updated_at->diffForHumans();
+        return $last;
     }
 
 

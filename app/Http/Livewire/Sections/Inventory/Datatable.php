@@ -13,15 +13,20 @@ class Datatable extends BaseDatatable
     protected $view = 'livewire.sections.inventory.datatable';
 
 
-    public $stocks;
     public $products;
 
+    public $lotModal = false;
+    public $selectedProduct;
+ 
 
     public function mount()
     {
-        // dump(StockCalculations::test());
-        // $this->stocks = StockCalculations::total();
-        // dd($this->stocks);
         $this->products = Product::all();
+    }
+    
+    public function showLotsOf($productId)
+    {
+        $this->selectedProduct = $this->products->find($productId);
+        $this->lotModal = true;
     }
 }

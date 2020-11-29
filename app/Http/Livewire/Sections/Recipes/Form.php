@@ -68,8 +68,6 @@ class Form extends BaseForm
     public function removeCard($key)
     {
         unset($this->cards[$key]);
-        // $this->cards = array_values($this->cards);
-        // $this->emit('aCardDeleted'.$key); triggerOnEvent="aCardDeleted{{ $key }}" 
     }
     public function removeAllCards()
     {
@@ -80,12 +78,6 @@ class Form extends BaseForm
     {
         $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
     }
-
-    // is unit calculation available for representation 
-    // public function isUnitCalcAvailable($card)
-    // {
-    //     return isset($card['unit_id']) && isset($card['amount']);
-    // }
 
     public function calculatedUnit($card)
     {
@@ -145,11 +137,6 @@ class Form extends BaseForm
         if(empty($this->product_id)) {
             return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.please_select_a_product_to_create_recipe', 'warning');
         }
-
-        // count of ingredient, unit_id and amount fields have to be filled before save
-        // if ( ! $this->isCardsStable()) {
-        //     return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.fill_in_amount_and_unit_correctly', 'warning');
-        // }
         
 
         // if it already saved in database, just update it
@@ -188,11 +175,6 @@ class Form extends BaseForm
 
 
 
-
-
-
-
-
     /**
      * return if given ingredient id is already in cards
      */
@@ -202,35 +184,28 @@ class Form extends BaseForm
         return in_array($ingredientID, array_column($dimension2, 'id'));
     }
 
-    // public function isCardsStable()
-    // {
-    //     return $this->columnCount('unit_id') == $this->columnCount('ingredient') && $this->columnCount('ingredient') == $this->columnCount('amount');       
-    // }
-    // public function columnCount($column)
-    // {
-    //     return count(array_column($this->cards, $column));
-    // }
 
     /**
      * Produce a random recipe unique code
      */
-    public function random()
+    public function suggest()
     {
         $string = $this->code;
-        $number = 8;
-        $randomString = strtolower(Str::random($number));
-        if($string) {
-            $pos = strpos($string, '_');
-            if(! $pos) {
-                $this->code = $string . '_' . $randomString;
+        $randomString = strtolower(Str::random(8));
+
+        if($this->selectedProduct) {
+            if($string) {
+                $pos = strpos($string, '_');
+                if(! $pos) {
+                    $this->code = $string . '_' . $this->selectedProduct->code;
+                } else {
+                    $string = substr($string, 0, $pos);
+                    $this->code = $string . '_' . $randomString;
+                }
             } else {
-                $string = substr($string, 0, $pos);
-                $this->code = $string . '_' . $randomString;
+                $this->code = 'rct_' . $this->selectedProduct->code;
             }
-        } else {
-            $this->code = 'rct_' . $randomString;
         }
-        
     }
     
 

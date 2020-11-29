@@ -1,6 +1,6 @@
 <div>
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
-    <x-content theme="orange" buttons>
+    <x-content theme="orange" >
 
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
@@ -11,9 +11,9 @@
                         
                         <x-input action model="code" label="sections/recipes.code" placeholder="sections/recipes.code" class="required">
                             <x-slot name="action">
-                                <button wire:click.prevent="random" class="ui teal right labeled icon button" >
+                                <button wire:click.prevent="suggest" class="ui teal right labeled icon button @if(!$selectedProduct) disabled @endif" >
                                     <i class="icon random"></i>
-                                    {{ __('sections/recipes.random_code') }}
+                                    {{ __('sections/recipes.suggest_code') }}
                                 </button>
                             </x-slot>
                         </x-input>
@@ -106,4 +106,7 @@
 
 
     </x-content>
+    @if ($selectedProduct)
+        <x-form-buttons class="p-4 pt-6" />
+    @endif
 </div>

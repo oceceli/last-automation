@@ -177,7 +177,7 @@
                             @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
                         </x-slot>
                     </x-input>
-                    <button class="text-green-500">gönder</button>
+                    <x-form-buttons class="pt-4" />
                 </form>
             </x-custom-modal>
         </div>

@@ -27,7 +27,7 @@ class Recipe extends Model
         return [
             'data' => [
                 'product_id' => 'required|min:1',
-                'code' => 'required',
+                'code' => 'required|unique:recipes',
             ],
             'relation' => [ // use for many to many relationships
                 //

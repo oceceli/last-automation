@@ -10,7 +10,8 @@ return [
     'count_of_ingredients' => 'İçindekiler',
     'ingredients' => 'İçindekiler',
 
-    'random_code' => 'Rastgele',
+    // 'random_code' => 'Rastgele',
+    'suggest_code' => 'Üret',
     'amount' => 'Miktar',
     'includes' => 'içerisinde',
     'has_recipe' => 'Reçetesi var',
@@ -30,7 +31,7 @@ return [
     'a_product_cannot_have_itself_as_a_ingredient' => 'Reçeteye ürünün kendisi eklenemez!',
 
     'please_select_a_product_to_create_recipe' => 'Reçetesini oluşturmak istediğiniz ürünü seçin...',
-    'fill_in_amount_and_unit_correctly' => 'Lütfen miktar ve birim alanlarını eksiksiz doldurun...',
+    // 'fill_in_amount_and_unit_correctly' => 'Lütfen miktar ve birim alanlarını eksiksiz doldurun...',
     'ingredients_should_be_specified_to_save' => 'Lütfen reçete içeriği oluşturun...',
 
     'an_error_occurred_while_adding_ingredients' => 'Reçete içeriği kaydedilirken bir hata oluştu!',
