@@ -4,7 +4,7 @@
             <i class="undo alternate icon"></i>
             Temizle
         </button>
-        <button class="ui right labeled icon positive button" wire:loading.class="disabled loading" > {{-- wire:click.prevent="{{ $submit }}" --}}
+        <button class="ui right labeled icon positive button" wire:loading.class="disabled loading" @if($submit) wire:click.prevent="{{ $submit }} @endif"> {{-- wire:click.prevent="{{ $submit }}" --}}
             <i class="angle right icon"></i>
             Kaydet
         </button>

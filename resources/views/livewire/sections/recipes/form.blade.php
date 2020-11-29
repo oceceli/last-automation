@@ -5,7 +5,7 @@
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
             <div class="p-6 shadow-md">
-                <div class="ui small form">
+                <form class="ui small form" wire:submit.prevent="submit">
                     <div class="equal width fields">
                         <x-dropdown.search model="product_id" label="sections/recipes.recipe_product" :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" />
                         
@@ -21,7 +21,7 @@
                     @if ($this->producibles->count() <= 0)
                         <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> başlayın...</div>
                     @endif
-                </div> 
+                </form> 
             </div>
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
 

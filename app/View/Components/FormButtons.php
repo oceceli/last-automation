@@ -15,7 +15,7 @@ class FormButtons extends Component
      *
      * @return void
      */
-    public function __construct($clear = 'clearFields', $submit = 'submit')
+    public function __construct($clear = 'clearFields', $submit = '')
     {
         $this->clear = $clear;
         $this->submit = $submit;

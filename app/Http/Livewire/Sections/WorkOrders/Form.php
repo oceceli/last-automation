@@ -24,6 +24,8 @@ class Form extends BaseForm
 
     public $unit_id;
 
+    public $test;
+
     // comes from dropdown
     public $selectedProduct;
     public $recipeOfSelectedProduct;
@@ -46,6 +48,8 @@ class Form extends BaseForm
         $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
         $this->emit('woProductChanged'); // fill the units
         $this->recipeOfSelectedProduct = $this->selectedProduct->recipe;
+
+        $this->guessFields($this->selectedProduct);
     }
     
 
@@ -60,6 +64,25 @@ class Form extends BaseForm
     public function getProductsProperty()
     {
         return Product::has('recipe')->get()->toArray();
+    }
+
+    public function guessFields($product)
+    {
+        $latestWO = $product->getLastCreatedWorkOrder();
+        $globalWO = WorkOrder::latest()->first();
+
+        if(is_numeric($latestWO->lot_no)) {
+            $this->lot_no = $latestWO->lot_no + 1;
+        } else {
+            $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
+        }
+
+        $this->amount = $latestWO->amount;
+        $this->unit_id = $latestWO->unit_id;
+        $this->datetime = now();
+        $this->queue = $globalWO->queue + 1;
+        $this->code = $globalWO->code;
+        
     }
 
 
@@ -87,7 +110,7 @@ class Form extends BaseForm
     {
         $this->create();
         $this->emit('new_work_order_created');
-        // $this->reset();
+        $this->reset();
     }
 
 

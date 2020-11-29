@@ -10,6 +10,7 @@ class CustomModal extends Component
     public $active;
     public $theme;
     public $padding;
+    public $headerClass;
     public $position;
     public $positions = [
         'right' => 'top-0 right-0 bottom-0 absolute',
@@ -30,6 +31,7 @@ class CustomModal extends Component
         $this->header = $header;
         $this->active = $active;
         $this->theme = $theme;
+        if($position == 'center') $this->headerClass = 'rounded-t-md';
         $this->position = $this->positions[$position];
         if($padding) $this->padding = 'px-6 py-4';
     }

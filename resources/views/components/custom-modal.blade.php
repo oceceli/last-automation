@@ -25,13 +25,12 @@
 <div class="fixed top-0 right-0 left-0 bottom-0 bg-smoke-light z-50 flex overflow-auto" x-show="{{ $active }}" x-cloak>
     <div class="bg-white {{ $position }} h-full md:h-auto w-full md:max-w-screen-sm shadow" >
         
-        <div class="{{ $padding }} md:rounded-md shadow-md border bg-white"> {{-- pt-2 --}}
-            <div class="bg-{{ $theme }}-300 shadow-md flex justify-between items-center p-2">
+        <div class="{{ $padding }} md:rounded-md shadow-md bg-white"> {{-- pt-2 --}}
+            <div class="bg-{{ $theme }}-300 {{ $headerClass }} shadow-md flex justify-between items-center p-2">
                 <div>
                     @if($header)
                         {{ $header }}
                     @endif
-                    asdf
                 </div>
                 <button class="focus:outline-none opacity-75 hover:opacity-100 ease-in-out duration-150"
                         wire:click.prevent="" @click="{{ $active }} = false">

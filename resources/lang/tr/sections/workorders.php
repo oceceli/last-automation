@@ -60,7 +60,7 @@ return [
     'production_started_at_time' => 'Üretim :time başladı',
     'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
     'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
-    'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
+    // 'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
 
     'there_is_no_any_schuled_work_today' => 'Bugün için bir iş programı oluşturulmadı',
 ];

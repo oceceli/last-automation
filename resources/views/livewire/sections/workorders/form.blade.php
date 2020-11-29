@@ -20,11 +20,25 @@
         <x-slot name="right">
             <div class="p-2 border rounded shadow h-full">
                 @if ($recipeOfSelectedProduct)
-                Bu ürünün üretimi için
-                    @foreach ($recipeOfSelectedProduct->ingredients as $ingredient)
-                        {{ $ingredient->pivot->amount }} {{ \App\Models\Unit::find($ingredient->pivot->unit_id)->abbreviation }} {{ $ingredient->name }}  @if(!$loop->last) ve  @endif
-                    @endforeach
-                kullanılacak. Stok tercihi ekle!
+                    Bu ürünün üretimi için
+                        @foreach ($recipeOfSelectedProduct->ingredients as $ingredient)
+                            {{ $ingredient->pivot->amount }} {{ \App\Models\Unit::find($ingredient->pivot->unit_id)->abbreviation }} {{ $ingredient->name }}  @if(!$loop->last) ve  @endif
+                        @endforeach
+                    kullanılacak. Stok tercihi ekle!
+
+                    <div class="flex flex-col gap-4 justify-center p-4">
+                        @foreach ($recipeOfSelectedProduct->ingredients as $ingredient)
+                            <div class="p-3 shadow-md rounded text-ease border equal width fields">
+                                <div class="field flex items-center ">
+                                    <span class="">{{ $ingredient->name }} </span>
+                                    {{-- <span class="text-xs"> ({{ $ingredient->code }})</span>  --}}
+                                </div>
+                                <x-dropdown model="test" :collection="$ingredient->lots" value="lot_number" text="amount" class="mini" sId="{{ $loop->index }}">
+                                        
+                                </x-dropdown>
+                            </div>
+                        @endforeach
+                    </div>
                 @else 
                     <x-placeholder icon="mortar pestle" header="test" />
                 @endif
@@ -33,9 +47,9 @@
         
         <x-slot name="bottom">
             <div x-data="{addNote: false}">
-                <div x-show="!addNote">
+                <div x-show="!addNote" class="text-ease">
                     <i class="write icon"></i>
-                    <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
+                    <span class="cursor-pointer pt-1 text-sm font-bold" @click="addNote = true">{{ __('common.add_note') }}</span>
                 </div>
                 <div x-show="addNote" class="field">
                     <label><i class="write icon"></i>{{ __('common.note' )}}</label>

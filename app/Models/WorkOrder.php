@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Common\Facades\Conversions;
+use App\Models\Traits\HasFormSuggestions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers, Production;
+    use HasFormSuggestions;
 
     protected $guarded = [];
 
@@ -39,9 +41,6 @@ class WorkOrder extends Model
                 'datetime' => 'required|date',
                 'queue' => 'required|int|min:0',
                 'status' => 'required|max:15',
-                // 'is_active' => 'required|boolean',
-                // 'in_progress' => 'nullable|boolean',
-                // 'is_completed' => 'nullable|boolean',
                 'note' => 'nullable',
             ],
             'relation' => [ // use for many to many relationships
@@ -181,11 +180,11 @@ class WorkOrder extends Model
             ->get();
     }
 
+
     public static function inProgressCurrently()
     {
         return self::where('status', 'in_progress')->first();
     }
-
 
     
     public function unitIsAlreadyBase()
@@ -202,6 +201,8 @@ class WorkOrder extends Model
     {
         return Conversions::toBase($this->unit, $this->amount)['amount'];
     }
+
+
 
 
 

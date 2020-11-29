@@ -106,6 +106,11 @@ class Product extends Model
         return $this->hasMany(WorkOrder::class);
     }
 
+    public function getLastCreatedWorkOrder()
+    {
+        return $this->workorders()->latest()->first();
+    }
+
     public function getRecipeIngredients()
     {
         if($this->recipe()->exists() && $this->recipe->ingredients()->exists()) {

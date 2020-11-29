@@ -65,15 +65,14 @@ class Today extends Component
 
         $workOrder = $this->woCompleteData;
 
-        // if($this->production_waste > $this->production_gross)
-        //     return $this->emit('toast', __('common.error.title'), __('stockmoves.waste_cannot_be_greater_than_total_amount'), 'error');
-
         $workOrder->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id);
 
-        // $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
         
-
         $this->clearFields();
+        $this->workOrders = WorkOrder::getTodaysList();
+
+        $this->emit('toast', '', __('sections/workorders.production_is_completed'), 'success');
+
     }
 
     /**
