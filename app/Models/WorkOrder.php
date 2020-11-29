@@ -14,7 +14,6 @@ use Carbon\Carbon;
 class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers, Production;
-    use HasFormSuggestions;
 
     protected $guarded = [];
 
