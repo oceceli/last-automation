@@ -12,7 +12,10 @@ class StockCalculations
 
     public function getCurrentStockAmountOfProduct($productId)
     {
-        return array_sum(array_column($this->lotNumbersAndAmounts($productId), 'amount'));
+        return [
+            'amount' => array_sum(array_column($this->lotNumbersAndAmounts($productId), 'amount')),
+            'unit' => $this->getUnit($productId),
+        ];
     }
 
 

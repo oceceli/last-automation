@@ -7,7 +7,7 @@
             </button>
         </x-slot>
     </x-page-header>
-    <x-custom-modal active="wo_modal">
+    <x-custom-modal active="wo_modal" position="right">
         <livewire:sections.work-orders.form>
     </x-custom-modal>
 </div>

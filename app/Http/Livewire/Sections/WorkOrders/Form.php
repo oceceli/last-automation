@@ -82,5 +82,13 @@ class Form extends BaseForm
         $this->note = $workOrder->note;
     }
 
+    // @override
+    public function submit()
+    {
+        $this->create();
+        $this->emit('new_work_order_created');
+        // $this->reset();
+    }
+
 
 }

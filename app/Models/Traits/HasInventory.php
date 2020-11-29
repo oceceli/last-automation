@@ -16,14 +16,28 @@ trait HasInventory
         return StockCalculations::lotNumbersAndAmounts($this->id);
     }
 
-    public function getStockStatusColorsAttribute()
+    
+    public function getStockStatusAttribute()
     {
-        if($this->totalStock <= 0) $color = ['header' => 'bg-red-50', 'text' => 'text-red-400 hover:text-red-600'];
-        elseif($this->totalStock > 0 && $this->totalStock < $this->min_threshold) $color = ['header' => 'bg-yellow-100', 'text' => 'text-yellow-400 hover:text-yellow-600'];
-        else $color = ['header' => 'bg-green-100', 'text' => 'text-green-400 hover:text-green-600'];
-
-
-        return $color;
+        if($this->totalStock['amount'] <= 0) 
+            $array = [
+                'tr' => 'bg-red-50 text-red-500 hover:text-red-800 left red marked', 
+                'icon' => 'exclamation icon', 
+                'explanation' => __('inventory.out_of_stock'),
+            ];
+        elseif($this->totalStock['amount'] > 0 && $this->totalStock['amount'] < $this->min_threshold) 
+            $array = [
+                'tr' => 'bg-yellow-100 text text-yellow-500 hover:text-yellow-800 left yellow marked', 
+                'icon' => 'exclamation circle icon', 
+                'explanation' => __('inventory.at_least_count_unit_needed', ['count' => $this->min_threshold, 'unit' => $this->baseUnit->abbreviation]),
+            ];
+        else 
+            $array = [
+                'tr' => 'text-green-500 hover:text-green-800 left green marked', 
+                'icon' => 'circle icon', 
+                'explanation' => __('inventory.sufficient_amount'),
+            ];
+        return $array;
     }
 
 

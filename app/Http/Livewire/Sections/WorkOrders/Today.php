@@ -19,6 +19,8 @@ class Today extends Component
     public $woCompleteModal;
     public $woCompleteData;
 
+    // public $newWorkOrderModal = false; 
+
 
     // modal form, it will go to the stockmoves table
     public $unit_id;
@@ -28,12 +30,14 @@ class Today extends Component
 
     public $selectedUnit;
 
-    public $rules = [
+    protected $rules = [
         'unit_id' => 'required|integer|min:1',
         'production_gross' => 'required|numeric|gt:production_waste',
         'production_waste' => 'nullable|numeric|lt:production_gross',
     ];
     
+    protected $listeners = ['new_work_order_created' => 'workOrderCreated'];
+
 
 // stok giriş çıkış işlemlerinizi buradan yapabilirsiniz
 // Lütfen ekle butonunu kullanın 
@@ -66,13 +70,19 @@ class Today extends Component
 
         $workOrder->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id);
 
-
-
-
         // $this->emit('toast', '', __('sections/workorders.wo_completed_with_zero_production'), 'warning');
         
 
         $this->clearFields();
+    }
+
+    /**
+     * Re-fetch the list upon new work order created
+     */
+    public function workOrderCreated()
+    {
+        $this->workOrders = WorkOrder::getTodaysList();
+        // $this->newWorkOrderModal = false;
     }
 
 

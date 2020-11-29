@@ -12,11 +12,12 @@ class CustomModal extends Component
     public $padding;
     public $position;
     public $positions = [
-        'right' => 'top-0 right-0 bottom-0',
-        'left' => 'top-0 left-0 bottom-0',
-        'bottom' => 'bottom-0 right-0 left-0 w-full',
-        'top' => 'top-0 right-0 left-0 w-full',
-        'overlay' => 'top-0 bottom-0 right-0 left-0 w-full',
+        'right' => 'top-0 right-0 bottom-0 absolute',
+        'left' => 'top-0 left-0 bottom-0 absolute',
+        'bottom' => 'bottom-0 right-0 left-0 w-full absolute',
+        'top' => 'top-0 right-0 left-0 w-full absolute ',
+        'overlay' => 'top-0 bottom-0 right-0 left-0 w-full absolute',
+        'center' => 'm-auto rounded-md',
     ];
 
     /**
@@ -24,7 +25,7 @@ class CustomModal extends Component
      *
      * @return void
      */
-    public function __construct($active = null, $theme = 'teal', $padding = null, $header = null, $position = 'right')
+    public function __construct($active = null, $theme = 'teal', $padding = null, $header = null, $position = 'center')
     {
         $this->header = $header;
         $this->active = $active;
