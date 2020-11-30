@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Sections\Units;
 
 use App\Common\Units\Conversions;
 use App\Models\Product;
+use App\Models\Unit;
 use Livewire\Component;
 
 class Form extends Component
@@ -11,12 +12,21 @@ class Form extends Component
     public $view = 'livewire.sections.units.form';
 
     public $product_id;
-
     public $selectedProduct;
 
     public $cards = [];
 
 
+    protected $rules = [
+        'cards.*.parent_id' => 'required|int|min:0',
+        // 'cards.*.product_id' => 'required|int|min:1',
+        'cards.*.name' => 'required|max:30',
+        'cards.*.abbreviation' => 'required|max:10',
+        'cards.*.operator' => 'required|boolean',
+        'cards.*.factor' => 'required|numeric'
+    ];
+
+    
     /**
      * Add a card for new unit assigment
      */
@@ -25,19 +35,20 @@ class Form extends Component
         $this->cards[] = ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null, 'locked' => false];
     }
 
-    public function mount()
-    {
-        $this->addNewCard();
-    }
-
 
     /**
      * Whenever product updated
      */
     public function updatedProductId($id)
     {
-        $this->reset();
+        // $this->reset('cards', 'product_id', 'selectedProduct');
         $this->selectedProduct = Product::find($id);
+        $this->fetchAndPlaceToCards();
+    }
+
+    private function fetchAndPlaceToCards()
+    {
+        $this->reset('cards');
         foreach($this->selectedProduct->units as $unit)
             $this->cards[] = array_merge($unit->toArray(), ['locked' => true]);
     }
@@ -89,26 +100,25 @@ class Form extends Component
      */
     public function submit($index)
     {
+        $this->validate();
         $card = $this->cards[$index];
-        $card['product_id'] = $this->selectedProduct->id;
-        unset($card['locked']);
 
-        Conversions::addUnit($card) 
-            ? $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success')
-            : $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
+            
+        $unit = Unit::create([
+            'product_id' => $this->selectedProduct->id, 
+            'operator' => $card['operator'], 
+            'factor' => $card['factor'], 
+            'parent_id' => $card['parent_id'], 
+            'name' => $card['name'], 
+            'abbreviation' => $card['abbreviation']
+        ]);
+
+        if($unit) {
+            $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
+            unset($this->cards[$index]);
+            $this->cards[$index] = array_merge($unit->toArray(), ['locked' => true]);
+        } else $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
+
     }
-
-    // private function ensureCardFulfilled($index)
-    // {
-    //     $this->validate([
-    //         "cards.$index.parent_id" => 'required|int|min:0',
-    //         "cards.$index.name" => 'required|max:20',
-    //         "cards.$index.abbreviation" => 'required|max:10',
-    //         "cards.$index.operator" => 'required|boolean',
-    //         "cards.$index.factor" => 'required|numeric',
-    //     ]);
-    // }
-
-
    
 }

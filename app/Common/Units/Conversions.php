@@ -30,16 +30,16 @@ class Conversions
     }
 
 
-    public static function addUnit(array $data)
-    {
-        try {
-            Validator::validate($data, Unit::rules()['data']); 
-        } catch (\Throwable $th) {
-            return false;
-        }        
-        Unit::create($data);
-        return true;
-    }
+    // public static function addUnit(array $data)
+    // {
+    //     try {
+    //         Validator::validate($data, Unit::rules()['data']); 
+    //     } catch (\Throwable $th) {
+    //         return false;
+    //     }        
+    //     Unit::create($data);
+    //     return true;
+    // }
 
     /**
      * Convert given unit to product's base unit. 

@@ -2,7 +2,7 @@
     <div class="w-16 h-16 hidden md:flex px-5 rounded-l-lg justify-center items-center shadow-md">
         <i class="large teal balance scale right icon"></i>
     </div>
-    <div class="px-2 grid grid-cols-2 md:grid-cols-8 w-full gap-3 items-center relative">
+    <div class="px-2 grid md:grid-cols-8 w-full gap-3 items-center relative">
 
         <div class="text-center items-center pt-2">
             <x-input model="cards.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input tiny max-w-full" />
