@@ -81,7 +81,7 @@ class Form extends BaseForm
 
     public function calculatedUnit($card)
     {
-        if(isset($card['unit_id']) && isset($card['amount']))
+        if($card['unit_id'] && $card['amount'])
             return $this->getConverted($card)['amount'] . ' ' . $this->getConverted($card)['unit']->name;
     }
 
@@ -131,6 +131,7 @@ class Form extends BaseForm
      */
     public function submit()
     {
+        dd($this->cards);
         $this->validate();
 
         // a product have to be selected to continue 

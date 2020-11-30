@@ -5,7 +5,7 @@
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
             <div class="p-6 shadow-md">
-                <form class="ui small form" wire:submit.prevent="submit">
+                <form class="ui small form">
                     <div class="equal width fields">
                         <x-dropdown.search model="product_id" label="sections/recipes.recipe_product" :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" />
                         
@@ -107,6 +107,6 @@
 
     </x-content>
     @if ($selectedProduct)
-        <x-form-buttons class="p-4 pt-6" />
+        <x-form-buttons class="p-4 pt-6" submit="submit()" />
     @endif
 </div>

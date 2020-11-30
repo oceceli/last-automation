@@ -56,7 +56,7 @@ class Conversions
 
     public static function toBase($unit, $amount = 1)
     {
-        if( ! $unit instanceof Unit && is_numeric($unit))
+        if( ! $unit instanceof Unit && is_numeric((int)$unit))
             $unit = Instantiator::make('unit', $unit);
 
         if($unit->isBase()) {
