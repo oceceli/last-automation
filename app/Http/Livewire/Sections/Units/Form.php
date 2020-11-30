@@ -14,10 +14,21 @@ class Form extends Component
 
     public $selectedProduct;
 
-    public $cards = [
-        ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null],
-    ];
+    public $cards = [];
 
+
+    /**
+     * Add a card for new unit assigment
+     */
+    public function addNewCard()
+    {
+        $this->cards[] = ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null, 'locked' => false];
+    }
+
+    public function mount()
+    {
+        $this->addNewCard();
+    }
 
 
     /**
@@ -27,28 +38,18 @@ class Form extends Component
     {
         $this->reset();
         $this->selectedProduct = Product::find($id);
-        $this->cards = $this->selectedProduct->units->toArray();
+        foreach($this->selectedProduct->units as $unit)
+            $this->cards[] = array_merge($unit->toArray(), ['locked' => true]);
     }
 
-    public function isLocked($card)
+    public function isLocked($key)
     {
-        return array_key_exists('id', $card);
+        return $this->cards[$key]['locked'];
     }
-    public function getUnit($card)
-    {
-        // 
-    }
+
     public function unlockCard($key)
     {
-        unset($this->cards[$key]['id']);
-    }
-
-    /**
-     * Add a card for new unit assigment
-     */
-    public function addNewCard()
-    {
-        $this->cards[] = ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null];
+        $this->cards[$key]['locked'] = false;
     }
 
     /**
@@ -90,6 +91,7 @@ class Form extends Component
     {
         $card = $this->cards[$index];
         $card['product_id'] = $this->selectedProduct->id;
+        unset($card['locked']);
 
         Conversions::addUnit($card) 
             ? $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success')
