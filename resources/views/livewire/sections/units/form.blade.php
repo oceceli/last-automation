@@ -5,7 +5,7 @@
         <div class="p-4 shadow-md">
             <div class="ui small form">
                 <div class="equal width fields">
-                    <x-dropdown label="{{ __('modelnames.product') }}"
+                    <x-dropdown label="{{ __('modelnames.product') }}" noErrors
                         placeholder="{{ __('common.dropdown_placeholder') }}" model="product_id"
                         dataSourceFunction="getProductsProperty" sId="selectProduct" sClass="search" value="id"
                         text="name">

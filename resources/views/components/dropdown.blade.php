@@ -33,12 +33,14 @@
     </template> --}}
     {{ $slot }}
 
-    @error($iModel)
-        <span class="text-red-500">{{ucfirst($message)}}</span>
-    @enderror
-    @error($model)
-        <span class="text-red-500">{{ucfirst($message)}}</span>
-    @enderror
+    @if (!$noErrors) 
+        @error($iModel)
+            <span class="text-red-500">{{ucfirst($message)}}</span>
+        @enderror
+        @error($model)
+            <span class="text-red-500">{{ucfirst($message)}}</span>
+        @enderror
+    @endif
 
 </div>
 

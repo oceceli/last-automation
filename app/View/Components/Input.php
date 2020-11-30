@@ -15,7 +15,7 @@ class Input extends Component
     
     public $type;
 
-    public $disableErrors;
+    public $noErrors;
     
     public $action;
     public $innerLabel;
@@ -25,13 +25,13 @@ class Input extends Component
      *
      * @return void
      */
-    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = null, $innerLabel = null, $disableErrors = false)
+    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = null, $innerLabel = null, $noErrors = false)
     {
         $this->model = $model;
         $this->placeholder = $placeholder;
         $this->type = $type;
         $this->label = $label;
-        $this->disableErrors = $disableErrors;
+        $this->noErrors = $noErrors;
         $this->action = $action;
         $this->innerLabel = $innerLabel;
     }

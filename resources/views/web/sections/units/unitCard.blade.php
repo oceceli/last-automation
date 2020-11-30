@@ -4,12 +4,21 @@
     </div>
     <div class="px-2 grid md:grid-cols-8 w-full gap-3 items-center relative">
 
-        <div class="text-center items-center pt-2">
-            <x-input model="cards.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input tiny max-w-full" />
+        <div class="md:text-center items-center pt-2">
+            @if($this->isLocked($key))
+                <h3 class="font-bold text-red-700">1</h3>
+            @else
+                <x-input model="cards.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input tiny max-w-full" noErrors />
+            @endif
         </div>
 
-        <div class="text-center pt-2">
-            <x-input model="cards.{{ $key }}.abbreviation" placeholder="sections/units.new_unit_name_short" class="ui input tiny max-w-full" />
+        <div class="pt-2">
+            @if($this->isLocked($key))
+                <span class="font-bold text-lg text-red-600">{{ $card['name'] }}</span>
+                <span class="text-xs text-ease">({{ $card['abbreviation']}})</span>
+            @else
+                <x-input model="cards.{{ $key }}.abbreviation" placeholder="sections/units.new_unit_name_short" class="ui input tiny max-w-full" noErrors />
+            @endif
         </div>
 
         <div class="hidden md:flex ">
@@ -37,7 +46,7 @@
 
         <div class="">
             @if ($this->isLocked($key))
-                <span>parent birim</span>
+                <span class="text-lg font-bold text-indigo-900">{{ $this->getParentName($key) }}</span>
             @else
                 <select wire:model.lazy="cards.{{ $key }}.parent_id"
                     class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
@@ -51,8 +60,13 @@
 
         <div class="text-right">
             @if ( ! $this->isLocked($key))
+            <div class="ui buttons max-w-full">
                 <button wire:click.prevent="submit({{ $key }})"
-                        class="ui positive mini button max-w-full">{{ __('common.save') }}</button>
+                        class="ui positive mini button ">{{ __('common.save') }}</button>
+                <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
+                    <i class="green unlock icon"></i>
+                </button>
+            </div>
             @else
                 <button wire:click.prevent="unlockCard({{ $key }})" 
                         class="ui mini icon button max-w-full">

@@ -34,6 +34,8 @@ class Dropdown extends Component
 
     public $basic;
     public $initnone;
+
+    public $noErrors;
     
 
     /**
@@ -45,7 +47,7 @@ class Dropdown extends Component
                                 $iModel = null, $iType = 'text', $iPlaceholder = null, 
                                 $sId = null, $model, $collection = null, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
                                 $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = 'settings',
-                                $basic = false, $initnone = false)
+                                $basic = false, $initnone = false, $noErrors = false)
     {
         $this->label = $label;
         $this->key = $key;
@@ -79,6 +81,7 @@ class Dropdown extends Component
 
         $this->basic = $basic;
         $this->initnone = $initnone;
+        $this->noErrors = $noErrors;
 
     }
 

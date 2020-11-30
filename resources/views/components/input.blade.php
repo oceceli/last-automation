@@ -17,7 +17,7 @@
     @endif
 
 
-    @if (!$disableErrors)
+    @if (!$noErrors)
         @error($model)
         <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
         @enderror
