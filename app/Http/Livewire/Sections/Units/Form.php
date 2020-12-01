@@ -64,15 +64,7 @@ class Form extends Component
     {
         $this->cards[] = ['operator' => true, 'factor' => null, 'parent_id' => null, 'name' => null, 'abbreviation' => null];
     }
-
-
-    /**
-     * Remove all cards
-     */
-    public function removeAllCards()
-    {
-        $this->reset('cards');
-    }
+    
 
     /**
      * Remove a unit card field
@@ -80,9 +72,19 @@ class Form extends Component
     public function removeCard($key)
     {
         if(array_key_exists('id', $this->cards[$key])) {
-            Unit::find($this->cards[$key]['id'])->delete(); // DEVAM soru sor
+
+            $unit = $this->selectedProduct->units->find($this->cards[$key]['id']);
+            $result = $unit->delete();
+
+            if($result['type'] == 'success') {
+                $this->emit('toast', __('common.delete'), $result['message'], 'success');
+                unset($this->cards[$key]);
+            } else {
+                $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'error');
+            }
+        } else {
+            unset($this->cards[$key]);
         }
-        unset($this->cards[$key]);
     }
 
     /**
@@ -103,8 +105,12 @@ class Form extends Component
 
     public function getParentName($key)
     {
-        if($unit = $this->selectedProduct->units->find($this->cards[$key]['parent_id']))
-            return $unit->name;
+        if($this->cards[$key]['parent_id'] == 0) {
+            return __('common.base');
+        } else {
+            if($unit = $this->selectedProduct->units->find($this->cards[$key]['parent_id']));
+                 return $unit->name;
+        }
     }
 
     /**

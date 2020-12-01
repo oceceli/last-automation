@@ -71,18 +71,22 @@ class Form extends BaseForm
         $latestWO = $product->getLastCreatedWorkOrder();
         $globalWO = WorkOrder::latest()->first();
 
-        if(is_numeric($latestWO->lot_no)) {
-            $this->lot_no = $latestWO->lot_no + 1;
-        } else {
-            $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
+        if($latestWO) {
+            if(is_numeric($latestWO->lot_no)) {
+                $this->lot_no = $latestWO->lot_no + 1;
+            } else {
+                $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
+            }
+    
+            $this->amount = $latestWO->amount;
+            $this->unit_id = $latestWO->unit_id;
         }
-
-        $this->amount = $latestWO->amount;
-        $this->unit_id = $latestWO->unit_id;
-        $this->datetime = now();
-        $this->queue = $globalWO->queue + 1;
-        $this->code = $globalWO->code;
         
+        $this->datetime = now();
+        if($globalWO) {
+            $this->queue = $globalWO->queue + 1;
+            $this->code = $globalWO->code;
+        }
     }
 
 

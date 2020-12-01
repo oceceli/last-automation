@@ -29,7 +29,10 @@ return [
 
     'smoothly_saved' => ':model sorunsuzca kaydedildi...', 
     'context_created' => ':model oluşturuldu...',
+    'context_deleted' => 'İçerik silindi',
     'smoothly_updated' => ':model sorunsuz bir şekilde güncellendi...',
+    
+    'unable_to_delete' => 'Silinmedi!',
     
 
 

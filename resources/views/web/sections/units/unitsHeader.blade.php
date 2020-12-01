@@ -14,9 +14,9 @@
             data-tooltip="{{ __('common.add_new') }}" data-variation="mini">
             <i class="plus icon"></i>
         </button>
-        <button wire:click.prevent="removeAllCards" class="ui icon mini gray basic button"
+        {{-- <button wire:click.prevent="removeAllCards" class="ui icon mini gray basic button"
             data-tooltip="{{ __('common.remove_all') }}" data-variation="mini">
             <i class="red trash icon"></i>
-        </button>
+        </button> --}}
     </x-slot>
 </x-page-header>

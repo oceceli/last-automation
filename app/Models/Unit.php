@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use Illuminate\Support\Facades\DB;
 
 class Unit extends Model
 {
@@ -37,6 +38,40 @@ class Unit extends Model
     {
         return $this->parent_id == 0;
     }
+
+    public function haveChildren()
+    {
+        return $this->children()->exists();
+    }
+
+    // @override
+    public function delete()
+    {
+        if($this->isBase()) {
+            return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
+        } elseif($this->haveChildren()) {
+            return ['message' => '!!! (model) Bu birime bağlı birimler bulunuyor!', 'type' => 'error'];
+        } elseif($this->isUsedInRecipe()) {
+            return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
+        } elseif($this->isUsedInWorkOrder()) {
+            return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç iş emrinde kullanıldığı için silinemez!', 'type' => 'error'];
+        }
+        else {
+            parent::delete();
+            return ['message' => '!!! (model) Birim sorunsuzca kaldırıldı...', 'type' => 'success'];
+        }
+    }
+    private function isUsedInRecipe()
+    {
+        return DB::table('product_recipe')->where('unit_id', $this->id)->first()
+            ? true : false;  
+    }
+    private function isUsedInWorkOrder() 
+    {
+        return DB::table('work_orders')->where('unit_id', $this->id)->first()
+            ? true : false;
+    }
+    
 
     /**
      * Get unit name ucfirst 

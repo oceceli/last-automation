@@ -131,7 +131,7 @@ class Form extends BaseForm
      */
     public function submit()
     {
-        dd($this->cards);
+        // dd($this->cards);
         $this->validate();
 
         // a product have to be selected to continue 
