@@ -1,4 +1,4 @@
-<div wire:key="{{ $loop->index }}" class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
+<div wire:key="{{ $key }}" class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
     <div class="w-16 h-16 hidden md:flex px-5 rounded-l-lg justify-center items-center shadow-md">
         <i class="large teal balance scale right icon"></i>
     </div>
@@ -29,9 +29,28 @@
             <h2 class="font-bold text-teal-700">1</h2>
         </div>
 
-        <div @if( ! $this->isLocked($key)) class="cursor-pointer" wire:click="toggleOperator({{ $key }})" data-tooltip="İşlemi değiştir" data-variation="mini" @endif>
-            <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+        {{-- <div>
+            <span @if( ! $this->isLocked($key)) wire:click.prevent="toggleOperator({{ $key }})" class="cursor-pointer" data-tooltip="İşlemi değiştir" data-variation="mini" @endif >
+                <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+            </span>
+        </div> --}} 
+
+        <div>
+            @if ($this->isLocked($key))
+                <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+            @else
+                <select wire:model.lazy="cards.{{ $key }}.operator"
+                        class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
+                    <option selected class="disabled">Operator</option>
+                    @foreach ([['value' => 0, 'text' => '/'], ['value' => 1, 'text' => 'X']] as $operator)
+                        <option class="text-red-500 font-bold" value="{{ $operator['value'] }}">{{ $operator['text'] }}</option>
+                    @endforeach
+                </select>
+            @endif
         </div>
+
+
+        
 
         <div>                   
             @if ($this->isLocked($key))
@@ -39,7 +58,7 @@
                     {{ $card['factor'] }}
                 </h3>
             @else
-                <input wire:model.lazy="cards.{{ $key }}.factor" type="number" placeholder="Miktar"
+                <input wire:model="cards.{{ $key }}.factor" type="number" placeholder="Miktar"
                     class="font-bold text-xl pb-1 max-w-full text-teal-700 border-b-2 border-dashed border-teal-200 hover:border-teal-300 focus:border-teal-400 focus:outline-none ">
             @endif
         </div>
@@ -59,19 +78,21 @@
         </div>
 
         <div class="text-right">
-            @if ( ! $this->isLocked($key))
-            <div class="ui buttons max-w-full">
-                <button wire:click.prevent="submit({{ $key }})"
-                        class="ui positive mini button ">{{ __('common.save') }}</button>
-                <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
-                    <i class="green unlock icon"></i>
-                </button>
-            </div>
+            @if ( $this->isLocked($key))
+            <button wire:click.prevent="unlockCard({{ $key }})" 
+                class="ui mini icon button max-w-full">
+                <i class="orange lock icon"></i>
+            </button>
             @else
-                <button wire:click.prevent="unlockCard({{ $key }})" 
-                        class="ui mini icon button max-w-full">
-                    <i class="orange lock icon"></i>
-                </button>
+                <div class="ui buttons max-w-full">
+                    <button wire:click.prevent="submit({{ $key }})"
+                            class="ui positive mini button ">{{ __('common.save') }}</button>
+                    @if (array_key_exists('id', $card))
+                    <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
+                        <i class="green unlock icon"></i>
+                    </button>
+                    @endif
+                </div>
             @endif
         </div>
 

@@ -16,23 +16,29 @@ class Form extends Component
     public $selectedProduct;
 
     public $cards = [];
+    public $backupCards = [];
+
+    public $askModal = false;
 
    
     
+
     /**
      * Whenever product updated
      */
     public function updatedProductId($id)
     {
-        $this->reset('selectedProduct', 'cards');
+        $this->reset('selectedProduct', 'cards', 'backupCards');
+        $this->backupCards = [];
+        $this->cards = [];
+
         $this->selectedProduct = Product::find($id);
-        $this->fetchAndPlaceToCards();
+
+        $this->cards = $this->selectedProduct->units->toArray();
+
     }
 
-    private function fetchAndPlaceToCards()
-    {
-        $this->cards = $this->selectedProduct->units->toArray();
-    }
+    
 
     /**
      * Determining if the card is locked.
@@ -48,12 +54,28 @@ class Form extends Component
      */
     public function unlockCard($key)
     {
-        unset($this->cards[$key]['created_at']);
+        $this->backupCards[" $key"] = $this->cards[$key];
+        unset($this->cards[$key]['created_at']); // unlock
     }
 
     public function lockCard($key)
     {
-        $this->cards[$key]['created_at'] = '';
+        // dd($this->backupCards);
+        //lock card 
+        $this->cards[$key]['created_at'] = $this->backupCards[" $key"]['created_at'];
+
+        // if something changed
+        if($this->cards[$key] != $this->backupCards[" $key"]) {
+            $this->askModal = true;
+        }
+    }
+
+    public function cancelModal($key)
+    {
+        $this->cards[$key] = $this->backupCards[" $key"];
+        $this->backupCards = [];
+
+        $this->askModal = false;
     }
 
 

@@ -20,8 +20,8 @@
 
                 @include('web.sections.units.unitsHeader')
 
-                <div class="relative rounded-t" style="min-height: 60%"
-                    x-data="{'materials' : false}">
+                <div class="relative rounded-t" style="min-height: 60%">
+                    {{-- x-data="{'materials' : false}" --}}
 
                        
                         <div class="px-2 py-7">
@@ -36,7 +36,25 @@
                                     </div>
                                 @else
                                     @foreach ($cards as $key => $card)
-                                        @include('web.sections.units.unitCard')
+
+                                        <div >
+                                            @include('web.sections.units.unitCard')
+                                        </div>
+
+                                        <div x-data="{'askModal': @entangle('askModal')}">
+                                            <x-custom-modal position="center" active="askModal">
+                                                <div class="p-5 flex flex-col gap-5">
+                                                    <div class="text-center">
+                                                        <span class="font-bold text-ease text-xl"> Formda değişiklikler var, kaydedilsin mi?</span>
+                                                    </div>
+                                                    <div class="ui tiny buttons">
+                                                        <button wire:click.prevent="cancelModal({{ $key }})" class="ui basic button">Vazgeç</button>
+                                                        <button wire:click.prevent="" class="ui primary button">Kaydet</button>
+                                                    </div>
+                                                </div>
+                                            </x-custom-modal>   
+                                        </div>
+
                                     @endforeach
                                 @endif
                             </div>
@@ -46,5 +64,6 @@
             </div>
         @endif
     </x-content>
-
+    
 </div>
+
