@@ -18,7 +18,7 @@ class CreateUnitsTable extends Migration
             $table->string('name');
             $table->string('abbreviation');
             $table->boolean('operator');
-            $table->float('factor', 8, 2, true);
+            $table->float('factor');
             $table->unsignedBigInteger('parent_id');
             $table->unsignedBigInteger('product_id');
 

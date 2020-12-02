@@ -42,8 +42,8 @@
             @else
                 <select wire:model.lazy="cards.{{ $key }}.operator"
                         class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
-                    <option selected class="disabled">Operator</option>
-                    @foreach ([['value' => 0, 'text' => '/'], ['value' => 1, 'text' => 'X']] as $operator)
+                    <option selected disabled>{{ __('common.dropdown_placeholder')}}</option>
+                    @foreach ([['value' => 1, 'text' => 'X'], ['value' => 0, 'text' => '/']] as $operator)
                         <option class="text-red-500 font-bold" value="{{ $operator['value'] }}">{{ $operator['text'] }}</option>
                     @endforeach
                 </select>
@@ -71,33 +71,35 @@
                 <select wire:model.lazy="cards.{{ $key }}.parent_id"
                     class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
                     <option selected class="disabled">Birim</option>
-                    @foreach ($selectedProduct->units as $unit)
+                    @foreach ($this->unitsOfSelectedProduct($key) as $unit)
                         <option class="text-red-500 font-bold" value="{{ $unit->id }}">{{ $unit->name }}</option>
                     @endforeach
                 </select>
             @endif
         </div>
-
+        
         <div class="text-right">
-            @if ( $this->isLocked($key))
-            <button wire:click.prevent="unlockCard({{ $key }})" 
-                class="ui mini icon button max-w-full">
-                <i class="orange lock icon"></i>
-            </button>
-            @else
-                <div class="ui buttons max-w-full">
-                    <button wire:click.prevent="submit({{ $key }})"
-                            class="ui positive mini button ">{{ __('common.save') }}</button>
-                    @if ($this->isIdExists($key))
-                    <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
-                        <i class="green unlock icon"></i>
-                    </button>
-                    @endif
-                </div>
+            @if (! $this->isBaseUnit($key))
+                @if ( $this->isLocked($key))
+                <button wire:click.prevent="unlockCard({{ $key }})" 
+                    class="ui mini icon button max-w-full">
+                    <i class="orange lock icon"></i>
+                </button>
+                @else
+                    <div class="ui buttons max-w-full">
+                        <button wire:click.prevent="submit({{ $key }})"
+                                class="ui positive mini button ">{{ __('common.save') }}</button>
+                        @if ($this->isIdExists($key))
+                        <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
+                            <i class="green unlock icon"></i>
+                        </button>
+                        @endif
+                    </div>
+                @endif
             @endif
         </div>
 
-        @if ( ! $this->isLocked($key))
+        @if ( ! $this->isLocked($key) && ! $this->hasChildren($key))
             <div class="absolute top-0 right-0 -mt-2 -mr-3 hover:opacity-100 opacity-50">
                 <button wire:click.prevent="removeCard({{ $key }})" class="focus:outline-none">
                     <i class="red shadow rounded-full cancel icon"></i>

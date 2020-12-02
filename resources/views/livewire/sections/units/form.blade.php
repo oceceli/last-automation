@@ -1,9 +1,9 @@
 <div>
-    {{ print_r($cards) }}
+    {{-- {{ print_r($cards) }}
     <br>
     -----------------
     <br>
-    {{ print_r($backupCards) }}
+    {{ print_r($backupCards) }} --}}
     <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
     <x-content theme="red">
 

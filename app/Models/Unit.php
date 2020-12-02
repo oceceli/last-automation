@@ -39,7 +39,7 @@ class Unit extends Model
         return $this->parent_id == 0;
     }
 
-    public function haveChildren()
+    public function hasChildren()
     {
         return $this->children()->exists();
     }
@@ -49,7 +49,7 @@ class Unit extends Model
     {
         if($this->isBase()) {
             return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
-        } elseif($this->haveChildren()) {
+        } elseif($this->hasChildren()) {
             return ['message' => '!!! (model) Bu birime bağlı birimler bulunuyor!', 'type' => 'error'];
         } elseif($this->isUsedInRecipe()) {
             return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
@@ -71,6 +71,8 @@ class Unit extends Model
         return DB::table('work_orders')->where('unit_id', $this->id)->first()
             ? true : false;
     }
+
+
     
 
     /**

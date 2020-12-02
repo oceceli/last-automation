@@ -24,7 +24,7 @@ class Form extends Component
    
 
     /**
-     * Whenever product updated
+     * Whenever product is updating
      */
     public function updatingProductId($id)
     {
@@ -173,6 +173,40 @@ class Form extends Component
     }
 
 
+    /**
+     * Get units to be parent which is not includes itself 
+     * Will be used for dropdown
+     */
+    public function unitsOfSelectedProduct($key)
+    {
+        // get units of selected product 
+        $units = $this->selectedProduct->units;
+        $currentUnit = $this->initiateUnit($key);
+
+        // discard the unit from collection so the unit will not be parent to itself or child to children 
+        if($this->isIdExists($key)) {
+            $units = $units->reject(function($unit) use ($currentUnit) {
+                return $unit->id == $currentUnit->id;
+            });
+        }
+
+        return $units;
+    }
+
+
+    public function isBaseUnit($key)
+    {
+        $unit = $this->initiateUnit($key);
+        return $unit ? $unit->isBase() : false;
+    }
+
+    public function hasChildren($key)
+    {
+        $unit = $this->initiateUnit($key);
+        return $unit ? $unit->hasChildren() : false;
+    }
+
+
     public function getParentName($key)
     {
         if($this->cards[$key]['parent_id'] == 0) {
@@ -180,6 +214,13 @@ class Form extends Component
         } else {
             if($unit = $this->selectedProduct->units->find($this->cards[$key]['parent_id']));
                  return $unit->name;
+        }
+    }
+
+    public function initiateUnit($key)
+    {
+        if($this->isIdExists($key)) {
+            return $this->selectedProduct->units->find($this->cards[$key]['id']);
         }
     }
 
@@ -198,14 +239,19 @@ class Form extends Component
      */
     public function submit($key)
     {
+
         // validate first
         $data = $this->customValidate($key);
+        
 
         // If ID exists in the card, it means it should be updated
         if($this->isIdExists($key)) {
 
-            $unit = Unit::find($this->cards[$key]['id']);
-                    $unit->update($data);
+            $unit = $this->initiateUnit($key);
+
+            // update unless unit is not base 
+            if(!$unit->isBase()) $unit->update($data);
+
             $this->emit('toast', 'güncellendi', 'başarılı falan', 'success');
             
         } 
@@ -232,7 +278,7 @@ class Form extends Component
     public function customValidate($key)
     {
         $validator = Validator::make($this->cards[$key], [
-            'parent_id' => 'required|int|min:0',
+            'parent_id' => 'required|int|min:1',
             // 'product_id' => 'required|int|min:1',
             'name' => 'required|max:30',
             'abbreviation' => 'required|max:20',
