@@ -1,4 +1,4 @@
-<div wire:key="{{ $key }}" class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
+<div class="bg-white shadow rounded-lg flex border border-teal-100 relative hover:border-teal-300">
     <div class="w-16 h-16 hidden md:flex px-5 rounded-l-lg justify-center items-center shadow-md">
         <i class="large teal balance scale right icon"></i>
     </div>
@@ -88,7 +88,7 @@
                 <div class="ui buttons max-w-full">
                     <button wire:click.prevent="submit({{ $key }})"
                             class="ui positive mini button ">{{ __('common.save') }}</button>
-                    @if (array_key_exists('id', $card))
+                    @if ($this->isIdExists($key))
                     <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
                         <i class="green unlock icon"></i>
                     </button>

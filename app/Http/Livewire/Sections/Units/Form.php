@@ -18,7 +18,8 @@ class Form extends Component
     public $cards = [];
     public $backupCards = [];
 
-    public $askModal = false;
+    public $questionModal = false;
+    public $editingCardKey; // for modal to know which card is it 
 
    
 
@@ -36,7 +37,6 @@ class Form extends Component
     }
 
     
-
     /**
      * Determining if the card is locked.
      * 'created_at' gives us a clue about where card filled from (fetch database)
@@ -46,34 +46,78 @@ class Form extends Component
         return isset($this->cards[$key]['created_at']);
     }
 
+
     /**
      * Unsetting 'created_at' element will unlock the card  
      */
     public function unlockCard($key)
     {
-        $this->backupCards[" $key"] = $this->cards[$key];
-        unset($this->cards[$key]['created_at']); // unlock
+        // get a copy of card for comparison with original, in case if user try to lock the card after doing some changes
+        $this->backupCards["wire$key"] = $this->cards[$key]; 
+
+        // unlock the card
+        unset($this->cards[$key]['created_at']);
     }
 
+
+    /**
+     * Lock the card so it will be non-editable 
+     */
     public function lockCard($key)
     {
-        //lock card 
-        $this->cards[$key]['created_at'] = $this->backupCards[" $key"]['created_at'];
+        $this->cards[$key]['created_at'] = $this->backupCards["wire$key"]['created_at'];
 
-        // if something changed
-        if($this->cards[$key] != $this->backupCards[" $key"]) {
-            $this->askModal = true;
+        // if something changed in the card, ask user to save or discard changes
+        if($this->cards[$key] != $this->backupCards["wire$key"]) {
+            $this->askForSaveEditedFields($key);
         } else {
-            unset($this->backupCards[" $key"]);
+            unset($this->backupCards["wire$key"]); // expel the backup as no need it anymore
         }
     }
 
-    public function cancelModal($key)
-    {
-        $this->cards[$key] = $this->backupCards[" $key"];
 
-        unset($this->backupCards[" $key"]);
-        $this->askModal = false;
+    /**
+     * Open modal and ask if user want to save changes
+     */
+    public function askForSaveEditedFields($key)
+    {
+        $this->questionModal = true;
+        $this->editingCardKey = $key;
+    }
+
+    /**
+     * If user don't want to save changes restore the card from backup
+     */
+    public function modalCancel()
+    {
+        $key = $this->editingCardKey;
+
+        // restore card
+        $this->cards[$key] = $this->backupCards["wire$key"];
+
+        // toss backup 
+        unset($this->backupCards["wire$key"]);
+
+        // close the modal 
+        $this->questionModal = false;
+    }
+
+
+    /**
+     * If user choosed to save changes, push new data to database and close the modal 
+     */
+    public function modalSaveEdited()
+    {
+        $this->submit($this->editingCardKey);
+        $this->questionModal = false;
+    }
+
+    /**
+     * If modal closed in any way, behave user clicked at "cancel" 
+     */
+    public function updatedQuestionModal($value)
+    {
+        if($value === false) $this->modalCancel();
     }
 
 
@@ -107,8 +151,9 @@ class Form extends Component
             unset($this->cards[$key]);
         }
         
-        unset($this->backupCards[" $key"]);
+        unset($this->backupCards["wire$key"]);
     }
+
 
     /**
      * Toggles the operator
@@ -118,6 +163,7 @@ class Form extends Component
         $this->cards[$key]['operator'] = ! $this->cards[$key]['operator'];
     }
 
+
     /**
      * Get all products for unit assigment 
      */
@@ -125,6 +171,7 @@ class Form extends Component
     {
         return Product::all()->toArray();
     }
+
 
     public function getParentName($key)
     {
@@ -136,45 +183,52 @@ class Form extends Component
         }
     }
 
+    
+    /**
+     * Is a card has an id key. If it does, that means it saved before
+     */
     public function isIdExists($key)
     {
         return array_key_exists('id', $this->cards[$key]);
     }
 
+
     /**
      * Submits the form
      */
-    public function submit($index)
+    public function submit($key)
     {
-        $data = $this->customValidate($index);
+        // validate first
+        $data = $this->customValidate($key);
 
-        if($this->isIdExists($index)) {
-            $unit = Unit::find($this->cards[$index]['id']);
+        // If ID exists in the card, it means it should be updated
+        if($this->isIdExists($key)) {
+
+            $unit = Unit::find($this->cards[$key]['id']);
                     $unit->update($data);
             $this->emit('toast', 'güncellendi', 'başarılı falan', 'success');
-        } else {
+            
+        } 
+        // if no ID inside card create a new unit for selected product 
+        else {
             $unit = Unit::create(array_merge($data, ['product_id' => $this->product_id]));
             $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
         }
-        unset($this->cards[$index]);
-        $this->cards[$index] = $unit->toArray();
 
+        // swap editable card with newly added unit entry 
+        unset($this->cards[$key]);
+        $this->cards[$key] = $unit->toArray();
+
+        // close the modal and toss out backup data
         $this->askModal = false;
-        unset($this->backupCards[" $index"]);
-
-
-        // swap current card with created one
-        // if($unit) {
-        //     $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
-        //     unset($this->cards[$index]);
-        //     $this->cards[$index] = $unit->toArray();
-        // } 
-        // else $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
-
+        unset($this->backupCards["wire$key"]);
     }
 
 
 
+    /**
+     * Create a validator to validate only a card at a time
+     */
     public function customValidate($key)
     {
         $validator = Validator::make($this->cards[$key], [
@@ -186,9 +240,11 @@ class Form extends Component
             'factor' => 'required|numeric'
         ]);
         
+        // assist user to correct mistakes 
         if($validator->fails())
             $this->emit('toast', '', $validator->errors()->first(), 'error'); // show errors 
 
+        // return validated data 
         return $validator->validate();
     }
    

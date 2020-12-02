@@ -41,25 +41,11 @@
                                     </div>
                                 @else
                                     @foreach ($cards as $key => $card)
-
-                                        <div >
-                                            @include('web.sections.units.unitCard')
+                                        <div wire:key="{{ $key }}">
+                                            <div >
+                                                @include('web.sections.units.unitCard')
+                                            </div>
                                         </div>
-
-                                        <div x-data="{'askModal': @entangle('askModal')}">
-                                            <x-custom-modal position="center" active="askModal">
-                                                <div class="p-5 flex flex-col gap-5">
-                                                    <div class="text-center">
-                                                        <span class="font-bold text-ease text-xl"> Formda değişiklikler var, kaydedilsin mi?</span>
-                                                    </div>
-                                                    <div class="ui tiny buttons">
-                                                        <button wire:click.prevent="cancelModal({{ $key }})" class="ui basic button">Vazgeç</button>
-                                                        <button wire:click.prevent="submit({{ $key }})" class="ui primary button">Kaydet</button>
-                                                    </div>
-                                                </div>
-                                            </x-custom-modal>   
-                                        </div>
-
                                     @endforeach
                                 @endif
                             </div>
@@ -69,6 +55,19 @@
             </div>
         @endif
     </x-content>
+    <div x-data="{'questionModal': @entangle('questionModal')}">
+        <x-custom-modal position="center" active="questionModal">
+            <div class="p-5 flex flex-col gap-5">
+                <div class="text-center">
+                    <span class="font-bold text-ease text-xl"> Formda değişiklikler var, kaydedilsin mi?</span>
+                </div>
+                <div class="ui tiny buttons">
+                    <button wire:click.prevent="modalCancel()" class="ui basic button">Hayır</button>
+                    <button wire:click.prevent="modalSaveEdited()" class="ui primary button">Kaydet</button>
+                </div>
+            </div>
+        </x-custom-modal>   
+    </div>
     
 </div>
 
