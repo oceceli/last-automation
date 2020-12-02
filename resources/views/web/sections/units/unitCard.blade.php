@@ -33,7 +33,8 @@
             <span @if( ! $this->isLocked($key)) wire:click.prevent="toggleOperator({{ $key }})" class="cursor-pointer" data-tooltip="İşlemi değiştir" data-variation="mini" @endif >
                 <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
             </span>
-        </div> --}} 
+        </div>  --}}
+
 
         <div>
             @if ($this->isLocked($key))

@@ -21,16 +21,13 @@ class Form extends Component
     public $askModal = false;
 
    
-    
 
     /**
      * Whenever product updated
      */
-    public function updatedProductId($id)
+    public function updatingProductId($id)
     {
         $this->reset('selectedProduct', 'cards', 'backupCards');
-        $this->backupCards = [];
-        $this->cards = [];
 
         $this->selectedProduct = Product::find($id);
 
@@ -60,21 +57,22 @@ class Form extends Component
 
     public function lockCard($key)
     {
-        // dd($this->backupCards);
         //lock card 
         $this->cards[$key]['created_at'] = $this->backupCards[" $key"]['created_at'];
 
         // if something changed
         if($this->cards[$key] != $this->backupCards[" $key"]) {
             $this->askModal = true;
+        } else {
+            unset($this->backupCards[" $key"]);
         }
     }
 
     public function cancelModal($key)
     {
         $this->cards[$key] = $this->backupCards[" $key"];
-        $this->backupCards = [];
 
+        unset($this->backupCards[" $key"]);
         $this->askModal = false;
     }
 
@@ -102,11 +100,14 @@ class Form extends Component
                 $this->emit('toast', __('common.delete'), $result['message'], 'success');
                 unset($this->cards[$key]);
             } else {
+                $this->lockCard($key);
                 $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'error');
             }
         } else {
             unset($this->cards[$key]);
         }
+        
+        unset($this->backupCards[" $key"]);
     }
 
     /**
@@ -135,6 +136,11 @@ class Form extends Component
         }
     }
 
+    public function isIdExists($key)
+    {
+        return array_key_exists('id', $this->cards[$key]);
+    }
+
     /**
      * Submits the form
      */
@@ -142,15 +148,28 @@ class Form extends Component
     {
         $data = $this->customValidate($index);
 
-        $unit = Unit::create(array_merge($data, ['product_id' => $this->product_id]));
+        if($this->isIdExists($index)) {
+            $unit = Unit::find($this->cards[$index]['id']);
+                    $unit->update($data);
+            $this->emit('toast', 'güncellendi', 'başarılı falan', 'success');
+        } else {
+            $unit = Unit::create(array_merge($data, ['product_id' => $this->product_id]));
+            $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
+        }
+        unset($this->cards[$index]);
+        $this->cards[$index] = $unit->toArray();
+
+        $this->askModal = false;
+        unset($this->backupCards[" $index"]);
+
 
         // swap current card with created one
-        if($unit) {
-            $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
-            unset($this->cards[$index]);
-            $this->cards[$index] = $unit->toArray();
-        } 
-        else $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
+        // if($unit) {
+        //     $this->emit('toast', 'common.saved.title', __('common.context_created', ['model' => __('modelnames.unit')]), 'success');
+        //     unset($this->cards[$index]);
+        //     $this->cards[$index] = $unit->toArray();
+        // } 
+        // else $this->emit('toast', 'common.somethings_missing', 'sections/units.please_fulfill_all_fields_carefully', 'error');
 
     }
 

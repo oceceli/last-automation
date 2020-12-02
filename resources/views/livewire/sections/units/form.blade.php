@@ -1,4 +1,9 @@
 <div>
+    {{ print_r($cards) }}
+    <br>
+    -----------------
+    <br>
+    {{ print_r($backupCards) }}
     <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
     <x-content theme="red">
 
@@ -49,7 +54,7 @@
                                                     </div>
                                                     <div class="ui tiny buttons">
                                                         <button wire:click.prevent="cancelModal({{ $key }})" class="ui basic button">Vazgeç</button>
-                                                        <button wire:click.prevent="" class="ui primary button">Kaydet</button>
+                                                        <button wire:click.prevent="submit({{ $key }})" class="ui primary button">Kaydet</button>
                                                     </div>
                                                 </div>
                                             </x-custom-modal>   
