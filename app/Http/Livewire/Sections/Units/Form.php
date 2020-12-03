@@ -21,14 +21,23 @@ class Form extends Component
     public $questionModal = false;
     public $editingCardKey; // for modal to know which card is it 
 
+    public $confirmModal = false;
+    public $deletingCardKey;
+
    
+    public function mount()
+    {
+        // $unit = Unit::find(1); 
+        // dd($unit->hasDescendant(41));
+    }
+
 
     /**
      * Whenever product is updating
      */
     public function updatingProductId($id)
     {
-        $this->reset('selectedProduct', 'cards', 'backupCards');
+        $this->reset('selectedProduct', 'cards', 'backupCards', 'questionModal', 'editingCardKey', 'confirmModal', 'deletingCardKey');
 
         $this->selectedProduct = Product::find($id);
 
@@ -70,14 +79,15 @@ class Form extends Component
         // if something changed in the card, ask user to save or discard changes
         if($this->cards[$key] != $this->backupCards["wire$key"]) {
             $this->askForSaveEditedFields($key);
-        } else {
+        } 
+        else {
             unset($this->backupCards["wire$key"]); // expel the backup as no need it anymore
         }
     }
 
 
     /**
-     * Open modal and ask if user want to save changes
+     * Open modal and ask if user wants to save changes
      */
     public function askForSaveEditedFields($key)
     {
@@ -86,7 +96,7 @@ class Form extends Component
     }
 
     /**
-     * If user don't want to save changes restore the card from backup
+     * If user don't want to save changes, restore the card from backup
      */
     public function modalCancel()
     {
@@ -122,7 +132,7 @@ class Form extends Component
 
 
     /**
-     * Add a card for new unit assigment
+     * Add a card for new unit assignment
      */
     public function addNewCard()
     {
@@ -130,13 +140,19 @@ class Form extends Component
     }
     
 
-    /**
-     * Remove a unit card field
-     */
-    public function removeCard($key)
+    public function callDeleteModal($key)
     {
-        if(array_key_exists('id', $this->cards[$key])) {
+        $this->deletingCardKey = $key;  // !!! burası
+        $this->confirmModal = true;
+    }
 
+    /**
+     * Delete a unit and unset the card
+     */
+    public function confirmDelete()
+    {
+        $key = $this->deletingCardKey;
+        if(array_key_exists('id', $this->cards[$key])) {
             $unit = $this->selectedProduct->units->find($this->cards[$key]['id']);
             $result = $unit->delete();
 
@@ -145,13 +161,29 @@ class Form extends Component
                 unset($this->cards[$key]);
             } else {
                 $this->lockCard($key);
-                $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'error');
+                $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'warning');
             }
         } else {
             unset($this->cards[$key]);
         }
+        // unset($this->backupCards["wire$key"]);
+        $this->confirmModal = false;
+    }
+
+    public function denyDelete()
+    {
+        $key = $this->deletingCardKey;
+        $this->deletingCardKey = null;
         
-        unset($this->backupCards["wire$key"]);
+        $this->confirmModal = false;
+        
+        // $this->lockCard($key);
+        // unset($this->backupCards["wire$key"]);
+    }
+
+    public function updatedConfirmModal()
+    {
+        $this->denyDelete();
     }
 
 
@@ -186,7 +218,7 @@ class Form extends Component
         // discard the unit from collection so the unit will not be parent to itself or child to children 
         if($this->isIdExists($key)) {
             $units = $units->reject(function($unit) use ($currentUnit) {
-                return $unit->id == $currentUnit->id;
+                return $unit->id == $currentUnit->id || $currentUnit->hasDescendant($unit);
             });
         }
 
@@ -200,11 +232,11 @@ class Form extends Component
         return $unit ? $unit->isBase() : false;
     }
 
-    public function hasChildren($key)
-    {
-        $unit = $this->initiateUnit($key);
-        return $unit ? $unit->hasChildren() : false;
-    }
+    // public function hasChildren($key)
+    // {
+    //     $unit = $this->initiateUnit($key);
+    //     return $unit ? $unit->hasChildren() : false;
+    // }
 
 
     public function getParentName($key)
@@ -288,7 +320,7 @@ class Form extends Component
         
         // assist user to correct mistakes 
         if($validator->fails())
-            $this->emit('toast', '', $validator->errors()->first(), 'error'); // show errors 
+            $this->emit('toast', '', $validator->errors()->first(), 'warning'); // show errors 
 
         // return validated data 
         return $validator->validate();

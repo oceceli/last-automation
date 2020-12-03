@@ -44,13 +44,25 @@ class Unit extends Model
         return $this->children()->exists();
     }
 
+    public function hasDescendant($unit) // ? parent_id backend koruması ekle, çocuğunun çocuğu olamasın kendinin
+    {
+        if( ! $unit instanceof self) {
+            if( ! $unit) return false;
+            $unit = self::find($unit);
+        }
+        if($unit) {
+            if($unit->parent_id == $this->id) return true;
+            return $this->hasDescendant($unit->parent);
+        } 
+    }
+
     // @override
     public function delete()
     {
         if($this->isBase()) {
             return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
         } elseif($this->hasChildren()) {
-            return ['message' => '!!! (model) Bu birime bağlı birimler bulunuyor!', 'type' => 'error'];
+            return ['message' => '!!! (model) Bu birime bağlı birimler olduğu için silinemez!', 'type' => 'error'];
         } elseif($this->isUsedInRecipe()) {
             return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
         } elseif($this->isUsedInWorkOrder()) {

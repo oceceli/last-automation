@@ -42,6 +42,7 @@
                                 @else
                                     @foreach ($cards as $key => $card)
                                         <div wire:key="{{ $key }}">
+                                            {{-- {{ App\Models\Unit::find($cards[$key]['id'])->id}} --}}
                                             <div >
                                                 @include('web.sections.units.unitCard')
                                             </div>
@@ -55,7 +56,7 @@
             </div>
         @endif
     </x-content>
-    <div x-data="{'questionModal': @entangle('questionModal')}">
+    <div x-data="{'questionModal': @entangle('questionModal')}" x-cloak>
         <x-custom-modal position="center" active="questionModal">
             <div class="p-5 flex flex-col gap-5">
                 <div class="text-center">
@@ -68,6 +69,12 @@
             </div>
         </x-custom-modal>   
     </div>
+
+    <div x-data="{'confirmModal': @entangle('confirmModal')}" x-cloak>
+        <x-confirm active="confirmModal" question="!!! Emin misin?" atConfirm="confirmDelete()" atDeny="denyDelete()" />
+    </div>
+
+
     
 </div>
 

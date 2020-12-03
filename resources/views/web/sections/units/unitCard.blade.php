@@ -99,9 +99,9 @@
             @endif
         </div>
 
-        @if ( ! $this->isLocked($key) && ! $this->hasChildren($key))
+        @if ( ! $this->isLocked($key))
             <div class="absolute top-0 right-0 -mt-2 -mr-3 hover:opacity-100 opacity-50">
-                <button wire:click.prevent="removeCard({{ $key }})" class="focus:outline-none">
+                <button wire:click.prevent="callDeleteModal({{ $key }})" class="focus:outline-none">
                     <i class="red shadow rounded-full cancel icon"></i>
                 </button>
             </div>
