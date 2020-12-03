@@ -48,11 +48,57 @@ class Form extends Component
 
 
 
+    /**
+     * Whenever product updated
+     */
+    public function updatedProductId($id)
+    {
+        // set selected product property when product_id changed 
+        $this->selectedProduct = $this->getProduciblesProperty()->find($id);
+
+        // set baseUnit property for selected unit 
+        $this->spBaseUnit = $this->selectedProduct->baseUnit;
+
+        // get selected product's recipe, set code and ingredients in the form if available 
+        $recipe = $this->selectedProduct->recipe;
+        if($recipe) {
+            $this->code = $recipe->code;
+            if($recipe->ingredients->isNotEmpty()) {
+                $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $recipe->ingredients]);
+            }
+        }
+    }
+
+    private function fetchAndSetIngredients()
+    {
+        // DEVAM ET üstü sil
+        $recipe = $this->selectedProduct->recipe;
+        if($recipe) {
+            $this->code = $recipe->code;
+            if($recipe->ingredients->isNotEmpty()) {
+                $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $recipe->ingredients]);
+            }
+        }
+    }
+
+
+    private function cardForming()
+    {
+        return [
+            'ingredient' => null,
+            'unit_id' => null,
+            'amount' => null,
+            'literal' => false, 
+        ];
+    }
+
+
+
     public function addCard($ingredient)
     {
         // Abort if ingredient is already in card
         if($this->isInCard($ingredient['id'])) {
-            return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'), 'info');
+            return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'));
         } 
 
         // Abort if ingredient is $selectedProduct
@@ -60,34 +106,45 @@ class Form extends Component
             return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
 
-        $this->cards[] = [
-            'ingredient' => $ingredient,
-            'unit_id' => null,
-            'amount' => null,
-            'literal' => false, 
-        ];
-        // dd($this->cards[$ingredient['id']]['ingredient']['units']);
+        // $this->cards[] = [
+        //     'ingredient' => $ingredient,
+        //     'unit_id' => null,
+        //     'amount' => null,
+        //     'literal' => false, 
+        // ];
 
+        $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
     }
+
+
+
     public function removeCard($key)
     {
         unset($this->cards[$key]);
     }
+
+
+
     public function removeAllCards()
     {
         $this->cards = [];
     }
+
+
 
     public function toggleLiteral($key)
     {
         $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
     }
 
+
+
     public function calculatedUnit($card)
     {
         if($card['unit_id'] && $card['amount'])
             return $this->getConverted($card)['amount'] . ' ' . $this->getConverted($card)['unit']->name;
     }
+
 
 
     /**
@@ -99,10 +156,14 @@ class Form extends Component
         return Product::getProducibleRecipes();
     }
 
+
+
     public function getCategoriesProperty()
     {
         return Category::all();
     }
+
+    
 
     public function getConverted($card)
     {
@@ -113,19 +174,7 @@ class Form extends Component
 
 
 
-    /**
-     * Lifecycle hooks ********************************
-     */
-
-    public function updatedProductId($id)
-    {
-        // set selected product property when product_id changed 
-        $this->selectedProduct = $this->getProduciblesProperty()->find($id);
-
-        //
-        $this->spBaseUnit = $this->selectedProduct->baseUnit;
-    }
-    /********************************************** */
+    
 
 
 
@@ -156,6 +205,7 @@ class Form extends Component
             // $this->reset();
         }
     }
+
 
     
     public function validateRecipe()
