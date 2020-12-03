@@ -126,9 +126,9 @@ class Product extends Model
         }
     }
 
-    public static function getProduciblesDoesntHaveRecipe()
+    public static function getProducibleRecipes()
     {
-        return self::where('producible', true)->doesntHave('recipe')->get();
+        return self::where('producible', true)->get();
     }
 
     public function getCodeAttribute($value)

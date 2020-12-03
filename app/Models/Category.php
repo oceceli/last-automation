@@ -34,14 +34,14 @@ class Category extends Model
     //     return $this->products()->where('producible', true);
     // }
 
-    public static function getCategoriesWithProducts()
-    {
-        return self::has('products', '>', 0)->get();
+    // public static function getCategoriesWithProducts()
+    // {
+    //     return self::has('products', '>', 0)->get();
 
-        // ->whereHas('products', function($query){
-        //     $query->where('producible', false);
-        // })
-    }
+    //     // ->whereHas('products', function($query){
+    //     //     $query->where('producible', false);
+    //     // })
+    // }
 
     /**
      * Validate rules for current model

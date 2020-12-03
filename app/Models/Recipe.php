@@ -21,19 +21,19 @@ class Recipe extends Model
     /**
      * Validate rules for current model
      */
-    public static function rules()
-    {
-        $id = self::getRequestID(); // use for unique keys on update event
-        return [
-            'data' => [
-                'product_id' => 'required|min:1',
-                'code' => 'required|unique:recipes',
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
-    }
+    // public static function rules()
+    // {
+    //     $id = self::getRequestID(); // use for unique keys on update event
+    //     return [
+    //         'data' => [
+    //             'product_id' => 'required|min:1',
+    //             'code' => 'required|unique:recipes',
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
 
     public function product()
     {

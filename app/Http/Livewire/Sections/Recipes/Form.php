@@ -3,22 +3,26 @@
 namespace App\Http\Livewire\Sections\Recipes;
 
 use App\Common\Units\Conversions;
-use App\Http\Livewire\Form as BaseForm;
+use App\Http\Livewire\FormHelpers;
 use \Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
+use Livewire\Component;
 
-class Form extends BaseForm
+
+class Form extends Component
 {
-    public $model = Recipe::class;
+    use FormHelpers;
+
     public $view = 'livewire.sections.recipes.form';
+
 
     public $selectedProduct;
     public $spBaseUnit;
 
     /**
-     * Recipe attributes *******************************
+     * Recipe model attributes *******************************
      */
     public $product_id;
     public $code;
@@ -92,18 +96,17 @@ class Form extends BaseForm
 
     public function getProduciblesProperty() 
     {
-        return Product::getProduciblesDoesntHaveRecipe();
+        return Product::getProducibleRecipes();
     }
 
     public function getCategoriesProperty()
     {
-        return Category::getCategoriesWithProducts();
+        return Category::all();
     }
 
     public function getConverted($card)
     {
-        // if($card['unit_id'])
-            return Conversions::toBase($card['unit_id'], $card['amount']);
+        return Conversions::toBase($card['unit_id'], $card['amount']);
     }
 
     /************************************************ */
@@ -120,7 +123,7 @@ class Form extends BaseForm
         $this->selectedProduct = $this->getProduciblesProperty()->find($id);
 
         //
-        $this->spBaseUnit = $this->selectedProduct->getBaseUnit();
+        $this->spBaseUnit = $this->selectedProduct->baseUnit;
     }
     /********************************************** */
 
@@ -131,27 +134,39 @@ class Form extends BaseForm
      */
     public function submit()
     {
-        // dd($this->cards);
-        $this->validate();
+        // validate recipe model only, not ingredients
+        $data = $this->validateRecipe();
 
-        // a product have to be selected to continue 
-        if(empty($this->product_id)) {
-            return $this->emit('toast', 'common.somethings_missing', 'sections/recipes.please_select_a_product_to_create_recipe', 'warning');
-        }
+        // fetch if recipe exists
+        $recipe = Recipe::where('product_id', $this->product_id)->first();
         
-
         // if it already saved in database, just update it
-        if($recipe = $this->model::where('product_id', $this->product_id)->first()) {
-            $this->update($recipe);
+        if($recipe) {
+            $recipe->update($data);
         } else {
-            $recipe = $this->create();
+            // if not, create a new one! 
+            $recipe = Recipe::create($data);
         }
 
         // finally execute syncing operation
         if( ! empty($this->cards)) {
             $this->syncIngredients($recipe);
+        } else {
+            $this->emit('toast', 'Boş olarak ...', 'Reçete içeriği boş olarak kaydedildi...');
+            // $this->reset();
         }
     }
+
+    
+    public function validateRecipe()
+    {
+        return $this->validate([
+            'product_id' => 'required|min:1',
+            'code' => 'required|unique:recipes,' . $this->product_id,
+        ]);
+    }
+
+
 
     /**
      * Sync ingredients of recipe
@@ -172,6 +187,7 @@ class Form extends BaseForm
             $this->emit('toast', 'common.error.title', 'sections/recipes.an_error_occurred_while_adding_ingredients', 'error');
         }
         $this->emit('toast', 'common.saved.title', 'common.saved.changes', 'success');
+        // $this->reset();
     }
 
 
@@ -184,6 +200,7 @@ class Form extends BaseForm
         $dimension2 = (array_column($this->cards, 'ingredient'));
         return in_array($ingredientID, array_column($dimension2, 'id'));
     }
+
 
 
     /**
