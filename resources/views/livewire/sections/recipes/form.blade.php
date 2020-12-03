@@ -1,7 +1,17 @@
 <div>
-    <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
-    <x-content theme="orange" >
+    <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader">
+        <x-slot name="buttons">
+            @if ($this->isLocked())
+                <div class="ui mini icon buttons">
+                    <button wire:click.prevent="unlock()" class="ui mini gray basic button" data-tooltip="{{ __('common.unlock') }}" data-variation="mini" data-position="bottom right">
+                        <i class="orange lock icon"></i>
+                    </button>
+                </div>
+            @endif
+        </x-slot>
+    </x-page-header>
 
+    <x-content theme="orange" >
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
             <div class="p-6 shadow-md">
@@ -9,17 +19,19 @@
                     <div class="equal width fields">
                         <x-dropdown.search model="product_id" label="sections/recipes.recipe_product" :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" />
                         
-                        <x-input action model="code" label="sections/recipes.code" placeholder="sections/recipes.code" class="required">
-                            <x-slot name="action">
-                                <button wire:click.prevent="suggest" class="ui teal right labeled icon button @if(!$selectedProduct) disabled @endif" >
-                                    <i class="icon random"></i>
-                                    {{ __('sections/recipes.suggest_code') }}
-                                </button>
-                            </x-slot>
-                        </x-input>
+                        <div class="@if($this->isLocked()) disabled @endif field">
+                            <x-input action model="code" label="sections/recipes.code" placeholder="sections/recipes.code" class="required">
+                                <x-slot name="action">
+                                    <button wire:click.prevent="suggest" class="ui teal right labeled icon button @if(!$selectedProduct) disabled @endif" >
+                                        <i class="icon random"></i>
+                                        {{ __('sections/recipes.suggest_code') }}
+                                    </button>
+                                </x-slot>
+                            </x-input>
+                        </div>
                     </div>
                     @if ($this->producibles->count() <= 0)
-                        <div class="pt-2 font-semibold text-sm">Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> başlayın...</div>
+                        <div class="pt-2 font-semibold text-sm">!!! Listede hiç ürün yok, öncelikle <a class="text-red-600" href="{{ route('products.create') }}">buradan</a> başlayın...</div>
                     @endif
                 </form> 
             </div>
@@ -48,13 +60,13 @@
                                 </div> --}}
 
                                 {{-- image field --}}
-                                <div wire:click.prevent="toggleLiteral({{ $key }})" class="flex flex-col justify-center items-center w-3/12 md:w-16 rounded-l-lg shadow-md">
+                                <div class="flex flex-col justify-center items-center w-3/12 md:w-16 rounded-l-lg shadow-md">
                                     @if ($card['literal'])
-                                        <span data-tooltip="Üretimden önce" data-variation="mini" data-position="top left" class="cursor-pointer">
+                                        <span wire:click.prevent="toggleLiteral({{ $key }})" data-tooltip="Üretimden önce" data-variation="mini" data-position="top left" class="cursor-pointer">
                                             <i class="large red chevron left icon"></i>
                                         </span>
                                     @else
-                                        <span data-tooltip="Üretimden sonra" data-variation="mini" data-position="top left" class="cursor-pointer">
+                                        <span wire:click.prevent="toggleLiteral({{ $key }})" data-tooltip="Üretimden sonra" data-variation="mini" data-position="top left" class="cursor-pointer">
                                             <i class="large green chevron right icon"></i>
                                         </span>
                                     @endif

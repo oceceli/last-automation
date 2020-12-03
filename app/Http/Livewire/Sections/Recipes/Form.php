@@ -27,6 +27,8 @@ class Form extends Component
     public $product_id;
     public $code;
 
+    public $locked = false;
+
     
 
     public $cards = [
@@ -51,34 +53,42 @@ class Form extends Component
     /**
      * Whenever product updated
      */
-    public function updatedProductId($id)
+    public function updatingProductId($id)
     {
+        $this->reset();
+        
         // set selected product property when product_id changed 
         $this->selectedProduct = $this->getProduciblesProperty()->find($id);
 
         // set baseUnit property for selected unit 
         $this->spBaseUnit = $this->selectedProduct->baseUnit;
 
-        // get selected product's recipe, set code and ingredients in the form if available 
-        $recipe = $this->selectedProduct->recipe;
-        if($recipe) {
-            $this->code = $recipe->code;
-            if($recipe->ingredients->isNotEmpty()) {
-                $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $recipe->ingredients]);
-            }
-        }
+        $this->fetchAndSetIngredients();
     }
 
+    /**
+     * Get selected product's recipe, set code and ingredients in the form if available 
+     */
     private function fetchAndSetIngredients()
     {
-        // DEVAM ET üstü sil
-        $recipe = $this->selectedProduct->recipe;
-        if($recipe) {
-            $this->code = $recipe->code;
-            if($recipe->ingredients->isNotEmpty()) {
-                $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $recipe->ingredients]);
-            }
+        if( ! $recipe = $this->selectedProduct->recipe) 
+            return $this->reset('code', 'cards');
+
+        $this->lock();
+        $this->code = $recipe->code;
+        
+        if($recipe->ingredients->isEmpty()) return;
+
+        foreach($recipe->ingredients as $ingredient) {
+            // $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
+            $this->cards[] = [
+                'ingredient' => $ingredient,
+                'unit_id' => $ingredient->pivot->unit_id,
+                'amount' => $ingredient->pivot->amount,
+                'literal' => $ingredient->pivot->literal,
+            ];
         }
+
     }
 
 
@@ -106,13 +116,6 @@ class Form extends Component
             return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
 
-        // $this->cards[] = [
-        //     'ingredient' => $ingredient,
-        //     'unit_id' => null,
-        //     'amount' => null,
-        //     'literal' => false, 
-        // ];
-
         $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
     }
 
@@ -125,16 +128,29 @@ class Form extends Component
 
 
 
-    public function removeAllCards()
-    {
-        $this->cards = [];
-    }
+    // public function removeAllCards()
+    // {
+    //     $this->cards = [];
+    // }
 
 
 
     public function toggleLiteral($key)
     {
         $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
+    }
+
+    public function isLocked()
+    {
+        return $this->locked;
+    }
+    private function lock()
+    {
+        $this->locked = true;
+    }
+    public function unlock()
+    {
+        $this->locked = false;
     }
 
 
@@ -172,9 +188,6 @@ class Form extends Component
 
     /************************************************ */
 
-
-
-    
 
 
 

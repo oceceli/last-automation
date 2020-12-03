@@ -21,7 +21,7 @@ return [
     'different_products' => ':number içerik',
     'add_ingredients' => 'İçerik Ekle',
     'add_recipe_ingredients' => 'Reçete içeriği ekleyin',
-    'remove_ingredients' => 'Tüm içeriği kaldır',
+    // 'remove_ingredients' => 'Tüm içeriği kaldır',
     'see_recipe' => 'Reçeteyi gör',
     'there_is_no_content_yet' => 'Henüz içerik eklenmemiş',
     

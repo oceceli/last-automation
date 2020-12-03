@@ -15,9 +15,15 @@
             <button wire:click.prevent @click="materials = true" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
                 <i class="plus icon"></i>
             </button>
-            <button wire:click.prevent="removeAllCards" class="ui mini gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}" data-variation="mini">
+            {{-- <button wire:click.prevent="removeAllCards" class="ui mini gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}" data-variation="mini">
                 <i class="red trash icon"></i>
-            </button>
+            </button> --}}
+            {{-- @if ($this->isLocked())
+                <button class="ui mini gray basic button" data-tooltip="{{ __('common.unlock') }}" data-variation="mini">
+                    <i class="orange lock icon"></i>
+                </button>
+            @endif --}}
+            
         </div>
     </x-slot>
 </x-page-header>

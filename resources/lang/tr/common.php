@@ -84,5 +84,7 @@ return [
     'status' => 'Durum',
     'suspended' => 'Askıya alındı',
     'today' => 'Bugün',
+    'lock' => 'Kilitle',
+    'unlock' => 'Kilidi kaldır',
     
 ];

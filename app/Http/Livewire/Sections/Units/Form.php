@@ -142,7 +142,7 @@ class Form extends Component
 
     public function callDeleteModal($key)
     {
-        $this->deletingCardKey = $key;  // !!! burası
+        $this->deletingCardKey = $key; 
         $this->confirmModal = true;
     }
 
