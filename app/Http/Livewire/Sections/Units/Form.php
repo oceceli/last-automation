@@ -74,15 +74,20 @@ class Form extends Component
      */
     public function lockCard($key)
     {
-        $this->cards[$key]['created_at'] = $this->backupCards["wire$key"]['created_at'];
+        $this->equalizeCreatedAts($key);
 
         // if something changed in the card, ask user to save or discard changes
         if($this->cards[$key] != $this->backupCards["wire$key"]) {
             $this->askForSaveEditedFields($key);
         } 
         else {
-            unset($this->backupCards["wire$key"]); // expel the backup as no need it anymore
+            $this->unsetBackup($key); // expel the backup as no need it anymore
         }
+    }
+
+    private function unsetBackup($key)
+    {
+        unset($this->backupCards["wire$key"]);
     }
 
 
@@ -142,9 +147,14 @@ class Form extends Component
 
     public function callDeleteModal($key)
     {
-        $this->deletingCardKey = $key; 
-        $this->confirmModal = true;
+        if($this->isSavedBefore($key)) {
+            $this->deletingCardKey = $key; 
+            $this->confirmModal = true;
+        } else {
+            unset($this->cards[$key]);
+        }
     }
+
 
     /**
      * Delete a unit and unset the card
@@ -167,23 +177,22 @@ class Form extends Component
             unset($this->cards[$key]);
         }
         // unset($this->backupCards["wire$key"]);
+        $this->unsetBackup($key);
         $this->confirmModal = false;
     }
 
     public function denyDelete()
     {
-        $key = $this->deletingCardKey;
-        $this->deletingCardKey = null;
-        
-        $this->confirmModal = false;
-        
+        // $this->deletingCardKey = null;
+        // $this->confirmModal = false;
         // $this->lockCard($key);
         // unset($this->backupCards["wire$key"]);
     }
 
-    public function updatedConfirmModal()
+    public function updatedConfirmModal($value)
     {
-        $this->denyDelete();
+        if($value === false)
+            $this->denyDelete();
     }
 
 
@@ -216,7 +225,7 @@ class Form extends Component
         $currentUnit = $this->initiateUnit($key);
 
         // discard the unit from collection so the unit will not be parent to itself or child to children 
-        if($this->isIdExists($key)) {
+        if($this->isSavedBefore($key)) {
             $units = $units->reject(function($unit) use ($currentUnit) {
                 return $unit->id == $currentUnit->id || $currentUnit->hasDescendant($unit);
             });
@@ -251,7 +260,7 @@ class Form extends Component
 
     public function initiateUnit($key)
     {
-        if($this->isIdExists($key)) {
+        if($this->isSavedBefore($key)) {
             return $this->selectedProduct->units->find($this->cards[$key]['id']);
         }
     }
@@ -260,24 +269,40 @@ class Form extends Component
     /**
      * Is a card has an id key. If it does, that means it saved before
      */
-    public function isIdExists($key)
+    public function isSavedBefore($key)
     {
         return array_key_exists('id', $this->cards[$key]);
     }
 
+
+    private function equalizeCreatedAts($key)
+    {
+        $this->cards[$key]['created_at'] = $this->backupCards["wire$key"]['created_at'];
+    }
+
+    private function backupExistsFor($key)
+    {
+        return isset($this->backupCards["wire$key"]);
+    }
 
     /**
      * Submits the form
      */
     public function submit($key)
     {
+        // if nothing changed, do not push exact data to database | editing case 
+        if($this->backupExistsFor($key)) {
+            $this->equalizeCreatedAts($key);
+            if($this->backupCards["wire$key"] == $this->cards[$key]) 
+                return $this->unsetBackup($key);
+        }
 
         // validate first
         $data = $this->customValidate($key);
         
 
         // If ID exists in the card, it means it should be updated
-        if($this->isIdExists($key)) {
+        if($this->isSavedBefore($key)) {
 
             $unit = $this->initiateUnit($key);
 
@@ -319,8 +344,10 @@ class Form extends Component
         ]);
         
         // assist user to correct mistakes 
-        if($validator->fails())
+        if($validator->fails()) {
+            $this->questionModal = false;
             $this->emit('toast', '', $validator->errors()->first(), 'warning'); // show errors 
+        }
 
         // return validated data 
         return $validator->validate();

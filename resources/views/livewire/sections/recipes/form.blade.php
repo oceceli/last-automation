@@ -148,7 +148,7 @@
         <x-confirm active="deleteConfirmModal" color="red" confirm="{{ __('common.delete') }}" deny="{{ __('common.cancel') }}"
         atConfirm="removeRecipe()" atDeny="closeDeleteConfirmModal()">
             <x-slot name="question">
-                !!! Reçete silinsin mi?
+                {{ __('sections/recipes.are_you_sure_you_want_to_delete_this_recipe') }}
             </x-slot>
         </x-confirm>
     </div>
