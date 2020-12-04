@@ -1,13 +1,19 @@
 <div>
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader">
         <x-slot name="buttons">
-            @if ($this->isLocked())
-                <div class="ui mini icon buttons">
+            <div class="ui mini icon buttons">
+                @if ($this->isLocked())
                     <button wire:click.prevent="unlock()" class="ui mini gray basic button" data-tooltip="{{ __('common.unlock') }}" data-variation="mini" data-position="bottom right">
                         <i class="orange lock icon"></i>
                     </button>
-                </div>
-            @endif
+                @else
+                    @if ($allowDelete)
+                        <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="!!! reçeteyi sil" data-variation="mini" data-position="bottom right">
+                            <i class="red trash icon"></i>
+                        </button>
+                    @endif
+                @endif
+            </div>
         </x-slot>
     </x-page-header>
 
@@ -60,20 +66,24 @@
                                 </div> --}}
 
                                 {{-- image field --}}
+                                
+                                
                                 <div class="flex flex-col justify-center items-center w-3/12 md:w-16 rounded-l-lg shadow-md">
-                                    @if ($card['literal'])
-                                        <span wire:click.prevent="toggleLiteral({{ $key }})" data-tooltip="Üretimden önce" data-variation="mini" data-position="top left" class="cursor-pointer">
-                                            <i class="large red chevron left icon"></i>
+                                    @if ($this->isLocked())
+                                        <span wire:key="locked.{{$key}}" data-tooltip="{{ $this->literalTooltip($key) }}" data-variation="mini" data-position="top left">
+                                            <i class="{{ $this->literalClass($key) }}"></i>
                                         </span>
                                     @else
-                                        <span wire:click.prevent="toggleLiteral({{ $key }})" data-tooltip="Üretimden sonra" data-variation="mini" data-position="top left" class="cursor-pointer">
-                                            <i class="large green chevron right icon"></i>
+                                        <span wire:key="unlocked.{{$key}}" wire:click="toggleLiteral({{ $key }})" data-tooltip="{{ $this->literalTooltip($key) }}" data-variation="mini" data-position="top left" class="cursor-pointer">
+                                            <i class="{{ $this->literalClass($key) }}"></i>
                                         </span>
                                     @endif
                                 </div>
+                                
 
 
                                 <div class="p-3 flex-1 flex flex-col md:flex-row md:items-center gap-3 justify-between">
+
                                     <div class="flex flex-col">
                                         <div class="flex gap-2 items-center">
                                             <div class="font-bold">{{ $card['ingredient']['name'] }}</div>
@@ -86,18 +96,29 @@
                                     </div>
                                     
                                     
-                                    <div class="flex gap-2 items-center">
-                                        <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
-                                            model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :sId="'unit'.$key" sClass="basic"
-                                            value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
-                                        </x-dropdown>
-                                    </div>
+                                    @if ($this->isLocked())
+                                        <div class="text-xl text-green-500 hover:text-green-600 cursor-default ease-in-out duration-200 font-bold">
+                                            <span class="">{{ $card['amount'] }}</span>
+                                            <span class="text-sm">{{ $this->getIngredientUnit($card)['name'] }}</span>
+                                        </div>
+                                    @else
+                                        <div class="flex gap-2 items-center">
+                                            <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
+                                                model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :sId="'unit'.$key" sClass="basic"
+                                                value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                            </x-dropdown>
+                                        </div>
+                                    @endif
+
+
                                 </div>
                                
 
-                                <button wire:click.prevent="removeCard({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 bg-white focus:outline-none opacity-75 hover:opacity-100">
-                                    <i class="red shadow rounded-full cancel icon"></i>
-                                </button>
+                                @if (! $this->isLocked())
+                                    <button wire:click.prevent="removeCard({{ $key }})" class="absolute top-0 right-0 -mt-2 -mr-3 bg-white focus:outline-none opacity-75 hover:opacity-100">
+                                        <i class="red shadow rounded-full cancel icon"></i>
+                                    </button>
+                                @endif
 
                             </div>
                         @endforeach
@@ -117,8 +138,17 @@
 
 
 
+            @if ($selectedProduct && ! $this->isLocked())
+                <x-form-buttons class="p-4 pt-6" submit="submit()" />
+            @endif
     </x-content>
-    @if ($selectedProduct)
-        <x-form-buttons class="p-4 pt-6" submit="submit()" />
-    @endif
+
+    <div x-data="{deleteConfirmModal: @entangle('deleteConfirmModal')}" x-cloak>
+        <x-confirm active="deleteConfirmModal" color="red" confirm="{{ __('common.delete') }}" deny="{{ __('common.cancel') }}"
+        atConfirm="removeRecipe()" atDeny="closeDeleteConfirmModal()">
+            <x-slot name="question">
+                !!! Reçete silinsin mi?
+            </x-slot>
+        </x-confirm>
+    </div>
 </div>

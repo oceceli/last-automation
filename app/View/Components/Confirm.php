@@ -10,6 +10,10 @@ class Confirm extends Component
     public $atConfirm;
     public $atDeny;
 
+    public $confirm;
+    public $deny;
+    public $color;
+
     public $active;
 
 
@@ -18,11 +22,15 @@ class Confirm extends Component
      *
      * @return void
      */
-    public function __construct($question, $atConfirm, $atDeny, $active)
+    public function __construct($atConfirm, $atDeny, $active, $question = null, $confirm = 'tamam', $deny = 'vazgeç', $color = 'blue')
     {
         $this->question = $question;
         $this->atConfirm = $atConfirm;
         $this->atDeny = $atDeny;
+
+        $this->confirm = $confirm;
+        $this->deny = $deny;
+        $this->color = $color;
 
         $this->active = $active;
     }

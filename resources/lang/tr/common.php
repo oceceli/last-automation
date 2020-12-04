@@ -16,6 +16,7 @@ return [
     'added' => 'Eklendi',
     'remove' => 'Kaldır',
     'delete' => 'Sil',
+    'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
     'display' => 'Görüntüle',

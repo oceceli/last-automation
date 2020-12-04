@@ -8,6 +8,7 @@ use \Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
+use App\Models\Unit;
 use Livewire\Component;
 
 
@@ -28,6 +29,9 @@ class Form extends Component
     public $code;
 
     public $locked = false;
+    public $allowDelete = false;
+
+    public $deleteConfirmModal;
 
     
 
@@ -47,7 +51,11 @@ class Form extends Component
         'cards.*.literal' => 'required|boolean',
     ]; 
 
-
+    protected $validationAttributes = [
+        'cards.*.unit_id' => '!!! Birim',
+        'cards.*.amount' => '!!! Miktar',
+        'cards.*.literal' => '!!! Kesin miktar',
+    ];
 
 
     /**
@@ -56,6 +64,7 @@ class Form extends Component
     public function updatingProductId($id)
     {
         $this->reset();
+        // $this->validate();
         
         // set selected product property when product_id changed 
         $this->selectedProduct = $this->getProduciblesProperty()->find($id);
@@ -74,6 +83,7 @@ class Form extends Component
         if( ! $recipe = $this->selectedProduct->recipe) 
             return $this->reset('code', 'cards');
 
+        $this->allowDelete = true;
         $this->lock();
         $this->code = $recipe->code;
         
@@ -126,6 +136,23 @@ class Form extends Component
         unset($this->cards[$key]);
     }
 
+    public function removeRecipe()
+    {
+        // $this->selectedProduct->recipe->ingredients()->detach();
+        $this->selectedProduct->recipe->delete();
+        $this->reset();
+    }
+
+    public function openDeleteConfirmModal()
+    {
+        $this->deleteConfirmModal = true;
+    }
+
+    public function closeDeleteConfirmModal()
+    {
+        $this->deleteConfirmModal = false;
+    } 
+
 
 
     // public function removeAllCards()
@@ -140,6 +167,16 @@ class Form extends Component
         $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
     }
 
+    public function getIngredientUnit($card) 
+    {
+        return Unit::find($card['unit_id']); // ?? 
+    }
+
+    
+
+    
+
+
     public function isLocked()
     {
         return $this->locked;
@@ -152,6 +189,7 @@ class Form extends Component
     {
         $this->locked = false;
     }
+
 
 
 
@@ -217,9 +255,17 @@ class Form extends Component
             $this->emit('toast', 'Boş olarak ...', 'Reçete içeriği boş olarak kaydedildi...');
             // $this->reset();
         }
+
+
+        // lock the form after saving
+        $this->lock(); 
+        $this->allowDelete();
     }
 
-
+    private function allowDelete()
+    {
+        $this->allowDelete = true;
+    }
     
     public function validateRecipe()
     {
@@ -236,6 +282,8 @@ class Form extends Component
      */
     public function syncIngredients($recipe)
     {
+        $this->validate();
+
         $cards = $this->cards;
         
         $IDs = [];
@@ -266,6 +314,30 @@ class Form extends Component
 
 
 
+
+    /**
+     * Lookup tables for avoiding duplicate in blade 
+     */
+    public function literalClass($key)
+    {
+        return [
+            true => 'large red chevron left icon',
+            false => 'large green chevron right icon',
+        ][$this->cards[$key]['literal']];
+    }
+
+    public function literalTooltip($key)
+    {
+        return [
+            true => '!!! Kesin miktar',
+            false => '!!! Değişken miktar',
+        ][$this->cards[$key]['literal']];
+    }
+
+
+
+
+
     /**
      * Produce a random recipe unique code
      */
@@ -284,7 +356,7 @@ class Form extends Component
                     $this->code = $string . '_' . $randomString;
                 }
             } else {
-                $this->code = 'rct_' . $this->selectedProduct->code;
+                $this->code = 'RCT_' . $this->selectedProduct->code;
             }
         }
     }

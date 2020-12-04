@@ -29,29 +29,17 @@
             <h2 class="font-bold text-teal-700">1</h2>
         </div>
 
-        {{-- <div>
-            <span @if( ! $this->isLocked($key)) wire:click.prevent="toggleOperator({{ $key }})" class="cursor-pointer" data-tooltip="İşlemi değiştir" data-variation="mini" @endif >
-                <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
-            </span>
-        </div>  --}}
-
-
         <div>
             @if ($this->isLocked($key))
-                <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+                <span wire:key="locked.{{ $key }}"class="cursor-pointer" data-tooltip="İşlemi değiştir" data-variation="mini">
+                    <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+                </span>
             @else
-                <select wire:model.lazy="cards.{{ $key }}.operator"
-                        class="font-bold text-xl focus:outline-none cursor-pointer bg-white">
-                    <option selected disabled>{{ __('common.dropdown_placeholder')}}</option>
-                    @foreach ([['value' => 1, 'text' => 'X'], ['value' => 0, 'text' => '/']] as $operator)
-                        <option class="text-red-500 font-bold" value="{{ $operator['value'] }}">{{ $operator['text'] }}</option>
-                    @endforeach
-                </select>
+                <span wire:key="unlocked.{{ $key }}" wire:click.prevent="toggleOperator({{ $key }})" class="cursor-pointer" data-tooltip="İşlemi değiştir" data-variation="mini">
+                    <i class="large hover:text-gray-600 {{ $card['operator'] == true ? 'times' : 'divide' }} icon"></i>
+                </span>
             @endif
-        </div>
-
-
-        
+        </div>       
 
         <div>                   
             @if ($this->isLocked($key))

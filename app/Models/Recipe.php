@@ -9,7 +9,7 @@ use App\Models\Traits\ModelHelpers;
 
 class Recipe extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers;
+    use HasFactory, ModelHelpers;
 
     protected $guarded = [];
 
@@ -43,6 +43,12 @@ class Recipe extends Model
     public function ingredients()
     {
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal');
+    }
+
+    public function delete()
+    {
+        $this->ingredients()->detach();
+        parent::delete();
     }
 
     

@@ -17,7 +17,7 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->string('code')->unique();
-            $table->softDeletes();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

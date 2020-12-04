@@ -11,6 +11,7 @@
         </div>
     </x-slot>
     <x-slot name="buttons">
+        @if ( ! $this->isLocked())
         <div class="ui mini icon buttons">
             <button wire:click.prevent @click="materials = true" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
                 <i class="plus icon"></i>
@@ -23,7 +24,7 @@
                     <i class="orange lock icon"></i>
                 </button>
             @endif --}}
-            
         </div>
+        @endif
     </x-slot>
 </x-page-header>

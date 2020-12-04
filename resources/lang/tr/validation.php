@@ -159,7 +159,7 @@ return [
     'attributes' => [
         'amount' => 'miktar',
         'lot_no' => 'lot no',
-        'code' => 'Kod',
+        'code' => 'kod',
     ],
 
 ];
