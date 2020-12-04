@@ -19,6 +19,7 @@ return [
     'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
+    'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',
     'detail' => 'Detay',
     'see_details' => 'Detayları gör',
@@ -78,6 +79,9 @@ return [
     'waste' => 'Fire',
 
     'create' => 'oluştur',
+    'confirm' => 'Onayla',
+    'stay_here' => 'Burada kal',
+    'leave' => 'Ayrıl',
     'home' => 'Anasayfa',
 
     'main' => 'Ana',
@@ -87,5 +91,7 @@ return [
     'today' => 'Bugün',
     'lock' => 'Kilitle',
     'unlock' => 'Kilidi kaldır',
+    // 'somethings_changed_in_the_form' => 'Formda değişiklik yapıldı',
+    // 'do_you_want_to_save_before_exit' => 'Çıkmadan önce kaydetmek ister misiniz?',
     
 ];

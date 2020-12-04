@@ -29,12 +29,16 @@ class Form extends Component
     public $code;
     public $backupCode; 
 
+    public $oldProductId;
+
     public $locked = false;
     public $allowDelete = false;
 
+    // modals
     public $deleteConfirmModal;
+    public $formChangedModal;
 
-    
+    public $backupExists = false; 
 
     public $cards = [];
     public $backupCards = [];
@@ -58,19 +62,38 @@ class Form extends Component
      */
     public function updatingProductId($id)
     {
-        $this->detectDifferences();
+        // save old product id to oldProductId property
+        $this->oldProductId = $this->product_id;
+
+        if($this->changesFoundOnForm()) 
+            return $this->formChangedModal = true;
 
         $this->reset();
+        $this->setForm($id);
+    }
+
+
+
+    private function changesFoundOnForm()
+    {
+        return $this->isBackupExists() && ($this->backupCode != $this->code || $this->backupCards != $this->cards);
+    }
+
+
+
+    private function setForm($productId)
+    {
         // $this->validate(); // ?? code alanı doğrulama sıfırlamak için
         
-        // set selected product property when product_id changed 
-        $this->selectedProduct = $this->getProduciblesProperty()->find($id);
+        // set selectedProduct property
+        $this->selectedProduct = $this->getProduciblesProperty()->find($productId);
 
         // set baseUnit property for selected unit 
         $this->spBaseUnit = $this->selectedProduct->baseUnit;
 
         $this->fetchAndSetIngredients();
     }
+
 
     /**
      * Get selected product's recipe, set code and ingredients in the form if available 
@@ -97,12 +120,7 @@ class Form extends Component
         }
     }
 
-    private function detectDifferences()
-    {
-        // !! devam
-    }
-
-
+    
     private function cardForming()
     {
         return [
@@ -112,7 +130,6 @@ class Form extends Component
             'literal' => false, 
         ];
     }
-
 
 
     public function addCard($ingredient)
@@ -154,6 +171,37 @@ class Form extends Component
         $this->deleteConfirmModal = false;
     } 
 
+   
+
+    public function modalStayHere()
+    {
+        $this->formChangedModal = false;
+        // $this->clearBackups();
+        $this->product_id = $this->oldProductId;
+        $this->reset('oldProductId');
+    }
+
+    
+    public function updatedFormChangedModal($bool) // leave selected on the modal 
+    {
+        if( ! $bool) {
+            $this->formChangedModal = false;
+            $this->clearBackups();
+            $this->reset('cards');
+            $this->setForm($this->product_id);
+        }
+    }
+
+    public function restoreForm()
+    {
+        $this->code = $this->backupCode;
+        $this->cards = $this->backupCards;
+    }
+
+    public function isRestorable()
+    {
+        return ! $this->isLocked() && $this->changesFoundOnForm();
+    }
 
 
     // public function removeAllCards()
@@ -174,38 +222,54 @@ class Form extends Component
     }
 
     
-
-    
-
-
     public function isLocked()
     {
         return $this->locked;
     }
+
+
     private function lock()
     {
         $this->locked = true;
+        $this->clearBackups();
     }
+
+
+    private function clearBackups()
+    {
+        if($this->isBackupExists()) {
+            $this->reset('backupCode', 'backupCards');
+            $this->backupExists = false;
+        }
+    }
+
+
     public function unlock()
     {
-        $this->backupThings();
+        $this->backupForm();
         $this->locked = false;
     }
 
-    private function backupThings()
+
+    private function backupForm()
     {
-        // !!! devam
+        $this->backupCards = $this->cards;
+        $this->backupCode = $this->code;
+        $this->backupExists = true;
     }
 
 
+    private function isBackupExists()
+    {
+        return $this->backupExists;
+    }
 
-
+    
     public function calculatedUnit($card)
     {
         if($card['unit_id'] && $card['amount'])
             return $this->getConverted($card)['amount'] . ' ' . $this->getConverted($card)['unit']->name;
     }
-
 
 
     /**
@@ -234,8 +298,6 @@ class Form extends Component
     /************************************************ */
 
 
-
-
     /**
      * Submit form and attach ingredients to the recipe
      */
@@ -260,11 +322,10 @@ class Form extends Component
             $this->syncIngredients($recipe);
         } else {
             $this->emit('toast', 'Boş olarak ...', 'Reçete içeriği boş olarak kaydedildi...');
-            // $this->reset();
         }
 
 
-        // lock the form after saving
+        // lock the form after saving (lock also clears the backups)
         $this->lock(); 
         $this->allowDelete();
     }

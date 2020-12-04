@@ -9,6 +9,7 @@ class Confirm extends Component
     public $question;
     public $atConfirm;
     public $atDeny;
+    public $atClose;
 
     public $confirm;
     public $deny;
@@ -22,11 +23,12 @@ class Confirm extends Component
      *
      * @return void
      */
-    public function __construct($atConfirm, $atDeny, $active, $question = null, $confirm = 'tamam', $deny = 'vazgeç', $color = 'blue')
+    public function __construct($atConfirm, $atDeny = null, $atClose = null, $active, $question = null, $confirm = 'tamam', $deny = 'vazgeç', $color = 'blue')
     {
         $this->question = $question;
         $this->atConfirm = $atConfirm;
         $this->atDeny = $atDeny;
+        $this->atClose = $atClose;
 
         $this->confirm = $confirm;
         $this->deny = $deny;

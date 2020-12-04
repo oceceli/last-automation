@@ -1,5 +1,15 @@
 <div>
-    {{ print_r($backupCards) }}
+    {{-- {{ print_r($backupCards) }} --}}
+    {{-- {{ $backupCode }} --}}
+    {{-- <br> --}}
+    {{-- @if ($product_id)
+    şu anki {{ \App\Models\Product::find($product_id)->code }}
+    @endif
+    <br>
+    @if($oldProductId)
+    önceki {{ \App\Models\Product::find($oldProductId)->code }}
+
+    @endif --}}
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader">
         <x-slot name="buttons">
             <div class="ui mini icon buttons">
@@ -8,7 +18,12 @@
                         <i class="orange lock icon"></i>
                     </button>
                 @else
-                    @if ($allowDelete)
+                @if ($this->isRestorable())
+                    <button wire:click.prevent="restoreForm()" class="ui mini basic  button" data-tooltip="!!! geri al" data-variation="mini" data-position="bottom right">
+                        <i class="green undo alternate icon"></i>
+                    </button>
+                @endif
+                @if ($allowDelete)
                         <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="!!! reçeteyi sil" data-variation="mini" data-position="bottom right">
                             <i class="red trash icon"></i>
                         </button>
@@ -144,12 +159,5 @@
             @endif
     </x-content>
 
-    <div x-data="{deleteConfirmModal: @entangle('deleteConfirmModal')}" x-cloak>
-        <x-confirm active="deleteConfirmModal" color="red" confirm="{{ __('common.delete') }}" deny="{{ __('common.cancel') }}"
-        atConfirm="removeRecipe()" atDeny="closeDeleteConfirmModal()">
-            <x-slot name="question">
-                {{ __('sections/recipes.are_you_sure_you_want_to_delete_this_recipe') }}
-            </x-slot>
-        </x-confirm>
-    </div>
+    @include('web.sections.recipes.recipeModals')
 </div>

@@ -20,8 +20,13 @@ return [
     'includes' => 'içerisinde',
     'has_recipe' => 'Reçetesi var',
     'recipe_found_for' => ':product ürününe ait reçete bulundu...',
+    'somethings_changed_in_the_recipe' => 'Reçetede bazı değişiklikler yapıldı',
+    // 'do_you_want_to_save_before_exit' => 'Çıkmadan önce kaydetmek ister misiniz?',
+    'do_you_want_to_leave_for_sure' => 'Ayrılmak istediğinize emin misiniz?',
+    'all_changes_will_be_lost_if_you_leave' => 'Ayrılırsanız tüm değişiklikler kaybolacak',
     
     'edit_recipe_of' => ':product ürününe ait reçeteyi düzenle',
+    'are_you_sure_you_want_to_delete_this_recipe' => 'Bu reçeteyi silmek istediğinize emin misiniz?',
     'different_products' => ':number içerik',
     'add_ingredients' => 'İçerik Ekle',
     'add_recipe_ingredients' => 'Reçete içeriği ekleyin',

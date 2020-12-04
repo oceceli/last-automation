@@ -77,7 +77,7 @@
                     <div class="ui buttons max-w-full">
                         <button wire:click.prevent="submit({{ $key }})"
                                 class="ui positive mini button ">{{ __('common.save') }}</button>
-                        @if ($this->isIdExists($key))
+                        @if ($this->isSavedBefore($key))
                         <button wire:click.prevent="lockCard({{ $key }})" class="ui mini icon button">
                             <i class="green unlock icon"></i>
                         </button>

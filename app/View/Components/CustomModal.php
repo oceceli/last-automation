@@ -11,6 +11,7 @@ class CustomModal extends Component
     public $theme;
     public $padding;
     public $headerClass;
+    public $atClose;
     public $position;
     public $positions = [
         'right' => 'top-0 right-0 bottom-0 absolute',
@@ -26,7 +27,7 @@ class CustomModal extends Component
      *
      * @return void
      */
-    public function __construct($active = null, $theme = 'teal', $padding = null, $header = null, $position = 'center')
+    public function __construct($active = null, $theme = 'teal', $padding = null, $header = null, $atClose = null, $position = 'center')
     {
         $this->header = $header;
         $this->active = $active;
@@ -34,6 +35,7 @@ class CustomModal extends Component
         if($position == 'center') $this->headerClass = 'rounded-t-md';
         $this->position = $this->positions[$position];
         if($padding) $this->padding = 'px-6 py-4';
+        $this->atClose = $atClose;
     }
 
     /**
