@@ -27,6 +27,7 @@ class Form extends Component
      */
     public $product_id;
     public $code;
+    public $backupCode; 
 
     public $locked = false;
     public $allowDelete = false;
@@ -35,14 +36,8 @@ class Form extends Component
 
     
 
-    public $cards = [
-        // [
-        //     'ingredient' => ['name' => 'Ürün2', 'code' => 'RM239', 'id' => 50, 'units' => [['id' => 97, 'name' => 'gram'],['id' => 8, 'name' => 'kg']]],
-        //     'unit_id' => 8,
-        //     'amount' => 550,
-        //     'literal' => false,
-        // ],
-    ];
+    public $cards = [];
+    public $backupCards = [];
 
     protected $rules = [
         'cards.*' => 'array',
@@ -63,8 +58,10 @@ class Form extends Component
      */
     public function updatingProductId($id)
     {
+        $this->detectDifferences();
+
         $this->reset();
-        // $this->validate();
+        // $this->validate(); // ?? code alanı doğrulama sıfırlamak için
         
         // set selected product property when product_id changed 
         $this->selectedProduct = $this->getProduciblesProperty()->find($id);
@@ -98,7 +95,11 @@ class Form extends Component
                 'literal' => $ingredient->pivot->literal,
             ];
         }
+    }
 
+    private function detectDifferences()
+    {
+        // !! devam
     }
 
 
@@ -187,7 +188,13 @@ class Form extends Component
     }
     public function unlock()
     {
+        $this->backupThings();
         $this->locked = false;
+    }
+
+    private function backupThings()
+    {
+        // !!! devam
     }
 
 
@@ -329,8 +336,8 @@ class Form extends Component
     public function literalTooltip($key)
     {
         return [
-            true => '!!! Kesin miktar',
-            false => '!!! Değişken miktar',
+            true => __('sections/recipes.literal'),
+            false => __('sections/recipes.non_literal'),
         ][$this->cards[$key]['literal']];
     }
 

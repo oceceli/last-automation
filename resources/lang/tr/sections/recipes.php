@@ -4,11 +4,15 @@ return [
     'header' => 'Reçete Oluştur',
     'subheader' => 'Üretim için reçete oluştur',
 
+
     'code' => 'Reçete Kodu',
     'recipe_product' => 'Reçetesi yazılacak ürün',
     'belongs_to' => 'Ait olduğu ürün',
     'count_of_ingredients' => 'İçindekiler',
     'ingredients' => 'İçindekiler',
+
+    'literal' => 'Kesin',
+    'non_literal' => 'Değişken',
 
     // 'random_code' => 'Rastgele',
     'suggest_code' => 'Üret',

@@ -1,4 +1,5 @@
 <div>
+    {{ print_r($backupCards) }}
     <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader">
         <x-slot name="buttons">
             <div class="ui mini icon buttons">
