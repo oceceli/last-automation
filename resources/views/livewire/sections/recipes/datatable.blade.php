@@ -32,7 +32,7 @@
                                 @endif
                             </td>
                             <td class="collapsing">
-                                <x-crud-actions modelName="recipe" :modelId="$recipe->id" />
+                                <x-crud-actions show delete edit modelName="recipe" :modelId="$recipe->id" />
                             </td>
                         </tr>
                     @endforeach
