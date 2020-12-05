@@ -12,6 +12,9 @@
   .text-ease {
     @apply text-gray-500 hover:text-gray-800 font-semibold ease-in-out duration-200 cursor-default;
   }
+  .text-ease-red {
+    @apply text-red-400 hover:text-red-600 font-semibold ease-in-out duration-200 cursor-default;
+  }
   .red {
     @apply text-red-500 hover:text-red-800;
   }

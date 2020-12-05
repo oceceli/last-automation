@@ -32,6 +32,8 @@ class Dropdown extends Component
     public $clearable;
     public $placeholder;
 
+    public $customMessage;
+
     public $basic;
     public $initnone;
 
@@ -46,7 +48,7 @@ class Dropdown extends Component
     public function __construct($label = null, $key = null,
                                 $iModel = null, $iType = 'text', $iPlaceholder = null, 
                                 $sId = null, $model, $collection = null, $dataSource = null, $dataSourceFunction = null, $value, $text, $sClass = null,
-                                $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = null,
+                                $triggerOn = false, $triggerOnEvent = null, $transition = 'slide', $clearable = false, $placeholder = null, $customMessage = null,
                                 $basic = false, $initnone = false, $noErrors = false)
     {
         $this->label = $label;
@@ -79,6 +81,8 @@ class Dropdown extends Component
         $this->clearable = $clearable;
         $this->placeholder = $placeholder;
         if( ! $placeholder) $this->placeholder = __('common.dropdown_placeholder');
+
+        $this->customMessage = $customMessage;
 
         $this->basic = $basic;
         $this->initnone = $initnone;

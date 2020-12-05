@@ -56,7 +56,7 @@
                     </x-placeholder>
                 @endforelse
                 
-            <x-form-buttons />
+            <x-form-buttons submit="submit()" />
             </form>
         </div>
     </x-content>

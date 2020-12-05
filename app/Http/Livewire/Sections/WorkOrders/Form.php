@@ -2,17 +2,19 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
-use App\Http\Livewire\Form as BaseForm;
+use App\Http\Livewire\FormHelpers;
 use App\Models\Product;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
+use Livewire\Component;
 
-class Form extends BaseForm
+class Form extends Component
 {
-    public $model = WorkOrder::class;
+    use FormHelpers;
+
     public $view = 'livewire.sections.workorders.form';
 
-
+    // workorder attributes
     public $product_id;
     public $lot_no;
     public $amount;
@@ -28,7 +30,6 @@ class Form extends BaseForm
 
     // comes from dropdown
     public $selectedProduct;
-    public $recipeOfSelectedProduct;
 
     // edit mode
     public $editMode = false;
@@ -43,11 +44,10 @@ class Form extends BaseForm
         }
     }
 
-    public function updatedProductId($id)
+    public function updatingProductId($id)
     {
         $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
         $this->emit('woProductChanged'); // fill the units
-        $this->recipeOfSelectedProduct = $this->selectedProduct->recipe;
 
         $this->guessFields($this->selectedProduct);
     }
@@ -55,7 +55,7 @@ class Form extends BaseForm
 
     public function getUnitsProperty()
     {
-        if($this->selectedProduct) {
+        if($this->productSelected()) {
             return $this->selectedProduct->units->toArray();
         }
     }
@@ -66,27 +66,13 @@ class Form extends BaseForm
         return Product::has('recipe')->get()->toArray();
     }
 
-    public function guessFields($product)
-    {
-        $latestWO = $product->getLastCreatedWorkOrder();
-        $globalWO = WorkOrder::latest()->first();
-
-        if($latestWO) {
-            if(is_numeric($latestWO->lot_no)) {
-                $this->lot_no = $latestWO->lot_no + 1;
-            } else {
-                $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
-            }
     
-            $this->amount = $latestWO->amount;
-            $this->unit_id = $latestWO->unit_id;
-        }
-        
-        $this->datetime = now();
-        if($globalWO) {
-            $this->queue = $globalWO->queue + 1;
-            $this->code = $globalWO->code;
-        }
+    // @override
+    public function submit()
+    {
+        $this->create();
+        $this->emit('new_work_order_created');
+        $this->reset();
     }
 
 
@@ -109,12 +95,36 @@ class Form extends BaseForm
         $this->note = $workOrder->note;
     }
 
-    // @override
-    public function submit()
+
+
+    public function productSelected()
     {
-        $this->create();
-        $this->emit('new_work_order_created');
-        $this->reset();
+        return ! empty($this->product_id);
+    }
+
+    
+
+    public function guessFields($product)
+    {
+        $latestWO = $product->getLastCreatedWorkOrder();
+        $globalWO = WorkOrder::latest()->first();
+
+        if($latestWO) {
+            if(is_numeric($latestWO->lot_no)) {
+                $this->lot_no = $latestWO->lot_no + 1;
+            } else {
+                $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
+            }
+    
+            $this->amount = $latestWO->amount;
+            $this->unit_id = $latestWO->unit_id;
+        }
+        
+        $this->datetime = now();
+        if($globalWO) {
+            $this->queue = $globalWO->queue + 1;
+            $this->code = $globalWO->code;
+        }
     }
 
 

@@ -48,19 +48,19 @@ class Form extends BaseForm
     {
         $this->cards[] = [
             'product_id' => null,
-            'direction' => 0,
+            'direction' => 1,
             'amount' => null,
             'lot_number' => null,
             'datetime' => date('d.m.Y H:i:s'),
             'unit_id' => null,       
             
-            'lotNumberAreaType' => 'dropdown',
+            'lotNumberAreaType' => 'input',
         ];
     }
 
     public function lotNumbers($productId)
     {
-        return StockMove::where('product_id', $productId)->pluck('lot_number')->toArray(); 
+        return StockMove::where('product_id', $productId)->pluck('lot_number')->toArray();
     }
 
     public function removeCard($key)
@@ -78,7 +78,7 @@ class Form extends BaseForm
         $currentDirection = $this->cards[$key]['direction'];
         $this->cards[$key]['direction'] = ! $currentDirection;
 
-        $this->cards[$key]['lotNumberAreaType'] = $currentDirection 
+        $this->cards[$key]['lotNumberAreaType'] = $currentDirection
                                 ? 'dropdown' // ??? 
                                 : 'input';
         $this->cards[$key]['lot_number'] = null; // empty lot number 

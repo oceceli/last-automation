@@ -41,7 +41,7 @@ class ScenarioSeeder extends Seeder
         $sodyumBikarbonat = $this->cProduct($hammadde->id, 'kilogram', 'Sodyum bikarbonat', 'sdymbkr');
         $sodyumKlorur = $this->cProduct($hammadde->id, 'Kilogram', 'Sodyum Klorür', 'sdymklr');
         $potasyumKlorur = $this->cProduct($hammadde->id, 'Kilogram', 'Potasyum klorür', 'ptsklr');
-        $kalsiyumKlorur = $this->cProduct($hammadde->id, 'Kilogram', 'Kalsiyum Klorur', 'klsklr');
+        $kalsiyumKlorur = $this->cProduct($hammadde->id, 'Kilogram', 'Kalsiyum Klorür', 'klsklr');
         $magnezyumKlorur = $this->cProduct($hammadde->id, 'Kilogram', 'magnezyum klorür', 'mgnzymklr');
         $asetikAsit = $this->cProduct($hammadde->id, 'Kilogram', 'asetik asit', 'astkast');
         $su = $this->cProduct($hammadde->id, 'Litre', 'su', 'su');

@@ -120,6 +120,10 @@
                         textToShowUser.push(data[txt]);
                     });
 
+                    @if($customMessage)
+                        textToShowUser.push("{{ $customMessage }}");
+                    @endif
+
                     values.push({
                         name: textToShowUser.join(' - '),
                         value: data.{{ $value }},
