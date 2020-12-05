@@ -1,8 +1,14 @@
 <?php 
 
 return [
-    'header' => 'Reçete Oluştur',
-    'subheader' => 'Üretim için reçete oluştur',
+    'recipe_create' => 'Reçete Oluştur',
+    'create_recipe_for_production' => 'Üretim için reçete oluştur',
+
+    'recipe_details' => 'Reçete Detayları',
+    'see_recipe_details' => 'Reçete içeriğini incele',
+
+    'edit_recipe' => 'Reçeteyi düzenle',
+    'add_edit_or_delete_ingredients' => 'Reçeteye içerik ekle, çıkar ya da düzenle',
 
 
     'code' => 'Reçete Kodu',

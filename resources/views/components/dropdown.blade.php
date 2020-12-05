@@ -1,13 +1,13 @@
 
 <div class="field">
-    <div {{ $attributes->merge(['class' => 'field']) }}>
+    <div {{ $attributes->merge(['class' => 'field']) }} >
 
         <label>{{ __($label)}}</label>
     
         @if ($iModel)
-        <div class="ui right labeled input" wire:ignore wire:loading.class="disabler">
-            <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.lazy="{{ $iModel }}">
-            <div class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
+        <div class="ui right labeled input" wire:loading.class="disabler">
+            <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.debounce.500ms="{{ $iModel }}">
+            <div wire:ignore class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
                 <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
                 <div class="text default">{{ __($placeholder) }}</div>
                 <i class="dropdown icon"></i>
@@ -28,9 +28,7 @@
         @endif
     </div>
 
-    {{-- <template x-if="$wire.{{ $model }}"> 
-        <div id="modelEmpty">sadf</div>
-    </template> --}}
+
     {{ $slot }}
 
     @if (!$noErrors) 
@@ -90,13 +88,6 @@
          */
         function fetchValues() {
             
-        
-            // if($(sId).length < 1) { // if dom deleted
-            //     @this.call('render');
-            //     console.warn(sId + " already deleted");
-            //     sId = null;
-            //     return;
-            // }
             
             @if($collection)
                 var data = @json($collection);
@@ -113,15 +104,26 @@
                 });
             @endif
         }
+        
 
         function setValues(data) {
             console.log(data);
             if(data != null) {
                 data.forEach(data => {
+                    let text = "{{ $text }}";
+                    let textToShowUser = [];
+
+                    // dropdownda tire(-) ile aralayarak çoklu gösterim yapılmak istenebilir 
+                    // kullanıcı virgül ile text attribute'ine geçmeli 
+                    text = text.split(',');
+                    text.forEach(function(txt){
+                        textToShowUser.push(data[txt]);
+                    });
+
                     values.push({
-                        name: data.{{ $text }},
+                        name: textToShowUser.join(' - '),
                         value: data.{{ $value }},
-                        selected :  @this.get('{{ $model }}') == data.{{ $value }},
+                        selected: @this.get('{{ $model }}') == data.{{ $value }},
                     });
                 });
                 populate(values);

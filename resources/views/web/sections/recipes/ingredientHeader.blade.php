@@ -4,7 +4,7 @@
             <span class="font-bold">1</span>
             <span class="border-b-2 border-black pb-1" data-tooltip="{{ __('sections/products.defined_base_unit_for_the_product', ['product' => $selectedProduct->name]) }}" 
                 data-variation="mini" data-position="top left">
-                {{ $spBaseUnit->name }}
+                {{ $selectedProduct->baseUnit->name }}
             </span>
             <span class="font-bold text-red-700">{{ $selectedProduct->name }}</span>
             <span class="text-gray-600">{{ __('sections/recipes.includes') }}</span>

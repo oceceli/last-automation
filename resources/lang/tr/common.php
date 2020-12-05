@@ -19,6 +19,7 @@ return [
     'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
+    'clear' => 'Temizle',
     'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',
     'detail' => 'Detay',

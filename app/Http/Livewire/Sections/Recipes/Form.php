@@ -18,9 +18,8 @@ class Form extends Component
 
     public $view = 'livewire.sections.recipes.form';
 
-
+    
     public $selectedProduct;
-    public $spBaseUnit;
 
     /**
      * Recipe model attributes *******************************
@@ -32,13 +31,11 @@ class Form extends Component
     public $oldProductId;
 
     public $locked = false;
-    public $allowDelete = false;
+    public $recipeExists = false;
 
     // modals
-    public $deleteConfirmModal;
-    public $formChangedModal;
-
-    public $backupExists = false; 
+    public $deleteConfirmModal = false;
+    public $formChangedModal = false;
 
     public $cards = [];
     public $backupCards = [];
@@ -62,54 +59,40 @@ class Form extends Component
      */
     public function updatingProductId($id)
     {
-        // save old product id to oldProductId property
-        $this->oldProductId = $this->product_id;
-
-        if($this->changesFoundOnForm()) 
+        if($this->isChangesFoundOnForm()) {
+            // save old product id to oldProductId property
+            $this->oldProductId = $id;
             return $this->formChangedModal = true;
+        }
 
         $this->reset();
         $this->setForm($id);
     }
 
 
-
-    private function changesFoundOnForm()
-    {
-        return $this->isBackupExists() && ($this->backupCode != $this->code || $this->backupCards != $this->cards);
-    }
-
-
-
-    private function setForm($productId)
-    {
-        // $this->validate(); // ?? code alanı doğrulama sıfırlamak için
-        
-        // set selectedProduct property
-        $this->selectedProduct = $this->getProduciblesProperty()->find($productId);
-
-        // set baseUnit property for selected unit 
-        $this->spBaseUnit = $this->selectedProduct->baseUnit;
-
-        $this->fetchAndSetIngredients();
-    }
-
-
     /**
      * Get selected product's recipe, set code and ingredients in the form if available 
      */
-    private function fetchAndSetIngredients()
+    private function setForm($productId)
     {
-        if( ! $recipe = $this->selectedProduct->recipe) 
+        // set selectedProduct property
+        $this->selectedProduct = $this->getProduciblesProperty()->find($productId);
+        
+        // if selected product has no recipe then exit
+        if( ! $recipe = $this->selectedProduct->recipe)
             return $this->reset('code', 'cards');
 
+        // if there is a recipe for selected product, lock the card so it will be non-editable
         $this->lock();
+
+        // equalize code field with recipe code which comes from database 
         $this->code = $recipe->code;
         
+        // if recipe not have any ingredients, return 
         if($recipe->ingredients->isEmpty()) return;
 
+        // if recipe has ingredients, fill in in the cards
         foreach($recipe->ingredients as $ingredient) {
-            // $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
             $this->cards[] = [
                 'ingredient' => $ingredient,
                 'unit_id' => $ingredient->pivot->unit_id,
@@ -119,7 +102,19 @@ class Form extends Component
         }
     }
 
+
+    /**
+     * Detects if something changed on the form by the user
+     */
+    private function isChangesFoundOnForm()
+    {
+        return $this->isBackupExists() && ($this->backupCode != $this->code || $this->backupCards != $this->cards);
+    }
+
     
+    /**
+     * A card's structure
+     */
     private function cardForming()
     {
         return [
@@ -131,14 +126,17 @@ class Form extends Component
     }
 
 
+    /**
+     * Add ingredient to form from material modal
+     */
     public function addCard($ingredient)
     {
-        // Abort if ingredient is already in card
+        // Return if ingredient is already in card
         if($this->isInCard($ingredient['id'])) {
             return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'));
         } 
 
-        // Abort if ingredient is $selectedProduct
+        // Return if ingredient is $selectedProduct
         if($ingredient['id'] == $this->selectedProduct->id) {
             return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
@@ -147,40 +145,62 @@ class Form extends Component
     }
 
 
-
+    /**
+     * Remove a card
+     */
     public function removeCard($key)
     {
         unset($this->cards[$key]);
     }
 
+
+    /**
+     * Remove recipe from database
+     */
     public function removeRecipe()
     {
-        // $this->selectedProduct->recipe->ingredients()->detach();
         $this->selectedProduct->recipe->delete();
         $this->reset();
     }
 
+
+    /**
+     * Opens modal for deletion confirm
+     */
     public function openDeleteConfirmModal()
     {
         $this->deleteConfirmModal = true;
     }
 
+
+    /**
+     * Closes deletion confirm modal on cancel
+     */
     public function closeDeleteConfirmModal()
     {
         $this->deleteConfirmModal = false;
     } 
 
    
-
+    /**
+     * If product id is updated and changes made in the form 
+     */
     public function modalStayHere()
     {
+        // close modal
         $this->formChangedModal = false;
         // $this->clearBackups();
+
+        // restore old form
         $this->product_id = $this->oldProductId;
+
         $this->reset('oldProductId');
     }
 
     
+    /**
+     * If formChangedModal got a false
+     */
     public function updatedFormChangedModal($bool) // leave selected on the modal 
     {
         if( ! $bool) {
@@ -191,59 +211,67 @@ class Form extends Component
         }
     }
 
+
+    /**
+     * Undo changes made to form 
+     */
     public function restoreForm()
     {
         $this->code = $this->backupCode;
         $this->cards = $this->backupCards;
     }
 
+
+    /**
+     * If user made changes on form, it should be restorable from backup 
+     */
     public function isRestorable()
     {
-        return ! $this->isLocked() && $this->changesFoundOnForm();
+        return ! $this->isLocked() && $this->isChangesFoundOnForm();
     }
 
 
-    // public function removeAllCards()
-    // {
-    //     $this->cards = [];
-    // }
-
-
-
+    /**
+     * Toggles literal attribute of ingredient pivot
+     */
     public function toggleLiteral($key)
     {
         $this->cards[$key]['literal'] = ! $this->cards[$key]['literal'];
     }
 
+
+    /**
+     * Get unit based on given card
+     */
     public function getIngredientUnit($card) 
     {
         return Unit::find($card['unit_id']); // ?? 
     }
 
     
+    /**
+     * Return locked property
+     */
     public function isLocked()
     {
         return $this->locked;
     }
 
 
+    /**
+     * Perform a locking operation to prevent user from editing the form until it's unlocked
+     */
     private function lock()
     {
         $this->locked = true;
         $this->clearBackups();
-        $this->allowDelete(); // ?? submit'in altındaydı buraya almak mantıklı olabilir mi?
+        $this->recipeExists = true; // ?? submit'in altındaydı buraya almak mantıklı olabilir mi?
     }
 
 
-    private function clearBackups()
-    {
-        if($this->isBackupExists()) {
-            $this->reset('backupCode', 'backupCards');
-            $this->backupExists = false;
-        }
-    }
-
-
+    /**
+     * Unlock the form, now user can edit or delete the recipe
+     */
     public function unlock()
     {
         $this->backupForm();
@@ -251,20 +279,48 @@ class Form extends Component
     }
 
 
+    /**
+     * Backup form fields
+     */
     private function backupForm()
     {
         $this->backupCards = $this->cards;
         $this->backupCode = $this->code;
-        $this->backupExists = true;
     }
 
 
-    private function isBackupExists()
+    /**
+     * Get rid of backups
+     */
+    private function clearBackups()
     {
-        return $this->backupExists;
+        if($this->isBackupExists()) {
+            $this->reset('backupCode', 'backupCards');
+        }
+    }
+
+
+    /**
+     * Return backup status
+     */
+    public function isBackupExists()
+    {
+        return ! empty($this->backupCards) && ! empty($this->backupCode);
     }
 
     
+    /**
+     * Return cards status
+     */
+    public function isCardsExists()
+    {
+        return ! empty($this->cards);
+    }
+
+
+    /**
+     * Convert units to base
+     */
     public function calculatedUnit($card)
     {
         if($card['unit_id'] && $card['amount'])
@@ -273,16 +329,17 @@ class Form extends Component
 
 
     /**
-     * Computed properties *****************************
+     * Fetch producible products
      */
-
     public function getProduciblesProperty() 
     {
         return Product::getProducibleProducts();
     }
 
 
-
+    /**
+     * Fetch categories
+     */
     public function getCategoriesProperty()
     {
         return Category::all();
@@ -317,22 +374,21 @@ class Form extends Component
             $recipe = Recipe::create($data);
         }
 
-        // finally execute syncing operation
-        if( ! empty($this->cards)) {
+        // finally execute the card syncing operation
+        if($this->isCardsExists()) {
             $this->syncIngredients($recipe);
         } else {
             $this->emit('toast', 'Boş olarak ...', 'Reçete içeriği boş olarak kaydedildi...');
         }
 
-
         // lock the form after saving (lock also clears the backups)
-        $this->lock(); 
+        $this->lock();
     }
 
-    private function allowDelete()
-    {
-        $this->allowDelete = true;
-    }
+    // private function setRecipeExists()
+    // {
+    //     $this->recipeExists = true;
+    // }
     
     public function validateRecipe()
     {
@@ -365,7 +421,6 @@ class Form extends Component
             $this->emit('toast', 'common.error.title', 'sections/recipes.an_error_occurred_while_adding_ingredients', 'error');
         }
         $this->emit('toast', 'common.saved.title', 'common.saved.changes', 'success');
-        // $this->reset();
     }
 
 
@@ -386,7 +441,7 @@ class Form extends Component
      * Lookup tables for avoiding duplicate in blade 
      */
     public function literalClass($key)
-    {
+    {   
         return [
             true => 'large red chevron left icon',
             false => 'large green chevron right icon',
@@ -401,14 +456,31 @@ class Form extends Component
         ][$this->cards[$key]['literal']];
     }
 
-
-
+    public function headerText()
+    {
+        if($this->recipeExists) {
+            return $this->isLocked() 
+                ? [
+                    'main' => __('sections/recipes.recipe_details'),
+                    'sub' => __('sections/recipes.see_recipe_details'),
+                ]
+                : [
+                    'main' => __('sections/recipes.edit_recipe'),
+                    'sub' => __('sections/recipes.add_edit_or_delete_ingredients'),
+                ];
+        } else {
+            return [
+                'main' => __('sections/recipes.recipe_create'),
+                'sub' => __('sections/recipes.create_recipe_for_production'),
+            ];
+        }
+    }
 
 
     /**
      * Produce a random recipe unique code
      */
-    public function suggest()
+    public function suggestCode()
     {
         $string = $this->code;
         $randomString = strtolower(Str::random(8));

@@ -1,12 +1,13 @@
-<div {{ $attributes->merge(['class' => 'flex items-center'])}}>
-    <div class="ui mini buttons w-full ">
-        <button class="ui basic button labeled icon" type="reset" wire:click="{{ $clear }}">
+<div {{ $attributes->merge(['class' => 'flex items-center relative'])}}>
+    <div wire:loading.class="absolute pin z-20"></div>
+    <div class="ui mini buttons w-full">
+        <button class="ui basic button labeled icon" type="reset" wire:click.prevent="{{ $clear }}">
             <i class="undo alternate icon"></i>
-            Temizle
+            {{ __('common.clear') }}
         </button>
-        <button class="ui right labeled icon positive button" wire:loading.class="disabled" @if($submit) wire:click.prevent="{{ $submit }} @endif"> {{-- wire:click.prevent="{{ $submit }}" --}}
+        <button class="ui right labeled icon positive button" @if($submit) wire:click.prevent="{{ $submit }} @endif"> {{-- wire:click.prevent="{{ $submit }}" --}}
             <i class="angle right icon"></i>
-            Kaydet
+            {{ __('common.save') }}
         </button>
     </div>
 </div>

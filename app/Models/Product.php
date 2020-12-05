@@ -128,9 +128,7 @@ class Product extends Model
 
     public static function getProducibleProducts()
     {
-        return self::where('producible', true)
-            ->orderBy('code', 'asc')
-            ->get();
+        return self::where('producible', true)->get();
     }
 
     public function getCodeAttribute($value)

@@ -28,4 +28,10 @@ Trait FormHelpers
             //
         ];
     }
+
+    public function clearFields()
+    {
+        $this->reset();
+        // $this->emit('')
+    }
 }

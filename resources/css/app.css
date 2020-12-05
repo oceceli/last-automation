@@ -16,4 +16,7 @@
     @apply text-red-500 hover:text-red-800;
   }
   /* tests */
+  .pin {
+    @apply top-0 right-0 left-0 bottom-0;
+  }
 }
