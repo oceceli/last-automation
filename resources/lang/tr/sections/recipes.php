@@ -24,6 +24,7 @@ return [
     // 'do_you_want_to_save_before_exit' => 'Çıkmadan önce kaydetmek ister misiniz?',
     'do_you_want_to_leave_for_sure' => 'Ayrılmak istediğinize emin misiniz?',
     'all_changes_will_be_lost_if_you_leave' => 'Ayrılırsanız tüm değişiklikler kaybolacak',
+    'delete_recipe' => 'Reçeteyi sil',
     
     'edit_recipe_of' => ':product ürününe ait reçeteyi düzenle',
     'are_you_sure_you_want_to_delete_this_recipe' => 'Bu reçeteyi silmek istediğinize emin misiniz?',

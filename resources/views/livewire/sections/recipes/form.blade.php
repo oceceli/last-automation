@@ -1,8 +1,8 @@
 <div>
-    {{-- {{ print_r($backupCards) }} --}}
-    {{-- {{ $backupCode }} --}}
-    {{-- <br> --}}
-    {{-- @if ($product_id)
+    {{-- {{ print_r($backupCards) }}
+    {{ $backupCode }}
+    <br>
+    @if ($product_id)
     şu anki {{ \App\Models\Product::find($product_id)->code }}
     @endif
     <br>
@@ -19,12 +19,12 @@
                     </button>
                 @else
                 @if ($this->isRestorable())
-                    <button wire:click.prevent="restoreForm()" class="ui mini basic  button" data-tooltip="!!! geri al" data-variation="mini" data-position="bottom right">
+                    <button wire:click.prevent="restoreForm()" class="ui mini basic  button" data-tooltip="{{ __('common.undo_changes') }}" data-variation="mini" data-position="bottom right">
                         <i class="green undo alternate icon"></i>
                     </button>
                 @endif
                 @if ($allowDelete)
-                        <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="!!! reçeteyi sil" data-variation="mini" data-position="bottom right">
+                        <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="{{ __('sections/recipes.delete_recipe') }}" data-variation="mini" data-position="bottom right">
                             <i class="red trash icon"></i>
                         </button>
                     @endif
@@ -158,6 +158,6 @@
                 <x-form-buttons class="p-4 pt-6" submit="submit()" />
             @endif
     </x-content>
-
+    
     @include('web.sections.recipes.recipeModals')
 </div>

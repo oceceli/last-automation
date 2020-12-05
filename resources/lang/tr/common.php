@@ -82,6 +82,8 @@ return [
     'confirm' => 'Onayla',
     'stay_here' => 'Burada kal',
     'leave' => 'Ayrıl',
+    'undo_changes' => 'Değişiklikleri geri al',
+
     'home' => 'Anasayfa',
 
     'main' => 'Ana',

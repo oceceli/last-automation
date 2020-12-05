@@ -103,7 +103,6 @@ class Form extends Component
         if( ! $recipe = $this->selectedProduct->recipe) 
             return $this->reset('code', 'cards');
 
-        $this->allowDelete = true;
         $this->lock();
         $this->code = $recipe->code;
         
@@ -232,6 +231,7 @@ class Form extends Component
     {
         $this->locked = true;
         $this->clearBackups();
+        $this->allowDelete(); // ?? submit'in altındaydı buraya almak mantıklı olabilir mi?
     }
 
 
@@ -278,7 +278,7 @@ class Form extends Component
 
     public function getProduciblesProperty() 
     {
-        return Product::getProducibleRecipes();
+        return Product::getProducibleProducts();
     }
 
 
@@ -327,7 +327,6 @@ class Form extends Component
 
         // lock the form after saving (lock also clears the backups)
         $this->lock(); 
-        $this->allowDelete();
     }
 
     private function allowDelete()
