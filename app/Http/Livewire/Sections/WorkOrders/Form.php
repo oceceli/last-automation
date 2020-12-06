@@ -39,6 +39,18 @@ class Form extends Component
     public $editMode = false;
     public $workOrder;
 
+    protected $rules = [
+        'product_id' => 'required|min:1',
+        'unit_id' => 'required|min:1',
+        'code' => 'required|integer|min:0', // iş emri no
+        'lot_no' => 'required',
+        'amount' => 'required|numeric|min:0.1',
+        'datetime' => 'required|date',
+        'queue' => 'required|int|min:0',
+        'status' => 'required|max:15',
+        'note' => 'nullable',
+    ];
+
     public function mount($workOrder = null) 
     {
         if($workOrder) {
@@ -98,10 +110,15 @@ class Form extends Component
     // @override
     public function submit()
     {
-        $this->create();
+        $data = $this->validate();
+        WorkOrder::create($data);
+
+        $this->emit('toast', __('common.saved_successfully'), __('sections/workorders.workorder_saved_successfully'), 'success');
         $this->emit('new_work_order_created');
+        
         $this->reset();
     }
+
 
 
     /**

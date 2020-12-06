@@ -21,18 +21,16 @@
 
 
         <x-slot name="right">
-            <div class="border rounded shadow-md h-full bg-cool-gray-50 md:h-30-rem md:overflow-x-hidden ">
+            <div class="rounded shadow-lg border h-full bg-white md:h-30-rem md:overflow-x-hidden ">
                 @if ($this->productSelected())
                     @if ($preferStock)
 
-
                         @include('web.sections.workorders.create.workorderPreferStock')
 
-                
                     @else
-                        <div class="p-8 h-full flex flex-col justify-between bg-white">
-                            <div>
-                                <h5 class="leading-tight font-light cursor-default">Üretim tamamlandığında stoktan düşecek malzemeler:</h5>
+                        <div class="h-full flex flex-col justify-between bg-white">
+                            <div class="p-8">
+                                <h5 class="leading-tight font-light cursor-default">{{ __('sections/workorders.these_items_will_be_reduced_from_stock_after_production') }}:</h5>
                                 @foreach ($selectedProduct->recipe->ingredients as $ingredient)
                                     <x-custom-list>
                                         <div class="flex items-center gap-1">
@@ -50,21 +48,18 @@
                                     </x-custom-list>
                                 @endforeach
                             </div>
-                            <div class="pt-8">
+                            <div class="p-8">
                                 <button wire:click.prevent="activatePreferStock()" class="ui primary tiny button shadow">
-                                    Kaynakları belirt
+                                    {{ __('sections/workorders.specify_sources') }}
                                 </button>
                                 <span class="text-ease">ya da boşver...</span>
                             </div>
                         </div>
                     @endif
-
-
-
                 @else 
                     <x-placeholder icon="tasks">
                         <span class="text-">
-                            Üretim için gerekli malzeme ve miktarları burada görüntülenecek...
+                            {{ __('sections/workorders.necessary_items_and_amounts_will_be_shown_here') }}...
                         </span>
                     </x-placeholder>
                 @endif

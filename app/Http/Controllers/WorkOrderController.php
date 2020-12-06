@@ -47,7 +47,7 @@ class WorkOrderController extends Controller
 
     public function create()
     {
-        return view('web.sections.workorders.create');
+        return view('web.sections.workorders.create.index');
     }
 
     public function daily()

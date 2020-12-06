@@ -28,26 +28,26 @@ class WorkOrder extends Model
     /**
      * Validate rules for current model
      */
-    public static function rules()
-    {
-        // $id = self::getRequestID(); // use for unique keys on update event
-        return [
-            'data' => [
-                'product_id' => 'required|min:1',
-                'unit_id' => 'required|min:1',
-                'code' => 'required|integer|min:0', // iş emri no
-                'lot_no' => 'required',
-                'amount' => 'required|numeric|min:0.1',
-                'datetime' => 'required|date',
-                'queue' => 'required|int|min:0',
-                'status' => 'required|max:15',
-                'note' => 'nullable',
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
-    }
+    // public static function rules()
+    // {
+    //     // $id = self::getRequestID(); // use for unique keys on update event
+    //     return [
+    //         'data' => [
+    //             'product_id' => 'required|min:1',
+    //             'unit_id' => 'required|min:1',
+    //             'code' => 'required|integer|min:0', // iş emri no
+    //             'lot_no' => 'required',
+    //             'amount' => 'required|numeric|min:0.1',
+    //             'datetime' => 'required|date',
+    //             'queue' => 'required|int|min:0',
+    //             'status' => 'required|max:15',
+    //             'note' => 'nullable',
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
 
     public function stockMoves()
     {
