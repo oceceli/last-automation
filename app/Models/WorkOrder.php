@@ -13,7 +13,8 @@ use Carbon\Carbon;
 
 class WorkOrder extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers, Production;
+    use HasFactory, SoftDeletes, ModelHelpers;
+    use Production;
 
     protected $guarded = [];
 
@@ -60,6 +61,11 @@ class WorkOrder extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function preferredStocks()
+    {
+        return $this->hasMany(PreferredStock::class);
     }
 
     public function unit()

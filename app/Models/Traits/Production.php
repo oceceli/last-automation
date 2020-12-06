@@ -49,7 +49,7 @@ trait Production
             }
         }
         return $totalDecrase;
-    }   
+    }
 
 
 

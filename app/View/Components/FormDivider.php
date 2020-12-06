@@ -8,18 +8,24 @@ class FormDivider extends Component
 {
 
     public $bottom; // slot
-    
     public $noButtons; 
+
+    public $lClass;
+    public $rClass;
+
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($bottom = false, $noButtons = false)
+    public function __construct($bottom = false, $noButtons = false, $lClass = null, $rClass= null)
     {
         $this->bottom = $bottom;
         $this->noButtons = $noButtons;
+
+        $this->lClass = $lClass;
+        $this->rClass = $rClass;
     }
 
     /**

@@ -3,6 +3,7 @@
 
     <x-form-divider>
 
+        
         <x-slot name="left">
             <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
                 value="id" text="name" label="sections/products.name" placeholder="{{ __('sections/units.unit') }}"  
@@ -17,55 +18,60 @@
             <x-input model="queue" label="sections/workorders.queue" placeholder="sections/workorders.queue" class="required field" /> 
         </x-slot>
 
+
+
         <x-slot name="right">
-            <div class="border rounded shadow h-full bg-smoke-lightest">
+            <div class="border rounded shadow-md h-full bg-cool-gray-50 md:h-30-rem md:overflow-x-hidden ">
                 @if ($this->productSelected())
-                    {{-- Bu ürünün üretimi için
-                        @foreach ($selectedProduct->recipe->ingredients as $ingredient)
-                            {{ $ingredient->pivot->amount }} {{ \App\Models\Unit::find($ingredient->pivot->unit_id)->abbreviation }} {{ $ingredient->name }}  @if(!$loop->last) ve  @endif
-                        @endforeach
-                    kullanılacak. Stok tercihi ekle! --}}
+                    @if ($preferStock)
 
-                    <div class="flex flex-col gap-4 p-3 h-full">
-                        @foreach ($selectedProduct->recipe->ingredients as $ingredient)
-                            <div wire:key="{{ $loop->index }}" class="p-3 shadow-md rounded font-bold border border-red-300 bg-white">
 
-                                <div class="flex justify-between gap-3 text-ease">
-                                    <div class="field flex gap-1 items-center">
-                                        <span class="">{{ $ingredient->name }}</span>
-                                        <span class="text-xs"> ({{ $ingredient->code }})</span> 
-                                    </div>
-                                    <div class="text-xs">
-                                        Gerekli miktar: şu kadar
-                                    </div>
-                                </div>
+                        @include('web.sections.workorders.create.workorderPreferStock')
 
-                                <div>
-                                    @if ($ingredient->lots)
-                                        {{-- <div class="ui tiny form -mb-3">
-                                            <x-dropdown model="test" :collection="$ingredient->lots" value="lot_number" text="lot_number" customMessage="döngüyü yakalamak lazım" class="mini" sId="{{ $loop->index }}" >
-                                            
-                                            </x-dropdown>
-                                        </div> --}}
-                                        <select class="form-select text-xs ">
-                                            <option selected disabled>seçiniz</option>
-                                            @foreach ($ingredient->lots as $lot)
-                                                <option value="{{ $lot['lot_number'] }}">{{ $lot['lot_number'] }} {{ $lot['amount'] . ' ' . $lot['unit']->name }} bulunuyor</option>
-                                            @endforeach
-                                        </select>
-                                    @else
-                                        <span class="text-xs text-ease">Stokta hiç {{ $ingredient->name }} bulunmuyor. Üretim yapmadan önce kullanılacak lot numarası belirtilecektir.</span>
-                                    @endif
-                                </div>
+                
+                    @else
+                        <div class="p-8 h-full flex flex-col justify-between bg-white">
+                            <div>
+                                <h5 class="leading-tight font-light cursor-default">Üretim tamamlandığında stoktan düşecek malzemeler:</h5>
+                                @foreach ($selectedProduct->recipe->ingredients as $ingredient)
+                                    <x-custom-list>
+                                        <div class="flex items-center gap-1">
+                                            <div>{{ $ingredient->name }}</div>
+                                            <span class="text-xs hidden md:block"> ({{ $ingredient->code }})</span> 
+                                        </div>
+                                        <div>
+                                            @if ($ingredient->pivot->literal) {{ __('common.net') }}
+                                            @else {{ __('common.least') }}
+                                            @endif
+                                            <span class="">
+                                                {{ $this->calculateNeeds($ingredient)['amount'] }} {{ $this->calculateNeeds($ingredient)['unit']->name }}
+                                            </span>
+                                        </div>
+                                    </x-custom-list>
+                                @endforeach
                             </div>
-                        @endforeach
-                    </div>
-                    
+                            <div class="pt-8">
+                                <button wire:click.prevent="activatePreferStock()" class="ui primary tiny button shadow">
+                                    Kaynakları belirt
+                                </button>
+                                <span class="text-ease">ya da boşver...</span>
+                            </div>
+                        </div>
+                    @endif
+
+
+
                 @else 
-                    <x-placeholder icon="mortar pestle" header="test" />
+                    <x-placeholder icon="tasks">
+                        <span class="text-">
+                            Üretim için gerekli malzeme ve miktarları burada görüntülenecek...
+                        </span>
+                    </x-placeholder>
                 @endif
             </div>
         </x-slot>
+
+
         
         <x-slot name="bottom">
             <div x-data="{addNote: false}">
@@ -80,6 +86,7 @@
             </div>
         </x-slot>
 
+
     </x-form-divider>
 
 
@@ -88,3 +95,8 @@
 
 
 
+
+{{-- <div class="ui tiny form -mb-3">
+    <x-dropdown model="test" :collection="$ingredient->lots" value="lot_number" text="lot_number" customMessage="döngüyü yakalamak lazım" class="mini" sId="{{ $loop->index }}" >
+    </x-dropdown>
+</div> --}}

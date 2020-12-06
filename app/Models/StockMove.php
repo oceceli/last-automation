@@ -81,6 +81,16 @@ class StockMove extends Model
         return $this->product->getBaseUnit()->name;
     }
 
+    public function setLotNumberAttribute($lotNumber)
+    {
+        $this->attributes['lot_number'] = strtoupper($lotNumber);
+    }
+
+    public function getLotNumberAttribute($lotNumber)
+    {
+        return strtoupper($lotNumber);
+    }
+
     public function convertToBase()
     {
         return Conversions::toBase($this->unit, $this->amount);

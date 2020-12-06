@@ -51,5 +51,17 @@ class Recipe extends Model
         parent::delete();
     }
 
+    public function getNeedsAttribute()
+    {
+        foreach($this->ingredients as $ingredient) {
+            $array[] = [
+                'ingredient' => $ingredient,
+                'amount' => $ingredient->pivot->amount,
+                'unit' => Unit::find($ingredient->pivot->unit_id)
+            ];
+        }
+        return $array;
+    }
+
     
 }

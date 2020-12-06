@@ -83,13 +83,16 @@ class Product extends Model
     {
         return $this->hasOne(Recipe::class);
     }
+
+
+
     /**
      * A bridge for the recipe ingredients 
      */
-    public function getIngredientsAttribute()
-    {
-        return $this->recipe->ingredients;
-    }
+    // public function getIngredientsAttribute()
+    // {
+    //     return $this->recipe->ingredients;
+    // }
 
     public function getBaseUnit()
     {

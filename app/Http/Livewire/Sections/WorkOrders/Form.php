@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
+use App\Common\Facades\Conversions;
 use App\Http\Livewire\FormHelpers;
 use App\Models\Product;
+use App\Models\Unit;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -31,6 +33,8 @@ class Form extends Component
     // comes from dropdown
     public $selectedProduct;
 
+    public $preferStock;
+
     // edit mode
     public $editMode = false;
     public $workOrder;
@@ -46,10 +50,34 @@ class Form extends Component
 
     public function updatingProductId($id)
     {
+        $this->reset();
         $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
         $this->emit('woProductChanged'); // fill the units
 
         $this->guessFields($this->selectedProduct);
+    }
+
+
+    public function calculateNeeds($ingredient)
+    {
+        $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
+        
+        if($this->amount && $this->unit_id) {
+            $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
+            $selectedProductAmount = Conversions::toBase($this->unit_id, $this->amount)['amount'];
+
+            $result = ['amount' => $selectedProductAmount * $convertedIngredient['amount'], 'unit' => $convertedIngredient['unit']];
+            if( ! $ingredient->pivot->literal) $result['amount'] = floor($selectedProductAmount * $convertedIngredient['amount']);
+
+            return $result;
+        } 
+        
+        else return ['amount' => 0, 'unit' => $convertedIngredient['unit']];
+    }
+
+    public function activatePreferStock()
+    {
+        $this->preferStock = true;
     }
     
 

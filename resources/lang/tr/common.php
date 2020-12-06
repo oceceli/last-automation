@@ -20,6 +20,8 @@ return [
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
     'clear' => 'Temizle',
+    'least' => 'En az',
+    'net' => 'Net',
     'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',
     'detail' => 'Detay',

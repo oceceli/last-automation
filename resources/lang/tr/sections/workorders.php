@@ -42,6 +42,8 @@ return [
 
     'no_workorder_found' => 'Hiç iş emri bulunamadı',
     'create_workorder' => 'iş emri oluşturun',
+    'select_lot_number' => 'Lot seçiniz',
+    'necessary_amount' => 'Gerekli miktar',
     // 'todays_work_orders' => 'Bugüne ait iş emirleri',
     'daily_work_orders' => 'Günlük iş emri',
     'production_is_completed' => 'Üretim tamamlandı',
