@@ -179,6 +179,11 @@ class Form extends Component
         return ! empty($this->product_id);
     }
 
+    public function redirectForAddIngredients()
+    {
+        return redirect()->route('recipes.edit', ['recipe' => $this->selectedProduct->recipe]);
+    }
+
     
 
     public function guessFields($product)

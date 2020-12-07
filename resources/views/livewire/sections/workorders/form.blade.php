@@ -21,10 +21,10 @@
                 <x-slot name="left">
                     @if ($editMode)
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
-                            value="id" text="name" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
+                            value="id" text="name,code" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
                     @else
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
-                            value="id" text="name" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
+                            value="id" text="name,code" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
                     @endif
                     <x-input model="lot_no" label="sections/workorders.lot_no" placeholder="sections/workorders.lot_no" class="required field" />
                     @if ($editMode)
@@ -51,11 +51,23 @@
                             @if ($preferStock)
         
                                 @include('web.sections.workorders.create.workorderPreferStock')
-        
+
+                            @elseif($selectedProduct->recipe->ingredients->isEmpty())
+                                <x-placeholder icon="red exclamation">
+                                    <div class="text-sm">
+                                        <div>{{ __('sections/recipes.no_recipe_ingredients_found') }}</div>
+                                        <div>{{ __('sections/workorders.recipe_ingredients_must_be_correct_for_keep_inventory_flawless') }}</div>
+                                        <div class="pt-5">
+                                            <button wire:click.prevent="redirectForAddIngredients()" class="ui mini button">
+                                                {{ __('sections/recipes.add_recipe_ingredients') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </x-placeholder>
                             @else
                                 <div class="h-full flex flex-col justify-between bg-white">
                                     <div class="py-5 text-center shadow">
-                                        <h5 class="leading-tight font-light text-ease">{{ __('sections/workorders.these_items_will_be_reduced_from_stock_after_production') }}</h5>
+                                        <h5 class="leading-tight font-light text-ease">{{ __('sections/workorders.items_to_be_used_in_production') }}</h5>
                                     </div>
                                     <div class="p-8">
                                         @foreach ($selectedProduct->recipe->ingredients as $ingredient)
@@ -83,8 +95,9 @@
                                     </div>
                                 </div>
                             @endif
+                            
                         @else 
-                            <x-placeholder icon="tasks">
+                            <x-placeholder icon="primary tasks">
                                 <span class="text-sm">
                                     {{ __('sections/workorders.necessary_items_and_amounts_will_be_shown_here') }}...
                                 </span>

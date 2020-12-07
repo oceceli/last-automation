@@ -171,8 +171,15 @@ class Form extends Component
      */
     public function removeRecipe()
     {
-        $this->selectedProduct->recipe->delete();
-        $this->reset();
+        $result = $this->selectedProduct->recipe->delete();
+
+        if($result['type'] == 'error') {
+            $this->emit('toast', __('common.error.title'), $result['message'], 'warning');
+        } else {
+            $this->emit('toast', '', $result['message'], 'success');
+            $this->reset();
+        }
+
     }
 
 
@@ -387,11 +394,7 @@ class Form extends Component
         }
 
         // finally execute the card syncing operation
-        if($this->isCardsExists()) {
-            $this->syncIngredients($recipe);
-        } else {
-            $this->emit('toast', 'Boş olarak ...', 'Reçete içeriği boş olarak kaydedildi...');
-        }
+        $this->syncIngredients($recipe);
 
         // lock the form after saving (lock also clears the backups)
         $this->lock();

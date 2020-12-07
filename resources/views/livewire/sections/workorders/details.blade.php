@@ -51,6 +51,22 @@
                         <span>{{ $necessary['ingredient']->baseUnit->name }}</span>
                     </div>
                 @endforeach
+
+                                    <div>
+                                        <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
+                                        <div class="ui toggle checkbox">
+                                            <input type="checkbox" wire:model="status">
+                                            <label></label>
+                                        </div>
+                                    </div>
+            @else
+                                    <div>
+                                        <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
+                                        <div class="ui toggle checkbox">
+                                            <input type="checkbox" wire:model="status">
+                                            <label></label>
+                                        </div>
+                                    </div>
             @endif
         </div>
     </div>

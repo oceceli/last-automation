@@ -45,23 +45,43 @@ class Recipe extends Model
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal');
     }
 
+
+    
+
     public function delete()
     {
-        $this->ingredients()->detach();
-        parent::delete();
+        if($this->recipeUsedInActiveWorkOrders() > 0) {
+            return ['message' => '!!! Bu reçeteye ait aktif iş emri/emrileri olduğu için silinemez!', 'type' => 'error'];
+        } else {
+            $this->ingredients()->detach();
+            parent::delete();
+            return ['message' => __('sections/recipes.recipe_deleted_successfully'), 'type' => 'success'];
+        }
+        
     }
 
-    public function getNeedsAttribute()
+    private function recipeUsedInActiveWorkOrders()
     {
-        foreach($this->ingredients as $ingredient) {
-            $array[] = [
-                'ingredient' => $ingredient,
-                'amount' => $ingredient->pivot->amount,
-                'unit' => Unit::find($ingredient->pivot->unit_id)
-            ];
-        }
-        return $array;
+        return WorkOrder::where('product_id', $this->product->id)
+                        ->where(function($query){
+                            $query->where('status', 'active')
+                                  ->orWhere('status', 'inactive');
+                        })->count();
     }
+
+
+
+    // public function getNeedsAttribute()
+    // {
+    //     foreach($this->ingredients as $ingredient) {
+    //         $array[] = [
+    //             'ingredient' => $ingredient,
+    //             'amount' => $ingredient->pivot->amount,
+    //             'unit' => Unit::find($ingredient->pivot->unit_id)
+    //         ];
+    //     }
+    //     return $array;
+    // }
 
     
 }
