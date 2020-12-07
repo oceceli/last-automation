@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'flex items-center justify-between px-2 pt-1 pb-4']) }}>
+<div {{ $attributes->merge(['class' => 'flex items-center justify-between px-2 pt-2 pb-4']) }}>
 
   <div class="flex-1">
       <h4 class="ui horizontal left aligned divider header">

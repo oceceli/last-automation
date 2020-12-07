@@ -2,7 +2,7 @@
     <div class="flex flex-col bg-cool-gray-50">
         <div>
             <div class="py-8 rounded shadow-md bg-white text-xl text-ease text-center">
-                {{ $question }}
+                {{ $slot }}
             </div>
         </div>
         <div class="p-5 ui tiny buttons border-t border-{{ $color }}-300">

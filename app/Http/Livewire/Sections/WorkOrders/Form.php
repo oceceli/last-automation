@@ -33,11 +33,14 @@ class Form extends Component
     // comes from dropdown
     public $selectedProduct;
 
-    public $preferStock;
+    // is lot stock prefering available?
+    public $preferStock = false;
 
     // edit mode
     public $editMode = false;
     public $workOrder;
+
+    public $deleteModal = false;
 
     protected $rules = [
         'product_id' => 'required|min:1',
@@ -62,11 +65,68 @@ class Form extends Component
 
     public function updatingProductId($id)
     {
+        if($this->editMode) return;
+
         $this->reset();
-        $this->selectedProduct = Product::find($id); // get it from getProductsProperty 
+        $this->selectedProduct = Product::find($id); // !!! get it from getProductsProperty
         $this->emit('woProductChanged'); // fill the units
 
         $this->guessFields($this->selectedProduct);
+    }
+
+
+    public function activatePreferStock()
+    {
+        $this->preferStock = true;
+    }
+    
+
+    public function getProductsProperty()
+    {
+        return Product::has('recipe')->get()->toArray();
+    }
+
+
+    public function getUnitsProperty()
+    {
+        if($this->productSelected()) {
+            return $this->selectedProduct->units->toArray();
+        }
+    }
+
+    
+    // @override
+    public function submit()
+    {
+        $data = $this->validate();
+
+        if($this->workOrder && $this->editMode) {
+            $this->workOrder->update($data);
+            $this->emit('toast', '', __('common.saved.changes'), 'success');
+        } else {
+            WorkOrder::create($data);
+            $this->emit('toast', '', __('sections/workorders.workorder_saved_successfully'), 'success');
+            $this->emit('new_work_order_created');
+            $this->reset();
+        } 
+    }
+
+    public function openDeleteModal()
+    {
+        if($this->editMode)
+            $this->deleteModal = true;
+    }
+
+    public function confirmDelete()
+    {
+        if($this->editMode && $this->workOrder) {
+            $this->workOrder->delete();
+            return redirect()->route('work-orders.index');
+        }
+    }
+    public function updatedDeleteModal($bool)
+    {
+        !$bool ? $this->deleteModal = false : null;
     }
 
 
@@ -87,39 +147,6 @@ class Form extends Component
         else return ['amount' => 0, 'unit' => $convertedIngredient['unit']];
     }
 
-    public function activatePreferStock()
-    {
-        $this->preferStock = true;
-    }
-    
-
-    public function getUnitsProperty()
-    {
-        if($this->productSelected()) {
-            return $this->selectedProduct->units->toArray();
-        }
-    }
-
-
-    public function getProductsProperty()
-    {
-        return Product::has('recipe')->get()->toArray();
-    }
-
-    
-    // @override
-    public function submit()
-    {
-        $data = $this->validate();
-        WorkOrder::create($data);
-
-        $this->emit('toast', __('common.saved_successfully'), __('sections/workorders.workorder_saved_successfully'), 'success');
-        $this->emit('new_work_order_created');
-        
-        $this->reset();
-    }
-
-
 
     /**
      * Sets the attributes for editing
@@ -128,6 +155,8 @@ class Form extends Component
     {
         $this->editMode = true;
         $this->workOrder = $workOrder;
+        $this->selectedProduct = $workOrder->product;
+
 
         $this->product_id = $workOrder->product_id;
         $this->lot_no = $workOrder->lot_no;
@@ -135,9 +164,12 @@ class Form extends Component
         $this->datetime = $workOrder->datetime;
         $this->code = $workOrder->code;
         $this->queue = $workOrder->queue;
+        $this->unit_id = $workOrder->unit_id;
         // $this->is_active = $workOrder->is_active;
         // $this->in_progress = $workOrder->in_progress;
         $this->note = $workOrder->note;
+        $this->emit('woProductChanged'); // fill the units
+
     }
 
 

@@ -2,6 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+[x-cloak=""] { display: none; }
+
 @layer components {
     .btn-blue {
       @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-red-300 shadow-md;

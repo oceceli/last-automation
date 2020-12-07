@@ -22,6 +22,7 @@ return [
     'in_progress' => 'Üretiliyor',
     'is_completed' => 'Tamamlandı',
     'note' => 'Açıklama',
+    
 
     'daily_production' => 'Günlük üretim',
 
@@ -47,7 +48,7 @@ return [
     'necessary_items_and_amounts_will_be_shown_here' => 'Üretim için gerekli malzeme ve miktarlar burada görüntülenecek',
     'specify_sources' => 'Kaynakları belirt',
     'these_items_will_be_reduced_from_stock_after_production' => 'Üretimden sonra stoktan eksilecek malzemeler',
-    'workorder_saved_successfully' => 'İş emri sorunsuzca kaydedildi',
+    'workorder_saved_successfully' => 'İş emri kaydedildi',
     // 'todays_work_orders' => 'Bugüne ait iş emirleri',
     'daily_work_orders' => 'Günlük iş emri',
     'production_is_completed' => 'Üretim tamamlandı',
@@ -60,6 +61,7 @@ return [
     'wo_unsuspended' => 'İş emri üretimi bekliyor',
     'wo_complete' => 'Bitir',
     'wo_start' => 'İşi başlat',
+    'wo_delete' => 'İş emrini sil',
 
     'waiting_for_production' => 'Üretim bekleniyor...',
     'started_at_time' => ':time başladı',

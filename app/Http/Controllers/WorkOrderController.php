@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\WorkOrderContract;
 use App\Http\Controllers\Traits\DefaultController;
+use App\Models\WorkOrder;
 
 class WorkOrderController extends Controller
 {
@@ -41,7 +42,7 @@ class WorkOrderController extends Controller
 
     public function edit($id)
     {
-        $workOrder = $this->repository->fetch($id);
+        $workOrder = WorkOrder::find($id);
         return view('web.sections.workorders.edit', compact('workOrder'));
     }
 

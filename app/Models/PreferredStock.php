@@ -22,4 +22,9 @@ class PreferredStock extends Model
         return $this->belongsTo(WorkOrder::class);
     }
 
+    public function ingredient()
+    {
+        return $this->belongsTo(Product::class, null, 'ingredient_id'); // ?? doğru mu emin değilim
+    }
+
 }

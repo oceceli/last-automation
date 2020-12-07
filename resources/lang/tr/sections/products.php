@@ -1,7 +1,7 @@
 <?php 
 
 return [
-    'product' => 'ürün',
+    'product' => 'Ürün',
     'category_id' => 'Kategori',
     'name' => 'Ürün Adı',
     'code' => 'Ürün Kodu',
