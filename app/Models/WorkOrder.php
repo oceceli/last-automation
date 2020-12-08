@@ -49,6 +49,14 @@ class WorkOrder extends Model
     //     ];
     // }
 
+    // @override
+    public function delete()
+    {
+        $this->preferredStocks()->delete(); // ???? silme kuralları eklenecek 
+        parent::delete();
+    }
+
+
     public function stockMoves()
     {
         return $this->morphMany('App\Models\StockMove', 'stockable');

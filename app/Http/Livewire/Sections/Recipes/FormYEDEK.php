@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
 
-class Form extends BaseForm
+class FormYEDEK extends BaseForm
 {
     public $model = Recipe::class;
     public $view = 'livewire.sections.recipes.form';

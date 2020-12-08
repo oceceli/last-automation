@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Common\Facades\Conversions;
 use App\Http\Livewire\FormHelpers;
+use App\Models\PreferredStock;
 use App\Models\Product;
 use App\Models\Unit;
 use App\Models\WorkOrder;
@@ -28,14 +29,18 @@ class Form extends Component
 
     public $unit_id;
 
-    public $test;
-
+    public $test = 'deneme';
+    public function changeTest()
+    {
+        $this->test =  "değişti!";
+        $this->emit('refreshChild');
+    }
     // comes from dropdown
     public $selectedProduct;
 
     // is lot stock prefering available?
-    public $preferStock = false;
-    public $preferredStockCards = [];
+    public $preferStockForm = false;
+    public $stockCards = [];
 
     // edit mode
     public $editMode = false;
@@ -76,9 +81,9 @@ class Form extends Component
     }
 
 
-    public function activatePreferStock()
+    public function activatePreferStockForm()
     {
-        $this->preferStock = true;
+        $this->preferStockForm = true;
     }
     
 
@@ -99,25 +104,29 @@ class Form extends Component
     // @override
     public function submit()
     {
-        dd($this->preferredStockCards);
         $data = $this->validate();
 
-        if($this->workOrder && $this->editMode) {
-            $this->workOrder->update($data);
+        if($this->editMode && $this->workOrder) {
+            $workOrder = $this->workOrder->update($data);
+            $workOrder->preferredStocks()->delete();
+            
             $this->emit('toast', '', __('common.saved.changes'), 'success');
         } else {
-            WorkOrder::create($data);
+            $workOrder = WorkOrder::create($data);
             $this->emit('toast', '', __('sections/workorders.workorder_saved_successfully'), 'success');
             $this->emit('new_work_order_created');
-            $this->reset();
         } 
 
-        $this->setPreferredStocks();
+        $this->setPreferredStocks($workOrder);
     }
 
-    public function setPreferredStocks()
+    private function setPreferredStocks($workOrder) // !!! edit mode kısmını yapmadım henüz
     {
-        
+        foreach($this->stockCards as $stock) {
+            $exploded = explode(',', $stock);
+            $workOrder->preferredStocks()->create(['product_id' => $exploded[0], 'preferred_lot' => $exploded[1]]);
+        }
+        $this->reset();
     }
 
     public function openDeleteModal()
@@ -177,7 +186,18 @@ class Form extends Component
         // $this->is_active = $workOrder->is_active;
         // $this->in_progress = $workOrder->in_progress;
         $this->note = $workOrder->note;
-        $this->emit('woProductChanged'); // fill the units
+
+        // if any stock preferred in work order while saving
+        if($workOrder->preferredStocks->isNotEmpty()) { // !!!! bol bol hata var burda indexlerle ilgili, geri dönmem gerek!
+            $this->activatePreferStockForm();
+            foreach($workOrder->preferredStocks as $key => $stock) {
+                $array["lot_$key"] = $stock->ingredient_id . ',' . $stock->preferred_lot;
+            }
+            $this->stockCards = $array;
+        }
+
+
+        // $this->emit('woProductChanged'); // fill the units
 
     }
 

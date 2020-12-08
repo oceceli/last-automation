@@ -16,8 +16,9 @@ class CreatePreferredStocksTable extends Migration
         Schema::create('preferred_stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('work_order_id');
-            $table->unsignedBigInteger('ingredient_id');
-            $table->string('lot_number');
+
+            $table->integer('product_id');
+            $table->string('preferred_lot');
             $table->timestamps();
         });
     }

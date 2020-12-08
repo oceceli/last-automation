@@ -1,5 +1,4 @@
-
-<div>
+{{-- <div>
     @if ($editMode)
         <x-page-header icon="project diagram" header="sections/workorders.edit.header">
             <x-slot name="buttons">
@@ -48,7 +47,9 @@
                 <x-slot name="right">
                     <div class="rounded shadow-lg border h-full bg-white md:h-30-rem md:overflow-x-hidden ">
                         @if ($this->productSelected())
-                            @if ($preferStock)
+
+
+                            @if ($preferStockForm)
         
                                 @include('web.sections.workorders.create.workorderPreferStock')
 
@@ -71,7 +72,7 @@
                                     </div>
                                     <div class="p-8">
                                         @foreach ($selectedProduct->recipe->ingredients as $ingredient)
-                                            <x-custom-list>
+                                            <x-custom-list wire:key="{{ $loop->index }}">
                                                 <div class="flex items-center gap-1">
                                                     <div>{{ $ingredient->name }}</div>
                                                     <span class="text-xs hidden md:block"> ({{ $ingredient->code }})</span> 
@@ -88,7 +89,7 @@
                                         @endforeach
                                     </div>
                                     <div class="p-8">
-                                        <button wire:click.prevent="activatePreferStock()" class="ui primary tiny button shadow">
+                                        <button wire:click.prevent="activatePreferStockForm()" class="ui primary tiny button shadow">
                                             {{ __('sections/workorders.specify_sources') }}
                                         </button>
                                         <span class="text-ease">ya da boşver...</span>
@@ -96,6 +97,8 @@
                                 </div>
                             @endif
                             
+
+
                         @else 
                             <x-placeholder icon="primary tasks">
                                 <span class="text-sm">
@@ -134,12 +137,9 @@
     </div>
 
 </div>
+ --}}
 
-
-
-
-
-{{-- <div class="ui tiny form -mb-3">
-    <x-dropdown model="test" :collection="$ingredient->lots" value="lot_number" text="lot_number" customMessage="döngüyü yakalamak lazım" class="mini" sId="{{ $loop->index }}" >
-    </x-dropdown>
-</div> --}}
+<div>
+    <button class="ui basic button" wire:click="changeTest()">dene bakalım</button>
+    <livewire:necessary-ingredients :product="$test" />
+</div>

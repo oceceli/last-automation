@@ -24,7 +24,7 @@ class PreferredStock extends Model
 
     public function ingredient()
     {
-        return $this->belongsTo(Product::class, null, 'ingredient_id'); // ?? doğru mu emin değilim
+        return $this->belongsTo(Product::class, null, null, 'ingredient_id'); // ?? doğru mu emin değilim
     }
 
 }

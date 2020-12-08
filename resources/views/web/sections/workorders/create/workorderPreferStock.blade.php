@@ -20,7 +20,7 @@
 
                 <div>
                     @if ($ingredient->lots)
-                        <select class="form-select text-sm" wire:model="preferredStockCards.{{ $loop->index }}.lot_number">
+                        <select class="form-select text-sm" wire:model="stockCards.lot_{{ $loop->index }}">
                             <option selected class="text-xs">{{ __('sections/workorders.select_lot_number')}}...</option>
                             @foreach ($ingredient->lots as $lot)
                                 <option value="{{ $ingredient->id }},{{ $lot['lot_number'] }}">{{ $lot['lot_number'] }} - {{ $lot['amount'] }} {{ $lot['unit']->name }}</option>
