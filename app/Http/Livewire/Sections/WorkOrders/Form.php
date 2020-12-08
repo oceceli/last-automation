@@ -35,6 +35,7 @@ class Form extends Component
 
     // is lot stock prefering available?
     public $preferStock = false;
+    public $preferredStockCards = [];
 
     // edit mode
     public $editMode = false;
@@ -98,6 +99,7 @@ class Form extends Component
     // @override
     public function submit()
     {
+        dd($this->preferredStockCards);
         $data = $this->validate();
 
         if($this->workOrder && $this->editMode) {
@@ -109,6 +111,13 @@ class Form extends Component
             $this->emit('new_work_order_created');
             $this->reset();
         } 
+
+        $this->setPreferredStocks();
+    }
+
+    public function setPreferredStocks()
+    {
+        
     }
 
     public function openDeleteModal()
