@@ -46,6 +46,7 @@ return [
     'select_lot_number' => 'Lot seçiniz',
     'necessary_amount' => 'Gerekli miktar',
     'necessary_items_and_amounts_will_be_shown_here' => 'Üretim için gerekli malzeme ve miktarlar burada görüntülenecek',
+    'please_fill_in_the_amount_and_unit_fields' => 'Lütfen miktar ve birim alanlarını doldurun.',
     'specify_sources' => 'Kaynakları belirt',
     // 'these_items_will_be_reduced_from_stock_after_production' => 'Üretimden sonra stoktan eksilecek malzemeler',
     'items_to_be_used_in_production' => 'Üretimde kullanılacak malzemeler',

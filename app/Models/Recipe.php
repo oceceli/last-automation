@@ -65,7 +65,7 @@ class Recipe extends Model
         return WorkOrder::where('product_id', $this->product->id)
                         ->where(function($query){
                             $query->where('status', 'active')
-                                  ->orWhere('status', 'inactive')
+                                  ->orWhere('status', 'suspended')
                                   ->orWhere('status', 'in_progress');
                         })->count();
     }

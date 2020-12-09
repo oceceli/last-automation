@@ -42,7 +42,8 @@
                     <span class="font-bold text-yellow-500">{{ __('sections/workorders.production_started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}...</span>
                 </span>
             @elseif($workOrder->isActive())
-                <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
+                {{-- <x-necessary-ingredients :product="$workOrder->product" :amount="$amount" :unitId="$unit_id" /> --}}
+                {{-- <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
 
                 @foreach ($workOrder->necessaryIngredients as $necessary)
                     <div>
@@ -67,7 +68,7 @@
                                             <label></label>
                                         </div>
                                     </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 

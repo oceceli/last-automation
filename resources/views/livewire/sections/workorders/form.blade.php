@@ -1,9 +1,18 @@
-{{-- <div>
+<div>
     @if ($editMode)
         <x-page-header icon="project diagram" header="sections/workorders.edit.header">
             <x-slot name="buttons">
                 <div class="ui mini icon buttons">
-                    <button wire:click.prevent="openDeleteModal()" class="ui mini gray basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
+                    @if ($workOrder->isSuspended())
+                        <button wire:key="unsuspend" wire:click.prevent="unsuspend()" class="ui mini basic button" data-tooltip="{{ __('common.suspended') }}" data-variation="mini" data-position="bottom right">
+                            <i class="gray circle icon"></i>
+                        </button>
+                    @else 
+                        <button wire:key="suspend" wire:click.prevent="suspend()" class="ui mini basic button" data-tooltip="{{ __('common.active') }}" data-variation="mini" data-position="bottom right">
+                            <i class="green circle icon"></i>
+                        </button>
+                    @endif
+                    <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
                         <i class="red trash icon"></i>
                     </button>
                 </div>
@@ -14,7 +23,7 @@
     @endif
     <x-content theme="purple">
 
-        <form class="ui small form"  wire:submit.prevent="submit">
+        <form class="ui small form" wire:submit.prevent="submit">
             <x-form-divider>
 
                 <x-slot name="left">
@@ -45,15 +54,12 @@
         
         
                 <x-slot name="right">
-                    <div class="rounded shadow-lg border h-full bg-white md:h-30-rem md:overflow-x-hidden ">
-                        @if ($this->productSelected())
-
-
-                            @if ($preferStockForm)
-        
-                                @include('web.sections.workorders.create.workorderPreferStock')
-
-                            @elseif($selectedProduct->recipe->ingredients->isEmpty())
+                    @if ($this->productSelected())
+                    
+                        <div class="rounded shadow-lg h-full border md:h-30-rem md:overflow-x-hidden">
+                            {{-- @if ($preferStockForm)
+                                @include('web.sections.workorders.create.workorderPreferStock') --}}
+                            @if($selectedProduct->recipe->ingredients->isEmpty())
                                 <x-placeholder icon="red exclamation">
                                     <div class="text-sm">
                                         <div>{{ __('sections/recipes.no_recipe_ingredients_found') }}</div>
@@ -66,47 +72,23 @@
                                     </div>
                                 </x-placeholder>
                             @else
-                                <div class="h-full flex flex-col justify-between bg-white">
-                                    <div class="py-5 text-center shadow">
-                                        <h5 class="leading-tight font-light text-ease">{{ __('sections/workorders.items_to_be_used_in_production') }}</h5>
-                                    </div>
-                                    <div class="p-8">
-                                        @foreach ($selectedProduct->recipe->ingredients as $ingredient)
-                                            <x-custom-list wire:key="{{ $loop->index }}">
-                                                <div class="flex items-center gap-1">
-                                                    <div>{{ $ingredient->name }}</div>
-                                                    <span class="text-xs hidden md:block"> ({{ $ingredient->code }})</span> 
-                                                </div>
-                                                <div>
-                                                    @if ($ingredient->pivot->literal) {{ __('common.net') }}
-                                                    @else {{ __('common.least') }}
-                                                    @endif
-                                                    <span class="">
-                                                        {{ $this->calculateNeeds($ingredient)['amount'] }} {{ $this->calculateNeeds($ingredient)['unit']->name }}
-                                                    </span>
-                                                </div>
-                                            </x-custom-list>
-                                        @endforeach
-                                    </div>
-                                    <div class="p-8">
-                                        <button wire:click.prevent="activatePreferStockForm()" class="ui primary tiny button shadow">
+                                <x-necessary-ingredients :product="$selectedProduct" :amount="$amount" :unitId="$unit_id" noHeader>
+                                    {{-- <x-slot name="actions">
+                                        <button wire:click.prevent="activatePreferStockForm()" class="ui primary tiny button">
                                             {{ __('sections/workorders.specify_sources') }}
                                         </button>
-                                        <span class="text-ease">ya da boşver...</span>
-                                    </div>
-                                </div>
+                                    </x-slot> --}}
+                                </x-necessary-ingredients>
                             @endif
-                            
+                        </div>
 
-
-                        @else 
-                            <x-placeholder icon="primary tasks">
-                                <span class="text-sm">
-                                    {{ __('sections/workorders.necessary_items_and_amounts_will_be_shown_here') }}...
-                                </span>
-                            </x-placeholder>
-                        @endif
-                    </div>
+                    @else 
+                        <x-placeholder icon="primary tasks">
+                            <span class="text-sm">
+                                {{ __('sections/workorders.necessary_items_and_amounts_will_be_shown_here') }}...
+                            </span>
+                        </x-placeholder>
+                    @endif
                 </x-slot>
         
         
@@ -136,10 +118,4 @@
         </x-confirm>
     </div>
 
-</div>
- --}}
-
-<div>
-    <button class="ui basic button" wire:click="changeTest()">dene bakalım</button>
-    <livewire:necessary-ingredients :product="$test" />
 </div>

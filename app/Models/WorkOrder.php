@@ -99,7 +99,7 @@ class WorkOrder extends Model
     {
         return [
             'active' => 'blue',
-            'inactive' => 'gray',
+            'suspended' => 'gray',
             'in_progress' => 'yellow',
             'completed' => 'green',
         ][$this->status] ?? null;
@@ -115,21 +115,41 @@ class WorkOrder extends Model
         return !$this->isCompleted();
     }
 
+    
+
+    public function setActivation(bool $value)
+    { 
+        // if work order is not completed, then should change the is_active column
+        if($this->isNotCompleted()) {
+            $value
+                ? $this->update(['status' => 'active'])
+                : $this->update(['status' => 'suspended']);
+        }
+    }
+
+
     public function isActive()
     {
         return $this->status === 'active';
     }
 
-    public function setActivation($value)
-    { 
-        // if work order is not completed, then should change the is_active column
-        if($this->isNotCompleted() && is_bool($value)) {
-            $value
-                ? $this->update(['status' => 'active'])
-                : $this->update(['status' => 'inactive']);
-        }
+    
+    public function isSuspended()
+    {
+        return $this->status === 'suspended';
     }
 
+
+    public function suspend()
+    {
+        $this->setActivation(false);
+    }
+
+    public function unsuspend()
+    {
+        $this->setActivation(true);
+    }
+    
     public function isInProgress() : bool
     {
         return $this->status === 'in_progress';

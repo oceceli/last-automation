@@ -10,6 +10,7 @@ return [
 
     'date' => 'Tarih',
     'datetime' => 'Tarih',
+    'caution' => 'Dikkat',
     'add_new' => 'Ekle',
     'add_note' => 'Not ekle',
     'edit' => 'Düzenle',
@@ -84,6 +85,8 @@ return [
 
     'create' => 'oluştur',
     'confirm' => 'Onayla',
+    // 'suspend' => 'Askıya al',
+    // 'unsuspend' => 'Aktifleştir',
     'stay_here' => 'Burada kal',
     'leave' => 'Ayrıl',
     'undo_changes' => 'Değişiklikleri geri al',
@@ -94,6 +97,7 @@ return [
     'base' => 'Temel',
     'status' => 'Durum',
     'suspended' => 'Askıya alındı',
+    'active' => 'Aktif',
     'today' => 'Bugün',
     'lock' => 'Kilitle',
     'unlock' => 'Kilidi kaldır',
