@@ -100,7 +100,7 @@ class WorkOrder extends Model
     public function setActivation(bool $value)
     { 
         // if work order is not completed, then should change the is_active column
-        if($this->isNotCompleted() || $this->isInProgress()) {
+        if($this->isNotCompleted() && ! $this->isInProgress()) {
             $value
                 ? $this->update(['status' => 'active'])
                 : $this->update(['status' => 'suspended']);
