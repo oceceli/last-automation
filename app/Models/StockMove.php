@@ -24,29 +24,6 @@ class StockMove extends Model
      */
     // protected $with = ['product']; 
 
-    /**
-     * Validate rules for current model
-     */
-    // public static function rules()
-    // {
-    //     // $id = self::getRequestID(); // use for unique keys on update event
-    //     return [
-    //         'data' => [
-    //             'product_id' => 'required|min:1|integer',
-    //             'unit_id' => 'required|min:1|integer',
-    //             'stockable_id' => 'required|min:1|integer',
-    //             'stockable_type' => 'required|max:30',
-    //             'type' => 'required|max:30',
-    //             'direction' => 'required|boolean',
-    //             'amount' => 'required|numeric',
-    //             'lot_number' => 'required|numeric',
-    //             'datetime' => 'required|date',
-    //         ],
-    //         'relation' => [ // use for many to many relationships
-    //
-    //         ],
-    //     ];
-    // }
 
     public function stockable()
     {

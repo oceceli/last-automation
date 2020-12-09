@@ -41,7 +41,10 @@
                                 <span data-tooltip="{{ __('common.see_details') }}" data-variation="mini">
                                     <i class="link teal eye icon"></i>
                                 </span>
+                                <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" />
                             </td>
+
+                            
                         </tr>
                     @else
                         <tr class="@if($workOrder->isInProgress()) left teal marked @elseif($workOrder->isActive()) left primary marked @else left grey marked text-gray-400 @endif">

@@ -25,7 +25,7 @@ class Form extends Component
     public $datetime;
     public $code;
     public $queue;
-    // public $status = 'active';
+    public $status = 'active';
     public $note;
 
     
@@ -164,7 +164,7 @@ class Form extends Component
         $this->code = $workOrder->code;
         $this->queue = $workOrder->queue;
         $this->unit_id = $workOrder->unit_id;
-        // $this->status = $workOrder->status;
+        $this->status = $workOrder->status;
         $this->note = $workOrder->note;
     }
 

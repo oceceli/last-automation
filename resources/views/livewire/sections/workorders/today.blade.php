@@ -138,7 +138,7 @@
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
-                                            <span class="text-xs text-ease">({{ round($workOrder->convertedAmount(),3) }} {{ $workOrder->convertedUnit()->name }})</span>
+                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
                                         @endif
                                     </td>
                                     <td class="">{{ $workOrder->lot_no }}</td>
