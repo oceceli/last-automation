@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Common\Facades\Conversions;
-use App\Models\Traits\HasFormSuggestions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -23,14 +22,14 @@ class WorkOrder extends Model
      */
     protected $with = ['product'];
 
-    protected $casts = ['datetime' => 'date'];
+    protected $casts = ['datetime' => 'date', 'started_at' => 'date', 'finalized_at' => 'date'];
 
 
     // @override
     public function delete()
     {
         // $this->preferredStocks()->delete(); // ???? silme kuralları eklenecek
-        if($this->isCompleted()) {
+        if($this->isFinalized()) {
             $this->stockMoves()->delete();
         }
         parent::delete();
@@ -41,20 +40,19 @@ class WorkOrder extends Model
     {
         return $this->morphMany('App\Models\StockMove', 'stockable');
     }
-    // public function getStockableTypeAttribute()
-    // {
-    //     return 'App\Models\StockMove';
-    // }
+
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
+
     public function preferredStocks()
     {
         return $this->hasMany(PreferredStock::class);
     }
+
 
     public function unit()
     {
@@ -62,15 +60,20 @@ class WorkOrder extends Model
     }
 
 
+
     public function setDatetimeAttribute($value) 
     {
         $this->attributes['datetime'] = Carbon::parse($value)->format('d.m.Y');
     }
 
+
+
     public function getDatetimeAttribute($value)
     {
         return Carbon::parse($value)->format('d.m.Y');
     }
+
+
 
     /**
      * $workOrder->statusColor
@@ -86,96 +89,113 @@ class WorkOrder extends Model
     }
 
 
-    public function isCompleted()
+
+    /**
+     * Return work order finalized status
+     */
+    public function isFinalized()
     {
-        return $this->status === 'completed';
-    }
-    public function isNotCompleted()
-    {
-        return !$this->isCompleted();
+        return isset($this->finalized_at); 
+        // return $this->status === 'completed';
     }
 
-    
 
-    // public function setActivation(bool $value) // !!! iptal ettim burayı, bir yerde kullanılmış olabilir!
-    // { 
-    //     // if work order is not completed, then should change the is_active column
-    //     if($this->isNotCompleted() && ! $this->isInProgress()) {
-    //         $value
-    //             ? $this->update(['status' => 'active'])
-    //             : $this->update(['status' => 'suspended']);
-    //     }
-    // }
-
-
+    /**
+     * Return is work order active
+     */
     public function isActive()
     {
         return $this->status === 'active';
     }
 
-    
+
+    /**
+     * Return is work order suspended
+     */
     public function isSuspended()
     {
         return $this->status === 'suspended';
     }
 
 
+    /**
+     * Suspend work order, so it will be non-producible until unsuspend again
+     */
     public function suspend()
     {
-        if($this->isNotCompleted() && ! $this->isInProgress() && $this->update(['status' => 'suspended'])) 
+        if( ! $this->isFinalized() && ! $this->isInProgress() && $this->update(['status' => 'suspended'])) 
             return true;
     }
 
+
+    /**
+     * Unsuspend the workorder, it can get into in_progress
+     */
     public function unsuspend()
     {
         if($this->update(['status' => 'active']))
             return true;
     }
     
+
+
+    /**
+     * Return is progress started
+     */
     public function isInProgress() : bool
     {
         return $this->status === 'in_progress';
     }
+
+
 
     /**
      * Put selected work-order into production 
      */
     public function start()
     {
-        if($this->isActive() && ! $this->inProgressCurrently()) {
+        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç
             $this->update(['status' => 'in_progress']);
             return true;
         }
     }
+    
+
 
     /**
-     * Put selected work-order out of production and mark as completed
+     * Put selected work-order out of production and mark as finalized
      */
-    public function markAsCompleted()
+    public function markAsFinalized()
     {
         if($this->isInProgress())
-            $this->update(['status' => 'completed']);
+            $this->update(['finalized_at' => now()]);
+            // $this->update(['status' => 'completed']);
     }
 
     
 
     /**
-     * Return updated_at date if production started
+     * Return started_at date if production started
      */
     public function startedAt()
     {
         return $this->isInProgress()
-            ? $this->updated_at // ???
-            : false;
-        
+            ? $this->started_at // ???
+            : null;
     }
 
-    public function completedAt()
+
+    /**
+     * Return finalized_at 
+     */
+    public function finalizedAt()
     {
-        return $this->isCompleted()
-            ? $this->updated_at->diffForHumans() // ???
+        return $this->isFinalized()
+            ? $this->finalized_at->diffForHumans() // ???
             : false;
     }
+
+
 
     public function isToday() // ??? patlamış olabilir
     {

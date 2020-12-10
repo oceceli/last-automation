@@ -13,7 +13,7 @@ trait Production
     public function saveProductionResults($productionGross, $productionWaste, $unitId)
     {
         if($productionWaste > $productionGross) return;
-        if($this->isCompleted()) return;
+        if($this->isFinalized()) return;
 
         // take production results to their base unit
         $productionGross = Conversions::toBase($unitId, $productionGross)['amount'];
@@ -24,7 +24,7 @@ trait Production
         Moves::saveProductionGross($this, $productionGross);
         Moves::saveProductionWaste($this, $productionWaste);
 
-        $this->markAsCompleted();
+        $this->markAsFinalized();
 
         foreach($this->necessaryIngredients as $necessary) {
             Moves::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount']);
@@ -38,7 +38,7 @@ trait Production
         foreach($this->product->recipe->ingredients as $key => $ingredient) {
             $ingredientBaseAmount = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount)['amount'];
             $totalDecrase[$key]['ingredient'] = $ingredient;
-            if($this->isCompleted()) {
+            if($this->isFinalized()) {
                 if($ingredient->pivot->literal) {
                     $totalDecrase[$key]['amount'] = $plannedBaseAmount * $ingredientBaseAmount;
                 } else {
@@ -73,7 +73,7 @@ trait Production
 
     public function getProductionResults()
     {
-        if($this->isCompleted()) {
+        if($this->isFinalized()) {
             return [
                 'gross' => $this->getProductionGross(),
                 'waste' => $this->getProductionWaste(),

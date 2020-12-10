@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 @foreach ($data as $key => $workOrder)
-                    @if ($workOrder->isCompleted())
+                    @if ($workOrder->isFinalized())
                         <tr class="positive">
                             <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
                                 <i class="large green checkmark icon"></i>

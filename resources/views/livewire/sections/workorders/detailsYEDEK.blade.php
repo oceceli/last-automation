@@ -25,7 +25,7 @@
 
 
             <div class="p-6">
-                <div class="p-4 border shadow rounded-sm @if($workOrder->isCompleted()) bg-green-50 @else bg-orange-50 @endif">
+                <div class="p-4 border shadow rounded-sm @if($workOrder->isFinalized()) bg-green-50 @else bg-orange-50 @endif">
                     <div class="border-b pb-4 flex justify-between items-center">
                         <div>
                             <label class="text-gray-500">{{ __('modelnames.product') }}:</label>
@@ -67,7 +67,7 @@
 
                 <div class="mt-4 flex justify-between items-center">
                     <div class="font-bold text-xl border p-2 rounded shadow-md">
-                        @if ($workOrder->isCompleted())
+                        @if ($workOrder->isFinalized())
                             <span class="text-green-500">Üretim sonuçlandı!</span>
                         @else
                             @if ($workOrder->isInProgress())
@@ -82,7 +82,7 @@
                             @endif
                         @endif
                     </div>
-                    @if ($workOrder->isNotCompleted() && ! $workOrder->isInProgress())
+                    @if ( ! $workOrder->isFinalized() && ! $workOrder->isInProgress())
                     <div>
                         <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
                         <div class="ui toggle checkbox">
@@ -106,7 +106,7 @@
 
 
 
-@if ($workOrder->isNotCompleted() && ! $workOrder->isInProgress())
+@if ( ! $workOrder->isFinalized() && ! $workOrder->isInProgress())
         <div>
             <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
             <div class="ui toggle checkbox">

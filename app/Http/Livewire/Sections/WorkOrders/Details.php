@@ -31,14 +31,14 @@ class Details extends Component
         // $this->unit = Unit::find($workOrder->unit_id);
     }
 
-    public function updatingStatus($value)
-    {
-        $this->workOrder->setActivation($value);
-        $this->statusColor = $this->workOrder->statusColor;
-        $value 
-            ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
-            : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
-    }
+    // public function updatingStatus($value) // !! düzenlenecek
+    // {
+    //     $this->workOrder->setActivation($value);
+    //     $this->statusColor = $this->workOrder->statusColor;
+    //     $value 
+    //         ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
+    //         : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
+    // }
 
     public function getInProductionProperty()
     {

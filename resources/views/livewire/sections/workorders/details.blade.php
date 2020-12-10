@@ -14,7 +14,7 @@
         </div>
 
         <div class="p-3 m-4 rounded shadow-md border leading-8 cursor-default">
-            @if ($workOrder->isCompleted())
+            @if ($workOrder->isFinalized())
                 <div class="flex flex-col justify-between gap-2">
                     <div class="border-b pb-2">
                         <div>
