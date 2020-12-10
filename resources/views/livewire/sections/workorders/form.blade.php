@@ -8,17 +8,23 @@
                             <i class="gray circle icon"></i>
                         </button>
                     @elseif($workOrder->isCompleted())
-                        <div class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
+                        <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
                             <i class="green checkmark icon"></i>
-                        </div>
+                        </button>
+                    @elseif($workOrder->isInProgress())
+                        <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini" data-position="bottom right">
+                            <i class="orange loading cog icon"></i>
+                        </button>
                     @else 
                         <button wire:key="suspend" wire:click.prevent="suspend()" class="ui mini basic button" data-tooltip="{{ __('common.active') }}" data-variation="mini" data-position="bottom right">
                             <i class="green circle icon"></i>
                         </button>
                     @endif
-                    <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
-                        <i class="red trash icon"></i>
-                    </button>
+                    @if (!$workOrder->isInProgress())
+                        <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
+                            <i class="red trash icon"></i>
+                        </button>
+                    @endif
                 </div>
             </x-slot>
         </x-page-header>

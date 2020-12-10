@@ -170,8 +170,7 @@ class Form extends Component
 
     public function suspend()
     {
-        if($this->editMode)  {
-            $this->workOrder->suspend();
+        if($this->editMode && $this->workOrder->suspend())  {
             $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
         }
     }
