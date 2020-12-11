@@ -74,6 +74,8 @@ class Product extends Model
         return $this->hasMany(Unit::class); 
     }
 
+    
+
     public function stockmoves()
     {
         return $this->hasMany(StockMove::class);
@@ -104,9 +106,14 @@ class Product extends Model
     }
 
 
+    // public function workorders()
+    // {
+    //     return $this->hasMany(WorkOrder::class);
+    // }
+
     public function workorders()
     {
-        return $this->hasMany(WorkOrder::class);
+        return $this->belongsToMany(WorkOrder::class);
     }
 
     public function getLastCreatedWorkOrder()
