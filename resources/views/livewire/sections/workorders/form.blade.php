@@ -37,9 +37,6 @@
             <x-form-divider>
 
                 <x-slot name="left">
-                    <x-input model="code" label="sections/workorders.code" placeholder="sections/workorders.code" class="required field" />                
-                    <x-input model="queue" label="sections/workorders.queue" placeholder="sections/workorders.queue" class="required field" /> 
-                    <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="sections/workorders.datetime"   class="required field" />
                     @if ($editMode)
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
                             value="id" text="name,code" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
@@ -59,18 +56,14 @@
                         value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
                     />
                     @endif
-                    
+                    <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="sections/workorders.datetime"   class="required field" />
+                    <x-input model="code" label="sections/workorders.code" placeholder="sections/workorders.code" class="required field" />                
+                    <x-input model="queue" label="sections/workorders.queue" placeholder="sections/workorders.queue" class="required field" /> 
                 </x-slot>
         
         
         
                 <x-slot name="right">
-                    
-                </x-slot>
-        
-        
-                
-                <x-slot name="bottom">
                     @if ($this->productSelected())
                     
                         <div class="rounded shadow-lg h-full border md:h-30-rem md:overflow-x-hidden">
@@ -106,7 +99,11 @@
                             </span>
                         </x-placeholder>
                     @endif
-                    
+                </x-slot>
+        
+        
+                
+                <x-slot name="bottom">
                     <div x-data="{addNote: false}">
                         <div x-show="!addNote" class="text-ease">
                             <i class="write icon"></i>

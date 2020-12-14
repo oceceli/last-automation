@@ -22,7 +22,7 @@ class WorkOrder extends Model
      */
     protected $with = ['product'];
 
-    protected $casts = ['datetime' => 'date', 'started_at' => 'datetime', 'finalized_at' => 'datetime'];
+    protected $casts = ['datetime' => 'date', 'started_at' => 'date', 'finalized_at' => 'date'];
 
 
     // @override
@@ -42,14 +42,9 @@ class WorkOrder extends Model
     }
 
 
-    // public function product()
-    // {
-    //     return $this->belongsTo(Product::class);
-    // }
-
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
 
@@ -159,8 +154,8 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
-            $this->update(['status' => 'in_progress', 'started_at' => now()]);
+        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç
+            $this->update(['status' => 'in_progress']);
             return true;
         }
     }
@@ -180,16 +175,18 @@ class WorkOrder extends Model
     
 
     /**
-     * Return started_at date if production has started
+     * Return started_at date if production started
      */
     public function startedAt()
     {
-        return $this->isInProgress() ? $this->started_at : null; // ??
+        return $this->isInProgress()
+            ? $this->started_at // ???
+            : null;
     }
 
 
     /**
-     * Return finalized_at column for humans
+     * Return finalized_at 
      */
     public function finalizedAt()
     {
