@@ -45,6 +45,10 @@ class Recipe extends Model
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal');
     }
 
+    public function setCodeAttribute($code)
+    {
+        $this->attributes['code'] = strtoupper($code);
+    }
 
     
 

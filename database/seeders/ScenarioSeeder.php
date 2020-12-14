@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Recipe;
 use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,7 @@ class ScenarioSeeder extends Seeder
         $glukoz = $this->cCategory('glukoz');
         $diyaplus = $this->cCategory('diyaplus');
         $hammadde = $this->cCategory('hammadde');
+        $yariMamul = $this->cCategory('Yarı mamül');
         $sarf = $this->cCategory('sarf malzeme');
 
 
@@ -34,6 +36,9 @@ class ScenarioSeeder extends Seeder
         $rm036 = $this->cProduct($glukoz->id, 'adet', 'K2 Ca 1,5 G+ 10lt', 'rm036', '8699645660759', true);
         $rm038 = $this->cProduct($glukoz->id, 'adet', 'K2 Ca 1,5 G+ 5lt', 'rm038', '8699645660773', true);
         $rm033 = $this->cProduct($acet->id, 'adet', 'K2 Ca 1,5 10lt', 'rm033', '8699645660230', true);
+
+        // yarı mamül
+        $fb01 = $this->cProduct($yariMamul->id, 'litre', 'Ren Bikar Bazik Solüsyon', 'fb01', null, true);
         
 
         // içerik  **********************
@@ -62,13 +67,13 @@ class ScenarioSeeder extends Seeder
         $kapakMavi = $this->cProduct($hammadde->id, 'adet', 'kapak mavi', 'kpkmv');
         $kapaksari = $this->cProduct($hammadde->id, 'adet', 'kapak sarı', 'kpksr');
         
+        $ribonLg = $this->cProduct($sarf->id, 'adet', 'Ribon 110x600', 'rbn110x600');
+        $ribonSm = $this->cProduct($sarf->id, 'adet', 'Ribon 50x600', 'rbn50x600');
         
-        
-
-
 
         // extra units ***************************************************** 
         $this->cUnit($rm004->id, 'litre', 'lt', 6, false, $rm004->baseUnit->id);
+        $this->cUnit($rm001->id, 'litre', 'lt', 10, false, $rm001->baseUnit->id);
         $this->cUnit($rm029->id, 'litre', 'lt', 10, false, $rm029->baseUnit->id);
         $this->cUnit($rm026->id, 'litre', 'lt', 10, false, $rm026->baseUnit->id);
         $this->cUnit($rm036->id, 'litre', 'lt', 10, false, $rm036->baseUnit->id);
@@ -76,13 +81,42 @@ class ScenarioSeeder extends Seeder
         $this->cUnit($rmd02->id, 'litre', 'lt', 5, false, $rmd02->baseUnit->id);
         $this->cUnit($rm033->id, 'litre', 'lt', 10, false, $rm033->baseUnit->id);
         // kimyasallar
-        $this->cUnit($sodyumBikarbonat->id, 'gram', 'gr', 1000, false, $sodyumBikarbonat->baseUnit->id);
+        $sodyumBikarbonatGram = $this->cUnit($sodyumBikarbonat->id, 'gram', 'gr', 1000, false, $sodyumBikarbonat->baseUnit->id);
         $this->cUnit($sodyumKlorur->id, 'gram', 'gr', 1000, false, $sodyumKlorur->baseUnit->id);
         $this->cUnit($potasyumKlorur->id, 'gram', 'gr', 1000, false, $potasyumKlorur->baseUnit->id);
         $this->cUnit($kalsiyumKlorur->id, 'gram', 'gr', 1000, false, $kalsiyumKlorur->baseUnit->id);
         $this->cUnit($magnezyumKlorur->id, 'gram', 'gr', 1000, false, $magnezyumKlorur->baseUnit->id);
         $this->cUnit($asetikAsit->id, 'gram', 'gr', 1000, false, $asetikAsit->baseUnit->id);
         $this->cUnit($su->id, 'gram', 'gr', 1000, false, $su->baseUnit->id);
+
+        $ribonLgCm = $this->cUnit($ribonLg->id, 'santimetre', 'cm', 60000, false, $ribonLg->baseUnit->id);
+        $ribonSmCm = $this->cUnit($ribonSm->id, 'santimetre', 'cm', 60000, false, $ribonSm->baseUnit->id);
+
+
+
+
+        // recipes ***********************************************************
+        $rct_fb01 = $this->cRecipe($fb01->id, 'rct_fb01', [
+            $sodyumBikarbonat->id => ['amount' => '84', 'unit_id' => $sodyumBikarbonatGram->id, 'literal' => true],
+        ]);
+
+        $rct_rm004 = $this->cRecipe($rm004->id, 'rct_rm004', [
+            $fb01->id => ['amount' => '6', 'unit_id' => $fb01->baseUnit->id, 'literal' => false],
+            $bidon6Lt->id => ['amount' => '1', 'unit_id' => $bidon6Lt->baseUnit->id, 'literal' => false],
+            $etiketBazik->id => ['amount' => '1', 'unit_id' => $etiketBazik->baseUnit->id, 'literal' => false],
+            $kapakMavi->id => ['amount' => '1', 'unit_id' => $kapakMavi->baseUnit->id, 'literal' => false],
+            $ribonSm->id => ['amount' => '7.5', 'unit_id' => $ribonSmCm->id, 'literal' => false],
+        ]);
+        
+        $rct_rm001 = $this->cRecipe($rm001->id, 'rct_rm001', [
+            $fb01->id => ['amount' => '10', 'unit_id' => $fb01->baseUnit->id, 'literal' => false],
+            $bidon10Lt->id => ['amount' => '1', 'unit_id' => $bidon10Lt->baseUnit->id, 'literal' => false],
+            $etiketBazik->id => ['amount' => '1', 'unit_id' => $etiketBazik->baseUnit->id, 'literal' => false],
+            $kapakMavi->id => ['amount' => '1', 'unit_id' => $kapakMavi->baseUnit->id, 'literal' => false],
+            $ribonSm->id => ['amount' => '7.5', 'unit_id' => $ribonSmCm->id, 'literal' => false],
+        ]);
+
+
         
     }
 
@@ -106,7 +140,15 @@ class ScenarioSeeder extends Seeder
             'parent_id' => 0
         ]);
         return $product;
+    }
 
+    private function cRecipe($productId, $code, array $ingredients = [])
+    {
+        $recipe = Recipe::create([
+            'product_id' => $productId,
+            'code' => $code,
+        ]);
+        $recipe->ingredients()->sync($ingredients);
     }
 
     private function cCategory($name)

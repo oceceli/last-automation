@@ -22,7 +22,7 @@ class WorkOrder extends Model
      */
     protected $with = ['product'];
 
-    protected $casts = ['datetime' => 'date', 'started_at' => 'date', 'finalized_at' => 'date'];
+    protected $casts = ['datetime' => 'date', 'started_at' => 'datetime', 'finalized_at' => 'datetime'];
 
 
     // @override
@@ -41,6 +41,11 @@ class WorkOrder extends Model
         return $this->morphMany('App\Models\StockMove', 'stockable');
     }
 
+
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
 
     public function product()
     {
@@ -144,7 +149,7 @@ class WorkOrder extends Model
      */
     public function isInProgress() : bool
     {
-        return $this->status === 'in_progress';
+        return $this->status === 'in_progress' && isset($this->started_at);
     }
 
 
@@ -154,8 +159,8 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç
-            $this->update(['status' => 'in_progress']);
+        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+            $this->update(['status' => 'in_progress', 'started_at' => now()]);
             return true;
         }
     }
@@ -168,25 +173,23 @@ class WorkOrder extends Model
     public function markAsFinalized()
     {
         if($this->isInProgress())
-            $this->update(['finalized_at' => now()]);
+            $this->update(['finalized_at' => now(), 'status' => 'completed']);
             // $this->update(['status' => 'completed']);
     }
 
     
 
     /**
-     * Return started_at date if production started
+     * Return started_at date if production has started
      */
     public function startedAt()
     {
-        return $this->isInProgress()
-            ? $this->started_at // ???
-            : null;
+        return $this->isInProgress() ? $this->started_at : null; // ??
     }
 
 
     /**
-     * Return finalized_at 
+     * Return finalized_at column for humans
      */
     public function finalizedAt()
     {
