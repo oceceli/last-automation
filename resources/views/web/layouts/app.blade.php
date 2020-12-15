@@ -37,9 +37,9 @@
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
-                <div class="flex" x-data="{open: false}">
+                <div class="flex" x-data="{sidebar: false}">
 
-                    <template id="SIDEBAR"  x-if="!open">
+                    <template id="SIDEBAR"  x-if="!sidebar">
                         <div class="w-96 h-screen bg-white">
                             <x-layouts.partials.sidebar/>
                         </div>
