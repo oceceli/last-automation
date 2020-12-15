@@ -37,8 +37,8 @@
                             <div class="active item">
                         @else
                             <div class="item">
-                                <a href="{{ route($route['name']) }}"> 
                         @endif
+                                <a href="{{ route($route['name']) }}"> 
                                     <div class="h-11 p-3 flex items-center">
                                         <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
                                         <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
