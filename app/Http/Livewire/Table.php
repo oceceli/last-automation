@@ -7,10 +7,68 @@ use Livewire\WithPagination;
 
 trait Table
 {
+    use WithPagination;
+
+
+    /** 
+     * Paginate per page 
+     */
+    public $perPage;
+
+    /**
+     * Searching string
+     */
+    public $searchQuery = '';
+
+
+    
+    public function mount()
+    {
+        $this->perPage = auth()->user()->getDatatablePerpage();
+    }
+
+
+
+    public function render()
+    {
+        return view($this->view, [
+            'data' => $this->model::paginate($this->perPage)
+        ]);
+    }
+
+
+    public function updatedSearchQuery($keyword)
+    {
+        $this->data = $this->model::search($keyword)->paginate($this->perPage);
+    }
+
+
+    /**
+     * save user's default perpage preference 
+     */
+    public function updatedPerPage()
+    {
+        $this->setPage(1);
+        $this->chastenPerpage();
+        auth()->user()->setDatatablePerpage($this->perPage);
+    }
+
+    /**
+     * perPage property should not be 0 or less
+     */
+    public function chastenPerpage()
+    {
+        if($this->perPage < 1) {
+            $this->perPage = auth()->user()->getDatatablePerpage();
+        }
+    }
+
+    
+    
     
 
 
-    // use WithPagination;
+
 
     // /**
     //  * Prop property for $this livewire component
@@ -34,20 +92,12 @@ trait Table
     //     'created_at', 'updated_at', 'deleted_at', // id
     // ];
 
-    // /**
-    //  * Searching string
-    //  */
-    // public $searchQuery = '';
 
     // /**
     //  * The data which will be shown to a user
     //  */
     // protected $data = [];
    
-    // /** 
-    //  * Paginate per page 
-    //  */
-    // public $perPage;
 
 
 

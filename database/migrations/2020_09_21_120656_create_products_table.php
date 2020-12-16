@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->integer('min_threshold')->nullable();
             $table->string('note')->nullable();
-            $table->softDeletes();
+            // $table->softDeletes();
 
             $table->timestamps();
         });

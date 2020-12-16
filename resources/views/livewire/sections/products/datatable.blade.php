@@ -8,7 +8,7 @@
         <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
-                    <th>Sıra</th>
+                    <th>{{ __('sections/products.code') }}</th>
                     <th>{{ __('sections/products.name') }}</th>
                     <th>{{ __('modelnames.category') }}</th>
                     <th>{{ __('sections/products.code') }}</th>
@@ -24,7 +24,7 @@
             <tbody>
                 @foreach ($data as $key => $product)
                     <tr wire:key="{{ $key }}">
-                        <td>{{ $key+1 }}</td>
+                        <td class="collapsing">{{ $product->code }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->code }}</td>
@@ -43,12 +43,13 @@
                             </div>
                         </td> --}}
                         <td>
-                            <div class="flex items-center justify-center">
+                            test
+                            {{-- <div class="flex items-center justify-center">
                                 <div class="ui checkbox">
                                     <input type="checkbox" wire:model.lazy="is_active.{{ $key }}">
                                     <label></label>
                                 </div>
-                            </div>
+                            </div> --}}
                         </td>
 
                         <td class="collapsing">

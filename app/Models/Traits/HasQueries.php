@@ -6,12 +6,9 @@ use App\Models\Setting;
 
 trait HasQueries
 {
-    public function getDatatablePerpage($default = 10) : int
+    public function getDatatablePerpage($default = 30) : int
     {
-        $result =  Setting::where(function($query) {
-            return $query->where('user_id', auth()->user()->id)
-                  ->where('name', 'datatable_perpage');
-        })->get()->first();
+        $result = Setting::where(['user_id' => auth()->user()->id, 'name' => 'datatable_perpage'])->first();
 
         return $result 
             ? (int)abs($result->value)
