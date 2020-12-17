@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Common\Factories\ModelFactory;
 use Livewire\WithPagination;
 
 trait Table
@@ -18,7 +17,8 @@ trait Table
     /**
      * Searching string
      */
-    public $searchQuery = '';
+    public $searchQuery;
+
 
 
     
@@ -32,14 +32,14 @@ trait Table
     public function render()
     {
         return view($this->view, [
-            'data' => $this->model::paginate($this->perPage)
+            'data' => $this->model::search($this->searchQuery)->paginate($this->perPage),
         ]);
     }
 
 
     public function updatedSearchQuery($keyword)
     {
-        $this->data = $this->model::search($keyword)->paginate($this->perPage);
+        $this->setPage(1);
     }
 
 

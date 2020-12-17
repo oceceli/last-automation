@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $key => $product)
+                @forelse ($data as $key => $product)
                     <tr wire:key="{{ $key }}">
                         <td class="collapsing">{{ $product->code }}</td>
                         <td>{{ $product->name }}</td>
@@ -57,7 +57,13 @@
                         </td>
 
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="10">
+                            <x-placeholder icon="inbox">{{ __('datatable.no_results') }}</x-placeholder>
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         
