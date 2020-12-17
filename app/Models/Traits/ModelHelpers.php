@@ -73,16 +73,16 @@ trait ModelHelpers
     }
     
 
-    public static function search($string)
-    {
-        $columns = self::getColumnNames();
-        return self::query()
-            ->where(function($query) use ($columns, $string) {
-                foreach($columns as $column) {
-                    $query->orWhere($column, 'LIKE', "%{$string}%");
-                }
-            });
-    }
+    // public static function search($string)
+    // {
+    //     $columns = self::getColumnNames();
+    //     return self::query()
+    //         ->where(function($query) use ($columns, $string) {
+    //             foreach($columns as $column) {
+    //                 $query->orWhere($column, 'LIKE', "%{$string}%");
+    //             }
+    //         });
+    // }
 
     
 }

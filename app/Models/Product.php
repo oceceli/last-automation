@@ -6,10 +6,13 @@ use App\Models\Traits\HasInventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, ModelHelpers;
+    use HasFactory;
+    use ModelHelpers;
+    use Searchable;
     use HasInventory;
 
     protected $guarded = [];

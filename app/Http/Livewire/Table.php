@@ -17,7 +17,7 @@ trait Table
     /**
      * Searching string
      */
-    public $searchQuery;
+    public $searchQuery = '';
 
 
 
@@ -31,13 +31,15 @@ trait Table
 
     public function render()
     {
-        return view($this->view, [
-            'data' => $this->model::search($this->searchQuery)->paginate($this->perPage),
-        ]);
+        dd($this->model::search()->paginate($this->perPage));
+        $data = $this->searchQuery 
+            ? $this->model::search($this->searchQuery)->paginate($this->perPage)
+            : $this->model::paginate($this->perPage);
+        return view($this->view, ['data' => $data]);
     }
 
 
-    public function updatedSearchQuery($keyword)
+    public function updatedSearchQuery()
     {
         $this->setPage(1);
     }
