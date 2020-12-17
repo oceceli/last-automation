@@ -2,13 +2,13 @@
 
 namespace App\Console\Traits;
 
-use App\Traits\GlobalHelpers;
+// use App\Traits\GlobalHelpers;
 use Illuminate\Support\Facades\Storage;
 
 
 trait Scaffolder
 {
-    use GlobalHelpers;
+    // use GlobalHelpers;
 
     protected $stubsPath = 'stubs/';
 

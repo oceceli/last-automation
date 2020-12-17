@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Traits\GlobalHelpers;
+// use App\Traits\GlobalHelpers;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  */
 trait Resources
 {
-    use GlobalHelpers;
+    // use GlobalHelpers;
 
     protected function decideResource($data, $resourceClass = null)
     {

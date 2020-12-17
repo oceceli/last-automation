@@ -2,14 +2,13 @@
 
 namespace App\Models\Traits;
 
-use App\Traits\GlobalHelpers;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use App\Traits\GlobalHelpers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 trait ModelHelpers
 {
-    use GlobalHelpers;
+    // use GlobalHelpers;
 
 
     /**
