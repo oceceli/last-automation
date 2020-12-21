@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Sections\Products;
 
-use App\Http\Livewire\Table;
+use App\Http\Livewire\TableHelpers;
 use App\Models\Product;
 use Livewire\Component;
 
 class Datatable extends Component
 {
-    use Table;
+
+    use TableHelpers;
 
     public $model = Product::class;
     protected $view = 'livewire.sections.products.datatable';

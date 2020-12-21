@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\WithPagination;
 
-trait Table
+trait TableHelpers
 {
     use WithPagination;
 
@@ -31,7 +31,6 @@ trait Table
 
     public function render()
     {
-        dd($this->model::search()->paginate($this->perPage));
         $data = $this->searchQuery 
             ? $this->model::search($this->searchQuery)->paginate($this->perPage)
             : $this->model::paginate($this->perPage);

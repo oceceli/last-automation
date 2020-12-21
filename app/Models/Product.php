@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory;
     use ModelHelpers;
-    use Searchable;
+    // use Searchable;
     use HasInventory;
 
     protected $guarded = [];

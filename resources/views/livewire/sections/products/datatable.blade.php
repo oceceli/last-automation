@@ -5,7 +5,7 @@
 
     <div>
 
-        <table class="ui celled sortable table tablet stackable very compact">
+        <table class="ui celled sortable table tablet stackable very compact disabled">
             <thead>
                 <tr>
                     <th>{{ __('sections/products.code') }}</th>
@@ -14,10 +14,11 @@
                     <th>{{ __('sections/products.code') }}</th>
                     <th>{{ __('sections/products.barcode') }}</th>
                     <th>{{ __('sections/products.shelf_life') }}</th>
-                    <th>{{ __('sections/products.min_threshold') }}</th>
+                    {{-- <th>{{ __('sections/products.min_threshold') }}</th> --}}
+                    <th>{{ __('inventory.in_stock') }}</th>
                     <th>{{ __('sections/products.note') }}</th>
                     {{-- <th>{{ __('sections/products.producible') }}</th> --}}
-                    <th>{{ __('sections/products.is_active') }}</th>
+                    {{-- <th>{{ __('sections/products.is_active') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
@@ -30,26 +31,21 @@
                         <td>{{ $product->code }}</td>
                         <td>{{ $product->barcode }}</td>
                         <td>{{ $product->shelf_life }}</td>
-                        <td>{{ $product->min_threshold }}</td>
-                        <td class="truncate w-2/12 max-w-0">
-                            {{ $product->note }}
-                        </td>
-                        {{-- <td>
-                            <div class="flex items-center justify-center">
-                                <div class="ui slider checkbox">
-                                    <input type="checkbox" wire:model.lazy="producible.{{ $key }}">
-                                    <label></label>
-                                </div>
-                            </div>
-                        </td> --}}
+                        {{-- <td>{{ $product->min_threshold }}</td> --}}
+                        {{-- <td>{{ $product->min_threshold }}</td> --}}
                         <td>
-                            test
-                            {{-- <div class="flex items-center justify-center">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" wire:model.lazy="is_active.{{ $key }}">
-                                    <label></label>
-                                </div>
-                            </div> --}}
+                            @if ($product->inStock)
+                            <span class="text-ease-green text-sm">
+                                {{ $product->totalStock['amount'] }} {{ $product->totalStock['unit']->abbreviation }}
+                            </span>
+                            @else <span class="text-sm text-ease-red">{{ __('common.NA') }}</span>
+                            @endif
+                        </td>
+                        
+                        <td class="">  {{-- truncate w-2/12 max-w-0 --}}
+                            @if ($product->note) {{ $product->note }}
+                            @else <span class="text-sm text-ease-red">{{ __('common.NA') }}</span>
+                            @endif
                         </td>
 
                         <td class="collapsing">

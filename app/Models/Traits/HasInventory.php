@@ -16,6 +16,11 @@ trait HasInventory
         return StockCalculations::lotNumbersAndAmounts($this->id);
     }
 
+    public function getInStockAttribute()
+    {
+        return $this->totalStock['amount'] > 0;
+    }
+
     public function getLastMoveAttribute()
     {
         $lastMove = StockCalculations::lastMove($this->id);

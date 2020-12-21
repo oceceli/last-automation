@@ -23,6 +23,7 @@ return [
     'clear' => 'Temizle',
     'least' => 'En az',
     'net' => 'Net',
+    'NA' => 'Yok',
     'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',
     'detail' => 'Detay',
