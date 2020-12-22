@@ -5,7 +5,7 @@
 
     <div>
 
-        <table class="ui celled sortable table tablet stackable very compact disabled">
+        <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
                     <x-thead-item sortBy="code">{{ __('sections/products.code') }}</x-thead-item>

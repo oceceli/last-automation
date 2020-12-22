@@ -3,6 +3,9 @@
 namespace App\Models\Traits;
 
 // use App\Traits\GlobalHelpers;
+
+use App\Common\Helpers\Generic;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -32,6 +35,7 @@ trait ModelHelpers
     {
         return array_key_exists($attr, $this->attributes);
     }
+
 
 
     /**
@@ -71,24 +75,45 @@ trait ModelHelpers
     }
 
     /**
-     * Gets 
+     * Get current table's column names.
      */
-    public static function getColumnNames()
-    {
-        return Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class))); 
-    }
+    // public static function getColumnNames()
+    // {
+    //     return Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class)));
+    // }
     
 
-    public static function search($string)
+    public static function search($columns, $string)
     {
-        $columns = self::getColumnNames();
+        Generic::ensureArray($columns);
+
+        // $columns = self::getColumnNames();
+        // return self::query()
+        //     ->where(function($query) use ($columns, $string) {
+        //         foreach($columns as $column) {
+        //             $query->orWhere($column, 'LIKE', "%{$string}%");
+        //         }
+        //     });
+
         return self::query()
-            ->where(function($query) use ($columns, $string) {
-                foreach($columns as $column) {
-                    $query->orWhere($column, 'LIKE', "%{$string}%");
+            ->where(function (Builder $query) use ($columns, $string) {
+                foreach ($columns as $column) {
+                    $query->when(
+                        str_contains($column, '.'),
+                        function (Builder $query) use ($column, $string) {
+                            [$relationName, $relationColumn] = explode('.', $column);
+        
+                            $query->orWhereHas($relationName, function (Builder $query) use ($relationColumn, $string) {
+                                $query->where($relationColumn, 'LIKE', "%{$string}%");
+                            });
+                        },
+                        function (Builder $query) use ($column, $string) {
+                            $query->orWhere($column, 'LIKE', "%{$string}%");
+                        }
+                    );
                 }
             });
-    }
 
-    
+    }
+        
 }

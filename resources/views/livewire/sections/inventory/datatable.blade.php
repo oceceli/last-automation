@@ -5,18 +5,18 @@
     <div x-data="{lotModal: @entangle('lotModal')}">
         
 
-        <x-table class="celled">
+        <x-table class="celled ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
-                    <th class="">{{ __('sections/products.code')}} </th>
-                    <th>{{ __('sections/products.name')}} </th>
-                    <th>{{ __('inventory.available_quantity') }}</th>
-                    <th class="text-sm collapsing">{{ __('stockmoves.last_move') }}</th>
-                    <th></th>
+                    <x-thead-item sortBy="code" class="">{{ __('sections/products.code')}} </x-thead-item>
+                    <x-thead-item sortBy="name">{{ __('sections/products.name')}} </x-thead-item>
+                    <x-thead-item>{{ __('inventory.available_quantity') }}</x-thead-item>
+                    <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
+                    <x-thead-item></x-thead-item>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($products as $product)
+                @foreach ($data as $product)
                 <tr class="{{ $product->stockStatus['tr'] }} font-semibold ease-in-out duration-150 cursor-default" wire:key="{{ $loop->index }}">
                     <td class="collapsing font-bold ">
                         <span data-tooltip="{{ $product->stockStatus['explanation'] }}" data-variation="mini" data-position="top left">
@@ -31,7 +31,7 @@
                         {{ $product->lastMove['date'] }} 
                     </td>
                     <td class="one wide center aligned">
-                        <div wire:click="showLotsOf({{ $product->id }})"
+                        <div wire:click="lots({{ $product->id }})"
                             class="border bg-white shadow text-blue-400 hover:text-blue-700 ease-in-out duration-200 cursor-pointer">
                             <span class="p-1">LOT</span>
                             <i class="search alternate icon"></i>
@@ -54,10 +54,10 @@
                     <table class="ui center aligned table unstackable very compact">
                         <thead>
                             <tr>
-                                <th>{{ __('stockmoves.lot_number') }}</th>
-                                <th>{{ __('inventory.available_quantity') }}</th>
-                                <th class="text-sm collapsing">{{ __('stockmoves.last_move') }}</th>
-                                <th></th>
+                                <x-thead-item>{{ __('stockmoves.lot_number') }}</x-thead-item>
+                                <x-thead-item>{{ __('inventory.available_quantity') }}</x-thead-item>
+                                <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
+                                <x-thead-item></x-thead-item>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +86,6 @@
         </x-custom-modal>   
         {{-- Product lots MODAL --------------------------------------------------}}
 
-    
     </div>
 </div>
 

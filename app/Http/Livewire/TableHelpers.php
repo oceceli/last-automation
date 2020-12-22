@@ -34,8 +34,13 @@ trait TableHelpers
     public function render()
     {
         $data = $this->searchQuery 
-            ? $this->model::search($this->searchQuery)->orderBy($this->orderByColumn, $this->direction)->paginate($this->perPage)
-            : $this->model::orderBy($this->orderByColumn, $this->direction)->paginate($this->perPage);
+            ? $this->model
+                ::search(['recipe.code'], $this->searchQuery)
+                ->orderBy($this->orderByColumn, $this->direction)
+                ->paginate($this->perPage)
+            : $this->model
+                ::orderBy($this->orderByColumn, $this->direction)
+                ->paginate($this->perPage);
         return view($this->view, ['data' => $data]);
     }
 
