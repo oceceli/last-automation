@@ -136,14 +136,24 @@ class Product extends Model
         return self::where('producible', true)->get();
     }
 
-    public function getCodeAttribute($value)
+
+    public function setCodeAttribute($code)
     {
-        return strtoupper($value);
+        $this->attributes['code'] = strtoupper($code);
+    }
+    public function getCodeAttribute($code)
+    {
+        return strtoupper($code);
     }
     
-    public function getNameAttribute($value)
+
+    public function setNameAttribute($name)
     {
-        return ucwords($value);
+        $this->attributes['name'] = ucwords($name);
+    }
+    public function getNameAttribute($name)
+    {
+        return ucwords($name);
     }
 
     

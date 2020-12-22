@@ -20,6 +20,8 @@ trait TableHelpers
     public $searchQuery = '';
 
 
+    public $orderByColumn;
+    public $direction = 'asc';
 
     
     public function mount()
@@ -32,8 +34,8 @@ trait TableHelpers
     public function render()
     {
         $data = $this->searchQuery 
-            ? $this->model::search($this->searchQuery)->paginate($this->perPage)
-            : $this->model::paginate($this->perPage);
+            ? $this->model::search($this->searchQuery)->orderBy($this->orderByColumn, $this->direction)->paginate($this->perPage)
+            : $this->model::orderBy($this->orderByColumn, $this->direction)->paginate($this->perPage);
         return view($this->view, ['data' => $data]);
     }
 
@@ -64,96 +66,34 @@ trait TableHelpers
         }
     }
 
-    
-    
-    
+    public function sortBy($column)
+    {
+        // todo: column model columnları içerisinde var mı
+        if($this->orderByColumn == $column) {
+            $this->direction = $this->direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->orderByColumn = $column;
+            $this->direction = 'asc';
+        }
+    }
+
+    /**
+     * Direction class will provide a visual statement for direction icon
+     */
+    public function getDirectionClass($column)
+    {
+        if($this->orderByColumn === $column && $this->direction === 'asc') {
+            return 'small green sort up';
+        } elseif($this->orderByColumn === $column && $this->direction === 'desc') {
+            return 'small red sort down';
+        } else {
+            return 'small orange sort';
+        }
+    }
 
 
-
-
-    // /**
-    //  * Prop property for $this livewire component
-    //  */
-    // public $modelName;
-
-    // /**
-    //  * Points the model path
-    //  */
-    // public $model;
-
-    // /**
-    //  * Table attributes
-    //  */
-    // public $attributes;
-    
-    // /**
-    //  * These columns should not be shown in the table
-    //  */
-    // public $except = [
-    //     'created_at', 'updated_at', 'deleted_at', // id
-    // ];
-
-
-    // /**
-    //  * The data which will be shown to a user
-    //  */
-    // protected $data = [];
-   
-
-
-
-    // protected $view = 'livewire.datatable'; // default
-
-
-
-    // public function mount()
-    // {
-    //     if($this->modelName)
-    //         $this->model = ModelFactory::make($this->modelName);
-    //     if( ! $this->attributes)
-    //         $this->attributes = array_diff($this->model::getColumnNames(), $this->except); 
-    //     $this->perPage = auth()->user()->getDatatablePerpage();
-    // }  
-    
-
-    // public function render()
-    // {
-    //     $this->setData();
-
-    //     return view($this->view, [
-    //         'data' => $this->data,
-    //     ]);
-    // }
-
-
-    // protected function setData()
-    // {
-    //     $this->data = $this->searchQuery == null 
-    //         ? $this->model::paginate($this->perPage)
-    //         : $this->model::search($this->searchQuery)->paginate($this->perPage);
-    // }
-
-    // public function updatedSearchQuery()
-    // {
-    //     $this->resetPage();
-    // }
-
-    // public function updatedPerPage($value)
-    // {
-    //     $value = abs($value);
-    //     $this->resetPage();
-    //     $this->perPage = $value;
-
-    //     auth()->user()->setDatatablePerpage($value);
-    // }    
-
-
-    // public function delete($id)
-    // {
-    //     if($this->model::find($id)->delete()) {
-    //         $this->emit('toast', 'crud.deleted', 'crud.content_deleted_smoothly', 'info');
-    //     } else {
-    //         $this->emit('toast', 'crud.unable_to_delete', 'crud.something_happened_while_deleting_the_content', 'error');
-    //     }
-    // }
+    public function delete($id)
+    {
+        $this->model::findAndDelete($id);
+    }
 }
