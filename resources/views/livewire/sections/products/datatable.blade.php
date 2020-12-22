@@ -19,8 +19,6 @@
                     {{-- <th>{{ __('sections/products.min_threshold') }}</th> --}}
                     <x-thead-item>{{ __('inventory.in_stock') }}</x-thead-item>
                     <x-thead-item sortBy="note">{{ __('sections/products.note') }}</x-thead-item>
-                    {{-- <th>{{ __('sections/products.producible') }}</th> --}}
-                    {{-- <th>{{ __('sections/products.is_active') }}</th> --}}
                     <x-thead-item></x-thead-item>
                 </tr>
             </thead>

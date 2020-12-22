@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class theadItem extends Component
+class TheadItem extends Component
 {
 
     public $sortBy;

@@ -1,10 +1,8 @@
-{{-- <div> --}}
+<th wire:click="sortBy('{{ $sortBy }}')">
     @if ($sortBy)
-        <th wire:click="sortBy('{{ $sortBy }}')">
-            {{ $slot }}
-            <i class="{{ $this->getDirectionClass($sortBy) }} icon"></i>
-        </th>
+        {{ $slot }}
+        <i class="{{ $this->getDirectionClass($sortBy) }} icon"></i>
     @else 
-        <th>{{ $slot }}</th>
+        {{ $slot }}
     @endif
-{{-- </div> --}}
+</th>
