@@ -35,7 +35,7 @@ trait TableHelpers
     {
         $data = $this->searchQuery 
             ? $this->model
-                ::search(['recipe.code'], $this->searchQuery)
+                ::search($this->searchQuery, ['category.name'])
                 ->orderBy($this->orderByColumn, $this->direction)
                 ->paginate($this->perPage)
             : $this->model

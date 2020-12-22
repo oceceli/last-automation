@@ -94,7 +94,7 @@ class Generic
     }
 
 
-    public static function detectIDs(string $string) : bool
+    public static function detectIdAppending(string $string) : bool
     {
         return preg_match('/_id$/', $string);
     }

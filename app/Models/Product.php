@@ -6,13 +6,13 @@ use App\Models\Traits\HasInventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
-use Laravel\Scout\Searchable;
+use App\Models\Traits\Searchable;
 
 class Product extends Model
 {
     use HasFactory;
     use ModelHelpers;
-    // use Searchable;
+    use Searchable;
     use HasInventory;
 
     protected $guarded = [];
@@ -22,16 +22,13 @@ class Product extends Model
      */
     protected $with = ['units', 'recipe']; 
 
-
-    // public const theadAttributes = [
-    //     'Sıra', 'Ürün Adı', 'Kod', 'Barkod', 'Raf Ömrü', 'Min. Stok', 'Aktif', 'Üretilebilir',
-    // ];
-
         
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
+
 
 
     /**
