@@ -4,18 +4,18 @@
     <x-table-toolbar :perPage="$perPage" /> 
 
     <div>
-        <table class="ui celled sortable selectableeeeeeeeeeeeeeeeeeeee very compact unstackable table">
+        <table class="ui celled sortable very compact unstackable table">
             <thead>
                 <tr>
-                    <th>{{ __('sections/workorders.wo_status') }}</th>
-                    <th>{{ __('sections/workorders.queue') }}</th>
-                    <th>{{ __('sections/workorders.code') }}</th>
-                    <th>{{ __('sections/products.name') }}</th>
-                    <th>{{ __('sections/workorders.amount') }}</th>
-                    <th>{{ __('sections/workorders.lot_no') }}</th>
-                    <th>{{ __('sections/workorders.datetime') }}</th>
-                    {{-- <th>{{ __('sections/workorders.in_progress') }}</th>     --}}
-                    <th></th>
+                    <x-thead-item sortBy="status">{{ __('sections/workorders.wo_status') }}</x-thead-item>
+                    <x-thead-item sortBy="queue">{{ __('sections/workorders.queue') }}</x-thead-item>
+                    <x-thead-item sortBy="code">{{ __('sections/workorders.code') }}</x-thead-item>
+                    <x-thead-item>{{ __('sections/products.name') }}</x-thead-item>
+                    <x-thead-item sortBy="amount">{{ __('sections/workorders.amount') }}</x-thead-item>
+                    <x-thead-item sortBy="lot_no">{{ __('sections/workorders.lot_no') }}</x-thead-item>
+                    <x-thead-item sortBy="datetime">{{ __('sections/workorders.datetime') }}</x-thead-item>
+                    {{-- <x-thead-item sortBy="">{{ __('sections/workorders.in_progress') }}</x-thead-item>     --}}
+                    <x-thead-item></x-thead-item>
                 </tr>
             </thead>
             <tbody>

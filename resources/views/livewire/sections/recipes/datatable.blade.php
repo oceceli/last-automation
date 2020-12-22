@@ -9,11 +9,11 @@
             <table class="ui celled sortable table tablet stackable very compact">
                 <thead>
                     <tr>
-                        <th>Sıra</th>
-                        <th>{{ __('sections/recipes.code') }}</th>
-                        <th>{{ __('sections/recipes.belongs_to') }}</th>
-                        <th>{{ __('sections/recipes.count_of_ingredients') }}</th>
-                        <th></th>
+                        <x-thead-item>Sıra</x-thead-item>
+                        <x-thead-item sortBy="code">{{ __('sections/recipes.code') }}</x-thead-item>
+                        <x-thead-item>{{ __('sections/recipes.belongs_to') }}</x-thead-item>
+                        <x-thead-item>{{ __('sections/recipes.count_of_ingredients') }}</x-thead-item>
+                        <x-thead-item></x-thead-item>
                     </tr>
                 </thead>
                 <tbody>

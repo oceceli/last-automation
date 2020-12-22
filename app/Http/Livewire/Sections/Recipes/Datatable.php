@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Sections\Recipes;
 
 use App\Models\Recipe;
-use App\Http\Livewire\Datatable as BaseDatatable;
+use App\Http\Livewire\TableHelpers;
+use Livewire\Component;
 
-class Datatable extends BaseDatatable
+class Datatable extends Component
 {
+    use TableHelpers;
 
     protected $view = 'livewire.sections.recipes.datatable';
 

@@ -7,13 +7,13 @@
         <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
-                    <th>Sıra</th>
-                    <th class="center aligned">{{ __('stockmoves.type') }}</th>
-                    <th>{{ __('sections/products.code') }}</th>
-                    <th>{{ __('stockmoves.amount') }}</th>
-                    <th>{{ __('stockmoves.lot_number') }}</th>
-                    <th>{{ __('common.datetime') }}</th>
-                    <th></th>
+                    <x-thead-item>Sıra</x-thead-item>
+                    <x-thead-item sortBy="type" class="center aligned">{{ __('stockmoves.type') }}</x-thead-item>
+                    <x-thead-item>{{ __('sections/products.code') }}</x-thead-item>
+                    <x-thead-item>{{ __('stockmoves.amount') }}</x-thead-item>
+                    <x-thead-item sortBy="lot_number">{{ __('stockmoves.lot_number') }}</x-thead-item>
+                    <x-thead-item sortBy="datetime">{{ __('common.datetime') }}</x-thead-item>
+                    <x-thead-item></x-thead-item>
                 </tr>
             </thead>
             <tbody>
