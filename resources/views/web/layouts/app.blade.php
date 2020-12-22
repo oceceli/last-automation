@@ -57,8 +57,8 @@
                         
                         <!-- Page Content -->
                         <div class="overflow-x-hidden flex flex-col flex-1">
-                            <div class="p-3 flex-1">
-                                <div class="shadow-lg p-3 bg-gray-100 border border-teal-200 rounded-lg">{{ $slot }}</div>
+                            <div class="md:p-5 p-0 flex-1">
+                                <div class="shadow-lg p-3 bg-gray-100 border md:border-teal-200 md:rounded">{{ $slot }}</div>
                             </div>
                             <div id="FOOTER" class="bg-white">
                                 <x-layouts.partials.footer/>
