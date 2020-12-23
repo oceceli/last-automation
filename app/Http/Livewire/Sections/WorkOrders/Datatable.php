@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
-use App\Http\Livewire\TableHelpers;
+use App\Http\Livewire\SmartTable;
 use App\Models\WorkOrder;
 use Livewire\Component;
 
 class Datatable extends Component
 {
-    use TableHelpers;
+    use SmartTable;
 
     protected $view = 'livewire.sections.workorders.datatable';
 

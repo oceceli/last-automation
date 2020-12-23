@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire\Sections\Inventory;
 
-use App\Http\Livewire\TableHelpers;
+use App\Http\Livewire\SmartTable;
 use App\Models\Product;
 use App\Models\StockMove;
 use Livewire\Component;
 
 class Datatable extends Component
 {
-    use TableHelpers;
+    use SmartTable;
 
     public $model = Product::class;
     protected $view = 'livewire.sections.inventory.datatable';

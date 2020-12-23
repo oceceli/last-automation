@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\WithPagination;
 
-trait TableHelpers
+trait SmartTable
 {
     use WithPagination;
 
