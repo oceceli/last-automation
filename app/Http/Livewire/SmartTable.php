@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 
 trait SmartTable
@@ -20,7 +21,7 @@ trait SmartTable
     public $searchQuery = '';
 
 
-    public $orderByColumn;
+    public $orderByColumn = '';
     public $direction = 'asc';
 
     
@@ -33,16 +34,22 @@ trait SmartTable
 
     public function render()
     {
-        $data = $this->searchQuery 
-            ? $this->model
-                ::search($this->searchQuery, ['category.name'])
-                ->orderBy($this->orderByColumn, $this->direction)
-                ->paginate($this->perPage)
-            : $this->model
-                ::orderBy($this->orderByColumn, $this->direction)
-                ->paginate($this->perPage);
+        // Searched or unsearched Illuminate\Database\Eloquent\Builder
+        $query = $this->searchQuery
+            ? $this->model::search($this->searchQuery, $this->searchRelations)
+            : $this->model::query();
+            
+        // Sorted Illuminate\Database\Eloquent\Builder
+        $ordered = strpos($this->orderByColumn, '.')
+            ? $query->orderByRelationColumn('test')
+            : $query->orderBy($this->orderByColumn, $this->direction);
+        
+        
+        $data = $ordered->paginate($this->perPage);
+
         return view($this->view, ['data' => $data]);
     }
+
 
 
     public function updatedSearchQuery()

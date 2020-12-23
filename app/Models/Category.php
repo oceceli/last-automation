@@ -58,6 +58,10 @@ class Category extends Model
         ];
     }
 
+    public function setNameAttribute($value) 
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
     public function getNameAttribute($value)
     {
         return ucwords($value);

@@ -52,5 +52,6 @@ trait Searchable
             });
 
     }
+
     
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -28,9 +29,18 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    
+    public static function orderByRelationColumn($relation, $direction = 'asc') // ?? eksik
+    {
+        // dd($relation);
+        $subQuery = 
+            self::join('categories', 'categories.id', '=', 'products.category_id')
+            ->orderBy('categories.name', $direction)
+            ->select('products.*');
+        return $subQuery;
+    }
 
-
-
+    
     /**
      * Validate rules for current model
      */

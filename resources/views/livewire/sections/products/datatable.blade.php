@@ -13,12 +13,12 @@
                         {{ __('sections/products.name') }}
                         <i class="{{ $this->getDirectionClass('name') }} icon"></i>
                     </th>
-                    <x-thead-item>{{ __('modelnames.category') }}</x-thead-item>
+                    <x-thead-item sortBy="category.name">{{ __('modelnames.category') }}</x-thead-item>
                     <x-thead-item sortBy="barcode">{{ __('sections/products.barcode') }}</x-thead-item>
                     <x-thead-item sortBy="shelf_life">{{ __('sections/products.shelf_life') }}</x-thead-item>
                     {{-- <th>{{ __('sections/products.min_threshold') }}</th> --}}
                     <x-thead-item>{{ __('inventory.in_stock') }}</x-thead-item>
-                    <x-thead-item sortBy="note">{{ __('sections/products.note') }}</x-thead-item>
+                    {{-- <x-thead-item sortBy="note">{{ __('sections/products.note') }}</x-thead-item> --}}
                     <x-thead-item></x-thead-item>
                 </tr>
             </thead>
@@ -41,11 +41,12 @@
                             @endif
                         </td>
                         
-                        <td class="">  {{-- truncate w-2/12 max-w-0 --}}
+                        {{-- truncate w-2/12 max-w-0 --}}
+                        {{-- <td class="">  
                             @if ($product->note) {{ $product->note }}
                             @else <span class="text-sm text-ease-red">{{ __('common.NA') }}</span>
                             @endif
-                        </td>
+                        </td> --}}
 
                         <td class="collapsing">
                             <x-crud-actions edit show delete modelName="product" :modelId="$product->id" />

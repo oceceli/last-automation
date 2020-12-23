@@ -11,6 +11,10 @@ class Datatable extends Component
 
     use SmartTable;
 
+    protected $searchRelations = [
+        'category.name',
+    ];
+
     public $model = Product::class;
     protected $view = 'livewire.sections.products.datatable';
 
