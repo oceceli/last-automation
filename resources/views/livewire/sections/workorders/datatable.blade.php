@@ -1,6 +1,5 @@
 <div>
 
-    @if ($data->count() > 0)
     <x-table-toolbar :perPage="$perPage" /> 
 
     <div>
@@ -19,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $key => $workOrder)
+                @forelse ($data as $key => $workOrder)
                     @if ($workOrder->isFinalized())
                         <tr class="positive">
                             <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
@@ -86,7 +85,15 @@
                             </td>
                         </tr>
                     @endif
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="10">
+                            <x-placeholder icon="project diagram">
+                                {{ __('sections/workorders.no_workorder_found') }}
+                            </x-placeholder>
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         
@@ -101,13 +108,4 @@
         
         
     </div>
-    @else
-    <div class="ui placeholder segment h-full">
-        <div class="ui icon header">
-            <i class="project diagram icon"></i>
-            <a href="{{ route('work-orders.create') }}" class="text-blue-600 font-bold focus:outline-none">{{ __('common.click_here_link') }}</a> {{ __('sections/workorders.create_workorder') }}
-        </div>
-        <div class="text-sm font-semibold text-gray-500 text-center">{{ __('sections/workorders.no_workorder_found') }}</div>
-    </div>
-    @endif
 </div>

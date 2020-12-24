@@ -33,7 +33,7 @@
  
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-indigo-50 overflow-y-hidden">
+        <div class="min-h-screen bg-indigo-100 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
@@ -57,7 +57,7 @@
                         
                         <!-- Page Content -->
                         <div class="overflow-x-hidden flex flex-col flex-1">
-                            <div class="md:p-5 p-0 flex-1">
+                            <div class="md:p-5 p-0 flex-1 shadow relative">
                                 <div class="shadow-lg p-3 bg-gray-100 border md:border-teal-200 md:rounded">{{ $slot }}</div>
                             </div>
                             <div id="FOOTER" class="bg-white">

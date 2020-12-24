@@ -169,7 +169,7 @@
         <div x-data="{woCompleteModal: @entangle('woCompleteModal')}">
             <x-custom-modal active="woCompleteModal">
                 <form class="ui small form p-5" wire:submit.prevent="submitWoCompleted()">
-                    <x-dropdown label="Toplam" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
+                    <x-dropdown label="{{ __('common.total') }}" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
                         model="unit_id" value="id" text="name" :collection="$woCompleteData->product->units" placeholder="{{__('modelnames.unit')}}"
                     />
                     <x-input label="{{ __('stockmoves.waste') }}" model="production_waste" placeholder="{{ __('stockmoves.waste_amount')}}">

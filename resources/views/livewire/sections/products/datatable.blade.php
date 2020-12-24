@@ -56,7 +56,7 @@
                 @empty
                     <tr>
                         <td colspan="10">
-                            <x-placeholder icon="inbox">{{ __('datatable.no_results') }}</x-placeholder>
+                            <x-placeholder icon="brown open box">{{ __('common.no_results') }}</x-placeholder>
                         </td>
                     </tr>
                 @endforelse

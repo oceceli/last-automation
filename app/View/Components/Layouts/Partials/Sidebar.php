@@ -26,16 +26,16 @@ class Sidebar extends Component
     {
         return [
             ['name' => 'dashboard', 'label' => 'dashboard', 'icon' => 'icon large dashboard'],
-            ['name' => 'products.index', 'label' => 'products', 'icon' => 'icon large box'],
-            ['name' => 'products.create', 'label' => 'products-create', 'icon' => 'icon large box'],
+            ['name' => 'products.index', 'label' => 'products', 'icon' => 'icon large brown box'],
+            ['name' => 'products.create', 'label' => 'products-create', 'icon' => 'icon large brown box'],
             ['name' => 'work-orders.index', 'label' => 'work-orders', 'icon' => 'icon large project diagram'],
-            ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large project diagram'],
+            // ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large project diagram'],
             ['name' => 'work-orders.daily', 'label' => 'work-orders-daily', 'icon' => 'icon large settings'],
             ['name' => 'recipes.index', 'label' => 'recipes', 'icon' => 'icon large mortar pestle'],
             ['name' => 'recipes.create', 'label' => 'recipes-create', 'icon' => 'icon large mortar pestle'],
             ['name' => 'stock-moves.index', 'label' => 'stock-moves', 'icon' => 'large truck packing icon'],
             ['name' => 'stock-moves.create', 'label' => 'stock-moves-create', 'icon' => 'large truck packing icon'],
-            ['name' => 'inventory.index', 'label' => 'inventory', 'icon' => 'large heart icon'],
+            ['name' => 'inventory.index', 'label' => 'inventory', 'icon' => 'large warehouse icon'],
             ['name' => 'units.create', 'label' => 'unit-create', 'icon' => 'icon large weight'],
         ];
     }

@@ -25,5 +25,5 @@ return [
 
     // 'waste_cannot_be_greater_than_total_amount' => 'Fire, toplam üretimden fazla olamaz!',
 
-    'any_stockmove_will_be_projected_here' => 'Stoğa ekleme çıkarma yapıldıkça burada görüntülenecek',
+    // 'any_stockmove_will_be_projected_here' => 'Stoğa ekleme çıkarma yapıldıkça burada görüntülenecek',
 ];

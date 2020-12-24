@@ -133,7 +133,7 @@
                     <div>{{ __('common.are_you_sure_you_want_to_delete') }}</div>
                 @endif
             </x-confirm>
-        </div
-    @endif>
+        </div>
+    @endif
 
 </div>

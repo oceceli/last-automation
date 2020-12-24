@@ -29,7 +29,7 @@ return [
     'detail' => 'Detay',
     'see_details' => 'Detayları gör',
     'already_exist' => 'Zaten var',
-    'click_here_link' => 'Buradan',
+    // 'click_here_link' => 'Buradan',
     'add_from_here' => 'Buradan ekleyin',
     'use_add_button' => 'Ekle butonunu kullanın',
     // 'saved' => 'Kaydedildi',
@@ -60,7 +60,8 @@ return [
     'attention' => 'Dikkat!',
     'somethings_missing' => 'Bir şeyler eksik!',
     'somethings_wrong' => 'Bir şeyler yanlış',
-    'there_is_nothing_here' => 'Burada hiçbir şey yok!',
+    // 'there_is_nothing_here' => 'Burada hiçbir şey yok!',
+    'no_results' => 'Sonuç bulunamadı...',
     'note' => 'Not',
     'optional' => 'İsteğe bağlı',
 

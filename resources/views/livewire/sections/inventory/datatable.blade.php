@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $product)
+                @forelse ($data as $product)
                 <tr class="{{ $product->stockStatus['tr'] }} font-semibold ease-in-out duration-150 cursor-default" wire:key="{{ $loop->index }}">
                     <td class="collapsing font-bold ">
                         <span data-tooltip="{{ $product->stockStatus['explanation'] }}" data-variation="mini" data-position="top left">
@@ -38,7 +38,15 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="10">
+                        <x-placeholder icon="warehouse">
+                            {{ __('common.no_results') }}
+                        </x-placeholder>
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </x-table>
 

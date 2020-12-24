@@ -59,8 +59,8 @@
                 @empty
                     <tr>
                         <td colspan="10">
-                            <x-placeholder icon="red truck packing" header="{{ __('common.empty') }}">
-                                {{ __('stockmoves.any_stockmove_will_be_projected_here') }}
+                            <x-placeholder icon="truck packing">
+                                {{ __('common.no_results') }}
                             </x-placeholder>
                         </td>
                     </tr>

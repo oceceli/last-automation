@@ -160,7 +160,7 @@
                     addResult     : '<b>{term}</b> ekle',
                     count         : '{count} adet seçildi',
                     maxSelections : 'En fazla {maxCount} seçilebilir',
-                    noResults     : '{{ __('common.there_is_nothing_here') }}',
+                    noResults     : '{{ __('common.no_results') }}',
                 },
             });
             const style = 'font-size: 10px; color: green;';
