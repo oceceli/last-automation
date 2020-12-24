@@ -29,10 +29,13 @@ trait Searchable
     }
     
 
-    public static function search($string, array $related = [])
+    public static function search($string, array $related = [], $query = null)
     {
         $columns = array_merge(self::getColumnNames(), $related);
-        return self::query()
+
+        $query = $query ? $query : self::query();
+
+        return $query
             ->where(function (Builder $query) use ($columns, $string) {
                 foreach ($columns as $column) {
                     $query->when(

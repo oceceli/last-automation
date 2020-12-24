@@ -30,15 +30,14 @@ class Product extends Model
     }
 
     
-    public static function orderByRelationColumn($relation, $direction = 'asc') // ?? eksik
-    {
-        // dd($relation);
-        $subQuery = 
-            self::join('categories', 'categories.id', '=', 'products.category_id')
-            ->orderBy('categories.name', $direction)
-            ->select('products.*');
-        return $subQuery;
-    }
+    // public static function orderByRelationColumn($relation, $direction = 'asc') // !! kullanılmıyor
+    // {
+    //     $subQuery = 
+    //         self::join('categories', 'categories.id', '=', 'products.category_id')
+    //         ->orderBy('categories.name', $direction)
+    //         ->select('products.*');
+    //     return $subQuery;
+    // }
 
     
     /**

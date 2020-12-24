@@ -11,8 +11,8 @@ class Datatable extends Component
 
     use SmartTable;
 
-    protected $searchRelations = [
-        'category.name',
+    protected $alsoSearch = [
+        'category.ctg_name', 'category.id',
     ];
 
     public $model = Product::class;

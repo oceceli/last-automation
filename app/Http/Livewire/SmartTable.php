@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Common\Helpers\Generic;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 trait SmartTable
 {
@@ -36,16 +37,16 @@ trait SmartTable
     {
         // Searched or unsearched Illuminate\Database\Eloquent\Builder
         $query = $this->searchQuery
-            ? $this->model::search($this->searchQuery, $this->searchRelations)
+            ? $this->model::search($this->searchQuery, $this->alsoSearch)
             : $this->model::query();
             
-        // Sorted Illuminate\Database\Eloquent\Builder
-        $ordered = strpos($this->orderByColumn, '.')
-            ? $query->orderByRelationColumn('test')
-            : $query->orderBy($this->orderByColumn, $this->direction);
+        // // Sorted Illuminate\Database\Eloquent\Builder
+        // $ordered = strpos($this->orderByColumn, '.')
+        //     ? $this->model::orderByRelationColumn('test')
+        //     : $query->orderBy($this->orderByColumn, $this->direction);
         
-        
-        $data = $ordered->paginate($this->perPage);
+        $data = $query->orderBy($this->orderByColumn, $this->direction)
+                      ->paginate($this->perPage);
 
         return view($this->view, ['data' => $data]);
     }

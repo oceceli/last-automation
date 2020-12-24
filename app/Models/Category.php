@@ -9,7 +9,7 @@ use App\Models\Traits\ModelHelpers;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes, ModelHelpers;
+    use HasFactory, ModelHelpers;
 
     protected $guarded = [];
 

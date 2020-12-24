@@ -13,7 +13,7 @@
                         {{ __('sections/products.name') }}
                         <i class="{{ $this->getDirectionClass('name') }} icon"></i>
                     </th>
-                    <x-thead-item sortBy="category.name">{{ __('modelnames.category') }}</x-thead-item>
+                    <x-thead-item>{{ __('modelnames.category') }}</x-thead-item>
                     <x-thead-item sortBy="barcode">{{ __('sections/products.barcode') }}</x-thead-item>
                     <x-thead-item sortBy="shelf_life">{{ __('sections/products.shelf_life') }}</x-thead-item>
                     {{-- <th>{{ __('sections/products.min_threshold') }}</th> --}}
@@ -27,7 +27,7 @@
                     <tr wire:key="{{ $key }}">
                         <td class="collapsing">{{ $product->code }}</td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->category->name }}</td>
+                        <td>{{ $product->category->ctg_name }}</td>
                         <td>{{ $product->barcode }}</td>
                         <td>{{ $product->shelf_life }}</td>
                         {{-- <td>{{ $product->min_threshold }}</td> --}}

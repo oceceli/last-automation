@@ -153,7 +153,7 @@ class ScenarioSeeder extends Seeder
 
     private function cCategory($name)
     {
-        return Category::create(['name' => $name]);
+        return Category::create(['ctg_name' => $name]);
     }   
 
     private function cUnit($productId, $name, $abbreviation, $factor, $operator, $parentId)
