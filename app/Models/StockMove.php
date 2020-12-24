@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use App\Models\Traits\Searchable;
 use App\Models\Traits\StockCalculations;
 use Carbon\Carbon;
 
 class StockMove extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
+    use Searchable;
 
     protected $guarded = [];
 

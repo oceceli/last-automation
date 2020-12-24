@@ -10,9 +10,13 @@ class Datatable extends Component
 {
     use SmartTable;
 
-    protected $view = 'livewire.sections.workorders.datatable';
+    protected $alsoSearch = [
+        'product.name',
+    ];
 
     public $model = WorkOrder::class;
+    protected $view = 'livewire.sections.workorders.datatable';
+
 
 
 }

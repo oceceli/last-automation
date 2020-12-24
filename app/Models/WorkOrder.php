@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Production;
+use App\Models\Traits\Searchable;
 use Carbon\Carbon;
 
 class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes, ModelHelpers;
+    use Searchable;
     use Production;
 
     protected $guarded = [];

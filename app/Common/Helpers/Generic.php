@@ -50,7 +50,7 @@ class Generic
 
 
     /**
-     * @deprecated Use \Illuminate\Support\Str::plural instead
+     * @deprecatedd Use \Illuminate\Support\Str::plural instead
      */
     // public static function makePlural($string)
     // {

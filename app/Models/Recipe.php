@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
+use App\Models\Traits\Searchable;
 
 class Recipe extends Model
 {
     use HasFactory, ModelHelpers;
+    use Searchable;
 
     protected $guarded = [];
 

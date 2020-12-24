@@ -16,7 +16,8 @@ trait Searchable
      */
     public static function getColumnNames()
     {
-        $array = Schema::getColumnListing(Str::plural(preg_replace('/.*\\\/', '', self::class)));
+        $array = Schema::getColumnListing(Str::plural(Generic::toSnakeCase(self::class)));
+        $idsAppended = [];
 
         // find '_id' appended attributes. Will be extracted from search index
         foreach($array as $item) {

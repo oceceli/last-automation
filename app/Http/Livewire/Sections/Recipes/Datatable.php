@@ -10,9 +10,10 @@ class Datatable extends Component
 {
     use SmartTable;
 
-    protected $view = 'livewire.sections.recipes.datatable';
+    // protected 
 
-    public $model = Recipe::class;
+    protected $view = 'livewire.sections.recipes.datatable';
+    protected $model = Recipe::class;
 
     
 }

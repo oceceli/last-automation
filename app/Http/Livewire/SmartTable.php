@@ -37,13 +37,8 @@ trait SmartTable
     {
         // Searched or unsearched Illuminate\Database\Eloquent\Builder
         $query = $this->searchQuery
-            ? $this->model::search($this->searchQuery, $this->alsoSearch)
+            ? $this->model::search($this->searchQuery, isset($this->alsoSearch) ? $this->alsoSearch : [])
             : $this->model::query();
-            
-        // // Sorted Illuminate\Database\Eloquent\Builder
-        // $ordered = strpos($this->orderByColumn, '.')
-        //     ? $this->model::orderByRelationColumn('test')
-        //     : $query->orderBy($this->orderByColumn, $this->direction);
         
         $data = $query->orderBy($this->orderByColumn, $this->direction)
                       ->paginate($this->perPage);
