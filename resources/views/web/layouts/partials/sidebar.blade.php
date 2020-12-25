@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="h-20 p-3 flex justify-between items-center bg-gradient-to-b from-white to-gray-100">
+            <div class="h-20 p-3 px-5 flex justify-between items-center bg-gradient-to-b from-white to-gray-100">
 
                 <a href="{{ route('work-orders.create') }}">
                     <i class="circular icons" data-tooltip="{{ __('common.work-orders_create')}}" data-position="top left" data-variation="mini">
