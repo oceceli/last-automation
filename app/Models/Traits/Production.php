@@ -12,8 +12,9 @@ trait Production
 
     public function saveProductionResults($productionGross, $productionWaste, $unitId)
     {
+        if( ! $this->isInProgress()) return;
         if($productionWaste > $productionGross) return;
-        if($this->isFinalized()) return;
+        // if($this->isFinalized()) return;
 
         // take production results to their base unit
         $productionGross = Conversions::toBase($unitId, $productionGross)['amount'];
@@ -29,6 +30,8 @@ trait Production
         foreach($this->necessaryIngredients as $necessary) {
             Moves::decreasedIngredient($this, $necessary['ingredient']->id, $necessary['amount']);
         }
+
+        return true;
     }
 
     public function getNecessaryIngredientsAttribute()

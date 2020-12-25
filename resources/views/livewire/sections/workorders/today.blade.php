@@ -119,7 +119,7 @@
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
-                                        <x-crud-actions show modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
+                                        <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
                                             <div data-tooltip="{{ __('sections/workorders.wo_start') }}" data-variation="mini">
                                                 <i wire:click.prevent="startJob({{ $workOrder->id }})" class="red play link icon"></i>
                                             </div>
@@ -145,7 +145,7 @@
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
-                                        <x-crud-actions show modelName="work-order" gray :modelId="$workOrder->id" />
+                                        <x-crud-actions show edit delete modelName="work-order" gray :modelId="$workOrder->id" />
                                     </td>
                                 </tr>
                             @endif
@@ -165,10 +165,15 @@
         </div>
     </x-content>
 
+
+
     @if ($woCompleteModal)
         <div x-data="{woCompleteModal: @entangle('woCompleteModal')}">
             <x-custom-modal active="woCompleteModal">
-                <form class="ui small form p-5" wire:submit.prevent="submitWoCompleted()">
+                <x-slot name="header">
+                    <span class="">{{ $woCompleteData->product->name }}</span>
+                </x-slot>
+                <form class="ui small form p-5 shadow-md" wire:submit.prevent="submitWoCompleted()">
                     <x-dropdown label="{{ __('common.total') }}" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
                         model="unit_id" value="id" text="name" :collection="$woCompleteData->product->units" placeholder="{{__('modelnames.unit')}}"
                     />
@@ -179,13 +184,22 @@
                     </x-input>
                     <x-form-buttons class="pt-4" />
                 </form>
+                <div class="p-4 text-sm text-ease-red" x-data="{confirmation: false}">
+                    <div x-show="!confirmation">
+                        <span @click="confirmation = true" class="cursor-pointer">
+                            {{ __('sections/workorders.abort_this_work_order') }}
+                        </span>
+                        <span data-tooltip="{{ __('sections/workorders.production_results_will_not_be_processed')}}" data-variation="mini" data-position="bottom center">
+                            <i class="small circular question mark icon"></i>
+                        </span>
+                    </div>
+                    <div x-show="confirmation" wire:click="abort({{ $woCompleteData->id }})" class="font-extrabold bg-red-100 text-lg text-center border border-red-300 text-red-600 cursor-pointer p-2 rounded">
+                        {{ __('common.are_you_sure') }}
+                    </div>
+                </div>
             </x-custom-modal>
         </div>
     @endif
 
+
 </div>
-
-
-<style>
-    [x-cloak] { display: none; }
-</style>

@@ -35,6 +35,7 @@ return [
     'use_add_button' => 'Ekle butonunu kullanın',
     // 'saved' => 'Kaydedildi',
 
+    'are_you_sure' => 'Emin misiniz?',
     'are_you_sure_you_want_to_delete' => 'Silmek istediğinize emin misiniz?',
     'smoothly_saved' => ':model sorunsuzca kaydedildi...', 
     'context_created' => ':model oluşturuldu...',

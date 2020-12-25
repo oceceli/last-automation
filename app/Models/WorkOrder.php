@@ -30,6 +30,7 @@ class WorkOrder extends Model
     // @override
     public function delete()
     {
+        if($this->isInProgress()) return;
         // $this->preferredStocks()->delete(); // ???? silme kuralları eklenecek
         if($this->isFinalized()) {
             $this->stockMoves()->delete();
@@ -102,8 +103,7 @@ class WorkOrder extends Model
      */
     public function isFinalized()
     {
-        return isset($this->finalized_at); 
-        // return $this->status === 'completed';
+        return $this->status === 'completed' && $this->finalized_at;
     }
 
 
@@ -161,10 +161,17 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        if($this->isActive() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+        if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
             $this->update(['status' => 'in_progress', 'started_at' => now()]);
             return true;
         }
+    }
+
+
+    public function abort()
+    {
+        if($this->isInProgress())
+            $this->update(['status' => 'active', 'started_at' => null]);
     }
     
 

@@ -65,6 +65,8 @@ return [
     'wo_complete' => 'Bitir',
     'wo_start' => 'İşi başlat',
     'wo_delete' => 'İş emrini sil',
+    'abort_this_work_order' => 'Bu üretimi iptal et',
+    'production_results_will_not_be_processed' => 'Üretim sonucu stoğa işlenmeyecek.',
 
     'waiting_for_production' => 'Üretim bekleniyor...',
     'started_at_time' => ':time başladı',
