@@ -22,18 +22,23 @@
 
                 <a href="{{ route('work-orders.create') }}">
                     <i class="circular icons" data-tooltip="{{ __('common.work-orders_create')}}" data-position="top left" data-variation="mini">
-                        <i class="large link project diagram icon"></i>
-                        <i class="bottom right corner small add icon"></i>
+                        <i class="large link green project diagram icon"></i>
+                        <i class="bottom right green corner small add icon"></i>
                     </i>
+                </a>
+                <a href="{{ route('stock-moves.create') }}" data-tooltip="{{ __('stockmoves.stock_moves_create')}}" data-position="top left" data-variation="mini">
+                    <i class="large green truck packing icon"></i>
                 </a>
                 <a href="{{ route('inventory.index') }}">
                     <i class="large link warehouse icon"></i>
-                    
-
                 </a>
-                <i class="large link circular store icon"></i>
+                <a href="{{ route('work-orders.daily') }}">
+                    <i class="large link setting icon"></i>
+                </a>
+                
+
                 <i class="large link circular address card icon"></i>
-                <i class="large link circular setting icon"></i>
+                
             </div>
 
         </div>

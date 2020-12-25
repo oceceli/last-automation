@@ -6,7 +6,7 @@ namespace App\Http\Livewire;
 Trait FormHelpers
 {
 
-    public $validateOnly = false;
+    protected $validateOnly = false;
     
     public function render()
     {

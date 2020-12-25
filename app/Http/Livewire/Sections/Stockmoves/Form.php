@@ -3,16 +3,21 @@
 namespace App\Http\Livewire\Sections\Stockmoves;
 
 use App\Common\Facades\Moves;
-use App\Http\Livewire\Form as BaseForm;
+// use App\Http\Livewire\Form as BaseForm;
 use App\Models\Product;
 use App\Models\StockMove;
 use App\Common\Facades\Conversions;
+use App\Http\Livewire\FormHelpers;
+use Livewire\Component;
 
-class Form extends BaseForm
+class Form extends Component
 {
+    
+    use FormHelpers; 
+
     public $model = StockMove::class;
     public $view = 'livewire.sections.stockmoves.form';
-    public $validate = false;
+    // protected $validateOnly = true;
 
     public $test = true;
 
@@ -26,8 +31,8 @@ class Form extends BaseForm
         'cards.*.product_id' => 'required|min:1|integer',
         'cards.*.direction' => 'required|boolean',
         'cards.*.amount' => 'required|numeric',
-        'cards.*.datetime' => 'nullable|date',
-
+        'cards.*.datetime' => 'required|date',
+        'cards.*.lot_number' => 'required',
         'cards.*.unit_id' => 'required|integer',
     ];
     
@@ -36,13 +41,19 @@ class Form extends BaseForm
         'cards.*.direction' => 'Yön',
         'cards.*.amount' => 'Miktar',
         'cards.*.datetime' => 'Tarih',
+        'cards.*.unit_id' => 'Birim',
+        'cards.*.lot_number' => 'Lot numarası',
     ];
+
+
 
     public function mount()
     {
-        parent::mount();
+        // parent::mount();
         $this->addCard();
     }
+
+
 
     public function addCard()
     {
@@ -51,27 +62,43 @@ class Form extends BaseForm
             'direction' => 1,
             'amount' => null,
             'lot_number' => null,
-            'datetime' => date('d.m.Y H:i:s'),
+            'datetime' => now(),
             'unit_id' => null,       
             
             'lotNumberAreaType' => 'input',
         ];
     }
 
+
+
     public function lotNumbers($productId)
     {
         return StockMove::where('product_id', $productId)->pluck('lot_number')->toArray();
     }
 
+
+
     public function removeCard($key)
     {
+        if($this->isLastCard()) $this->reset();
         unset($this->cards[$key]);
     }
+
+
+
+    public function isLastCard()
+    {
+        return count($this->cards) <= 1;
+    }
     
+
+
     public function getProductsProperty()
     {
         return Product::all();
     }
+
+
 
     public function toggleDirection($key)
     {
@@ -84,6 +111,8 @@ class Form extends BaseForm
         $this->cards[$key]['lot_number'] = null; // empty lot number 
     }
 
+
+    
     /**
      * Nested product_id on updated event 
      * Fill out the units dropdown based on selected product 
@@ -99,6 +128,7 @@ class Form extends BaseForm
     }
 
 
+
     public function submit()
     {
         $this->validate();
@@ -107,6 +137,7 @@ class Form extends BaseForm
             Moves::newMove($card['product_id'], $amount, $card['direction'], $card['datetime'], $card['lot_number']);
         }
         $this->emit('toast', __('common.saved.title'), __('common.saved.standard'), 'success');
+        $this->reset();
     }
 
 }

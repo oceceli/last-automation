@@ -25,7 +25,7 @@ class Datepicker extends Component
      *
      * @return void
      */
-    public function __construct($model, $placeholder = 'common.date', $label = null, $type = 'date', $disabledDays = null, $initialDate = null, $key = null, $dId = null)
+    public function __construct($model, $placeholder = 'common.date', $label = null, $type = 'date', $disabledDays = null, $initialDate = null, $uniqueKey = null, $dId = null)
     {
         $this->model = $model;
         $this->label = $label;
@@ -37,7 +37,7 @@ class Datepicker extends Component
         if($dId) {
             $this->dId = $dId;
         } else {
-            $this->dId = 'datepicker_'.$key;
+            $this->dId = 'datepicker_'.$uniqueKey;
         }
     }
 

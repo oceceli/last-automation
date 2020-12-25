@@ -55,8 +55,8 @@
         </div>
         
         {{-- Product lots MODAL --------------------------------------------------}}
-        <x-custom-modal active="lotModal" position="right">
-            <div class="p-2">
+        <x-custom-modal active="lotModal">
+            <div class="py-2 px-6">
                 @if ($selectedProduct)
                     <h4 class="font-bold px-2 pt-2 text-ease">{{ $selectedProduct->name }}</h4>
                     <table class="ui center aligned table unstackable very compact">
