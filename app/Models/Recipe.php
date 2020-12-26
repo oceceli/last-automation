@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
@@ -58,15 +58,16 @@ class Recipe extends Model
     {
         if($this->recipeUsedInActiveWorkOrders() > 0) {
             return ['message' => '!!! Bu reçeteye ait aktif iş emri/emrileri olduğu için silinemez!', 'type' => 'error'];
-        } else {
-            $this->ingredients()->detach();
-            parent::delete();
-            return ['message' => __('sections/recipes.recipe_deleted_successfully'), 'type' => 'success'];
-        }
+        } 
+            
+        $this->ingredients()->detach();
+        parent::delete();
+        return ['message' => __('sections/recipes.recipe_deleted_successfully'), 'type' => 'success'];
+        
         
     }
 
-    private function recipeUsedInActiveWorkOrders()
+    private function recipeUsedInActiveWorkOrders() 
     {
         return WorkOrder::where('product_id', $this->product->id)
                         ->where(function($query){
@@ -76,6 +77,21 @@ class Recipe extends Model
                         })->count();
     }
 
+
+    public function calculateNecessaryIngredients($amount, $unitId) : array
+    {
+        $mainProduct = Conversions::toBase($unitId, $amount);
+        foreach($this->ingredients as $key => $ingredient) {
+            $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
+            $array[] = [
+                'ingredient' => $ingredient,
+                'amount' => $mainProduct['amount'] * $convertedIngredient['amount'],
+                'unit' => $convertedIngredient['unit'],
+            ];
+        }
+
+        return $array;
+    }
 
 
     // public function getNeedsAttribute()
@@ -92,3 +108,14 @@ class Recipe extends Model
 
     
 }
+
+
+
+// $array[$key] = [
+//     'ingredient' => $ingredient,
+//     'amount' => $mainProduct['amount'] * $convertedIngredient['amount'],
+//     'actual_amount' => $mainProduct['amount'] * $convertedIngredient['amount'],
+//     'unit' => $convertedIngredient['unit'],
+// ];
+// if( ! $ingredient->pivot->literal) 
+//     $array[$key]['amount'] = floor($mainProduct['amount'] * $convertedIngredient['amount']); // floor

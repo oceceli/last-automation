@@ -165,17 +165,44 @@
         </div>
     </x-content>
 
+    @if ($lotSourcesModal)
+        <div x-data="{lotSourcesModal: @entangle('lotSourcesModal')}">
+            <x-custom-modal active="lotSourcesModal" header="!!! {{ $woStartData->product->name }} üretim için kaynakları belirt">
+
+                @include('web.sections.workorders.productionLotSources')
+                
+            </x-custom-modal>
+        </div>
+    @endif
 
 
-    @if ($woCompleteModal)
-        <div x-data="{woCompleteModal: @entangle('woCompleteModal')}">
-            <x-custom-modal active="woCompleteModal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @if ($woFinalizeModal)
+        <div x-data="{woFinalizeModal: @entangle('woFinalizeModal')}">
+            <x-custom-modal active="woFinalizeModal">
                 <x-slot name="header">
-                    <span class="">{{ $woCompleteData->product->name }}</span>
+                    <span class="">{{ $woFinalizeData->product->name }}</span>
                 </x-slot>
-                <form class="ui small form p-5 shadow-md" wire:submit.prevent="submitWoCompleted()">
+                <form class="ui small form p-5 shadow-md" wire:submit.prevent="submitWoFinalized()">
                     <x-dropdown label="{{ __('common.total') }}" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
-                        model="unit_id" value="id" text="name" :collection="$woCompleteData->product->units" placeholder="{{__('modelnames.unit')}}"
+                        model="unit_id" value="id" text="name" :collection="$woFinalizeData->product->units" placeholder="{{__('modelnames.unit')}}"
                     />
                     <x-input label="{{ __('stockmoves.waste') }}" model="production_waste" placeholder="{{ __('stockmoves.waste_amount')}}">
                         <x-slot name="innerLabel">
@@ -193,8 +220,8 @@
                             <i class="small circular question mark icon"></i>
                         </span>
                     </div>
-                    <div x-show="confirmation" wire:click="abort({{ $woCompleteData->id }})" class="font-extrabold bg-red-100 text-lg text-center border border-red-300 text-red-600 cursor-pointer p-2 rounded">
-                        {{ __('common.are_you_sure') }}
+                    <div x-show="confirmation" wire:click="abort({{ $woFinalizeData->id }})" class="font-extrabold bg-red-100 text-lg text-center border border-red-300 text-red-600 cursor-pointer p-2 rounded">
+                        {{ __('common.confirm') }}
                     </div>
                 </div>
             </x-custom-modal>

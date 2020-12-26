@@ -45,7 +45,7 @@
                 {{-- <x-necessary-ingredients :product="$workOrder->product" :amount="$amount" :unitId="$unit_id" /> --}}
                 {{-- <h5 class="text-ease font-sans border-b">Gerekli malzemeler</h5>
 
-                @foreach ($workOrder->necessaryIngredients as $necessary)
+                @foreach ($workOrder->necessaryIngredienfts as $necessary)
                     <div>
                         <span class="text-ease">{{ $necessary['ingredient']->name }}: </span> 
                         <span>{{ $necessary['amount'] }} </span>

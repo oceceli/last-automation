@@ -32,7 +32,7 @@ class Form extends Component
     // comes from dropdown
     public $selectedProduct;
 
-    public $stockCards = [];
+    // public $stockCards = [];
 
     // edit mode
     public $editMode = false;
@@ -127,24 +127,6 @@ class Form extends Component
         !$bool ? $this->deleteModal = false : null;
     }
 
-
-    public function calculateNeeds($ingredient)
-    {
-        $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
-        
-        if($this->amount && $this->unit_id) {
-            $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
-            $selectedProductAmount = Conversions::toBase($this->unit_id, $this->amount)['amount'];
-
-            $result = ['amount' => $selectedProductAmount * $convertedIngredient['amount'], 'unit' => $convertedIngredient['unit']];
-            if( ! $ingredient->pivot->literal) $result['amount'] = floor($selectedProductAmount * $convertedIngredient['amount']);
-
-            return $result;
-        } 
-        
-        else return ['amount' => 0, 'unit' => $convertedIngredient['unit']];
-    }
-
     
 
 
@@ -190,6 +172,9 @@ class Form extends Component
         return ! empty($this->product_id);
     }
 
+    /**
+     * If recipe content is empty 
+     */
     public function redirectForAddIngredients()
     {
         return redirect()->route('recipes.edit', ['recipe' => $this->selectedProduct->recipe]);

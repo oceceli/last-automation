@@ -8,21 +8,21 @@
             @endif
             <div class="p-8">
         
-                @foreach ($listings as $row)
+                @foreach ($listings as $item)
                     <x-custom-list wire:key="{{ $loop->index }}">
                         <div class="flex items-center gap-1">
-                            <div>{{ $row['ingredient']->name }}</div>
-                            <span class="text-xs hidden md:block"> ({{ $row['ingredient']->code }})</span> 
+                            <div>{{ $item['ingredient']->name }}</div>
+                            <span class="text-xs hidden md:block"> ({{ $item['ingredient']->code }})</span> 
                         </div>
                         <div>
-                            @if ($row['ingredient']->pivot->literal) <span class="text-xs text-ease-green">{{ __('common.net') }}</span>
-                            @else <span class="text-xs text-ease-green">{{ __('common.least') }}</span>
+                            @if ($item['ingredient']->pivot->literal) <span class="text-xs text-ease-green">{{ __('common.net') }}</span>
+                            @else <span class="text-xs text-ease-green">{{ __('common.variable') }}</span>
                             @endif
-                            <span data-tooltip="{{ $row['actual_amount'] }}" data-variation="mini">
-                                {{ $row['amount'] }}
+                            <span>
+                                {{ number_format($item['amount'],2, ',', '.') }}
                             </span>
                             <span>
-                                {{ $row['unit']->name }}
+                                {{ $item['unit']->name }}
                             </span>
                         </div>
                     </x-custom-list>

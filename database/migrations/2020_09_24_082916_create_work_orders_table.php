@@ -28,7 +28,7 @@ class CreateWorkOrdersTable extends Migration
             $table->dateTime('finalized_at')->nullable();
 
             $table->string('note')->nullable();
-            $table->softDeletes();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

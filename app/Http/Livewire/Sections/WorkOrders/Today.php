@@ -13,11 +13,15 @@ class Today extends Component
     public $todayDate; // just date of today
     public $workOrders;
 
-    public $woCompleteModal;
-    public $woCompleteData;
+    public $woFinalizeModal;
+    public $woFinalizeData;
 
-    // public $newWorkOrderModal = false; 
+    public $lotSourcesModal;
+    public $woStartData;
+    public $lotCards = [];
+    public $selectedLots = [];
 
+    
 
     // modal form, it will go to the stockmoves table
     public $unit_id;
@@ -46,8 +50,8 @@ class Today extends Component
 
     public function woCompleteRequest($id)
     {
-        $this->woCompleteModal = true;
-        $this->woCompleteData = $this->workOrders->find($id);
+        $this->woFinalizeModal = true;
+        $this->woFinalizeData = $this->workOrders->find($id);
     }
 
 
@@ -63,7 +67,7 @@ class Today extends Component
     {
         $this->validate();
 
-        $workOrder = $this->woCompleteData;
+        $workOrder = $this->woFinalizeData;
 
         if($workOrder->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id))
             $this->emit('toast', '', __('sections/workorders.production_is_completed'), 'success');
@@ -78,7 +82,7 @@ class Today extends Component
         $workOrder = $this->workOrders->find($id);
         $workOrder->abort();
 
-        $this->woCompleteModal = false;
+        $this->woFinalizeModal = false;
     }
 
 
@@ -97,14 +101,25 @@ class Today extends Component
     /**
      * Set workorder as in progress 
      */
-    public function startJob($id)
+    public function startJob($id) // !! Eşzamanlı birçok üretim yapılabilsin.
     {
-        $workOrder = $this->workOrders->find($id);
-        $workOrder->start() 
-            ? null
-            : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+        $this->woStartData = $workOrder = $this->workOrders->find($id);
+        $this->lotCards = $workOrder->product->recipe->calculateNecessaryIngredients($workOrder->amount, $workOrder->unit_id);
+        
+        $this->lotSourcesModal = true;
+        
+
+        // $workOrder->start() 
+        //     ? null
+        //     : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
         
     }
+
+    public function start()
+    {
+        dd($this->selectedLots);
+    }
+
 
 
     
@@ -123,7 +138,7 @@ class Today extends Component
 
     public function refreshTable()
     {
-        $this->reset('production_gross', 'production_waste', 'unit_id', 'selectedUnit', 'woCompleteModal');
+        $this->reset('production_gross', 'production_waste', 'unit_id', 'selectedUnit', 'woFinalizeModal');
         $this->workOrders = WorkOrder::getTodaysList();
     }
 

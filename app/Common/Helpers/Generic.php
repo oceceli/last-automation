@@ -163,4 +163,13 @@ class Generic
             ? $data
             : (array)$data;
     }
+
+
+    public static function dd($value)
+    {
+
+        if(is_array($value))  echo "<pre><small>".print_r($value, true)."</small></pre>";
+        else echo "<pre><small>". $value . "</small></pre>";
+
+    }
 }
