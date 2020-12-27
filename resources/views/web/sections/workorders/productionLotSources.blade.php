@@ -21,19 +21,11 @@
                 </div>
 
                 <div class="pt-2">
-                    <div class="ui fluid mini multiple search selection dropdown">
-                        <input type="hidden" name="country" wire:model.defer="selectedLots.lot_{{ $key }}">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">{{ __('sections/workorders.select_lot_number')}}</div>
-                        <div class="menu">
-                            <div class="item" data-value="af"><i class="af flag"></i>Afghanistan</div>
-                            <div class="item" data-value="ax"><i class="ax flag"></i>Aland Islands</div>
-                            <div class="item" data-value="al"><i class="al flag"></i>Albania</div>
-                            <div class="item" data-value="dz"><i class="dz flag"></i>Algeria</div>
-                        </div>
-                    </div>
+                    <x-dropdown-multiple>
+
+                    </x-dropdown-multiple>
                 </div>
-                <div class="pt-2 text-xs text-ease">Yeterlilik</div>
+                <div class="pt-2 text-xs text-ease-red">Yeterlilik</div>
 
             </div>
         @endforeach
@@ -51,13 +43,7 @@
 
 </div>
 
-{{-- @push('scripts') --}}
-    <script>
-        $('.ui.dropdown')
-        .dropdown()
-        ;
-    </script>
-{{-- @endpush --}}
+
 
 
 
