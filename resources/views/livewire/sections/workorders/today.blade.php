@@ -121,7 +121,7 @@
                                     <td class="collapsing">
                                         <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
                                             <div data-tooltip="{{ __('sections/workorders.wo_start') }}" data-variation="mini">
-                                                <i wire:click.prevent="startJob({{ $workOrder->id }})" class="red play link icon"></i>
+                                                <i wire:click.prevent="startThread({{ $workOrder->id }})" class="red play link icon"></i>
                                             </div>
                                         </x-crud-actions>
                                     </td>

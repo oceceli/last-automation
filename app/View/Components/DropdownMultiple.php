@@ -6,14 +6,30 @@ use Illuminate\View\Component;
 
 class DropdownMultiple extends Component
 {
+
+    // public $collection;
+    // public $value;
+    // public $text;
+
+    public $model;
+
+    public $sId;
+    public $maxSelections;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    // public function __construct($collection, $value, $text, $sId)
+    public function __construct($model, $sId, $maxSelections = null)
     {
-        //
+        // $this->collection = $collection;
+        // $this->value = $value;
+        // $this->text = $text;
+        $this->model = $model;
+        $this->sId = $sId;
+        $this->maxSelections = $maxSelections;
     }
 
     /**

@@ -10,16 +10,15 @@ use Livewire\Component;
 class Today extends Component
 {
 
+    use managesLotSourcesModal;
+
     public $todayDate; // just date of today
     public $workOrders;
 
     public $woFinalizeModal;
     public $woFinalizeData;
 
-    public $lotSourcesModal;
-    public $woStartData;
-    public $lotCards = [];
-    public $selectedLots = [];
+    
 
     
 
@@ -99,26 +98,16 @@ class Today extends Component
 
 
     /**
-     * Set workorder as in progress 
+     * When pressed the start button for a work order, open lotSourceModal to ask which sources to be used
      */
-    public function startJob($id) // !! Eşzamanlı birçok üretim yapılabilsin.
+    public function startThread($id) // !! Eşzamanlı birçok üretim yapılabilsin.
     {
-        $this->woStartData = $workOrder = $this->workOrders->find($id);
-        $this->lotCards = $workOrder->product->recipe->calculateNecessaryIngredients($workOrder->amount, $workOrder->unit_id);
+        $this->woStartData = $this->workOrders->find($id);
+        $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->amount, $this->woStartData->unit_id);
         
         $this->lotSourcesModal = true;
-        
-
-        // $workOrder->start() 
-        //     ? null
-        //     : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
-        
     }
 
-    public function start()
-    {
-        dd($this->selectedLots);
-    }
 
 
 

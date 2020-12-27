@@ -1,16 +1,23 @@
-<div class="ui fluid mini multiple search selection dropdown">
-    <input type="hidden" name="country">
+{{-- <div {{ $attributes->merge(['class' => 'ui multiple search selection fluid dropdown'])}} id="{{ $sId }}">
+    <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">
     <i class="dropdown icon"></i>
-    <div class="default text">{{ __('sections/workorders.select_lot_number')}}</div>
+    <div class="default text">Select Country</div>
     <div class="menu">
-        <div class="item" data-value="af"><i class="af flag"></i>Afghanistan</div>
-        <div class="item" data-value="ax"><i class="ax flag"></i>Aland Islands</div>
-        <div class="item" data-value="al"><i class="al flag"></i>Albania</div>
-        <div class="item" data-value="dz"><i class="dz flag"></i>Algeria</div>
+        {{ $slot }}
     </div>
-</div>
+</div> --}}
+
+
+<select name="{{ $sId}}" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}} wire:model="{{ $model }}">
+    {{ $slot }}
+</select>
 
 
 
-
-
+<script>
+    $(document).ready(function(){
+        $('#{{ $sId }}').dropdown({
+            maxSelections: "{{ $maxSelections }}",
+        });
+    })
+</script>
