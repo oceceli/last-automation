@@ -18,7 +18,7 @@ trait managesLotSourcesModal
 
 
     /**
-     * Represents lot source cards in the modal.
+     * Represents lot source cards in the modal (Necessary Ingredients)
      */
     public $lotCards = [
         // 'ingredient' => '$ingredient',
@@ -26,36 +26,99 @@ trait managesLotSourcesModal
         // 'unit' => $convertedIngredient['unit'],
     ];
 
+    /**
+     * model property
+     */
+    public $inputModels = [];
 
-    public $userInputLotSource = [];
 
-
-
-
+    /**
+     * Sources selected and confirmed by user ...
+     */
     public function start()
     {
-        $sources = $this->resolveUserInputLotSource();
+        $resolvedInputModels = $this->validateInputs();
 
-        dd($sources);
+        foreach($resolvedInputModels as $highIndex => $sources) {
+            $productId = $this->lotCards[$highIndex]['ingredient']['id'];
+            foreach($sources as $source) {
+                $this->woStartData->preferredStocks()->create(['product_id' => $productId, 'preferred_lot' => $source['lot_number']]);
+            }
+        }
 
-        // $workOrder->start() 
-        //     ? null
-        //     : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+        $this->woStartData->start() 
+            ? null
+            : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+
+        $this->closeModal();
+
+        return $this->emit('toast', 'başarılı', 'Kaynak tercihleri sorunsuzca kaydedildi', 'success');
+    }
+    
+    private function validateInputs()
+    {
+        $resolvedInputModels = $this->resolveInputModels();
+
+        // are arrays have equal elements? If not abort
+        if(count($this->lotCards) !== count($resolvedInputModels)) 
+            return $this->toastNotEnough();
+        
+        foreach($resolvedInputModels as $highIndex => $sources) { // ?? daha kısa bir yolu vardır
+            if(! $this->isResourcesEnough($highIndex))
+                return $this->toastNotEnough();
+        }
+
+        return $resolvedInputModels;
+    }
+    
+    public function displayCoveredAmount($highIndex)
+    {
+        $inputModels = $this->resolveInputModels();
+        
+        if(array_key_exists($highIndex, $inputModels)) {
+            $unitName = $this->lotCards[$highIndex]['unit']['name'];
+            return $this->isResourcesEnough($highIndex)
+                ? ['text' => 'Belirtilen kaynaklar üretimi karşılar düzeyde', 'class' => 'text-green-600']
+                : ['text' => floor($this->necessaryAmount($highIndex) - $this->totalCovered($highIndex)) . " " . $unitName . " daha gerekli", 'class' => 'text-red-600'];
+
+        }
+        return ['text' => 'Lütfen üretim için kaynak seçin', 'class' => 'text-ease-red'];
     }
 
 
-    private function resolveUserInputLotSource()
+    private function isResourcesEnough($index) : bool
+    {        
+        return $this->totalCovered($index) >= $this->necessaryAmount($index);
+    }
+    
+    /**
+     * The amount of user provided ingredient sources
+     */
+    private function totalCovered($highIndex)
+    {
+        return array_sum(array_column($this->resolveInputModels()[$highIndex], 'amount'));
+    }
+    
+    /**
+     * How many ingredient needed for production
+     */
+    private function necessaryAmount($highIndex)
+    {
+        return $this->lotCards[$highIndex]['amount'];
+    }
+
+
+
+    private function resolveInputModels()
     {
         $result = [];
-        foreach($this->userInputLotSource as $fieldKey => $sources) {
+        foreach($this->inputModels as $index => $sources) {
             foreach($sources as $source) {
-                [$productId, $lotNumber, $amount, $necessaryAmount, $unitName] = explode(',', $source);
-                $result[$fieldKey][] = [
-                    'product_id' => $productId, 
+                [$lotNumber, $amount] = explode(',', $source);
+                $result[$index][] = [
+                    // 'product_id' => $productId, 
                     'lot_number' => $lotNumber, 
-                    'amount' => $amount, 
-                    'necessary_amount' => $necessaryAmount,
-                    'unit_name' => $unitName,
+                    'amount' => $amount,
                 ];
             }
         }
@@ -63,32 +126,33 @@ trait managesLotSourcesModal
     }
 
 
-    public function isResourceEnough($index)
+    /**
+     * Empty inputModels whenever modal closed
+     */
+    public function updatedLotSourcesModal($value)
     {
-        $userInputs = $this->resolveUserInputLotSource();
-        $necessaryAmount = // !! buradan devam et, bunları üstten çek
-
-        if(array_key_exists($index, $userInputs)) {
-            $totalCovered = array_sum(array_column($userInputs[$index], 'amount'));
-            // $necessaryAmount = $userInputs[$index][0]['necessary_amount'];
-            // $unitName = $userInputs[$index][0]['unit_name'];
-            $necessaryAmount = 0;
-            dd($index);
-
-            return $totalCovered < $necessaryAmount
-                ? ['text' => floor($necessaryAmount - $totalCovered) . " " . $unitName . " daha gerekli", 'class' => 'text-ease-red']
-                : ['text' => 'Belirtilen kaynaklar üretimi karşılar düzeyde', 'class' => 'text-ease-green'];
-
+        if($value === false) {
+            $this->reset('inputModels');
         }
-        return ['text' => 'Lot seçin', 'class' => 'text-ease-red'];
+    }
+
+    private function closeModal()
+    {
+        $this->lotSourcesModal = false;
+    }
+
+
+    private function toastNotEnough()
+    {
+        return $this->emit('toast', '!!! yetersiz', 'kaynaklar yetersiz görünüyor', 'warning');
     }
 
     /**
-     * For example; 'lot_5' becomes '5'
+     * For example; 'lot_5' will become '5'
      */
-    private function extractIndex($subject)
-    {
-        return substr($subject, 4);
-    }
+    // private function indexSync($string)
+    // {
+    //     return substr($string, strpos($string, '_') + 1);
+    // }
 
 }

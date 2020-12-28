@@ -19,24 +19,24 @@
                     </div>
                 </div>
 
-                <div class="pt-2" wire:key="dropdown{{ $key}}" wire:ignore>
+                <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
 
-                    <x-dropdown-multiple model="userInputLotSource.lot_{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
+                    <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
-                            <option value="{{ $lotCard['ingredient']['id'] }},{{ $selectLot['lot_number'] }},{{ $selectLot['amount'] }},{{ $lotCard['amount']}},{{ $lotCard['unit']['abbreviation']}}">
+                            <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['amount'] }}">
                                 {{ __('sections/workorders.lot_no')}}: {{ $selectLot['lot_number'] }} | {{ __('sections/workorders.amount' )}}: {{ $selectLot['amount'] }} {{ $selectLot['unit']['name'] }}
                             </option>
                         @endforeach
                     </x-dropdown-multiple>
 
                 </div>
-                {{-- @if ($this->isResourceEnough("lot_$key"))
+                {{-- @if ($this->displayCoveredAmount("lot_$key"))
                     <div class="pt-2 text-xs text-ease-red">:Şu kadar daha lazım</div>
                 @else
                     <div class="pt-2 text-xs text-ease-green">Belirtilen kaynaklar üretimi karşılar düzeyde</div>
                 @endif --}}
-                <div class="pt-2 text-xs {{ $this->isResourceEnough("lot_$key")['class'] }}">
-                    {{ $this->isResourceEnough("lot_$key")['text'] }}
+                <div class="pt-2 text-xs {{ $this->displayCoveredAmount($key)['class'] }}">
+                    {{ $this->displayCoveredAmount($key)['text'] }}
                 </div>
 
             </div>
