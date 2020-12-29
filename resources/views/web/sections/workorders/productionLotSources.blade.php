@@ -23,8 +23,9 @@
 
                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
-                            <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['amount'] }}">
-                                {{ __('sections/workorders.lot_no')}}: {{ $selectLot['lot_number'] }} | {{ __('sections/workorders.amount' )}}: {{ $selectLot['amount'] }} {{ $selectLot['unit']['name'] }}
+                            <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
+                                <span>{{ __('sections/workorders.lot_no')}}: {{ $selectLot['lot_number'] }}</span> | 
+                                <span>{{ __('sections/workorders.amount' )}}: {{ $selectLot['available_amount'] }} {{ $selectLot['unit']['name'] }}</span>
                             </option>
                         @endforeach
                     </x-dropdown-multiple>

@@ -99,7 +99,7 @@ class Today extends Component
     /**
      * When pressed the start button for a work order, open lotSourceModal to ask which sources to be used
      */
-    public function startThread($id) // !! Eşzamanlı birçok üretim yapılabilsin.
+    public function startThread($id)
     {
         $this->woStartData = $this->workOrders->find($id);
         $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->amount, $this->woStartData->unit_id);

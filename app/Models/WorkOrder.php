@@ -162,7 +162,7 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        // if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+        // if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // aynı anda bir çok iş başlayabilir, onu aç sonra // * açtım
         if($this->isActive() && ! $this->isInProgress()) {
             $this->update(['status' => 'in_progress', 'started_at' => now()]);
             return true;

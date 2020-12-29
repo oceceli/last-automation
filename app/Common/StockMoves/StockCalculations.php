@@ -2,7 +2,6 @@
 
 namespace App\Common\StockMoves;
 
-use App\Models\Product;
 use App\Models\ReservedStock;
 use App\Models\StockMove;
 use App\Models\Unit;
@@ -20,9 +19,9 @@ class StockCalculations
     }
 
 
+
     public function lotNumbersAndAmounts($productId)
     {
-        // dd($this->reservedLots());
         $lotNumbers = StockMove::where('product_id', $productId)
             ->distinct()
             ->get(['lot_number'])
@@ -30,20 +29,35 @@ class StockCalculations
             ->toArray();
 
         foreach($lotNumbers as $key => $lotNumber) {
-            $reserved = ReservedStock::where(['reserved_lot' => $lotNumber, 'product_id' => $productId])->first();
-            $amount = $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId);
-            if($amount < 0) continue;
+            $lotAmount = $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId);
+
+            // don't push negative lots to array 
+            if($lotAmount <= 0) continue;
+
             $array[$key] = [
                 'lot_number' => $lotNumber,
-                'amount' => $amount,
                 'unit' => $this->getUnit($productId),
+                'amount' => $lotAmount,
+                'available_amount' => $lotAmount,
+                // 'reserved_amount' => 0,
             ];
-            if($reserved) 
-                $array[$key]['reserved_amount'] = $reserved->reserved_amount;
+
+            // workorder in_progress olduğu sürece kaynakları rezerve ediyor. İş iptal edilmeden veya sonlandırılmadan kaynaklar kullanılamaz olmalı.
+            $reservations = ReservedStock::where(['reserved_lot' => $lotNumber, 'product_id' => $productId])->get();
+
+            if($reservations) {
+                $totalReserved = 0;
+                foreach($reservations as $reservation) {
+                    $totalReserved += $reservation->reserved_amount;
+                    $array[$key]['available_amount'] = $lotAmount - $totalReserved;
+                    $array[$key]['reserved_amount'] = (float)$totalReserved;
+                }
+            }
+                
         }
-        // dd($array); // !! dikkat
         return isset($array) ? $array : [];
     }
+
 
 
     
@@ -51,6 +65,9 @@ class StockCalculations
     {
         return $this->lotQuery($lotNumber, $productId, true) - $this->lotQuery($lotNumber, $productId, false);
     }
+
+
+
 
     private function getUnit($productId)
     {
@@ -70,6 +87,7 @@ class StockCalculations
 
 
 
+
     public function lastMove($productId)
     {
         $last = StockMove::where('product_id', $productId)
@@ -77,6 +95,7 @@ class StockCalculations
         // return $last = $last->updated_at->diffForHumans();
         return $last;
     }
+
 
 
     // public function total()

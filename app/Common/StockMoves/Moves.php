@@ -29,6 +29,8 @@ class Moves
         $this->prepare($workOrder->product_id, $baseAmount, true, 'production_gross', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
+
+
     /**
      *  Gets a workorder/workorder_id as parameter, creates a new stockmove in negative way(waste)
      */
@@ -39,12 +41,17 @@ class Moves
         $this->prepare($workOrder->product_id, $baseAmount, false, 'production_waste', $datetime, $workOrder->lot_no)->persist($workOrder);
     }
 
+
+
     public function decreasedIngredient($workOrder, $ingredientId, $baseAmount, $datetime = null)
     {
         if($baseAmount <= 0) return;
         $this->instantiate($workOrder);
-        $this->prepare($ingredientId, $baseAmount, false, 'production_ingredient', $datetime, 'değiştir')->persist($workOrder);
+        $lotNumber = $workOrder->reservedStocks()->where('product_id', $ingredientId)->first()->reserved_lot;
+        $this->prepare($ingredientId, $baseAmount, false, 'production_ingredient', $datetime, $lotNumber)->persist($workOrder);
     }
+
+
 
     /**
      * Create a positive move manually
@@ -54,6 +61,8 @@ class Moves
         $this->prepare($productId, $baseAmount, true, 'manual', $datetime, 'değiştir movein out')->persist();
     }
 
+
+
     /**
      * Create a negative move manually
      */
@@ -62,6 +71,8 @@ class Moves
         $this->prepare($productId, $baseAmount, false, 'manual', $datetime, 'değiştir movein out')->persist();
     }
     
+
+
     /**
      * Make a move
      */
@@ -93,6 +104,8 @@ class Moves
         return $this;
     }
 
+
+
     /**
      * The data that will be pushed
      */
@@ -109,6 +122,8 @@ class Moves
         ];
     }
 
+
+
     /**
      * Persist to database
      * @param mixed|null $related the initiated model that has to many stockmove relation 
@@ -124,6 +139,8 @@ class Moves
             ]));
         }
     }
+
+    
 
     private function instantiate(&$workOrder)
     {

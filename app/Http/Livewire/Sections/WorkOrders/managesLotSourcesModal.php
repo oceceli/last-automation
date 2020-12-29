@@ -43,27 +43,40 @@ trait managesLotSourcesModal
             return $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
 
 
-        foreach($resolvedInputModels as $highIndex => $sources) {
-            $necessary = $this->necessaryAmount($highIndex);
+        foreach($resolvedInputModels as $highIndex => $inputs) {
+
             $productId = $this->lotCards[$highIndex]['ingredient']['id'];
-            foreach($sources as $source) {
-                $necessary += $source['amount'];
-                dd($necessary); // !! devam et
-                // $usedAmount += $source['amount'];
+            $necessaryAmount = $this->totalNecessaryAmount($highIndex);
+
+            foreach($inputs as $input) {
+
+                if($necessaryAmount === 0) continue;
+                if($necessaryAmount >= $input['available_amount']) {
+                    $usedSource = $input['available_amount'];
+                    $necessaryAmount -= $input['available_amount'];
+                } else {
+                    $usedSource = $necessaryAmount;
+                    $necessaryAmount = 0;
+                }
+
                 $toBeReserved = [
                     'product_id' => $productId, 
-                    'reserved_lot' => $source['lot_number'],
-                    'reserved_amount' => $necessary,
+                    'reserved_lot' => $input['lot_number'],
+                    'reserved_amount' => $usedSource,
                 ];
+
                 $this->woStartData->reservedStocks()->create($toBeReserved);
             }
         }
 
         $this->refreshTable();
+
         $this->closeModal();
+
         return $this->emit('toast', '!!! başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
     }
     
+
 
     private function validateInputs()
     {
@@ -83,6 +96,8 @@ trait managesLotSourcesModal
         return $resolvedInputModels;
     }
 
+
+
     
     public function displayCoveredAmount($highIndex)
     {
@@ -92,30 +107,44 @@ trait managesLotSourcesModal
             $unitName = $this->lotCards[$highIndex]['unit']['name'];
             return $this->isResourcesEnough($highIndex)
                 ? ['text' => 'Belirtilen kaynaklar üretimi karşılar düzeyde', 'class' => 'text-green-600']
-                : ['text' => floor($this->necessaryAmount($highIndex) - $this->totalCovered($highIndex)) . " " . $unitName . " daha gerekli", 'class' => 'text-red-600'];
+                : ['text' => floor($this->totalNecessaryAmount($highIndex) - $this->totalCovered($highIndex)) . " " . $unitName . " daha gerekli", 'class' => 'text-red-600'];
 
         }
         return ['text' => 'Lütfen üretim için kaynak seçin', 'class' => 'text-ease-red'];
     }
 
 
+
+
+    public function isResourcesExcess($index)
+    {
+
+    }
+
+
+
+
     private function isResourcesEnough($index) : bool
     {        
-        return $this->totalCovered($index) >= $this->necessaryAmount($index);
+        return $this->totalCovered($index) >= $this->totalNecessaryAmount($index);
     }
     
+
+
     /**
      * The amount of user provided ingredient sources
      */
     private function totalCovered($highIndex)
     {
-        return array_sum(array_column($this->resolveInputModels()[$highIndex], 'amount'));
+        return array_sum(array_column($this->resolveInputModels()[$highIndex], 'available_amount'));
     }
+
+
     
     /**
      * How many ingredient needed for production
      */
-    private function necessaryAmount($highIndex)
+    private function totalNecessaryAmount($highIndex)
     {
         return $this->lotCards[$highIndex]['amount'];
     }
@@ -129,9 +158,8 @@ trait managesLotSourcesModal
             foreach($sources as $source) {
                 [$lotNumber, $amount] = explode(',', $source);
                 $result[$index][] = [
-                    // 'product_id' => $productId, 
                     'lot_number' => $lotNumber, 
-                    'amount' => $amount,
+                    'available_amount' => $amount,
                 ];
             }
         }
@@ -149,11 +177,14 @@ trait managesLotSourcesModal
         }
     }
 
+
+
     private function closeModal()
     {
         $this->lotSourcesModal = false;
         $this->reset('inputModels');
     }
+
 
 
     private function toastNotEnough()
