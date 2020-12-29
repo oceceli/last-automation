@@ -58,7 +58,7 @@ class Today extends Component
     {
         $this->selectedUnit = Unit::find($id);
     }
-    
+
 
 
     public function submitWoFinalized()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePreferredStocksTable extends Migration
+class CreateReservedStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePreferredStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('preferred_stocks', function (Blueprint $table) {
+        Schema::create('reserved_stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('work_order_id');
 
             $table->integer('product_id');
-            $table->string('preferred_lot');
+            $table->string('reserved_lot');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePreferredStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preferred_stocks');
+        Schema::dropIfExists('reserved_stocks');
     }
 }

@@ -33,7 +33,7 @@ trait Production
         }
         
         $this->markAsFinalized();
-        $this->preferredStocks()->delete();
+        $this->reservedStocks()->delete();
         return true;
     }
     

@@ -31,7 +31,7 @@ class WorkOrder extends Model
     public function delete()
     {
         if($this->isInProgress()) return;
-        // $this->preferredStocks()->delete(); // ???? silme kuralları eklenecek
+        // $this-reservedStocks()->delete(); // ???? silme kuralları eklenecek
         if($this->isFinalized()) {
             $this->stockMoves()->delete();
         }
@@ -56,9 +56,9 @@ class WorkOrder extends Model
     }
 
 
-    public function preferredStocks()
+    public function reservedStocks()
     {
-        return $this->hasMany(PreferredStock::class);
+        return $this->hasMany(ReservedStock::class);
     }
 
 
@@ -173,7 +173,7 @@ class WorkOrder extends Model
     {
         if($this->isInProgress()) {
             $this->update(['status' => 'active', 'started_at' => null]);
-            $this->preferredStocks()->delete();
+            $this->reservedStocks()->delete();
         }
     }
     

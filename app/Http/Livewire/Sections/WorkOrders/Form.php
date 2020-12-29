@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Sections\WorkOrders;
 
 use App\Common\Facades\Conversions;
 use App\Http\Livewire\FormHelpers;
-// use App\Models\PreferredStock;
+// use App\Models\ReservedStock;
 use App\Models\Product;
 use App\Models\Unit;
 use App\Models\WorkOrder;
@@ -95,7 +95,7 @@ class Form extends Component
 
         if($this->editMode && $this->workOrder) {
             $workOrder = $this->workOrder->update($data);
-            // $workOrder->preferredStocks()->delete();
+            // $workOrder->reservedStocks()->delete();
             
             $this->emit('toast', '', __('common.saved.changes'), 'success');
         } else {

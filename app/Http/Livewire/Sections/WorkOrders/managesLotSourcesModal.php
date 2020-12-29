@@ -47,7 +47,7 @@ trait managesLotSourcesModal
         foreach($resolvedInputModels as $highIndex => $sources) {
             $productId = $this->lotCards[$highIndex]['ingredient']['id'];
             foreach($sources as $source) {
-                $this->woStartData->preferredStocks()->create(['product_id' => $productId, 'preferred_lot' => $source['lot_number']]);
+                $this->woStartData->reservedStocks()->create(['product_id' => $productId, 'reserved_lot' => $source['lot_number']]);
             }
         }
 
