@@ -18,7 +18,6 @@ class Today extends Component
     public $woFinalizeModal;
     public $woFinalizeData;
 
-    
 
     
 
@@ -36,7 +35,7 @@ class Today extends Component
         'production_waste' => 'nullable|numeric|lt:production_gross',
     ];
     
-    protected $listeners = ['new_work_order_created' => 'workOrderCreated'];
+    protected $listeners = ['new_work_order_created' => 'workOrderCreated', 'refreshTable' => '$refresh'];
 
 
     public function mount()
@@ -62,7 +61,7 @@ class Today extends Component
     
 
 
-    public function submitWoCompleted()
+    public function submitWoFinalized()
     {
         $this->validate();
 
@@ -71,7 +70,7 @@ class Today extends Component
         if($workOrder->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id))
             $this->emit('toast', '', __('sections/workorders.production_is_completed'), 'success');
 
-        $this->refreshTable();
+        $this->reFetchTable();
     }
     
 
@@ -125,10 +124,16 @@ class Today extends Component
     }
 
 
-    public function refreshTable()
+    private function reFetchTable() // ?? yerini refreshtable'a bırakabilir mi?
     {
         $this->reset('production_gross', 'production_waste', 'unit_id', 'selectedUnit', 'woFinalizeModal');
         $this->workOrders = WorkOrder::getTodaysList();
+    }
+
+
+    private function refreshTable()
+    {
+        $this->emitSelf('refreshTable');
     }
 
 

@@ -161,7 +161,8 @@ class WorkOrder extends Model
      */
     public function start()
     {
-        if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+        // if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+        if($this->isActive() && ! $this->isInProgress()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
             $this->update(['status' => 'in_progress', 'started_at' => now()]);
             return true;
         }
@@ -170,8 +171,10 @@ class WorkOrder extends Model
 
     public function abort()
     {
-        if($this->isInProgress())
+        if($this->isInProgress()) {
             $this->update(['status' => 'active', 'started_at' => null]);
+            $this->preferredStocks()->delete();
+        }
     }
     
 

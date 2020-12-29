@@ -37,7 +37,12 @@ trait managesLotSourcesModal
      */
     public function start()
     {
-        $resolvedInputModels = $this->validateInputs();
+        if(! $resolvedInputModels = $this->validateInputs()) return; 
+        // $resolvedInputModels = $this->resolveInputModels();
+
+        if(! $this->woStartData->start())
+            return $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+
 
         foreach($resolvedInputModels as $highIndex => $sources) {
             $productId = $this->lotCards[$highIndex]['ingredient']['id'];
@@ -46,30 +51,30 @@ trait managesLotSourcesModal
             }
         }
 
-        $this->woStartData->start() 
-            ? null
-            : $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
-
+        $this->refreshTable();
         $this->closeModal();
-
         return $this->emit('toast', 'başarılı', 'Kaynak tercihleri sorunsuzca kaydedildi', 'success');
     }
     
+
     private function validateInputs()
     {
         $resolvedInputModels = $this->resolveInputModels();
 
         // are arrays have equal elements? If not abort
-        if(count($this->lotCards) !== count($resolvedInputModels)) 
-            return $this->toastNotEnough();
+        if(count($this->lotCards) !== count($resolvedInputModels)) {
+            return $this->toastNotEnough(); 
+        }
         
         foreach($resolvedInputModels as $highIndex => $sources) { // ?? daha kısa bir yolu vardır
-            if(! $this->isResourcesEnough($highIndex))
-                return $this->toastNotEnough();
+            if(! $this->isResourcesEnough($highIndex)) {
+                return $this->toastNotEnough(); 
+            }
         }
 
         return $resolvedInputModels;
     }
+
     
     public function displayCoveredAmount($highIndex)
     {
@@ -139,12 +144,14 @@ trait managesLotSourcesModal
     private function closeModal()
     {
         $this->lotSourcesModal = false;
+        $this->reset('inputModels');
     }
 
 
     private function toastNotEnough()
     {
-        return $this->emit('toast', '!!! yetersiz', 'kaynaklar yetersiz görünüyor', 'warning');
+        $this->emit('toast', '!!! yetersiz', 'kaynaklar yetersiz görünüyor', 'warning');
+        return false;
     }
 
     /**
