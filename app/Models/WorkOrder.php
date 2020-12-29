@@ -6,8 +6,8 @@ use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
-use App\Models\Traits\Production;
 use App\Models\Traits\Searchable;
+use App\Models\Traits\WorkOrder\Production;
 use Carbon\Carbon;
 
 class WorkOrder extends Model
@@ -31,7 +31,9 @@ class WorkOrder extends Model
     public function delete()
     {
         if($this->isInProgress()) return;
-        // $this-reservedStocks()->delete(); // ???? silme kuralları eklenecek
+
+        $this->reservedStocks()->delete(); // ???? silme kuralları eklenecek
+        
         if($this->isFinalized()) {
             $this->stockMoves()->delete();
         }

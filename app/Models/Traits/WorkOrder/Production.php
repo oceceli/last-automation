@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Models\Traits;
+namespace App\Models\Traits\WorkOrder;
 
 use App\Common\Facades\Conversions;
 use App\Common\Facades\Moves;
@@ -9,7 +9,6 @@ trait Production
 {
     private $userGrossInput;
     // private $userWasteInput;
-
 
     /**
      * Finalize the production for this workorder

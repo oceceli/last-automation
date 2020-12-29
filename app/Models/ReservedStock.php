@@ -27,4 +27,6 @@ class ReservedStock extends Model
         return $this->belongsTo(Product::class, null, null, 'ingredient_id'); // ?? doğru mu emin değilim
     }
 
+    
+
 }

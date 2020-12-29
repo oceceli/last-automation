@@ -53,7 +53,7 @@ trait managesLotSourcesModal
 
         $this->refreshTable();
         $this->closeModal();
-        return $this->emit('toast', 'başarılı', 'Kaynak tercihleri sorunsuzca kaydedildi', 'success');
+        return $this->emit('toast', 'başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
     }
     
 
