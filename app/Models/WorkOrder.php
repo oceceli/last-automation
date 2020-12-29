@@ -99,7 +99,6 @@ class WorkOrder extends Model
     }
 
 
-
     /**
      * Return work order finalized status
      */
@@ -164,7 +163,7 @@ class WorkOrder extends Model
     public function start()
     {
         // if($this->isActive() && ! $this->isInProgress() && ! $this->inProgressCurrently()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
-        if($this->isActive() && ! $this->isInProgress()) { // !! aynı anda bir çok iş başlayabilir, onu aç sonra
+        if($this->isActive() && ! $this->isInProgress()) {
             $this->update(['status' => 'in_progress', 'started_at' => now()]);
             return true;
         }
@@ -231,6 +230,13 @@ class WorkOrder extends Model
             ->orderBy('queue', 'asc')
             ->get();
     }
+
+    // public static function reservedLots()
+    // {
+    //     // todo: işi başlatmadan önce ayırtılmış lotları çek 
+    //     StockMove::where()
+    // }
+
 
 
     public static function inProgressCurrently()

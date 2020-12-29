@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Sections\WorkOrders;
 
-use App\Models\Product;
 
 trait managesLotSourcesModal
 {
@@ -45,15 +44,24 @@ trait managesLotSourcesModal
 
 
         foreach($resolvedInputModels as $highIndex => $sources) {
+            $necessary = $this->necessaryAmount($highIndex);
             $productId = $this->lotCards[$highIndex]['ingredient']['id'];
             foreach($sources as $source) {
-                $this->woStartData->reservedStocks()->create(['product_id' => $productId, 'reserved_lot' => $source['lot_number']]);
+                $necessary += $source['amount'];
+                dd($necessary); // !! devam et
+                // $usedAmount += $source['amount'];
+                $toBeReserved = [
+                    'product_id' => $productId, 
+                    'reserved_lot' => $source['lot_number'],
+                    'reserved_amount' => $necessary,
+                ];
+                $this->woStartData->reservedStocks()->create($toBeReserved);
             }
         }
 
         $this->refreshTable();
         $this->closeModal();
-        return $this->emit('toast', 'başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
+        return $this->emit('toast', '!!! başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
     }
     
 

@@ -19,6 +19,7 @@ class CreateReservedStocksTable extends Migration
 
             $table->integer('product_id');
             $table->string('reserved_lot');
+            $table->integer('reserved_amount');
             $table->timestamps();
         });
     }

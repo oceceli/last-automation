@@ -3,6 +3,7 @@
 namespace App\Common\StockMoves;
 
 use App\Models\Product;
+use App\Models\ReservedStock;
 use App\Models\StockMove;
 use App\Models\Unit;
 
@@ -20,22 +21,30 @@ class StockCalculations
 
 
     public function lotNumbersAndAmounts($productId)
-    {        
+    {
+        // dd($this->reservedLots());
         $lotNumbers = StockMove::where('product_id', $productId)
             ->distinct()
             ->get(['lot_number'])
             ->pluck('lot_number')
             ->toArray();
 
-        foreach($lotNumbers as $lotNumber) {
-            $array[] = [
+        foreach($lotNumbers as $key => $lotNumber) {
+            $reserved = ReservedStock::where(['reserved_lot' => $lotNumber, 'product_id' => $productId])->first();
+            $amount = $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId);
+            if($amount < 0) continue;
+            $array[$key] = [
                 'lot_number' => $lotNumber,
-                'amount' => $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId),
+                'amount' => $amount,
                 'unit' => $this->getUnit($productId),
             ];
+            if($reserved) 
+                $array[$key]['reserved_amount'] = $reserved->reserved_amount;
         }
+        // dd($array); // !! dikkat
         return isset($array) ? $array : [];
     }
+
 
     
     private function getCurrentAmountBasedOnLotNumber($lotNumber, $productId)
