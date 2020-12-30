@@ -53,6 +53,7 @@ trait managesLotSourcesModal
             foreach($inputs as $input) {
 
                 if($necessaryAmount === 0) continue;
+
                 if($necessaryAmount >= $input['available_amount']) {
                     $usedSource = $input['available_amount'];
                     $necessaryAmount -= $input['available_amount'];

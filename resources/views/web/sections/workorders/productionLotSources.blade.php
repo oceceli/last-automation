@@ -25,7 +25,7 @@
                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
                             <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
                                 <span>{{ __('sections/workorders.lot_no')}}: {{ $selectLot['lot_number'] }}</span> | 
-                                <span>{{ __('sections/workorders.amount' )}}: {{ $selectLot['available_amount'] }} {{ $selectLot['unit']['name'] }}</span>
+                                <span>{{ __('sections/workorders.amount' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['name'] }}</span>
                             </option>
                         @endforeach
                     </x-dropdown-multiple>

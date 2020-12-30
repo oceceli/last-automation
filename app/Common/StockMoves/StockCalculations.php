@@ -32,7 +32,7 @@ class StockCalculations
             $lotAmount = $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId);
 
             // don't push negative lots to array 
-            if($lotAmount <= 0) continue;
+            // if($lotAmount <= 0) continue; // !! eksi değerlerden bir şekilde korunmam lazım 
 
             $array[$key] = [
                 'lot_number' => $lotNumber,

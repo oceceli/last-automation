@@ -27,7 +27,8 @@
             },
             onRemove: function(removedValue, removedText, $removedChoice) {
                 let index = a.indexOf(removedValue);
-                @this.set("{{ $model }}", a.splice(a,1));
+                a.splice(index,1);
+                @this.set("{{ $model }}", a);
             }
         });
     })
