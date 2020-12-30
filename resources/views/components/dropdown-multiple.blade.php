@@ -8,7 +8,7 @@
 </div> --}}
 
 
-<select name="{{ $sId}}" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}} wire:model="{{ $model }}">
+<select name="" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}}>
     {{ $slot }}
 </select>
 
@@ -16,8 +16,19 @@
 
 <script>
     $(document).ready(function(){
+        var a = [];
         $('#{{ $sId }}').dropdown({
             maxSelections: "{{ $maxSelections }}",
+            // sortSelect: false,
+            fullTextSearch: true,
+            onAdd: function(addedValue, addedText, $addedChoice) {
+                a.push(addedValue);
+                @this.set("{{ $model }}", a);
+            },
+            onRemove: function(removedValue, removedText, $removedChoice) {
+                let index = a.indexOf(removedValue);
+                @this.set("{{ $model }}", a.splice(a,1));
+            }
         });
     })
 </script>

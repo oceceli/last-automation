@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
-
+                    
                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
                             <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">

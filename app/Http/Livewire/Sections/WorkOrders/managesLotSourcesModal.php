@@ -31,11 +31,13 @@ trait managesLotSourcesModal
     public $inputModels = [];
 
 
+
     /**
      * Sources selected and confirmed by user ...
      */
     public function start()
     {
+        // dd($this->inputModels);
         if(! $resolvedInputModels = $this->validateInputs()) return; 
         // $resolvedInputModels = $this->resolveInputModels();
 
@@ -70,7 +72,6 @@ trait managesLotSourcesModal
         }
 
         $this->refreshTable();
-
         $this->closeModal();
 
         return $this->emit('toast', '!!! başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
@@ -118,7 +119,7 @@ trait managesLotSourcesModal
 
     public function isResourcesExcess($index)
     {
-
+        
     }
 
 
