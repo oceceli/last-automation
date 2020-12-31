@@ -39,7 +39,7 @@ class StockCalculations
                 'unit' => $this->getUnit($productId),
                 'amount' => $lotAmount,
                 'available_amount' => $lotAmount,
-                // 'reserved_amount' => 0,
+                'reserved_amount' => null,
             ];
 
             // workorder in_progress olduğu sürece kaynakları rezerve ediyor. İş iptal edilmeden veya sonlandırılmadan kaynaklar kullanılamaz olmalı.
@@ -53,7 +53,7 @@ class StockCalculations
                     $array[$key]['reserved_amount'] = (float)$totalReserved;
                 }
             }
-                
+            // dd($array);
         }
         return isset($array) ? $array : [];
     }

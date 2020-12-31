@@ -3,7 +3,7 @@
     <div class="p-4 shadow-md flex flex-col gap-4 bg-cool-gray-100 relative">
         @foreach ($lotCards as $key => $lotCard)
             <div wire:key="{{ $key }}" class="p-3 shadow-md rounded font-bold border border-purple-200 hover:border-purple-300 ease-in-out duration-200 bg-white">
-                <div class="flex justify-between gap-3 " wire:model="test">
+                <div class="flex justify-between gap-3">
                     <div class="field flex gap-1 items-center text-ease">
                         <span class="">{{ $lotCard['ingredient']['name'] }}</span>
                         <span class="text-xs hidden md:block"> ({{ $lotCard['ingredient']['code'] }})</span> 
@@ -20,22 +20,22 @@
                 </div>
 
                 <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
-                    
+                    {{-- {{ __('sections/workorders.lot_no')}}:  --}}
                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
-                            <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
-                                <span>{{ __('sections/workorders.lot_no')}}: {{ $selectLot['lot_number'] }}</span> | 
-                                <span>{{ __('sections/workorders.amount' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['name'] }}</span>
-                            </option>
+                            @if ($selectLot['available_amount'] > 0 || $selectLot['reserved_amount'])
+                                <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
+                                    <span>{{ $selectLot['lot_number'] }}</span> | 
+                                    <span class="text-xs">{{ __('sections/workorders.available' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['abbreviation'] }}</span>
+                                    @if($selectLot['reserved_amount'])
+                                        | Rezerve: {{ $selectLot['reserved_amount'] }} {{ $selectLot['unit']['abbreviation'] }}
+                                    @endif
+                                </option>
+                            @endif
                         @endforeach
                     </x-dropdown-multiple>
 
                 </div>
-                {{-- @if ($this->displayCoveredAmount("lot_$key"))
-                    <div class="pt-2 text-xs text-ease-red">:Şu kadar daha lazım</div>
-                @else
-                    <div class="pt-2 text-xs text-ease-green">Belirtilen kaynaklar üretimi karşılar düzeyde</div>
-                @endif --}}
                 <div class="pt-2 text-xs {{ $this->displayCoveredAmount($key)['class'] }}">
                     {{ $this->displayCoveredAmount($key)['text'] }}
                 </div>
@@ -55,22 +55,3 @@
 
 
 </div>
-
-
-
-
-
-{{-- <div>
-    @if ($lotCard['ingredient']->lots)
-        <select class="form-select text-sm" wire:model.defer="selectedLots.lot_{{ $key }}">
-            <option selected class="text-xs">{{ __('sections/workorders.select_lot_number')}}...</option>
-            @foreach ($lotCard['ingredient']->lots as $lot)
-                <option wire:key="{{ $loop->index }}" value="{{ $lotCard['ingredient']->id }},{{ $lot['lot_number'] }}">
-                    {{ $lot['lot_number'] }} - {{ $lot['amount'] }} {{ $lot['unit']->name }}
-                </option>
-            @endforeach
-        </select>
-    @else
-        <span class="text-xs text-ease-red">!!! Stokta hiç {{ $lotCard['ingredient']->name }} bulunmuyor. Üretim yapmadan önce kullanılacak lot numarası belirtilecektir.</span>
-    @endif
-</div> --}}

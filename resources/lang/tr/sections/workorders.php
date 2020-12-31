@@ -45,7 +45,10 @@ return [
     'create_workorder' => 'iş emri oluşturun',
     'select_lot_number' => 'Lot seçiniz',
     'necessary_amount' => 'Gerekli miktar',
-    
+    'available' => 'Kullanılabilir',
+    'reserve_sources' => 'Kaynakları rezerve et',
+    'reserved_sources' => 'Rezerve edilen kaynaklar',
+
     'necessary_items_and_amounts_will_be_shown_here' => 'Üretim için gerekli malzeme ve miktarlar burada görüntülenecek',
     'please_fill_in_the_amount_and_unit_fields' => 'Lütfen miktar ve birim alanlarını doldurun.',
     'specify_sources' => 'Kaynakları belirt',

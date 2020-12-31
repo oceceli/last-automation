@@ -93,9 +93,12 @@
                                     <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
-                                        <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id">
+                                        <x-crud-actions show edit gray modelName="work-order" :modelId="$workOrder->id">
+                                            <div wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
+                                                <i class="search link icon"></i>
+                                            </div>
                                             <div wire:key="{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
-                                                <i class="{{ __('sections/workorders.wo_complete_icon') }} link icon"></i>
+                                                <i class="{{ __('sections/workorders.wo_complete_icon') }} red link icon"></i>
                                             </div>
                                         </x-crud-actions>
                                     </td>
@@ -167,7 +170,7 @@
 
     @if ($lotSourcesModal)
         <div x-data="{lotSourcesModal: @entangle('lotSourcesModal')}">
-            <x-custom-modal active="lotSourcesModal" header="!!! {{ $woStartData->product->name }} üretim için kaynakları belirt">
+            <x-custom-modal active="lotSourcesModal" header="{{ __('sections/workorders.reserve_sources') }}">
 
                 @include('web.sections.workorders.productionLotSources')
                 

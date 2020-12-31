@@ -1,5 +1,5 @@
 <div class="fixed top-0 right-0 left-0 bottom-0 bg-smoke-light z-50 flex overflow-auto" x-show="{{ $active }}" x-cloak>
-    <div class="{{ $position }} h-full md:h-auto w-full md:w-max-content">
+    <div class="{{ $position }} h-full md:h-auto w-full md:w-max-content max-w-full"> {{-- bu ölçülerin yeniden tanımlanması lazım adamakıllı otursun ekrana --}}
         
         <div class="md:py-6">
             <div class="{{ $padding }} md:rounded-md shadow-md bg-white">
