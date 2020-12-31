@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Sections\WorkOrders;
 
 
-trait managesLotSourcesModal
+trait ReserveSourcesModal
 {
     /**
      * Modal status
      */
-    public $lotSourcesModal;
+    public $reserveSourcesModal;
+
 
     /**
      * Workorder instance that processing in the moment
@@ -108,11 +109,11 @@ trait managesLotSourcesModal
         if(array_key_exists($highIndex, $inputModels)) {
             $unitName = $this->lotCards[$highIndex]['unit']['name'];
             return $this->isResourcesEnough($highIndex)
-                ? ['text' => 'Belirtilen kaynaklar üretimi karşılar düzeyde', 'class' => 'text-green-600']
-                : ['text' => floor($this->totalNecessaryAmount($highIndex) - $this->totalCovered($highIndex)) . " " . $unitName . " daha gerekli", 'class' => 'text-red-600'];
-
+                ? ['text' => __('sections/workorders.specified_sources_are_enough_for_manufacturing'), 'class' => 'text-green-600']
+                : ['text' => __('sections/workorders.amount_more_required', ['amount' => number_format($this->totalNecessaryAmount($highIndex) - $this->totalCovered($highIndex), 2, ',', '') . " " . strtolower($unitName)]), 'class' => 'text-red-600'];
+            
         }
-        return ['text' => 'Lütfen üretim için kaynak seçin', 'class' => 'text-ease-red'];
+        return ['text' => __('common.not_specified'), 'class' => 'text-ease-red'];
     }
 
 
@@ -172,7 +173,7 @@ trait managesLotSourcesModal
     /**
      * Empty inputModels whenever modal closed
      */
-    public function updatedLotSourcesModal($value)
+    public function updatedReserveSourcesModal($value)
     {
         if($value === false) {
             $this->reset('inputModels');
@@ -183,7 +184,7 @@ trait managesLotSourcesModal
 
     private function closeModal()
     {
-        $this->lotSourcesModal = false;
+        $this->reserveSourcesModal = false;
         $this->reset('inputModels');
     }
 

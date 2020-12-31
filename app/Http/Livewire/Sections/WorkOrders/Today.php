@@ -10,7 +10,8 @@ use Livewire\Component;
 class Today extends Component
 {
 
-    use managesLotSourcesModal;
+    use ReserveSourcesModal;
+    use ReservedSourcesModal;
 
     public $todayDate; // just date of today
     public $workOrders;
@@ -104,7 +105,7 @@ class Today extends Component
         $this->woStartData = $this->workOrders->find($id);
         $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->amount, $this->woStartData->unit_id);
         
-        $this->lotSourcesModal = true;
+        $this->reserveSourcesModal = true;
     }
 
 

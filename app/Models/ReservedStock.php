@@ -22,9 +22,9 @@ class ReservedStock extends Model
         return $this->belongsTo(WorkOrder::class);
     }
 
-    public function ingredient()
+    public function product()
     {
-        return $this->belongsTo(Product::class, null, null, 'ingredient_id'); // ?? doğru mu emin değilim
+        return $this->belongsTo(Product::class);
     }
 
     

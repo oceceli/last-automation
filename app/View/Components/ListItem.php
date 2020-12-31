@@ -4,10 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class CustomList extends Component
+class ListItem extends Component
 {
-
-
     /**
      * Create a new component instance.
      *
@@ -15,7 +13,7 @@ class CustomList extends Component
      */
     public function __construct()
     {
-
+        //
     }
 
     /**
@@ -25,6 +23,6 @@ class CustomList extends Component
      */
     public function render()
     {
-        return view('components.custom-list');
+        return view('components.list-item');
     }
 }

@@ -94,10 +94,10 @@
                                     <td class="center aligned collapsing">{{ $workOrder->code }}</td>
                                     <td class="collapsing">
                                         <x-crud-actions show edit gray modelName="work-order" :modelId="$workOrder->id">
-                                            <div wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
+                                            <div wire:key="showReserved{{ $workOrder->id }}" wire:click.prevent="showReservedSources({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
                                                 <i class="search link icon"></i>
                                             </div>
-                                            <div wire:key="{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
                                                 <i class="{{ __('sections/workorders.wo_complete_icon') }} red link icon"></i>
                                             </div>
                                         </x-crud-actions>
@@ -168,30 +168,11 @@
         </div>
     </x-content>
 
-    @if ($lotSourcesModal)
-        <div x-data="{lotSourcesModal: @entangle('lotSourcesModal')}">
-            <x-custom-modal active="lotSourcesModal" header="{{ __('sections/workorders.reserve_sources') }}">
-
-                @include('web.sections.workorders.productionLotSources')
-                
-            </x-custom-modal>
-        </div>
-    @endif
+    
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @include('web.sections.workorders.reserveSources')
+    @include('web.sections.workorders.reservedSources')
 
 
 

@@ -34,6 +34,7 @@ return [
     // 'click_here_link' => 'Buradan',
     'add_from_here' => 'Buradan ekleyin',
     'use_add_button' => 'Ekle butonunu kullanın',
+    'not_specified' => 'Belirtilmedi',
     // 'saved' => 'Kaydedildi',
 
     'are_you_sure' => 'Emin misiniz?',
