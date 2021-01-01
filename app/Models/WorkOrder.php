@@ -175,6 +175,7 @@ class WorkOrder extends Model
         if($this->isInProgress()) {
             $this->update(['status' => 'active', 'started_at' => null]);
             $this->reservedStocks()->delete();
+            return true;
         }
     }
     

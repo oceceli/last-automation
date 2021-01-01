@@ -46,9 +46,13 @@ class Moves
     public function decreasedIngredient($workOrder, $ingredientId, $baseAmount, $datetime = null)
     {
         if($baseAmount <= 0) return;
+
         $this->instantiate($workOrder);
-        $lotNumber = $workOrder->reservedStocks()->where('product_id', $ingredientId)->first()->reserved_lot;
-        $this->prepare($ingredientId, $baseAmount, false, 'production_ingredient', $datetime, $lotNumber)->persist($workOrder);
+        // $lotNumber = $workOrder->reservedStocks()->where('product_id', $ingredientId)->first()->reserved_lot;
+        $lotNumbers = $workOrder->reservedStocks()->where('product_id', $ingredientId)->get();
+        foreach($lotNumbers as $lotNumber) {
+            $this->prepare($ingredientId, $lotNumber->reserved_amount, false, 'production_ingredient', $datetime, $lotNumber->reserved_lot)->persist($workOrder);
+        }
     }
 
 

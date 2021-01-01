@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class FormDivider extends Component
 {
-
+    public $right; // slot
     public $bottom; // slot
     public $noButtons; 
 
@@ -14,13 +14,15 @@ class FormDivider extends Component
     public $rClass;
 
 
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($bottom = false, $noButtons = false, $lClass = null, $rClass= null)
+    public function __construct($bottom = false, $right = false, $noButtons = false, $lClass = null, $rClass= null)
     {
+        $this->right = $right;
         $this->bottom = $bottom;
         $this->noButtons = $noButtons;
 

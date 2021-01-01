@@ -97,7 +97,7 @@
                                             <div wire:key="showReserved{{ $workOrder->id }}" wire:click.prevent="showReservedSources({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
                                                 <i class="search link icon"></i>
                                             </div>
-                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="woCompleteRequest({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
+                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="FinalizeProcess({{ $workOrder->id }})" data-tooltip="{{ __('sections/workorders.wo_complete') }}" data-variation="mini">
                                                 <i class="{{ __('sections/workorders.wo_complete_icon') }} red link icon"></i>
                                             </div>
                                         </x-crud-actions>
@@ -124,7 +124,7 @@
                                     <td class="collapsing">
                                         <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
                                             <div data-tooltip="{{ __('sections/workorders.wo_start') }}" data-variation="mini">
-                                                <i wire:click.prevent="startThread({{ $workOrder->id }})" class="red play link icon"></i>
+                                                <i wire:click.prevent="startProcess({{ $workOrder->id }})" class="red play link icon"></i>
                                             </div>
                                         </x-crud-actions>
                                     </td>
@@ -173,44 +173,12 @@
 
     @include('web.sections.workorders.reserveSources')
     @include('web.sections.workorders.reservedSources')
+    @include('web.sections.workorders.finalize')
 
 
 
 
-
-    @if ($woFinalizeModal)
-        <div x-data="{woFinalizeModal: @entangle('woFinalizeModal')}">
-            <x-custom-modal active="woFinalizeModal">
-                <x-slot name="header">
-                    <span class="">{{ $woFinalizeData->product->name }}</span>
-                </x-slot>
-                <form class="ui small form p-5 shadow-md" wire:submit.prevent="submitWoFinalized()">
-                    <x-dropdown label="{{ __('common.total') }}" iModel="production_gross" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="black"
-                        model="unit_id" value="id" text="name" :collection="$woFinalizeData->product->units" placeholder="{{__('modelnames.unit')}}"
-                    />
-                    <x-input label="{{ __('stockmoves.waste') }}" model="production_waste" placeholder="{{ __('stockmoves.waste_amount')}}">
-                        <x-slot name="innerLabel">
-                            @if(!empty($selectedUnit)) {{ $selectedUnit->abbreviation }} @else ... @endif
-                        </x-slot>
-                    </x-input>
-                    <x-form-buttons class="pt-4" />
-                </form>
-                <div class="p-4 text-sm text-ease-red" x-data="{confirmation: false}">
-                    <div x-show="!confirmation">
-                        <span @click="confirmation = true" class="cursor-pointer">
-                            {{ __('sections/workorders.abort_this_work_order') }}
-                        </span>
-                        <span data-tooltip="{{ __('sections/workorders.production_results_will_not_be_processed')}}" data-variation="mini" data-position="bottom center">
-                            <i class="small circular question mark icon"></i>
-                        </span>
-                    </div>
-                    <div x-show="confirmation" wire:click="abort({{ $woFinalizeData->id }})" class="font-extrabold bg-red-100 text-lg text-center border border-red-300 text-red-600 cursor-pointer p-2 rounded">
-                        {{ __('common.confirm') }}
-                    </div>
-                </div>
-            </x-custom-modal>
-        </div>
-    @endif
+    
 
 
 </div>

@@ -37,6 +37,7 @@ trait Production
     }
     
 
+    
     private function necessaryIngredients()
     {
         $plannedBaseAmount = Conversions::toBase($this->unit, $this->amount)['amount'];

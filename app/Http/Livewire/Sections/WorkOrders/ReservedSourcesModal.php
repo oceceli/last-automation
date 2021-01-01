@@ -13,4 +13,13 @@ trait ReservedSourcesModal
         $this->reservedSourcesModal = true;
         $this->reservedSourcesData = $this->workOrders->find($id);
     }
+
+    /**
+     * Empty reservedSourcesData when modal closed
+     */
+    public function updatedReservedSourcesModal($value)
+    {
+        if(!$value) $this->reset('reservedSourcesData');
+    }
+
 }

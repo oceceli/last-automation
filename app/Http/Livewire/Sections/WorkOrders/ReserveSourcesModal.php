@@ -12,7 +12,7 @@ trait ReserveSourcesModal
 
 
     /**
-     * Workorder instance that processing in the moment
+     * Workorder instance which is processing in the moment
      */
     public $woStartData;
 
@@ -34,9 +34,22 @@ trait ReserveSourcesModal
 
 
     /**
+     * When pressed the start button for a work order, open lotSourceModal to ask which sources to be used
+     */
+    public function startProcess($id)
+    {
+        $this->woStartData = $this->workOrders->find($id);
+        $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->amount, $this->woStartData->unit_id);
+        
+        $this->reserveSourcesModal = true;
+    }
+
+
+
+    /**
      * Sources selected and confirmed by user ...
      */
-    public function start()
+    public function confirmStart()
     {
         // dd($this->inputModels);
         if(! $resolvedInputModels = $this->validateInputs()) return; 
@@ -63,6 +76,9 @@ trait ReserveSourcesModal
                     $necessaryAmount = 0;
                 }
 
+                // don't reserve zero sources
+                if($usedSource == 0) continue;
+
                 $toBeReserved = [
                     'product_id' => $productId, 
                     'reserved_lot' => $input['lot_number'],
@@ -74,9 +90,9 @@ trait ReserveSourcesModal
         }
 
         $this->refreshTable();
-        $this->closeModal();
+        $this->closeReserveSourcesModal();
 
-        return $this->emit('toast', '!!! başarılı', '!!! Kaynak tercihleri sorunsuzca kaydedildi', 'success');
+        return $this->emit('toast', __('sections/workorders.production_started'), __('sections/workorders.specified_resources_reserved_to_use_in_production'), 'success');
     }
     
 
@@ -85,14 +101,17 @@ trait ReserveSourcesModal
     {
         $resolvedInputModels = $this->resolveInputModels();
 
-        // are arrays have equal elements? If not abort
+        // are both arrays have equal elements?
         if(count($this->lotCards) !== count($resolvedInputModels)) {
-            return $this->toastNotEnough(); 
+            $this->emit('toast', __('common.there_are_missing_fields'), __('sections/workorders.please_specify_all_necessary_sources_for_production'), 'error');
+            return false;
         }
         
-        foreach($resolvedInputModels as $highIndex => $sources) { // ?? daha kısa bir yolu vardır
+        // are provided sources enough for production?
+        foreach($resolvedInputModels as $highIndex => $sources) {
             if(! $this->isResourcesEnough($highIndex)) {
-                return $this->toastNotEnough(); 
+                $this->emit('toast', __('sections/workorders.insufficient_sources'), __('sections/workorders.please_reserve_enough_amount_of_sources_in_order_to_continue_production'), 'warning');
+                return false;
             }
         }
 
@@ -101,7 +120,9 @@ trait ReserveSourcesModal
 
 
 
-    
+    /**
+     * User will know how many more needed for production instantly
+     */
     public function displayCoveredAmount($highIndex)
     {
         $inputModels = $this->resolveInputModels();
@@ -119,17 +140,12 @@ trait ReserveSourcesModal
 
 
 
-    public function isResourcesExcess($index)
-    {
-        
-    }
-
-
-
-
-    private function isResourcesEnough($index) : bool
+    /**
+     * Is sources that specified by user is enough for production?
+     */
+    private function isResourcesEnough($highIndex) : bool
     {        
-        return $this->totalCovered($index) >= $this->totalNecessaryAmount($index);
+        return $this->totalCovered($highIndex) >= $this->totalNecessaryAmount($highIndex);
     }
     
 
@@ -145,7 +161,7 @@ trait ReserveSourcesModal
 
     
     /**
-     * How many ingredient needed for production
+     * How many ingredient needed for production?
      */
     private function totalNecessaryAmount($highIndex)
     {
@@ -154,6 +170,9 @@ trait ReserveSourcesModal
 
 
 
+    /**
+     * Multiselect gives us strings, so need to explode and name them
+     */
     private function resolveInputModels()
     {
         $result = [];
@@ -175,33 +194,16 @@ trait ReserveSourcesModal
      */
     public function updatedReserveSourcesModal($value)
     {
-        if($value === false) {
-            $this->reset('inputModels');
-        }
+        if(!$value) $this->closeReserveSourcesModal();
     }
 
 
 
-    private function closeModal()
+    private function closeReserveSourcesModal()
     {
         $this->reserveSourcesModal = false;
-        $this->reset('inputModels');
+        $this->reset('inputModels', 'woStartData');
     }
 
-
-
-    private function toastNotEnough()
-    {
-        $this->emit('toast', '!!! yetersiz', 'kaynaklar yetersiz görünüyor', 'warning');
-        return false;
-    }
-
-    /**
-     * For example; 'lot_5' will become '5'
-     */
-    // private function indexSync($string)
-    // {
-    //     return substr($string, strpos($string, '_') + 1);
-    // }
 
 }

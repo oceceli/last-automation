@@ -64,6 +64,8 @@ return [
     'attention' => 'Dikkat!',
     'somethings_missing' => 'Bir şeyler eksik!',
     'somethings_wrong' => 'Bir şeyler yanlış',
+    'there_are_missing_fields' => 'Eksik alanlar var!',
+    // 'please_fill_in_all_fields' => 'Lütfen tüm alanları eksiksiz doldurunuz',
     // 'somethings_missing_or_wrong' => 'Eksik ya da yanlış bir şeyler var',
     'please_correct_specified_errors' => 'Lütfen belirtilen hataları düzeltin',
     // 'there_is_nothing_here' => 'Burada hiçbir şey yok!',
@@ -93,6 +95,8 @@ return [
 
     'create' => 'oluştur',
     'confirm' => 'Onayla',
+    'abort' => 'İptal et',
+    'do_complete' => 'Tamamla',
     // 'suspend' => 'Askıya al',
     // 'unsuspend' => 'Aktifleştir',
     'stay_here' => 'Burada kal',

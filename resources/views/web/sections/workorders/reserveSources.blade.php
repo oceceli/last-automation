@@ -26,6 +26,7 @@
                                 <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
                                     {{-- {{ __('sections/workorders.lot_no')}}:  --}}
                                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
+
                                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
                                             @if ($selectLot['available_amount'] > 0 || $selectLot['reserved_amount'])
                                                 <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
@@ -37,6 +38,7 @@
                                                 </option>
                                             @endif
                                         @endforeach
+                                        
                                     </x-dropdown-multiple>
 
                                 </div>
@@ -50,7 +52,7 @@
                     
 
                     <div class="p-5 border-t border-orange-100 bg-orange-50">
-                        <button class="ui orange button w-full" wire:click="start()">
+                        <button class="ui orange button w-full" wire:click="confirmStart()">
                             {{ __('common.confirm') }}
                             <i class="right arrow icon"></i>
                             {{-- {{ __('sections/workorders.start')}} --}}
