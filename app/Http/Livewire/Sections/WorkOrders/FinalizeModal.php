@@ -11,19 +11,19 @@ trait FinalizeModal
 
     public $unit_id;
     public $selectedUnit;
-    public $production_gross;
+    public $production_total;
     public $production_waste = 0; 
     // public $datetime; // daha sonra forma ekleyebilirim. Üretim bitiş zamanı 'şu an' harici de seçilebilir mi? // bana seçilemez gibi geliyo 
 
     protected $rules = [
         'unit_id' => 'required|integer|min:1',
-        'production_gross' => 'required|numeric|gt:production_waste',
-        'production_waste' => 'nullable|numeric|lt:production_gross',
+        'production_total' => 'required|numeric|gt:production_waste',
+        'production_waste' => 'nullable|numeric|lt:production_total',
     ];
 
     protected $validationAttributes = [
         'unit_id' => 'Birim',
-        'production_gross' => 'Toplam',
+        'production_total' => 'Toplam',
         'production_waste' => 'Fire',
     ];
 
@@ -59,7 +59,7 @@ trait FinalizeModal
     {
         $this->validate();
 
-        if($this->finalizeData->saveProductionResults($this->production_gross, $this->production_waste, $this->unit_id))
+        if($this->finalizeData->saveProductionResults($this->production_total, $this->production_waste, $this->unit_id))
             $this->emit('toast', __('sections/workorders.production_is_completed'), __('sections/workorders.reserved_sources_deducted_from_stocks_and_product_added_to_stock', ['product' => $this->finalizeData->product->name]), 'success');
 
         $this->reFetchTable();
@@ -83,12 +83,12 @@ trait FinalizeModal
     public function closeFinalizeModal()
     {
         $this->finalizeModal = false;
-        $this->reset('finalizeData');
+        $this->reset('finalizeData', 'unit_id', 'selectedUnit', 'production_total', 'production_waste');
     }
 
 
 
-    public function updatedFinalizedModal($value)
+    public function updatedFinalizeModal($value)
     {
         if(!$value) $this->closeFinalizeModal();
     }

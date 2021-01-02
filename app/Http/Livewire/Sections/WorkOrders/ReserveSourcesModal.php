@@ -69,20 +69,20 @@ trait ReserveSourcesModal
                 if($necessaryAmount === 0) continue;
 
                 if($necessaryAmount >= $input['available_amount']) {
-                    $usedSource = $input['available_amount'];
+                    $usedSourceAmount = $input['available_amount'];
                     $necessaryAmount -= $input['available_amount'];
                 } else {
-                    $usedSource = $necessaryAmount;
+                    $usedSourceAmount = $necessaryAmount;
                     $necessaryAmount = 0;
                 }
 
                 // don't reserve zero sources
-                if($usedSource == 0) continue;
+                if($usedSourceAmount == 0) continue;
 
                 $toBeReserved = [
                     'product_id' => $productId, 
                     'reserved_lot' => $input['lot_number'],
-                    'reserved_amount' => $usedSource,
+                    'reserved_amount' => $usedSourceAmount,
                 ];
 
                 $this->woStartData->reservedStocks()->create($toBeReserved);

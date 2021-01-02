@@ -48,7 +48,7 @@ class Today extends Component
 
     private function reFetchTable() // ?? yerini refreshtable'a bırakabilir mi?
     {
-        $this->reset('production_gross', 'production_waste', 'unit_id', 'selectedUnit', 'finalizeModal');
+        $this->reset('production_total', 'production_waste', 'unit_id', 'selectedUnit', 'finalizeModal');
         $this->workOrders = WorkOrder::getTodaysList();
     }
 

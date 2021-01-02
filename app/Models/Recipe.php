@@ -52,6 +52,10 @@ class Recipe extends Model
         $this->attributes['code'] = strtoupper($code);
     }
 
+    public function getToleranceFactorAttribute()
+    {
+        return 3; // !! todo: bunu veritabanına taşımam gerekiyor 
+    }
     
 
     public function delete()

@@ -97,6 +97,7 @@ return [
     'confirm' => 'Onayla',
     'abort' => 'İptal et',
     'do_complete' => 'Tamamla',
+    'stock' => 'Stok',
     // 'suspend' => 'Askıya al',
     // 'unsuspend' => 'Aktifleştir',
     'stay_here' => 'Burada kal',
