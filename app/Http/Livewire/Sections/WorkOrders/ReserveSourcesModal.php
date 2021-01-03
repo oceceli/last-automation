@@ -27,9 +27,12 @@ trait ReserveSourcesModal
     ];
 
     /**
-     * model property
+     * Model property for multiselect
      */
-    public $inputModels = [];
+    public $inputModels = [
+        // ["lotnumber23,950", "lot234,500"], muht.
+        // ["lotnumbertest34,10000"],
+    ];
 
 
 
@@ -51,21 +54,18 @@ trait ReserveSourcesModal
      */
     public function confirmStart()
     {
-        // dd($this->inputModels);
         if(! $resolvedInputModels = $this->validateInputs()) return; 
-        // $resolvedInputModels = $this->resolveInputModels();
 
         if(! $this->woStartData->start())
             return $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
 
 
-        foreach($resolvedInputModels as $highIndex => $inputs) {
+        foreach($resolvedInputModels as $index => $inputs) {
 
-            $productId = $this->lotCards[$highIndex]['ingredient']['id'];
-            $necessaryAmount = $this->totalNecessaryAmount($highIndex);
+            $ingredient = $this->lotCards[$index]['ingredient'];
+            $necessaryAmount = $this->totalNecessaryAmount($index);
 
             foreach($inputs as $input) {
-
                 if($necessaryAmount === 0) continue;
 
                 if($necessaryAmount >= $input['available_amount']) {
@@ -79,13 +79,11 @@ trait ReserveSourcesModal
                 // don't reserve zero sources
                 if($usedSourceAmount == 0) continue;
 
-                $toBeReserved = [
-                    'product_id' => $productId, 
+                $this->woStartData->reservedStocks()->create([
+                    'product_id' => $ingredient['id'], 
                     'reserved_lot' => $input['lot_number'],
                     'reserved_amount' => $usedSourceAmount,
-                ];
-
-                $this->woStartData->reservedStocks()->create($toBeReserved);
+                ]);
             }
         }
 
@@ -96,7 +94,44 @@ trait ReserveSourcesModal
     }
     
 
+    /**
+     * Returns tolerance amount based on product's amount
+     */
+    public function calculateTolerance($amount)
+    {
+        $toleranceFactor = $this->woStartData->product->recipe->tolerance_factor; // !! reçete tablosuna ekle 
+        return ($amount * $toleranceFactor) / 100;
+    }
+    
 
+
+    /**
+     * User will know how many more needed for production instantly
+     */
+    public function displayCoveredAmount($index)
+    {
+        $inputModels = $this->resolveInputModels();
+
+        if(array_key_exists($index, $inputModels)) {
+            $difference = $this->totalNecessaryAmount($index) - $this->totalCovered($index);
+            $unitName = $this->lotCards[$index]['unit']['name'];
+            return $this->isResourcesEnough($index)
+                ? ['text' => __('sections/workorders.specified_sources_are_enough_for_manufacturing'), 'class' => 'text-green-600']
+                : ['text' => __('sections/workorders.amount_more_required', ['amount' => number_format($difference, 2, ',', '') . " " . strtolower($unitName)]), 'class' => 'text-red-600'];
+            
+        }
+        return ['text' => __('common.not_specified'), 'class' => 'text-ease-red'];
+    }
+
+
+
+    private function isIngredientLiteral($index)
+    {
+        return $this->lotCards[$index]['ingredient']['pivot']['literal'];
+    }
+
+
+    
     private function validateInputs()
     {
         $resolvedInputModels = $this->resolveInputModels();
@@ -108,8 +143,8 @@ trait ReserveSourcesModal
         }
         
         // are provided sources enough for production?
-        foreach($resolvedInputModels as $highIndex => $sources) {
-            if(! $this->isResourcesEnough($highIndex)) {
+        foreach($resolvedInputModels as $index => $sources) {
+            if(! $this->isResourcesEnough($index)) {
                 $this->emit('toast', __('sections/workorders.insufficient_sources'), __('sections/workorders.please_reserve_enough_amount_of_sources_in_order_to_continue_production'), 'warning');
                 return false;
             }
@@ -121,31 +156,11 @@ trait ReserveSourcesModal
 
 
     /**
-     * User will know how many more needed for production instantly
-     */
-    public function displayCoveredAmount($highIndex)
-    {
-        $inputModels = $this->resolveInputModels();
-        
-        if(array_key_exists($highIndex, $inputModels)) {
-            $unitName = $this->lotCards[$highIndex]['unit']['name'];
-            return $this->isResourcesEnough($highIndex)
-                ? ['text' => __('sections/workorders.specified_sources_are_enough_for_manufacturing'), 'class' => 'text-green-600']
-                : ['text' => __('sections/workorders.amount_more_required', ['amount' => number_format($this->totalNecessaryAmount($highIndex) - $this->totalCovered($highIndex), 2, ',', '') . " " . strtolower($unitName)]), 'class' => 'text-red-600'];
-            
-        }
-        return ['text' => __('common.not_specified'), 'class' => 'text-ease-red'];
-    }
-
-
-
-
-    /**
      * Is sources that specified by user is enough for production?
      */
-    private function isResourcesEnough($highIndex) : bool
-    {        
-        return $this->totalCovered($highIndex) >= $this->totalNecessaryAmount($highIndex);
+    private function isResourcesEnough($index) : bool
+    {
+        return $this->totalCovered($index) >= $this->totalNecessaryAmount($index);
     }
     
 
@@ -153,9 +168,9 @@ trait ReserveSourcesModal
     /**
      * The amount of user provided ingredient sources
      */
-    private function totalCovered($highIndex)
+    private function totalCovered($index)
     {
-        return array_sum(array_column($this->resolveInputModels()[$highIndex], 'available_amount'));
+        return array_sum(array_column($this->resolveInputModels()[$index], 'available_amount'));
     }
 
 
@@ -163,9 +178,11 @@ trait ReserveSourcesModal
     /**
      * How many ingredient needed for production?
      */
-    private function totalNecessaryAmount($highIndex)
+    private function totalNecessaryAmount($index)
     {
-        return $this->lotCards[$highIndex]['amount'];
+        return $this->isIngredientLiteral($index) 
+            ? $this->lotCards[$index]['amount']
+            : $this->lotCards[$index]['amount'] + $this->calculateTolerance($this->lotCards[$index]['amount']);
     }
 
 
@@ -187,6 +204,7 @@ trait ReserveSourcesModal
         }
         return $result;
     }
+
 
 
     /**

@@ -98,6 +98,8 @@ return [
     'abort' => 'İptal et',
     'do_complete' => 'Tamamla',
     'stock' => 'Stok',
+    'tolerance' => 'Tolerans',
+    // 'with_tolerance' => 'Toleranslı',
     // 'suspend' => 'Askıya al',
     // 'unsuspend' => 'Aktifleştir',
     'stay_here' => 'Burada kal',

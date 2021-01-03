@@ -19,7 +19,8 @@ trait ReservedSourcesModal
      */
     public function updatedReservedSourcesModal($value)
     {
-        if(!$value) $this->reset('reservedSourcesData');
+        // if(!$value) $this->reset('reservedSourcesData');
+        if(!$value) $this->refreshTable();
     }
 
 }

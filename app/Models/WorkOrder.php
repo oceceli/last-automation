@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
-use App\Models\Traits\WorkOrder\Production;
+use App\Models\Traits\WorkOrder\FinalizedProduction;
+use App\Models\Traits\WorkOrder\FinalizeProduction;
 use Carbon\Carbon;
 
 class WorkOrder extends Model
@@ -15,7 +16,8 @@ class WorkOrder extends Model
     use HasFactory;
     use ModelHelpers;
     use Searchable;
-    use Production;
+    use FinalizeProduction;
+    use FinalizedProduction;
 
     protected $guarded = [];
 

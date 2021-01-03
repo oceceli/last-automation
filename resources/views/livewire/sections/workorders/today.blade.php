@@ -70,7 +70,7 @@
                                 </tr>
 
                             @elseif($workOrder->isInProgress())
-                                <tr class="{{ $workOrder->statusColor }} font-bold">
+                                <tr class="{{ $workOrder->statusColor }} font-bold cursor-default">
                                     <td class="center aligned collapsing">
                                         @if ( ! $workOrder->isToday())
                                             <span data-tooltip="{{ __('sections/workorders.this_work_order_is_not_finished_in_time_should_end_now')}}" data-variation="mini" data-position="top left">
@@ -105,7 +105,7 @@
                                 </tr>
 
                             @elseif($workOrder->isActive())
-                                <tr class="font-semibold">
+                                <tr class="font-semibold cursor-default hover:bg-cool-gray-50 ease-in duration-200">
                                     <td class="center aligned collapsing">
                                         <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
                                             <i class="large primary clock outline icon"></i>

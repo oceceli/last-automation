@@ -7,7 +7,7 @@
                             <tr>
                                 <x-thead-item>{{ __('sections/products.name') }}</x-thead-item>
                                 <x-thead-item>{{ __('sections/workorders.reserve_lot') }}</x-thead-item>
-                                <x-thead-item>{{ __('sections/workorders.reserve_amount') }}</x-thead-item>
+                                <x-thead-item>{{ __('sections/workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
                             </tr>
                         </x-thead>
                         <x-tbody>
@@ -18,11 +18,14 @@
                                         <span class="text-xs">({{ $reserved->product->code }})</span>
                                     </x-tbody-item>
                                     <x-tbody-item>{{ $reserved->reserved_lot }}</x-tbody-item>
-                                    <x-tbody-item>{{ $reserved->reserved_amount }} {{ $reserved->product->baseUnit->name }}</x-tbody-item>
+                                    <x-tbody-item class="font-bold right aligned">{{ number_format($reserved->reserved_amount, 3, ',', '') }} {{ $reserved->product->baseUnit->name }}</x-tbody-item>
                                 </tr>
                             @endforeach
                         </x-tbody>
                     </x-table>
+                    <div class="text-xs text-red-800 border-t pt-4">
+                        *{{ __('sections/workorders.reserved_sources_will_be_used_as_needed_when_production_is_finalized') }}
+                    </div>
                 </div>
         </x-custom-modal>
     </div>

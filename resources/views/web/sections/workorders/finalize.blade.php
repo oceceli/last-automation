@@ -21,9 +21,8 @@
                         <div class="h-full p-6 flex items-center justify-around flex-col border border-green-200 rounded-sm shadow-inner bg-cool-gray-50">
                             @if ($production_total)
                                 <div class="text-xl font-bold">
-                                    <span class="text-ease">{{ (float)$production_total ?? 0 }} -</span>
-                                    
-                                    <span class="text-ease-red">{{ (float)$production_waste ?? 0 }}</span>
+                                    <span class="text-ease">{{ (float)$production_total ?? 0 }}</span>
+                                    <span class="text-ease-red">- {{ (float)$production_waste ?? 0 }}</span>
                                 </div>
                                 <div class="text-2xl font-extrabold text-green-800 p-2">
                                     {{ __('common.stock') }}:
@@ -31,7 +30,7 @@
                                     {{ $selectedUnit['name'] }}
                                 </div>
                             @else
-                                <div class="text-ease"><i class="big cog icon"></i></div>
+                                <div class="text-ease"><i class="big calculator icon"></i></div>
                             @endif
                         </div>
                         
@@ -56,7 +55,8 @@
                         <i class="small circular question mark icon"></i>
                     </span>
                 </div>
-                <div x-show="confirmation" wire:click="abort({{ $finalizeData->id }})" class="font-extrabold bg-red-100 text-center border-red-300 text-red-600 cursor-pointer p-2 rounded">
+                <div x-show="confirmation" wire:click="abort({{ $finalizeData->id }})" 
+                        class="font-extrabold bg-red-200 text-center border-red-300 text-red-600 cursor-pointer p-2 rounded hover:bg-red-500 ease-in-out hover:text-white duration-200">
                     {{ __('common.abort') }}?
                 </div>
             </div>

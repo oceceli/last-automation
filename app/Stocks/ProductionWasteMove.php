@@ -9,7 +9,7 @@ class ProductionWasteMove extends Moves
 {
     private $workOrder;
 
-    public function __construct(WorkOrder $workOrder, int $amount)
+    public function __construct(WorkOrder $workOrder, float $amount)
     {
         $this->workOrder = $workOrder;
 
