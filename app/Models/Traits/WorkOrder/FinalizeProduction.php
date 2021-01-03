@@ -19,13 +19,13 @@ trait FinalizeProduction
         if($inputWaste > $inputTotal) return;
 
         // take production results to their base unit
-        $inputTotal = $this->inputTotal = Conversions::toBase($unitId, $inputTotal)['amount'];
+        $this->inputTotal = $inputTotal = Conversions::toBase($unitId, $inputTotal)['amount'];
         $inputWaste =                     Conversions::toBase($unitId, $inputWaste)['amount'];
         
         if(!$this->isEfficiencyAcceptable($inputTotal)) dd("verimlilik düşük/fazla"); //return; // todo: today livewire'da sorgula 
 
-        (new ProductionTotalMove($this, $inputTotal))->save();  // ?? kullanıcı girişi olduğu gibi stoğa yansıtılıyor. Yansımamalı. ** verimlilik yaptım eksikler var
-        (new ProductionWasteMove($this, $inputWaste))->save();
+        (new ProductionTotalMove($this, (float)$inputTotal))->save();  // ?? kullanıcı girişi olduğu gibi stoğa yansıtılıyor. Yansımamalı. ** verimlilik yaptım eksikler var
+        (new ProductionWasteMove($this, (float)$inputWaste))->save();
         
         $this->deductFromReservedSources();
         

@@ -7,11 +7,11 @@ use DateTime;
 
 class ProductionIngredientMove extends Moves
 {
-    private $workOrder;
 
     public function __construct(WorkOrder $workOrder, int $ingredientId, String $lotNumber, float $amount)
     {
-        $this->workOrder = $workOrder;
+        $this->instance = $workOrder;
+
         $this->type = 'production_ingredient';
         $this->direction = false;
         
@@ -21,9 +21,4 @@ class ProductionIngredientMove extends Moves
         $this->datetime = now();
     }
 
-
-    public function save()
-    {
-        $this->workOrder->StockMoves()->create($this->data());
-    }
 }

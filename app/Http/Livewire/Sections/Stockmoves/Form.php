@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire\Sections\Stockmoves;
 
-use App\Common\Facades\Moves;
-// use App\Http\Livewire\Form as BaseForm;
 use App\Models\Product;
 use App\Models\StockMove;
 use App\Common\Facades\Conversions;
 use App\Http\Livewire\FormHelpers;
+use App\Stocks\Moves;
 use Livewire\Component;
 
 class Form extends Component
@@ -134,7 +133,13 @@ class Form extends Component
         $this->validate();
         foreach($this->cards as $card) {
             $amount = Conversions::toBase($card['unit_id'], $card['amount'])['amount']; // stockMove, birimi kullanıcının kaydettiği şekilde göstermiyor, eklemedim. Base'e döndürüyoruz. Haberin olsun
-            Moves::newMove($card['product_id'], $amount, $card['direction'], $card['datetime'], $card['lot_number']);
+            // Moves::newMove($card['product_id'], $amount, $card['direction'], $card['datetime'], $card['lot_number']);
+            (new Moves())->setProductId($card['product_id'])
+                         ->setAmount($amount)
+                         ->setDirection($card['direction'])
+                         ->setDatetime($card['datetime'])
+                         ->setLotNumber($card['lot_number'])
+                         ->save();
         }
         $this->emit('toast', __('common.saved.title'), __('common.saved.standard'), 'success');
         $this->reset();

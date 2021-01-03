@@ -42,7 +42,10 @@ trait FinalizeModal
     }
     
 
-
+    
+    /**
+     * Start workorder finalize process, open modal
+     */
     public function FinalizeProcess($id)
     {
         $this->finalizeModal = true;
@@ -55,6 +58,9 @@ trait FinalizeModal
 
 
 
+    /**
+     * User filled in inputs and confirmed results
+     */
     public function ConfirmFinalize()
     {
         $this->validate();

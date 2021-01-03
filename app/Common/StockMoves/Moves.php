@@ -36,7 +36,7 @@ class Moves
      */
     public function saveProductionWaste($workOrder, $baseAmount, $datetime = null)
     {
-        if($baseAmount <= 0) return; // !! bu class'ı diğer tarafta tekrar yaz. Parametreleri class ile geç 
+        if($baseAmount <= 0) return; 
         $this->instantiate($workOrder);
         $this->prepare($workOrder->product_id, $baseAmount, false, 'production_waste', $datetime, $workOrder->lot_no)->persist($workOrder);
     }

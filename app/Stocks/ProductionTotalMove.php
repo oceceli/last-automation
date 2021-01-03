@@ -7,11 +7,10 @@ use DateTime;
 
 class ProductionTotalMove extends Moves
 {
-    private $workOrder;
 
     public function __construct(WorkOrder $workOrder, float $amount)
     {
-        $this->workOrder = $workOrder;
+        $this->instance = $workOrder;
 
         $this->productId = $workOrder->product_id;
         $this->type = 'production_total';
@@ -20,12 +19,6 @@ class ProductionTotalMove extends Moves
 
         $this->amount = $amount;
         $this->datetime = now();
-    }
-
-
-    public function save()
-    {
-        $this->workOrder->StockMoves()->create($this->data());
     }
 
     
