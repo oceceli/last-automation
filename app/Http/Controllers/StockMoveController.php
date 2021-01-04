@@ -45,4 +45,9 @@ class StockMoveController extends Controller
         return view('web.sections.stockmoves.create');
     }
 
+    public function edit(StockMove $stockMove)
+    {
+        return view('web.sections.stockmoves.edit', compact('stockMove'));
+    }
+
 }

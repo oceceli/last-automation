@@ -15,8 +15,8 @@ class Moves
     protected $lotNumber;
     protected $datetime;
 
-    protected $stockableType; // !! kullanılmıyorlar şu an, lazım olur mu bilemedim
-    protected $stockableId;
+    // protected $stockableType; // !! kullanılmıyorlar şu an, lazım olur mu bilemedim
+    // protected $stockableId;
 
     private $manualEntry = "manual";
 
@@ -26,7 +26,14 @@ class Moves
     protected $instance;
 
 
-    public function save() {
+    public function save() 
+    {
+        if( ! $this->direction) {
+            $lot = StockMove::getCompound($this->productId, $this->lotNumber);
+            if($lot->isEmpty()) 
+                dd("todo: ".__CLASS__ . ", save fonksiyonu. Bu lot numarasına ait yeterli miktarda kaynak var mı diye sorulacak!"); // !! eksik 
+        }
+
         if($this->amount <= 0) return;
 
         if($this->instance) {
@@ -49,7 +56,7 @@ class Moves
         return [
             'product_id' => $this->productId,
             'type' => $this->type,
-            'direction' => $this->direction,
+            'direction' => (bool)$this->direction,
             'base_amount' => $this->amount,
             'lot_number' => $this->lotNumber,
             'datetime' => $this->datetime,

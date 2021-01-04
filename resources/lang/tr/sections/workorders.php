@@ -11,6 +11,7 @@ return [
 
     // details
     'production_completed' => 'Üretim tamamlandı',
+    'belonged_workorder' => 'Ait olduğu iş emri',
 
     'product_id' => 'Reçete no ???',
     'lot_no' => 'Lot No',

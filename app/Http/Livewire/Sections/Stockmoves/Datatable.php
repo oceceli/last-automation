@@ -12,6 +12,17 @@ class Datatable extends Component
 
     public $model = StockMove::class;
     public $view = 'livewire.sections.stockmoves.datatable';
-    
+
+    public function delete($id) // !! bunu bir trait yardımıyla tüm componentlere ekleyebilirim.
+    {
+        $result = $this->model::findAndDelete($id);
+        if(is_array($result) && $result['type'] == 'error') {
+            $this->emit('toast', __('common.error.title'), $result['message'], 'warning');
+        } 
+        // else {
+        //     $this->emit('toast', '', $result['message'], 'success');
+        //     $this->reset();
+        // }
+    }
 
 }

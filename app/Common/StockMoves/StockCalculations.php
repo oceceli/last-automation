@@ -31,8 +31,8 @@ class StockCalculations
         foreach($lotNumbers as $key => $lotNumber) {
             $lotAmount = $this->getCurrentAmountBasedOnLotNumber($lotNumber, $productId);
 
-            // don't push negative lots to array 
-            // if($lotAmount <= 0) continue; // !! eksi değerlerden bir şekilde korunmam lazım 
+            // don't push zero lots to array 
+            if($lotAmount == 0) continue; // !! eksi değerlerden bir şekilde korunmam lazım 
 
             $array[$key] = [
                 'lot_number' => $lotNumber,

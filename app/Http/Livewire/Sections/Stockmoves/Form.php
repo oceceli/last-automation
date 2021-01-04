@@ -46,9 +46,11 @@ class Form extends Component
 
 
 
-    public function mount()
+    public function mount($stockMove = null)
     {
-        // parent::mount();
+        // if($stockMove) {
+        //     dd($stockMove->lot_number . " lot numaralı stock move düzenle");
+        // }
         $this->addCard();
     }
 

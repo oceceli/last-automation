@@ -52,7 +52,26 @@
                         <td class="text-sm">{{ $stockMove->datetime }}</td>
 
                         <td class="collapsing">
-                            <x-crud-actions edit show delete modelName="stock-move" :modelId="$stockMove->id" />
+                            @if ($stockMove->isProduction())
+                                <x-crud-actions modelName="stock-move" :modelId="$stockMove->id">
+                                    <div x-data="{detailModal: false}"
+                                        data-tooltip="{{ __('sections/workorders.belonged_workorder') }}" data-variation="mini" data-position="left center">
+                                        <a @click="detailModal = true" href="{{ route('work-orders.show', ['work_order' => $stockMove->stockable]) }}">
+                                            <i class="purple cog link icon"></i>
+                                        </a>
+                                        <div x-show="detailModal" x-cloak>
+                                            @include('web.sections.stockmoves.detailModal') 
+                                            {{-- !!!  devam --}}
+                                        </div>
+                                    </div>
+                                </x-crud-actions>
+                            @elseif($stockMove->isTypeManual())
+                                {{-- modal olacak burada --}}
+                                <div>
+                                    <i class="eye link icon"></i>
+                                </div>
+                                {{-- <x-crud-actions show modelName="stock-move" :modelId="$stockMove->id" /> --}}
+                            @endif
                         </td>
 
                     </tr>

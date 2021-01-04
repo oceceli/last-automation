@@ -64,7 +64,7 @@ trait ModelHelpers
     public static function findAndDelete($id)
     {
         $model = self::find($id);
-        $model->delete();
+        return $model->delete();
     }
 
     
