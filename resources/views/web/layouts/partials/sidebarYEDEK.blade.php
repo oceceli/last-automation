@@ -47,33 +47,24 @@
 
 
         <div class="p-2 h-full bg-white overflow-x-hidden shadow-md border-t">
-            <div class="flex flex-col gap-2">
-                @foreach ($routes as $route)
-                    <div x-data="{submenu: false}" class="py-1 px-4 shadow-md rounded">
-                        <div class="flex items-center justify-between" >
-                            <a href="{{ route($route['name']) }}"> 
-                                <div class="h-8 flex items-center">
-                                    <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
-                                    <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
-                                </div>
-                            </a> 
-                            <div>
-                                @if (array_key_exists('submenus', $route))
-                                    <div @click="submenu = ! submenu">
-                                        <i class="caret down icon"></i>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        @if (array_key_exists('submenus', $route))
-                            <div x-show="submenu">
-                                @foreach ($route['submenus'] as $submenu)
-                                    {{ $submenu['name'] }}
-                                @endforeach
-                            </div>
+            <div class="h-full rounded border bg-white border-indigo-200 shadow flex flex-col overflow-x-hidden">
+                <div class="ui middle aligned selection animated link divided small list">
+                    @foreach ($routes as $route)
+                        @if (route($route['name']) == request()->url())
+                            <div class="active item">
+                        @else
+                            <div class="item">
                         @endif
-                    </div>
-                @endforeach
+                                <a href="{{ route($route['name']) }}"> 
+                                    <div class="h-11 p-3 flex items-center">
+                                        <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
+                                        <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
+                                    </div>
+                                </a>  
+                            </div>
+                    @endforeach            
+                </div>
+                
             </div>
         </div>
 
@@ -93,21 +84,3 @@
     </div>
 </div>
 
-
-{{-- <div class="ui inline dropdown sidebardrop z-50">
-    <div class="text">today</div>
-    <i class="dropdown icon"></i>
-    <div class="menu bg-white">
-        <div class="header">Adjust time span</div>
-        <div class="active item" data-text="today">Today</div>
-        <div class="item" data-text="this week">This Week</div>
-        <div class="item" data-text="this month">This Month</div>
-    </div>
-</div> --}}
-
-
-<script>
-    $('document').ready(function(){
-        $('.sidebardrop').dropdown();
-    })
-</script>

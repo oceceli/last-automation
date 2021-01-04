@@ -40,7 +40,7 @@
                 <div class="flex" x-data="{sidebar: false}">
 
                     <template id="SIDEBAR"  x-if="!sidebar">
-                        <div class="w-96 h-screen bg-white">
+                        <div class="w-96 h-screen bg-white relative">
                             <x-layouts.partials.sidebar/>
                         </div>
                     </template>
