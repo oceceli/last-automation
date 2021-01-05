@@ -9,10 +9,32 @@ class Sidebar extends Component
 
     public $user;
 
+    public $activeMenuGroupKey;
+
+
+    
 
     public function __construct()
     {
         $this->user = auth()->user();
+        $this->decideOpenedDropdown();
+    }
+
+
+    
+    public function decideOpenedDropdown()
+    {
+        foreach($this->menuItems() as $index => $menuItem) {
+            if(array_key_exists('submenus', $menuItem) && is_array($menuItem['submenus'])) {
+                foreach($menuItem['submenus'] as $submenu) {
+                    if(route($submenu['name']) === url()->current()) 
+                        $this->activeMenuGroupKey = $index;
+                }
+            } else {
+                if(route($menuItem['name']) === url()->current()) 
+                        $this->activeMenuGroupKey = $index;
+            }
+        }
     }
 
 
@@ -22,29 +44,30 @@ class Sidebar extends Component
     }
 
 
-    public function routes()
+
+    public function menuItems()
     {
         return [
             [
                 'name' => 'dashboard', 
-                'label' => 'dashboard', 
+                'label' => 'dashboard',
                 'icon' => 'icon large dashboard', 
-                
             ],
             [
                 'name' => 'products.index', 
                 'label' => 'products', 
                 'icon' => 'icon large brown box', 
                 'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
-                ]
-            ],
-            [
-                'name' => 'products.create', 
-                'label' => 'products-create', 
-                'icon' => 'icon large brown box', 
-                'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
+                    [
+                        'name' => 'products.index', 
+                        'label' => 'products_list', 
+                        'icon' => 'list icon',
+                    ],
+                    [
+                        'name' => 'products.create', 
+                        'label' => 'define_product', 
+                        'icon' => 'plus icon',
+                    ],
                 ]
             ],
             [
@@ -52,15 +75,21 @@ class Sidebar extends Component
                 'label' => 'work-orders', 
                 'icon' => 'icon large project diagram', 
                 'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
-                ]
-            ],
-            [
-                'name' => 'work-orders.daily', 
-                'label' => 'work-orders-daily', 
-                'icon' => 'icon large settings', 
-                'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
+                    [
+                        'name' => 'work-orders.create', 
+                        'label' => 'create', 
+                        'icon' => 'plus icon',
+                    ],
+                    [
+                        'name' => 'work-orders.index', 
+                        'label' => 'all_workorders', 
+                        'icon' => 'list icon',
+                    ],
+                    [
+                        'name' => 'work-orders.daily', 
+                        'label' => 'work-orders-daily', 
+                        'icon' => 'icon settings',
+                    ],
                 ]
             ],
             [
@@ -68,31 +97,24 @@ class Sidebar extends Component
                 'label' => 'recipes', 
                 'icon' => 'icon large mortar pestle', 
                 'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
+                    [
+                        'name' => 'recipes.create', 
+                        'label' => 'recipes-create', 
+                        'icon' => 'icon large mortar pestle',
+                    ],
                 ]
             ],
-            [
-                'name' => 'recipes.create', 
-                'label' => 'recipes-create', 
-                'icon' => 'icon large mortar pestle', 
-                'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
-                ]
-            ],
+            
             [
                 'name' => 'stock-moves.index', 
-                'label' => 'stock-moves', 
+                'label' => 'stocks', 
                 'icon' => 'large truck packing icon', 
                 'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
-                ]
-            ],
-            [
-                'name' => 'inventory.index', 
-                'label' => 'inventory', 
-                'icon' => 'large warehouse icon', 
-                'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
+                    [
+                        'name' => 'inventory.index', 
+                        'label' => 'inventory', 
+                        'icon' => 'large warehouse icon',
+                    ],
                 ]
             ],
             [
@@ -100,7 +122,11 @@ class Sidebar extends Component
                 'label' => 'unit-create', 
                 'icon' => 'icon large weight', 
                 'submenus' => [
-                    ['name' => 'testvalue'], ['name' => 'test2']
+                    [
+                        'name' => 'units.create', 
+                        'label' => 'unit-create', 
+                        'icon' => 'icon large weight',
+                    ],
                 ]
             ],
         ];

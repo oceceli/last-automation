@@ -22,10 +22,14 @@ module.exports = {
 
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
+        borderWidth: ['responsive', 'last', 'hover', 'focus'],
+
         // extend: {
-        //     scale: ['focus-within'],
-        // }
+        //     // scale: ['focus-within'],
+        //     borderWidth: ['last'],
+        // },
     },
+    
 
     plugins: [require('@tailwindcss/ui')],
 

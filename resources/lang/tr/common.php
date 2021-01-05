@@ -77,9 +77,11 @@ return [
     // Mostly Sidebar ----
     'dashboard' => 'Anasayfa',
     'products' => 'Ürünler',
-    'products-create' => 'Ürün oluştur',
+    'products_list' => 'Ürün listesi',
+    'define_product' => 'Ürün tanımla',
     'work-orders' => 'İş emirleri',
-    'work-orders_create' => 'İş emri oluştur',
+    'all_workorders' => 'Tüm iş emirleri',
+    'workorder_create' => 'İş emri oluştur',
     'recipes' => 'Reçeteler',
     'recipes-create' => 'Reçete oluştur',
     'stock-moves' => 'Stok Hareketleri',
@@ -88,12 +90,13 @@ return [
     'units' => 'Birimler',
     'work-orders-daily' => 'Günlük iş emri',
     'inventory' => 'Envanter',
+    'stocks' => 'Stok',
 
 
     'total' => 'Toplam',
     'waste' => 'Fire',
 
-    'create' => 'oluştur',
+    'create' => 'Oluştur',
     'confirm' => 'Onayla',
     'abort' => 'İptal et',
     'do_complete' => 'Tamamla',

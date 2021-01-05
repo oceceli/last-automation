@@ -46,32 +46,50 @@
 
 
 
-        <div class="p-2 h-full bg-white overflow-x-hidden shadow-md border-t">
-            <div class="flex flex-col gap-2">
-                @foreach ($routes as $route)
-                    <div x-data="{submenu: false}" class="py-1 px-4 shadow-md rounded">
-                        <div class="flex items-center justify-between" >
-                            <a href="{{ route($route['name']) }}"> 
+        <div class=" h-full bg-white overflow-x-hidden shadow-md border-t">
+            <div class="flex flex-col ">
+                @foreach ($menuItems as $key => $menu)
+                    <div x-data="{submenu: false, submenuConfirm: false}" class="border-b border-dotted">
+
+                        <div class="pl-4 flex hover:bg-indigo-50 ease-in-out duration-200 @if($key === $activeMenuGroupKey) bg-gray-700 @endif">
+                            <a href="{{ route($menu['name']) }}" class="py-1  @if($key === $activeMenuGroupKey) text-white @endif"> 
                                 <div class="h-8 flex items-center">
-                                    <div><i class="{{ $route['icon'] }} text-gray-600"></i></div>
-                                    <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $route['label']) }}</p></div>
+                                    <div><i class="{{ $menu['icon'] }} text-gray-600"></i></div>
+                                    <div class="pl-2"><p class="font-extrabold ">{{ __('common.'. $menu['label']) }}</p></div>
                                 </div>
                             </a> 
-                            <div>
-                                @if (array_key_exists('submenus', $route))
-                                    <div @click="submenu = ! submenu">
+                            <div @click="submenu = ! submenu; submenuConfirm = true;" class="flex justify-end items-center cursor-pointer flex-1 text-right">
+                                @if (array_key_exists('submenus', $menu))
+                                    <div class="pr-2">
                                         <i class="caret down icon"></i>
                                     </div>
                                 @endif
                             </div>
                         </div>
-                        @if (array_key_exists('submenus', $route))
-                            <div x-show="submenu">
-                                @foreach ($route['submenus'] as $submenu)
-                                    {{ $submenu['name'] }}
-                                @endforeach
+                        @if (array_key_exists('submenus', $menu))
+                            <div x-show="submenu || ('{{ $key }}' === '{{ $activeMenuGroupKey }}') && ! submenuConfirm" class="shadow-inner bg-cool-gray-50 flex">
+                                <div class="border-r border-dashed pr-7"></div>
+                                <div class="flex-1">
+                                    @foreach ($menu['submenus'] as $submenu)
+                                        
+                                        <div class="flex justify-between border-b border-dashed last:border-b-0 hover:bg-blue-100">
+                                            <div class="flex-1 px-4 font-bold cursor-pointer">
+                                                <a href="{{ route($submenu['name']) }}"> 
+                                                    <div class="flex items-center py-2">
+                                                        <div><i class="{{ $submenu['icon'] }} text-gray-600"></i></div>
+                                                        <div class="pl-2"><p class="font-extrabold  text-gray-600">{{ __('common.'. $submenu['label']) }}</p></div>
+                                                    </div>
+                                                </a> 
+                                            </div>
+                                            @if (route($submenu['name']) == request()->url())
+                                                <div class="border-r-4 border-red-700"></div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         @endif
+
                     </div>
                 @endforeach
             </div>
