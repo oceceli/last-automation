@@ -80,7 +80,9 @@ return [
     // 'see_production_results' => 'Üretim sonuçlarını gör',
     'production_continues' => 'Üretim sürüyor',
     'on_hold' => 'Beklemede',
-
+    
+    'create_work_order' => 'İş emri oluştur',
+    // 'workorders' => 'İş emirleri',
     'wo_status' => 'Durum',
     'wo_suspended' => 'İş emri askıya alındı',
     'wo_unsuspended' => 'İş emri üretimi bekliyor',

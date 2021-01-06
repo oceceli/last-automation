@@ -50,89 +50,102 @@ class Sidebar extends Component
         return [
             [
                 'name' => 'dashboard', 
-                'label' => 'dashboard',
-                'icon' => 'icon large dashboard', 
+                'label' => 'common.dashboard',
+                'icon' => 'icon dashboard', 
             ],
             [
                 'name' => 'products.index', 
-                'label' => 'products', 
-                'icon' => 'icon large brown box', 
+                'label' => 'common.products', 
+                'icon' => 'icon box', 
                 'submenus' => [
                     [
-                        'name' => 'products.index', 
-                        'label' => 'products_list', 
-                        'icon' => 'list icon',
+                        'name' => 'products.create', 
+                        'label' => 'common.define_product', 
+                        'icon' => 'plus icon',
                     ],
                     [
-                        'name' => 'products.create', 
-                        'label' => 'define_product', 
-                        'icon' => 'plus icon',
+                        'name' => 'products.index', 
+                        'label' => 'common.products_list', 
+                        'icon' => 'th list icon',
+                    ],
+                    [
+                        'name' => 'categories.create', 
+                        'label' => 'common.create_category', 
+                        'icon' => 'group layer icon',
                     ],
                 ]
             ],
             [
                 'name' => 'work-orders.index', 
-                'label' => 'work-orders', 
-                'icon' => 'icon large project diagram', 
+                'label' => 'common.work-orders', 
+                'icon' => 'icon project diagram', 
                 'submenus' => [
                     [
                         'name' => 'work-orders.create', 
-                        'label' => 'create', 
+                        'label' => 'common.create', 
                         'icon' => 'plus icon',
                     ],
                     [
                         'name' => 'work-orders.index', 
-                        'label' => 'all_workorders', 
-                        'icon' => 'list icon',
+                        'label' => 'common.all_workorders', 
+                        'icon' => 'th list icon',
                     ],
                     [
                         'name' => 'work-orders.daily', 
-                        'label' => 'work-orders-daily', 
+                        'label' => 'common.work-orders-daily', 
                         'icon' => 'icon settings',
                     ],
                 ]
             ],
             [
                 'name' => 'recipes.index', 
-                'label' => 'recipes', 
-                'icon' => 'icon large mortar pestle', 
+                'label' => 'common.recipes', 
+                'icon' => 'icon mortar pestle', 
                 'submenus' => [
                     [
                         'name' => 'recipes.create', 
-                        'label' => 'recipes-create', 
-                        'icon' => 'icon large mortar pestle',
+                        'label' => 'common.recipes-create', 
+                        'icon' => 'plus icon',
+                    ],
+                    [
+                        'name' => 'recipes.index', 
+                        'label' => 'common.recipes', 
+                        'icon' => 'th list icon',
                     ],
                 ]
             ],
             
             [
-                'name' => 'stock-moves.index', 
-                'label' => 'stocks', 
-                'icon' => 'large truck packing icon', 
+                'name' => 'inventory.index', 
+                'label' => 'common.stock', 
+                'icon' => 'warehouse icon', 
                 'submenus' => [
                     [
+                        'name' => 'stock-moves.create', 
+                        'label' => 'stockmoves.stock_moves_create', 
+                        'icon' => 'exchange icon',
+                    ],
+                    [
+                        'name' => 'stock-moves.index', 
+                        'label' => 'common.stock_moves', 
+                        'icon' => 'dolly icon',
+                    ],
+                    [
                         'name' => 'inventory.index', 
-                        'label' => 'inventory', 
-                        'icon' => 'large warehouse icon',
+                        'label' => 'common.inventory', 
+                        'icon' => 'warehouse icon',
                     ],
                 ]
             ],
             [
                 'name' => 'units.create', 
-                'label' => 'unit-create', 
-                'icon' => 'icon large weight', 
-                'submenus' => [
-                    [
-                        'name' => 'units.create', 
-                        'label' => 'unit-create', 
-                        'icon' => 'icon large weight',
-                    ],
-                ]
+                'label' => 'common.units', 
+                'icon' => 'icon weight', 
             ],
         ];
     }
 }
 
 
-            // ['name' => 'work-orders.create', 'label' => 'work-orders_create', 'icon' => 'icon large project diagram', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],
-            // ['name' => 'stock-moves.create', 'label' => 'stock-moves-create', 'icon' => 'large truck packing icon', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],
+            // ['name' => 'work-orders.create', 'label' => 'common.work-orders_create', 'icon' => 'icon project diagram', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],
+            // ['name' => 'stock-moves.create', 'label' => 'common.stock-moves-create', 'icon' => 'truck packing icon', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],
