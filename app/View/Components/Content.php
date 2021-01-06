@@ -6,12 +6,12 @@ use Illuminate\View\Component;
 
 class Content extends Component
 {
+    public $header = null; // slot
 
     public $theme;
-
     public $buttons;
-
     public $noBorder;
+
 
 
     /**

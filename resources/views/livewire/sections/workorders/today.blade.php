@@ -1,6 +1,8 @@
 <div>
-    @include('web.sections.workorders.daily.header')
     <x-content theme="green">
+        <x-slot name="header">
+            @include('web.sections.workorders.daily.header')
+        </x-slot>
         <div class="p-4">
             
             

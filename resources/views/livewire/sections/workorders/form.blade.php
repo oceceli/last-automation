@@ -1,38 +1,39 @@
 <div>
-    @if ($editMode)
-        <x-page-header icon="project diagram" header="sections/workorders.edit.header">
-            <x-slot name="buttons">
-                <div class="ui mini icon buttons">
-                    @if ($workOrder->isSuspended())
-                        <button wire:key="unsuspend" wire:click.prevent="unsuspend()" class="ui mini basic button" data-tooltip="{{ __('common.suspended') }}" data-variation="mini" data-position="bottom right">
-                            <i class="gray circle icon"></i>
-                        </button>
-                    @elseif($workOrder->isFinalized())
-                        <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
-                            <i class="green checkmark icon"></i>
-                        </button>
-                    @elseif($workOrder->isInProgress())
-                        <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini" data-position="bottom right">
-                            <i class="orange loading cog icon"></i>
-                        </button>
-                    @else 
-                        <button wire:key="suspend" wire:click.prevent="suspend()" class="ui mini basic button" data-tooltip="{{ __('common.active') }}" data-variation="mini" data-position="bottom right">
-                            <i class="green circle icon"></i>
-                        </button>
-                    @endif
-                    @if (!$workOrder->isInProgress())
-                        <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
-                            <i class="red trash icon"></i>
-                        </button>
-                    @endif
-                </div>
-            </x-slot>
-        </x-page-header>
-    @else
-        <x-page-header icon="project diagram" header="sections/workorders.create.header" subheader="sections/workorders.create.subheader" />
-    @endif
     <x-content theme="purple">
-
+        <x-slot name="header">
+            @if ($editMode)
+                <x-page-header icon="project diagram" header="sections/workorders.edit.header">
+                    <x-slot name="buttons">
+                        <div class="ui mini icon buttons">
+                            @if ($workOrder->isSuspended())
+                                <button wire:key="unsuspend" wire:click.prevent="unsuspend()" class="ui mini basic button" data-tooltip="{{ __('common.suspended') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="gray circle icon"></i>
+                                </button>
+                            @elseif($workOrder->isFinalized())
+                                <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="green checkmark icon"></i>
+                                </button>
+                            @elseif($workOrder->isInProgress())
+                                <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="orange loading cog icon"></i>
+                                </button>
+                            @else 
+                                <button wire:key="suspend" wire:click.prevent="suspend()" class="ui mini basic button" data-tooltip="{{ __('common.active') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="green circle icon"></i>
+                                </button>
+                            @endif
+                            @if (!$workOrder->isInProgress())
+                                <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="red trash icon"></i>
+                                </button>
+                            @endif
+                        </div>
+                    </x-slot>
+                </x-page-header>
+            @else
+                <x-page-header icon="project diagram" header="sections/workorders.create.header" subheader="sections/workorders.create.subheader" />
+            @endif
+        </x-slot>
         <form class="ui small form" wire:submit.prevent="submit">
             <x-form-divider>
 

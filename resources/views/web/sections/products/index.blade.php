@@ -1,3 +1,5 @@
-<x-app-layout>        
-        <livewire:sections.products.datatable />
+<x-app-layout>
+        <x-container>
+                <livewire:sections.products.datatable />
+        </x-container>
 </x-app-layout>

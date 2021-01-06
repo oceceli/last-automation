@@ -24,30 +24,33 @@
     önceki {{ \App\Models\Product::find($oldProductId)->code }}
     @endif --}}
 
-    <x-page-header icon="mortar pestle" header="{{ $this->headerText()['main'] }}" subheader="{{ $this->headerText()['sub'] }}">
-        <x-slot name="buttons">
-            <div class="ui mini icon buttons">
-                @if ($this->isLocked())
-                    <button wire:click.prevent="unlock()" class="ui mini gray basic button" data-tooltip="{{ __('common.unlock') }}" data-variation="mini" data-position="bottom right">
-                        <i class="orange lock icon"></i>
-                    </button>
-                @else
-                @if ($this->isRestorable())
-                    <button wire:click.prevent="restoreForm()" class="ui mini basic  button" data-tooltip="{{ __('common.undo_changes') }}" data-variation="mini" data-position="bottom right">
-                        <i class="green undo alternate icon"></i>
-                    </button>
-                @endif
-                @if ($recipeExists)
-                        <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="{{ __('sections/recipes.delete_recipe') }}" data-variation="mini" data-position="bottom right">
-                            <i class="red trash icon"></i>
-                        </button>
-                    @endif
-                @endif
-            </div>
-        </x-slot>
-    </x-page-header>
+    
+    <x-content theme="orange">
 
-    <x-content theme="orange" >
+        <x-slot name="header">
+            <x-page-header icon="mortar pestle" header="{{ $this->headerText()['main'] }}" subheader="{{ $this->headerText()['sub'] }}">
+                <x-slot name="buttons">
+                    <div class="ui mini icon buttons">
+                        @if ($this->isLocked())
+                            <button wire:click.prevent="unlock()" class="ui mini gray basic button" data-tooltip="{{ __('common.unlock') }}" data-variation="mini" data-position="bottom right">
+                                <i class="orange lock icon"></i>
+                            </button>
+                        @else
+                        @if ($this->isRestorable())
+                            <button wire:click.prevent="restoreForm()" class="ui mini basic  button" data-tooltip="{{ __('common.undo_changes') }}" data-variation="mini" data-position="bottom right">
+                                <i class="green undo alternate icon"></i>
+                            </button>
+                        @endif
+                        @if ($recipeExists)
+                                <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="{{ __('sections/recipes.delete_recipe') }}" data-variation="mini" data-position="bottom right">
+                                    <i class="red trash icon"></i>
+                                </button>
+                            @endif
+                        @endif
+                    </div>
+                </x-slot>
+            </x-page-header>
+        </x-slot>
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
             <div class="p-6 shadow-md">

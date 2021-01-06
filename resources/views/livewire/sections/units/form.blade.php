@@ -4,9 +4,10 @@
     -----------------
     <br>
     {{ print_r($backupCards) }} --}}
-    <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
     <x-content theme="red">
-
+        <x-slot name="header">
+            <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
+        </x-slot>
         <div class="p-4 shadow-md">
             <div class="ui small form">
                 <div class="equal width fields">

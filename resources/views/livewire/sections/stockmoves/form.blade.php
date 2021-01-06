@@ -1,13 +1,15 @@
 <div>
-    <x-page-header icon="truck packing" header="{{ __('stockmoves.stock_moves_create') }}">
-        <x-slot name="buttons">
-            <button wire:click="addCard" class="ui icon mini teal button" data-tooltip="{{ __('stockmoves.new_move') }}" data-variation="mini">
-                <i class="plus icon"></i>
-            </button>
+    
+    <x-content>
+        <x-slot name="header">
+            <x-page-header icon="truck packing" header="{{ __('stockmoves.stock_moves_create') }}">
+                <x-slot name="buttons">
+                    <button wire:click="addCard" class="ui icon mini teal button" data-tooltip="{{ __('stockmoves.new_move') }}" data-variation="mini">
+                        <i class="plus icon"></i>
+                    </button>
+                </x-slot>
+            </x-page-header>
         </x-slot>
-    </x-page-header>
-
-    <x-content >
         <div class="p-6 bg-cool-gray-50 rounded-t-md shadow-lg">
             <form class="ui tiny form flex flex-col gap-6">
                 @forelse ($cards as $key => $card)

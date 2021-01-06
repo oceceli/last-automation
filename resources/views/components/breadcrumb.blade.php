@@ -1,4 +1,7 @@
-<div>
+<div class="flex items-center gap-5">
+    <div>
+        test
+    </div>
     <div class="ui breadcrumb">
         @if($currentPath == '/')
             <div class="active section">{{ ucfirst(__('home')) }}</div>

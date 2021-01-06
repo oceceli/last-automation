@@ -25,6 +25,8 @@ return [
         'subheader' => ':product',
     ],
 
+    'edit_product' => 'Ürün düzenle',
+
 
     'this_product_cannot_be_manufactured' => 'Bu ürün üretilemez',
     'products_with_no_recipes_cannot_be_manufactured' => 'Reçete tanımlanmamış ürünler üretilemezler',

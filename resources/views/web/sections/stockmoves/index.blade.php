@@ -1,3 +1,5 @@
 <x-app-layout>
-    <livewire:sections.stockmoves.datatable>
+    <x-container>
+        <livewire:sections.stockmoves.datatable>
+    </x-container>
 </x-app-layout>
