@@ -30,7 +30,7 @@
                         <i class="{{ $product->lastMove['direction'] }}"></i>
                         {{ $product->lastMove['date'] }} 
                     </td>
-                    <td class="one wide center aligned">
+                    <td class=" collapsing center aligned">
                         <div wire:click="lots({{ $product->id }})"
                             class="border bg-white shadow text-blue-400 hover:text-blue-700 ease-in-out duration-200 cursor-pointer">
                             <span class="p-1">LOT</span>
