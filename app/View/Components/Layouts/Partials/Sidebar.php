@@ -138,9 +138,26 @@ class Sidebar extends Component
                 ]
             ],
             [
+                'name' => 'companies.index', 
+                'label' => 'companies.companies', 
+                'icon' => 'briefcase icon',
+                'submenus' => [
+                    [
+                        'name' => 'companies.create', 
+                        'label' => 'companies.create_company', 
+                        'icon' => 'plus icon',
+                    ],
+                    [
+                        'name' => 'companies.index', 
+                        'label' => 'companies.companies', 
+                        'icon' => 'list icon',
+                    ],
+                ],
+            ],
+            [
                 'name' => 'units.create', 
-                'label' => 'common.units', 
-                'icon' => 'icon weight', 
+                'label' => 'common.units',
+                'icon' => 'icon balance scale', 
             ],
         ];
     }
