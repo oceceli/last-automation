@@ -13,6 +13,7 @@ return [
     'caution' => 'Dikkat',
     'add_new' => 'Yeni ekle',
     'add_note' => 'Not ekle',
+    'add_explanation' => 'Açıklama ekle',
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
     'remove' => 'Kaldır',

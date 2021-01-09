@@ -20,11 +20,13 @@ class CreateAddressesTable extends Migration
             $table->string('adr_province');
             $table->string('adr_district');
             $table->string('adr_body');
-            $table->string('adr_phone');
-            $table->string('adr_note');
+
+            $table->string('adr_phone')->nullable();
+            $table->string('adr_note')->nullable();
 
             $table->string('adressable_type');
             $table->bigInteger('adressable_id');
+            
             $table->timestamps();
         });
     }

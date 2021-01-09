@@ -1,3 +1,3 @@
-<th>
+<thead>
     {{ $slot }}
-</th>
+</thead>

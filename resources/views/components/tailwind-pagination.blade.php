@@ -1,5 +1,5 @@
-<div>
-    @if ($paginator->hasPages())
+@if ($paginator->hasPages())
+    <div>
         <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
             <div class="flex justify-between flex-1 sm:hidden">
                 <span>
@@ -117,5 +117,5 @@
                 </div>
             </div>
         </nav>
-    @endif
-</div>
+    </div>
+@endif

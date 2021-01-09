@@ -155,6 +155,23 @@ class Sidebar extends Component
                 ],
             ],
             [
+                'name' => 'addresses.index', 
+                'label' => 'addresses.addresses', 
+                'icon' => 'book icon',
+                'submenus' => [
+                    [
+                        'name' => 'addresses.create', 
+                        'label' => 'addresses.create_address',
+                        'icon' => 'plus icon',
+                    ],
+                    [
+                        'name' => 'addresses.index', 
+                        'label' => 'addresses.addresses', 
+                        'icon' => 'list icon',
+                    ],
+                ],
+            ],
+            [
                 'name' => 'units.create', 
                 'label' => 'common.units',
                 'icon' => 'icon balance scale', 
@@ -162,7 +179,3 @@ class Sidebar extends Component
         ];
     }
 }
-
-
-            // ['name' => 'work-orders.create', 'label' => 'common.work-orders_create', 'icon' => 'icon project diagram', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],
-            // ['name' => 'stock-moves.create', 'label' => 'common.stock-moves-create', 'icon' => 'truck packing icon', 'submenus' => [['name' => 'testvalue'], ['name' => 'test2']]],

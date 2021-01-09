@@ -3,14 +3,14 @@
 namespace App\Http\Livewire\Sections\Companies;
 
 use App\Http\Livewire\SmartTable;
+use App\Models\Company;
 use Livewire\Component;
 
 class Datatable extends Component
 {
     use SmartTable;
 
-    public function render()
-    {
-        return view('livewire.sections.companies.datatable');
-    }
+    public $model = Company::class;
+    public $view = 'livewire.sections.companies.datatable';
+
 }

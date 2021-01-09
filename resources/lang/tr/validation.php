@@ -160,6 +160,23 @@ return [
         'amount' => 'miktar',
         'lot_no' => 'lot no',
         'code' => 'kod',
+
+        // companies
+        'cmp_name' => 'Firma adı',
+        'cmp_current_code' => 'Cari kod',
+        'cmp_commercial_title' => 'Ticari Ünvan',
+        'cmp_tax_number' => 'Vergi numarası',
+        'cmp_phone' => 'İrtibat No',
+        'cmp_note' => 'Açıklama',
+
+        // addresses
+        'adr_name' => 'Adres adı',
+        'adr_country' => 'Ülke',
+        'adr_province' => 'Şehir',
+        'adr_district' => 'İlçe',
+        'adr_body' => 'Adres Detay',
+        'adr_phone' => 'İrtibat No',
+        'adr_note' => 'Açıklama',
     ],
 
 ];
