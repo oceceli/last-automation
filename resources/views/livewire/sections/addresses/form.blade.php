@@ -11,16 +11,19 @@
 
 
                 <x-slot name="left">
-                    <x-input model="adr_name" label="validation.attributes.adr_name" placeholder="validation.attributes.adr_name"  />
-                    {{-- <x-input model="adr_country" label="validation.attributes.adr_country" placeholder="validation.attributes.adr_country"  /> --}}
+                    <x-input model="adr_name" label="validation.attributes.adr_name" placeholder="validation.attributes.adr_name" class="required" />
 
-                    <x-dropdown model="adr_country" :collection="$this->countries" value="code" text="name" sId="countries"
+                    <x-dropdown model="adr_country" :collection="$this->countries" value="id" text="name" sId="countries" sClass="search"
                         label="validation.attributes.adr_country" placeholder="validation.attributes.adr_country" class="required field"
                     />
 
-                    <x-input model="adr_province" label="validation.attributes.adr_province" placeholder="validation.attributes.adr_province"  />
-                    <x-input model="adr_district" label="validation.attributes.adr_district" placeholder="validation.attributes.adr_district"  />
-                    {{-- <x-input model="adr_body" label="validation.attributes.adr_body" placeholder="validation.attributes.adr_body"  /> --}}
+                    <x-dropdown model="adr_province" initnone dataSourceFunction="getCitiesProperty" value="id" text="name" sId="cities" sClass="search" triggerOnEvent="address_countryChanged"
+                        label="validation.attributes.adr_province" placeholder="validation.attributes.adr_province" class="required field"
+                    />
+
+                    <x-dropdown model="adr_district" initnone dataSourceFunction="getCityDistrictProperty" value="id" text="ilce,mahalle,posta_kodu,semt" sId="districts" sClass="search" triggerOnEvent="address_provinceChanged"
+                        label="validation.attributes.adr_district" placeholder="validation.attributes.adr_district" class="required field"
+                    />
                 </x-slot>
                 
                 
