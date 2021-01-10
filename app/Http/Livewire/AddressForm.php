@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Sections\Addresses;
+namespace App\Http\Livewire;
 
 use Epigra\TrGeoZones\Models\Country;
-use App\Models\Address;
 use Epigra\TrGeoZones\Models\City;
-use Livewire\Component;
 
-class Form extends Component
+trait AddressForm
 {
 
     public $adr_name;
@@ -19,18 +17,21 @@ class Form extends Component
     public $adr_phone;
     public $adr_note;
 
+    public $addressable_type;
+    public $addressable_id;
 
 
     protected $rules = [
         'adr_name' => 'required|max:25',
         'adr_country' => 'required',
-        'adr_province' => 'required', 
+        'adr_province' => 'required',
         'adr_district' => 'required',
         'adr_body' => 'required',
 
         'adr_phone' => 'nullable',
         'adr_note' => 'nullable',
     ];
+
 
 
     public function updatingAdrCountry() 
@@ -42,10 +43,9 @@ class Form extends Component
 
     public function updatedAdrProvince()
     {
-        $this->resetAfterProvince();
-        $this->emit('address_provinceChanged');
+        $this->reset('adr_district');
     }
-
+    
     
     
     public function getCountriesProperty()
@@ -73,21 +73,16 @@ class Form extends Component
         $this->reset('adr_province', 'adr_district');
     }
 
-    private function resetAfterProvince()
-    {
-        $this->reset('adr_district');
-    }
 
-
-    public function render()
+    public function addressSubmit()
     {
-        return view('livewire.sections.addresses.form');
-    }
+        $this->adr_country = $this->getCountriesProperty()->find($this->adr_country)->name;
+        $model = $this->addressable_type::find($this->addressable_id);
 
-    public function submit()
-    {
-        Address::create($this->validate());
+        $model->addresses()->create($this->validate());
+
         $this->emit('toast','', __('addresses.address_added'), 'success');
+        $this->reset();
     }
 
 

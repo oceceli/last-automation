@@ -176,7 +176,7 @@ return [
         'adr_district' => 'İlçe',
         'adr_body' => 'Adres Detay',
         'adr_phone' => 'İrtibat No',
-        'adr_note' => 'Açıklama',
+        'adr_note' => 'Not',
     ],
 
 ];

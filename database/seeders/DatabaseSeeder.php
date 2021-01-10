@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GeozoneCountriesTableSeeder::class);
         $this->call(GeozoneCitiesTableSeeder::class);
         $this->call(GeozoneCityDistrictsTableSeeder::class);
-        $this->call(ScenarioSeeder::class);
+        // $this->call(ScenarioSeeder::class);
     }
 }

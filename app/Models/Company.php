@@ -11,6 +11,7 @@ class Company extends Model
 {
     use HasFactory;
     use Searchable;
+    use ModelHelpers;
 
     protected $guarded = [];
 
