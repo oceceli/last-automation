@@ -170,7 +170,7 @@ return [
         'cmp_note' => 'Açıklama',
 
         // addresses
-        'adr_name' => 'Adres adı',
+        'adr_name' => 'Adres tanımı',
         'adr_country' => 'Ülke',
         'adr_province' => 'Şehir',
         'adr_district' => 'İlçe',

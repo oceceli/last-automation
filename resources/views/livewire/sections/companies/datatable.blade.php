@@ -5,11 +5,11 @@
         <x-table class="ui celled sortable table tablet stackable very compact">
             <x-thead>
                 <tr>
-                    <x-thead-item sortBy="cmp_name">Firma Adı</x-thead-item>
-                    <x-thead-item sortBy="cmp_current_code">Ticari Ünvan</x-thead-item>
-                    <x-thead-item sortBy="cmp_commercial_title">Cari Kodu</x-thead-item>
-                    <x-thead-item sortBy="cmp_tax_number">Vergi Numarası</x-thead-item>
-                    <x-thead-item sortBy="cmp_phone">Telefon</x-thead-item>
+                    <x-thead-item sortBy="cmp_name">{{ __('validation.attributes.cmp_name') }}</x-thead-item>
+                    <x-thead-item sortBy="cmp_current_code">{{ __('validation.attributes.cmp_current_code') }}</x-thead-item>
+                    <x-thead-item sortBy="cmp_commercial_title">{{ __('validation.attributes.cmp_commercial_title') }}</x-thead-item>
+                    <x-thead-item sortBy="cmp_tax_number">{{ __('validation.attributes.cmp_tax_number') }}</x-thead-item>
+                    <x-thead-item sortBy="cmp_phone">{{ __('validation.attributes.cmp_phone') }}</x-thead-item>
                     {{-- <x-thead-item sortBy="cmp_note">Açıklama</x-thead-item> --}}
                     <x-thead-item>!! Kayıtlı adresler</x-thead-item>
                     <x-thead-item></x-thead-item>
@@ -32,7 +32,16 @@
                             </span>
                         </x-tbody-item>
                         <x-tbody-item class="collapsing">
-                            <x-crud-actions show delete edit modelName="company" :modelId="$company->id" />
+                            <div x-data="{showModal: false}">
+                                <x-crud-actions delete edit modelName="company" :modelId="$company->id">
+                                    <div @click="showModal = true" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                        <i class="link eye icon"></i>
+                                    </div>
+                                </x-crud-actions>
+
+                                @include('web.sections.companies.showModal')
+
+                            </div>
                         </x-tbody-item>
                     </tr>
                 @endforeach
@@ -51,6 +60,9 @@
             </x-custom-modal>
         </div>
     @endif
+    
+    
+
 
 
 </div>

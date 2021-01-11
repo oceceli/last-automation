@@ -1,4 +1,6 @@
 <div class="flex justify-around items-center gap-2 px-1 rounded bg-gray-50  hover:shadow shadow-md hover:bg-gray-200 ease-in-out duration-150 {{ $addClass }}">
+    {{ $slot }}
+    
     @if ($show)
         <div data-tooltip="{{ __('common.detail') }}" data-variation="mini">
             <a href="{{ route("$pluralModelName.show", ["$modelName" => $modelId]) }}">
@@ -18,5 +20,4 @@
             <i wire:click.prevent="delete({{ $modelId }})" class="eraser link @if($gray) grey @else inverted red @endif  icon"></i>
         </div>
     @endif
-    {{ $slot }}
 </div>  

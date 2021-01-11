@@ -15,6 +15,8 @@ class Company extends Model
 
     protected $guarded = [];
 
+    protected $with = ['addresses'];
+
     public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');
