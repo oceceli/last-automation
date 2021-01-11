@@ -26,6 +26,9 @@
   .red {
     @apply text-red-500 hover:text-red-800;
   }
+  .input-borderless {
+    @apply font-bold px-2 bg-transparent hover:bg-orange-100 focus:bg-orange-200 focus:outline-none rounded-md;
+  }
   /* tests */
   .pin {
     @apply top-0 right-0 left-0 bottom-0;
@@ -36,6 +39,9 @@
   @variants responsive {
     .h-30-rem {
       height: 30rem;
+    }
+    .w-min-30-rem {
+      min-width: 30rem;
     }
   }
 }

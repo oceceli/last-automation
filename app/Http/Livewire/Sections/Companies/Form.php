@@ -25,8 +25,8 @@ class Form extends Component
         'cmp_current_code' => 'required|unique:companies',
         'cmp_commercial_title' => 'required|unique:companies',
         
-        'cmp_tax_number' => 'nullable',
-        'cmp_phone' => 'nullable|max:12',
+        'cmp_tax_number' => 'nullable|unique:companies',
+        'cmp_phone' => 'nullable|max:12|unique:companies',
         'cmp_note' => 'nullable',
     ];
 

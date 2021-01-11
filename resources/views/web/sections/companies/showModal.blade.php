@@ -1,5 +1,5 @@
 <x-custom-modal active="showModal" header="!!! header">
-    <div class="">
+    <div class="w-min-30-rem">
         <div class="shadow-md p-4">
             <x-list-item>
                 <label>{{ __('validation.attributes.cmp_name') }}</label>
@@ -29,7 +29,7 @@
             @endif
         </div>
 
-        <div class="p-5">
+        <div class="p-5 max-w-full">
             @include('web.sections.addresses.editable')
         </div>
     </div>

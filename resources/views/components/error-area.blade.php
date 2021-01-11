@@ -1,5 +1,5 @@
 @if($errors->any())
-    <div class="p-4">
+    <div {{ $attributes }}>
         <div class="ui error message">    
             <div class="header">
                 <i class="exclamation triangle icon"></i>
