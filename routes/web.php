@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/stock-moves', 'StockMoveController');
     Route::resource('/inventory', 'InventoryController');
     Route::resource('/companies', 'CompanyController');
-    Route::resource('/addresses', 'AddressController');
+    // Route::resource('/addresses', 'AddressController');
     
     Route::resource('/roles', 'RoleController');
     

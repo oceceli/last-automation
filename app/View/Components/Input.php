@@ -20,12 +20,14 @@ class Input extends Component
     public $action;
     public $innerLabel;
 
+    public $defer;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = null, $innerLabel = null, $noErrors = false)
+    public function __construct($model, $placeholder, $label = null, $type = 'text', $action = null, $innerLabel = null, $noErrors = false, $defer = false)
     {
         $this->model = $model;
         $this->placeholder = $placeholder;
@@ -34,6 +36,8 @@ class Input extends Component
         $this->noErrors = $noErrors;
         $this->action = $action;
         $this->innerLabel = $innerLabel;
+
+        $this->defer = $defer;
     }
 
     /**

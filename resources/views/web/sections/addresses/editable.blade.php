@@ -15,13 +15,13 @@
             @if ($editableAddress)
                 @if ($editMode)
                     <div wire:loading wire:target="saveEdited">
-                        <i class="red loading circle notch icon"></i>
+                        <i class="gray loading circle notch icon"></i>
                     </div>
-                    <span data-tooltip="{{ __('common.save') }}" data-variation="mini">
-                        <i wire:click.prevent="saveEdited" class="green checkmark link icon cursor-pointer"></i>
-                    </span>
                     <span data-tooltip="{{ __('common.cancel') }}" data-variation="mini">
                         <i wire:click.prevent="cancelEditing" class="red undo link icon cursor-pointer"></i>
+                    </span>
+                    <span data-tooltip="{{ __('common.save') }}" data-variation="mini">
+                        <i wire:click.prevent="saveEdited" class="green checkmark link icon cursor-pointer"></i>
                     </span>
                 @else
                     <span data-tooltip="{{ __('common.edit') }}" data-variation="mini">

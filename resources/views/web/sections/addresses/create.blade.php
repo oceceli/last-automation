@@ -1,3 +1,3 @@
-<x-app-layout>
-    <livewire:sections.addresses.form> ??
-</x-app-layout>
+{{-- <x-app-layout>
+    <livewire:sections.addresses.form>
+</x-app-layout> --}}

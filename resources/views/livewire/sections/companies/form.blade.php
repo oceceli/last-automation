@@ -1,9 +1,11 @@
 <div>
     <x-content>
         <x-slot name="header">
-            <x-page-header icon="briefcase" header="!! firma kaydet">
-
-            </x-page-header>
+            @if ($editMode)
+                <x-page-header icon="briefcase" header="{{ __('companies.edit_company') }}" />
+            @else
+                <x-page-header icon="briefcase" header="{{ __('companies.create_company') }}" />
+            @endif
 
         </x-slot>
         <form wire:submit.prevent="submit" class="ui tiny form">
@@ -11,15 +13,15 @@
 
 
                 <x-slot name="left">
-                    <x-input model="cmp_name" label="validation.attributes.cmp_name" placeholder="validation.attributes.cmp_name"  />
-                    <x-input model="cmp_commercial_title" label="validation.attributes.cmp_commercial_title" placeholder="validation.attributes.cmp_commercial_title"  />
-                    <x-input model="cmp_current_code" label="validation.attributes.cmp_current_code" placeholder="validation.attributes.cmp_current_code"  />
+                    <x-input defer model="cmp_name" label="validation.attributes.cmp_name" placeholder="validation.attributes.cmp_name"  />
+                    <x-input defer model="cmp_commercial_title" label="validation.attributes.cmp_commercial_title" placeholder="validation.attributes.cmp_commercial_title"  />
+                    <x-input defer model="cmp_current_code" label="validation.attributes.cmp_current_code" placeholder="validation.attributes.cmp_current_code"  />
                 </x-slot>
 
 
                 <x-slot name="right">
-                    <x-input model="cmp_tax_number" label="validation.attributes.cmp_tax_number" placeholder="validation.attributes.cmp_tax_number"  />
-                    <x-input model="cmp_phone" label="validation.attributes.cmp_phone" placeholder="validation.attributes.cmp_phone"  />
+                    <x-input defer model="cmp_tax_number" label="validation.attributes.cmp_tax_number" placeholder="validation.attributes.cmp_tax_number"  />
+                    <x-input defer model="cmp_phone" label="validation.attributes.cmp_phone" placeholder="validation.attributes.cmp_phone"  />
 
                 </x-slot>
                 

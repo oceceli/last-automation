@@ -22,14 +22,22 @@ class Company extends Model
         return $this->morphMany(Address::class, 'addressable');
     }
 
-    public function setCmpNameAttribute($attribute)
-    {
-        $this->attributes['cmp_name'] = ucfirst($attribute);
-    }
+    // public function setCmpNameAttribute($attribute)
+    // {
+    //     $this->attributes['cmp_name'] = strtolower($attribute);
+    // }
+    // public function getCmpNameAttribute($attribute)
+    // {
+    //     return ucfirst($attribute);
+    // }
 
-    public function setCmpCommercialTitleAttribute($attribute)
-    {
-        $this->attributes['cmp_commercial_title'] = strtoupper($attribute);
-    }
+    // public function setCmpCommercialTitleAttribute($attribute)
+    // {
+    //     $this->attributes['cmp_commercial_title'] = strtolower($attribute);
+    // }
+    // public function getCmpCommercialTitleAttribute($attribute)
+    // {
+    //     return strtoupper($attribute);
+    // }
 
 }

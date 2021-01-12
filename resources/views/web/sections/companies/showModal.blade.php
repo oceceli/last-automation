@@ -1,6 +1,6 @@
 @if ($selectedCompany)
     <div x-data="{showModal: @entangle('showModal')}">
-        <x-custom-modal active="showModal" header="!!! header">
+        <x-custom-modal active="showModal" header="{{ __('companies.company_informations') }}">
             <div class="w-min-30-rem max-w-md">
                 <div class="shadow-md p-4">
                     <x-list-item>
