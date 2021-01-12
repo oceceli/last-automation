@@ -52,9 +52,8 @@
 
         @if ($addressModal)
             <div x-data="{addressModal: @entangle('addressModal')}">
-                <x-custom-modal active="addressModal" header="!!! header">
+                <x-custom-modal active="addressModal" header="{{ __('companies.add_address_to_name_company', ['name' => $selectedCompany->cmp_name]) }}">
                     @include('web.sections.addresses.AddressForm')
-                    {{-- <livewire:sections.addresses.form  addressableType="App\Models\Company" :addressableId="$companyId"> --}}
                 </x-custom-modal>
             </div>
         @endif

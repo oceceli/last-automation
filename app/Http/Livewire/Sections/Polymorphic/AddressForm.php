@@ -30,6 +30,10 @@ trait AddressForm
         'adr_note' => 'nullable',
     ];
 
+    private function clearFields()
+    {
+        $this->reset('adr_name', 'adr_country', 'adr_province', 'adr_district', 'adr_body', 'adr_phone', 'adr_note');
+    }
 
     public function addressSubmit()
     {

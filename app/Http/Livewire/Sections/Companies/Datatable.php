@@ -26,33 +26,41 @@ class Datatable extends Component
     public $editableAddress;
 
 
+
     public function addAddress($companyId)
     {
+        $this->selectedCompany = Company::find($companyId); 
         $this->addressable_id = $companyId;
         $this->addressModal = true;
     }
 
-
     public function updatedAddressModal($value)
     {
-        if(!$value) $this->reset();
+        if(!$value) $this->clearOut();
+    }
+
+    private function clearOut()
+    {
+        $this->clearFields();
+        $this->reset('addressModal', 'showModal', 'selectedCompany', 'editMode', 'editableAddressId', 'editableAddress');
     }
 
     public function openShowModal($companyId)
     {
         $this->selectedCompany = Company::find($companyId);
+        $this->updatingEditableAddressId(optional($this->selectedCompany->addresses->first())->id);
         $this->showModal = true;
     }
 
     public function updatedShowModal($value)
     {
-        if(!$value) $this->reset();
+        if(!$value) $this->clearOut();
     }
 
 
     public function updatingEditableAddressId($id)
     {
-        // $this->reset();
+        $this->editableAddressId = $id;
         $this->editableAddress = Address::find($id);
         $this->editMode = false;
     }
