@@ -168,6 +168,8 @@ return [
         'cmp_tax_number' => 'Vergi numarası',
         'cmp_phone' => 'İrtibat No',
         'cmp_note' => 'Açıklama',
+        'cmp_supplier' => 'Tedarikçi',
+        'cmp_customer' => 'Müşteri',
 
         // addresses
         'adr_name' => 'Adres tanımı',

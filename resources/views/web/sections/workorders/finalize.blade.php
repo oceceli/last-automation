@@ -18,6 +18,15 @@
 
 
                     <x-slot name="right">
+                        <div class="h-full">
+                            <div class="h-full p-6 flex items-center justify-around flex-col border border-green-200 rounded-sm shadow-inner bg-cool-gray-50">
+                                Diğer fireler buraya gelecek
+                            </div>
+                        </div>
+                    </x-slot>
+                    
+                    
+                    <x-slot name="bottom">
                         <div class="h-full p-6 flex items-center justify-around flex-col border border-green-200 rounded-sm shadow-inner bg-cool-gray-50">
                             @if ($production_total)
                                 <div class="text-xl font-bold">
@@ -30,17 +39,14 @@
                                     {{ $selectedUnit['name'] }}
                                 </div>
                             @else
-                                <div class="text-ease"><i class="big calculator icon"></i></div>
+                                <div class="text-ease p-10"><i class="big calculator icon"></i></div>
                             @endif
                         </div>
-                        
-                    </x-slot>
-
-
-                    <x-slot name="bottom">
-                        <button class="ui primary mini button w-full">
-                            {{ __('common.do_complete')}}
-                        </button>
+                        <div class="pt-5">
+                            <button class="ui primary mini button w-full">
+                                {{ __('common.do_complete')}}
+                            </button>
+                        </div>
                     </x-slot>
 
                 </x-form-divider>

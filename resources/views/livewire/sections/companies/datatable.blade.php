@@ -6,6 +6,7 @@
             <x-table class="ui celled sortable table tablet stackable very compact">
                 <x-thead>
                     <tr>
+                        <x-thead-item>{{ __('common.type') }}</x-thead-item>
                         <x-thead-item sortBy="cmp_name">{{ __('validation.attributes.cmp_name') }}</x-thead-item>
                         <x-thead-item sortBy="cmp_commercial_title">{{ __('validation.attributes.cmp_commercial_title') }}</x-thead-item>
                         <x-thead-item sortBy="cmp_current_code">{{ __('validation.attributes.cmp_current_code') }}</x-thead-item>
@@ -20,7 +21,8 @@
                 <x-tbody>
                     @foreach ($data as $company)
                         <tr wire:key="{{ $loop->index }}">
-                            <x-tbody-item>{{ $company->cmp_name }}</x-tbody-item>
+                            <x-tbody-item class="collapsing text-sm">{{ $company->type }}</x-tbody-item>
+                            <x-tbody-item class="collapsing">{{ $company->cmp_name }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_commercial_title }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_current_code }}</x-tbody-item>
                             <x-tbody-item>{{ $company->cmp_tax_number }}</x-tbody-item>

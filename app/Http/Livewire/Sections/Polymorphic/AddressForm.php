@@ -24,10 +24,10 @@ trait AddressForm
         'adr_country' => 'required',
         'adr_province' => 'required',
         'adr_district' => 'required',
-        'adr_body' => 'required',
+        'adr_body' => 'required|max:255',
 
-        'adr_phone' => 'nullable',
-        'adr_note' => 'nullable',
+        'adr_phone' => 'nullable|digits_between:10,14',
+        'adr_note' => 'nullable|max:255',
     ];
 
     private function clearFields()

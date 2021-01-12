@@ -7,6 +7,8 @@ use Illuminate\View\Component;
 
 class CrudActions extends Component
 {
+    public $left; // slot
+
     public $modelName;
     public $pluralModelName;
     public $modelId;

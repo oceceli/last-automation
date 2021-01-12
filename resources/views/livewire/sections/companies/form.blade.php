@@ -22,11 +22,18 @@
                 <x-slot name="right">
                     <x-input defer model="cmp_tax_number" label="validation.attributes.cmp_tax_number" placeholder="validation.attributes.cmp_tax_number"  />
                     <x-input defer model="cmp_phone" label="validation.attributes.cmp_phone" placeholder="validation.attributes.cmp_phone"  />
-
+                    <div class="pt-1">
+                        <div class="px-2 py-1 border border-dashed">
+                            <span class="text-ease text-xs">{{ __('companies.a_company_can_be_either_a_supplier_and_a_customer') }}.</span>
+                            <div class="py-1 flex gap-10">
+                                <x-checkbox model="cmp_supplier" label="{{ __('validation.attributes.cmp_supplier') }}" />
+                                <x-checkbox model="cmp_customer" label="{{ __('validation.attributes.cmp_customer') }}" />
+                            </div>
+                        </div>
+                    </div>
                 </x-slot>
                 
                 <x-slot name="bottom">
-                    
                     <div x-data="{addExplanation: false}">
                         <div x-show="!addExplanation">
                             <i class="write icon"></i>
@@ -37,17 +44,6 @@
                             <textarea wire:model.lazy="cmp_note" rows="3"></textarea>
                         </div>
                     </div>
-                    {{-- <div x-data="{addAddress: false}" class="pt-1">
-                        <div x-show="!addAddress">
-                            <button @click="addAddress = true" wire:click.prevent class="ui mini button">
-                                {{ __('addresses.add_address') }}
-                            </button>
-                        </div>
-                        <div x-show="addAddress">
-                            <livewire:sections.addresses.form>
-                        </div>
-                    </div> --}}
-
                 </x-slot>
 
                 

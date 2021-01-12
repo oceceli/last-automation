@@ -7,7 +7,7 @@
                             <tr>
                                 <x-thead-item>{{ __('sections/products.name') }}</x-thead-item>
                                 <x-thead-item>{{ __('sections/workorders.reserve_lot') }}</x-thead-item>
-                                <x-thead-item>{{ __('sections/workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
+                                <x-thead-item class="right aligned">{{ __('sections/workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
                             </tr>
                         </x-thead>
                         <x-tbody>

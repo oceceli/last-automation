@@ -19,7 +19,10 @@ class Form extends Component
     public $cmp_note;
     public $cmp_phone;
 
-    public $company;
+    public $cmp_supplier = false;
+    public $cmp_customer = false;
+
+    public $company = false;
     public $editMode = false;
 
 
@@ -31,16 +34,21 @@ class Form extends Component
             'cmp_commercial_title' => 'required|unique:companies,cmp_commercial_title,' . optional($this->company)->id,
             
             'cmp_tax_number' => 'nullable|unique:companies,cmp_tax_number,' . optional($this->company)->id,
-            'cmp_phone' => 'nullable|max:12|unique:companies,cmp_phone,' . optional($this->company)->id,
+            'cmp_phone' => 'nullable|digits_between:10,14|unique:companies,cmp_phone,' . optional($this->company)->id,
             'cmp_note' => 'nullable',
+
+            'cmp_supplier' => 'nullable',
+            'cmp_customer' => 'nullable',
         ];
     }
 
 
-    public function mount(Company $company)
+    public function mount($company = null)
     {
-        $this->editMode = true;
-        $this->setEditMode($company);
+        if($company) {
+            $this->editMode = true;
+            $this->setEditMode($company);
+        }
     }
 
     
@@ -61,7 +69,7 @@ class Form extends Component
     }
 
 
-    public function setEditMode(Company $company)
+    public function setEditMode($company)
     {
         $this->cmp_name = $company->cmp_name;
         $this->cmp_current_code = $company->cmp_current_code;
@@ -69,6 +77,8 @@ class Form extends Component
         $this->cmp_tax_number = $company->cmp_tax_number;
         $this->cmp_note = $company->cmp_note;
         $this->cmp_phone = $company->cmp_phone;
+        $this->cmp_supplier = $company->cmp_supplier;
+        $this->cmp_customer = $company->cmp_customer;
     }
 
     public function render()

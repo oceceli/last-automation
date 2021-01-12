@@ -22,6 +22,7 @@ return [
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
     'clear' => 'Temizle',
+    'type' => 'Tip',
     // 'least' => 'En az',
     'variable' => 'Değişken',
     'net' => 'Net',
