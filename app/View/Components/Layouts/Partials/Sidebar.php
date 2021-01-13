@@ -145,7 +145,7 @@ class Sidebar extends Component
             [
                 'name' => 'companies.index', 
                 'label' => 'companies.companies', 
-                'icon' => 'briefcase icon',
+                'icon' => 'building icon',
                 'submenus' => [
                     [
                         'name' => 'companies.create', 

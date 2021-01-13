@@ -2,14 +2,14 @@
         
         <form wire:submit.prevent="addressSubmit" class="ui tiny form">
             <div class="px-6 pb-6 pt-4 border-b shadow">
-                <x-input model="adr_name" label="validation.attributes.adr_name" placeholder="validation.attributes.adr_name" class="required" />
+                <x-input defer model="adr_name" label="validation.attributes.adr_name" placeholder="validation.attributes.adr_name" class="required" />
             </div>
             <x-form-divider>
                 <x-slot name="left">
                     
-                    <x-input model="adr_country" label="validation.attributes.adr_country" placeholder="validation.attributes.adr_country" class="required" />
-                    <x-input model="adr_province" label="validation.attributes.adr_province" placeholder="validation.attributes.adr_province" class="required" />
-                    <x-input model="adr_district" label="validation.attributes.adr_district" placeholder="validation.attributes.adr_district" class="required" />
+                    <x-input defer model="adr_country" label="validation.attributes.adr_country" placeholder="validation.attributes.adr_country" class="required" />
+                    <x-input defer model="adr_province" label="validation.attributes.adr_province" placeholder="validation.attributes.adr_province" class="required" />
+                    <x-input defer model="adr_district" label="validation.attributes.adr_district" placeholder="validation.attributes.adr_district" class="required" />
 
                     {{-- <x-dropdown model="adr_country" :collection="$this->countries" value="id" text="name" sId="countries" sClass="search" 
                         label="validation.attributes.adr_country" placeholder="validation.attributes.adr_country" class="required field"
@@ -28,12 +28,12 @@
                 <x-slot name="right">
                     <div class="field">
                         <label><i class="write icon"></i>{{ __('validation.attributes.adr_body' )}}</label>
-                        <textarea wire:model.lazy="adr_body" rows="3"></textarea>
+                        <textarea wire:model.defer="adr_body" rows="3"></textarea>
                     </div>
                 
-                    {{-- <x-input model="adr_note" label="validation.attributes.adr_note" placeholder="validation.attributes.adr_note"  /> --}}
+                    {{-- <x-input defer model="adr_note" label="validation.attributes.adr_note" placeholder="validation.attributes.adr_note"  /> --}}
                     
-                    <x-input model="adr_phone" label="validation.attributes.adr_phone" placeholder="validation.attributes.adr_phone"  />
+                    <x-input defer model="adr_phone" label="validation.attributes.adr_phone" placeholder="validation.attributes.adr_phone"  />
                 </x-slot>
                 
 
@@ -45,7 +45,7 @@
                         </div>
                         <div x-show="addAddressNote" class="field">
                             <label><i class="write icon"></i>{{ __('validation.attributes.adr_note' )}}</label>
-                            <textarea wire:model.lazy="adr_note" rows="3"></textarea>
+                            <textarea wire:model.defer="adr_note" rows="3"></textarea>
                         </div>
                     </div>
                 </x-slot>

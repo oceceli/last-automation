@@ -1,7 +1,7 @@
 @if ($selectedCompany)
     <div x-data="{showModal: @entangle('showModal')}">
         <x-custom-modal active="showModal" header="{{ __('companies.company_informations') }}">
-            <div class="w-min-30-rem max-w-md">
+            <div>
                 <div class="shadow-md p-4">
                     <x-list-item>
                         <label>{{ __('validation.attributes.cmp_name') }}</label>

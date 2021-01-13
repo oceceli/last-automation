@@ -5,7 +5,7 @@
             
             <x-table class="ui celled sortable table tablet stackable very compact">
                 <x-thead>
-                    <tr>
+                    <x-table-row>
                         <x-thead-item>{{ __('common.type') }}</x-thead-item>
                         <x-thead-item sortBy="cmp_name">{{ __('validation.attributes.cmp_name') }}</x-thead-item>
                         <x-thead-item sortBy="cmp_commercial_title">{{ __('validation.attributes.cmp_commercial_title') }}</x-thead-item>
@@ -15,13 +15,12 @@
                         {{-- <x-thead-item sortBy="cmp_note">Açıklama</x-thead-item> --}}
                         <x-thead-item>{{ __('addresses.addresses')}}</x-thead-item>
                         <x-thead-item></x-thead-item>
-                        
-                    </tr>
+                    </x-table-row>
                 </x-thead>
                 <x-tbody>
-                    @foreach ($data as $company)
-                        <tr wire:key="{{ $loop->index }}">
-                            <x-tbody-item class="collapsing text-sm">{{ $company->type }}</x-tbody-item>
+                    @forelse ($data as $company)
+                        <x-table-row wire:key="{{ $loop->index }}">
+                            <x-tbody-item class="collapsing center aligned text-sm">@include('web.sections.companies.companyType')</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_name }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_commercial_title }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_current_code }}</x-tbody-item>
@@ -43,8 +42,16 @@
                                     </x-crud-actions>
                                 </div>
                             </x-tbody-item>
-                        </tr>
-                    @endforeach
+                        </x-table-row>
+                    @empty
+                    <tr>
+                        <td colspan="10">
+                            <x-placeholder icon="briefcase">
+                                {{ __('common.no_results') }}
+                            </x-placeholder>
+                        </td>
+                    </tr>
+                    @endforelse
                 </x-tbody>
             </x-table>
             {{ $data->links('components.tailwind-pagination') }}

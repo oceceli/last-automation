@@ -29,13 +29,7 @@ class Company extends Model
         $this->addresses()->delete();
         parent::delete();
     }
-
-    public function getTypeAttribute()
-    {
-        // if($this->cmp_supplier && $this->cmp_customer) // !! ikisinin de olduğu durumda veya ikisininde olmadığı durumda ?
-        if($this->cmp_supplier) return __('validation.attributes.cmp_supplier');
-                                return __('validation.attributes.cmp_customer');
-    }
+    
 
     public function getCmpSupplierAttribute($supplier)
     {

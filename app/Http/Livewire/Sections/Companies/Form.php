@@ -63,8 +63,8 @@ class Form extends Component
             return redirect()->route('companies.index');
         } else {
             Company::create($validatedData);
-            $this->emit('toast','', __('companies.company_defined'), 'success');
-            $this->reset();
+            session()->flash('success', __('companies.company_defined'));
+            return redirect()->route('companies.index');
         }
     }
 
