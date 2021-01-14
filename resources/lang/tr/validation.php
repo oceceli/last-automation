@@ -179,6 +179,10 @@ return [
         'adr_body' => 'Adres Detay',
         'adr_phone' => 'İrtibat No',
         'adr_note' => 'Not',
+
+        // dispatchorders
+        'do_number' => 'Sevk numarası',
+        'do_datetime' => 'Sevk tarihi',
     ],
 
 ];

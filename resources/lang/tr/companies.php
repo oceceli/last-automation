@@ -2,6 +2,7 @@
 
 return [
 
+    'company' => 'Firma',
     'companies' => 'Firmalar',
     'create_company' => 'Firma Tanımla',
     'edit_company' => 'Firma düzenle',

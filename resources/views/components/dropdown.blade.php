@@ -120,8 +120,8 @@
                         textToShowUser.push(data[txt]);
                     });
 
-                    @if($customMessage)
-                        textToShowUser.push("{{ $customMessage }}");
+                    @if($prefix)
+                        textToShowUser.unshift("{{ $prefix }}");
                     @endif
 
                     values.push({

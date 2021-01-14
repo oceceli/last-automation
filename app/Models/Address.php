@@ -15,4 +15,23 @@ class Address extends Model
     {
         return $this->morphTo();
     }
+
+    public function setCountryAttribute($value)
+    {
+        $this->attributes['country'] = strtoupper($value);
+    }
+
+    public function getCountryAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    public function setProvinceAttribute($value)
+    {
+        $this->attributes['province'] = ucfirst($value);
+    }
+    public function getProvinceAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }
