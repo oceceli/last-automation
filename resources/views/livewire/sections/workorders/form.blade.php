@@ -34,7 +34,7 @@
                 <x-page-header icon="project diagram" header="sections/workorders.create.header" subheader="sections/workorders.create.subheader" />
             @endif
         </x-slot>
-        <form class="ui small form" wire:submit.prevent="submit">
+        <form class="ui tiny form" wire:submit.prevent="submit">
             <x-form-divider>
 
                 <x-slot name="left">

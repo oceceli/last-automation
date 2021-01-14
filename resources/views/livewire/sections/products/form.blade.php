@@ -1,5 +1,5 @@
 
-<form class="ui small form" wire:submit.prevent="submit" >
+<form class="ui tiny form" wire:submit.prevent="submit" >
     <x-form-divider>
 
         <x-slot name="left">
