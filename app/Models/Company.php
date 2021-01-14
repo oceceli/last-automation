@@ -24,6 +24,11 @@ class Company extends Model
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function dispatchorders()
+    {
+        return $this->hasMany(DispatchOrder::class);
+    }
+
     public function delete()
     {
         $this->addresses()->delete();

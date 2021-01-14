@@ -29,6 +29,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function dispatchorders()
+    {
+        return $this->belongsToMany(DispatchOrder::class);
+    }
+
     
     // public static function orderByRelationColumn($relation, $direction = 'asc') // !! kullanılmıyor
     // {
