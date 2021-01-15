@@ -6,7 +6,7 @@
                 {{ session()->get('success') }}
             </div>
         </div>
-        <button @click="showInfoArea = false" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none opacity-75 hover:opacity-100">
+        <button wire:click.prevent @click="showInfoArea = false" class="absolute top-0 right-0 -mt-2 -mr-3 focus:outline-none opacity-75 hover:opacity-100">
             <i class="red shadow rounded-full cancel icon"></i>
         </button>
     </div>
