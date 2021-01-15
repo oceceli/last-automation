@@ -17,6 +17,7 @@ class CreateDispatchOrderProduct extends Migration
             $table->id();
             $table->string('dp_lot_number');
             $table->integer('dp_amount');
+            // $table->integer('dp_total_amount');
             $table->unsignedBigInteger('unit_id');
 
             $table->unsignedBigInteger('dispatch_order_id');

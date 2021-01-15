@@ -4,7 +4,6 @@ namespace App\Services\Stock;
 
 use App\Models\Product;
 use App\Models\StockMove;
-use Illuminate\Database\Eloquent\Builder;
 
 class LotNumberService
 {
@@ -17,10 +16,25 @@ class LotNumberService
     }
 
 
+    public function total()
+    {
+        $amount = array_sum(array_column($this->allWithAmounts(), 'amount'));
+        $availableAmount = array_sum(array_column($this->allWithAmounts(), 'available_amount'));
+        $unit = $this->product->baseUnit;
+        return [
+            'amount' => $amount,
+            'available_amount' => $availableAmount,
+            'amount_string' => "$amount {$unit->name}",
+            'available_amount_string' => "$availableAmount {$unit->name}",
+            'unit' => $unit,
+        ];
+    }
+
+
     /**
      * Get total amount of updirection stockmoves
      */
-    private function positive($lot) : float
+    private function positive($lot)
     {
         return StockMove::where([
             'product_id' => $this->product->id, 
@@ -32,7 +46,7 @@ class LotNumberService
     /**
      * Get total amount of downdirection stockmoves
      */
-    private function negative($lot) : float
+    private function negative($lot)
     {
         return StockMove::where([
             'product_id' => $this->product->id, 
@@ -42,9 +56,9 @@ class LotNumberService
     }
 
     /**
-     * Return actual amount of given lot
+     * @return float actual amount of given lot
      */
-    public function inStock($lot)
+    public function only($lot)
     {
         return $this->positive($lot) - $this->negative($lot);
     }
@@ -67,16 +81,21 @@ class LotNumberService
     /**
      * @return array lot numbers and amounts
      */
-    public function withAmounts()
+    public function allWithAmounts()
     {
         $arr = [];
         foreach($this->uniqueLots() as $lot) {
-            $amount = $this->inStock($lot);
-            if($amount <= 0) continue;
+            $amount = $this->only($lot);
+            if($amount == 0) continue;
 
+            $unit = $this->product->baseUnit;
             $arr[] = [
                 'lot_number' => $lot, 
                 'amount' => $amount,
+                'available_amount' => $amount, // !! reserve edilen kısımlar buradan düşecek
+                'amount_string' => "$amount {$unit->name}", // presentation is much easy now (:
+                'available_amount_string' => "$amount {$unit->name}",
+                'unit' => $unit,
             ];
         }
         return $arr;

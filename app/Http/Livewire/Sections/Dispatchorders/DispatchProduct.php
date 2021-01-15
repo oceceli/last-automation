@@ -15,24 +15,25 @@ trait DispatchProduct
     public $product_id;
     public $dispatch_order_id;
 
-    public $selectedProduct; // ! kullanımdışı
+    public $selectedProduct;
 
     public function getProductsProperty()
     {
         return Product::all();
     }
 
-    public function updatedProductId($value)
+    public function updatedProductId($id)
     {
-        $this->selectedProduct = Product::find($value);
+        $this->selectedProduct = Product::find($id);
         $this->emit('dp_product_selected');
-        dd((new LotNumberService($this->selectedProduct))->inStock());
 
     }
 
     public function getLotsProperty()
     {
-        return StockMove::where('product_id', $this->product_id)->pluck('lot_number')->toArray(); // !! güncellenecek
+        $lotNumbers = (new LotNumberService($this->selectedProduct))->allWithAmounts();
+        return $lotNumbers;
+        // return StockMove::where('product_id', $this->product_id)->pluck('lot_number')->toArray(); // !! güncellenecek
     }
 
 }
