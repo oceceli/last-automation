@@ -2,13 +2,13 @@
 
 namespace App\Stocks;
 
+use App\Models\Interfaces\CanReserveStocks;
 use App\Models\WorkOrder;
-use DateTime;
 
 class ProductionWasteMove extends Moves
 {
 
-    public function __construct(WorkOrder $workOrder, float $amount)
+    public function __construct(CanReserveStocks $workOrder, float $amount)
     {
         $this->instance = $workOrder;
 

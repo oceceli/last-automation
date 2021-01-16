@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Common\Facades\Conversions;
+use App\Models\Interfaces\CanReserveStocks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
@@ -11,7 +12,7 @@ use App\Models\Traits\WorkOrder\FinalizedProduction;
 use App\Models\Traits\WorkOrder\FinalizeProduction;
 use Carbon\Carbon;
 
-class WorkOrder extends Model
+class WorkOrder extends Model implements CanReserveStocks
 {
     use HasFactory;
     use ModelHelpers;
@@ -49,11 +50,6 @@ class WorkOrder extends Model
     }
 
 
-    // public function product()
-    // {
-    //     return $this->belongsTo(Product::class);
-    // }
-
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -62,7 +58,7 @@ class WorkOrder extends Model
 
     public function reservedStocks()
     {
-        return $this->hasMany(ReservedStock::class);
+        return $this->morphMany(ReservedStock::class, 'reservable');
     }
 
 
@@ -71,6 +67,15 @@ class WorkOrder extends Model
         return $this->belongsTo(Unit::class);
     }
 
+
+    public function setLotNoAttribute($value)
+    {
+        $this->attributes['lot_no'] = strtoupper($value);
+    }
+    public function getLotNoAttribute($value)
+    {
+        return strtoupper($value);
+    }
 
 
     public function setDatetimeAttribute($value) 

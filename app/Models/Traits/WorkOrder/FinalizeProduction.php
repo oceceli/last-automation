@@ -7,10 +7,13 @@ use App\Stocks\ProductionIngredientMove;
 use App\Stocks\ProductionTotalMove;
 use App\Stocks\ProductionWasteMove;
 
+/**
+ * Finalize trait serving only to App\Models\WorkOrder
+ */
 trait FinalizeProduction
 {
 
-    private $inputTotal;  
+    private $inputTotal;
 
 
     public function saveProductionResults($inputTotal, $inputWaste, $unitId)
@@ -26,7 +29,7 @@ trait FinalizeProduction
 
         (new ProductionTotalMove($this, (float)$inputTotal))->save();  // ?? kullanıcı girişi olduğu gibi stoğa yansıtılıyor. Yansımamalı. ** verimlilik yaptım eksikler var
         (new ProductionWasteMove($this, (float)$inputWaste))->save();
-        
+
         $this->deductFromReservedSources();
         
         $this->markAsFinalized();

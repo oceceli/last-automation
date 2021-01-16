@@ -17,9 +17,17 @@ class ReservedStock extends Model
     protected $with = []; 
 
 
-    public function workorder()
+    // public function workorder()
+    // {
+    //     return $this->belongsTo(WorkOrder::class);
+    // }
+
+    /**
+     * Stocks can be reserved by workorder and dispatch orders
+     */
+    public function reservable()
     {
-        return $this->belongsTo(WorkOrder::class);
+        return $this->morphTo();
     }
 
     public function product()

@@ -15,11 +15,13 @@ class CreateReservedStocksTable extends Migration
     {
         Schema::create('reserved_stocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('work_order_id');
-
             $table->integer('product_id');
             $table->string('reserved_lot');
             $table->integer('reserved_amount');
+            
+            $table->string('reservable_type');
+            $table->unsignedBigInteger('reservable_id');
+            
             $table->timestamps();
         });
     }

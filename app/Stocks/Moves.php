@@ -5,7 +5,7 @@ namespace App\Stocks;
 use App\Models\StockMove;
 use App\Models\WorkOrder;
 
-class Moves 
+class Moves
 {   
 
     protected $productId;
@@ -21,7 +21,7 @@ class Moves
     private $manualEntry = "manual";
 
     /**
-     * Workorder or shipment instance
+     * Model instance which is App\Models\Interfaces\CanReserveStocks implemented
      */
     protected $instance;
 
@@ -29,17 +29,15 @@ class Moves
     public function save() 
     {
         if( ! $this->direction) {
-            $lot = StockMove::getCompound($this->productId, $this->lotNumber);
+            $lot = StockMove::where(['product_id' => $this->productId, 'lot_number' => strtoupper($this->lotNumber)])->get();
             if($lot->isEmpty()) 
-                dd("todo: ".__CLASS__ . ", save fonksiyonu. Bu lot numarasına ait yeterli miktarda kaynak var mı diye sorulacak!"); // !! eksik 
+                dd("todo: ".__CLASS__ . ", save fonksiyonu. Bu lot numarasına ait yeterli miktarda kaynak var mı diye sorulacak! muhtemelen vardır yani ama.."); // !! eksik 
         }
 
         if($this->amount <= 0) return;
 
         if($this->instance) {
-            if($this->instance instanceof WorkOrder)
-                $this->instance->StockMoves()->create($this->data());
-            // elseif($this->instance instanceof shipment) şeklinde devam edersin
+            $this->instance->stockMoves()->create($this->data());
         }
         else {
             $this->type = $this->manualEntry;
