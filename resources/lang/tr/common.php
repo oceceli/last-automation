@@ -48,7 +48,7 @@ return [
     'smoothly_updated' => ':model sorunsuz bir şekilde güncellendi...',
     
     'unable_to_delete' => 'Silinmedi!',
-    
+    'phone' => 'Telefon',
 
 
     'saved' => [

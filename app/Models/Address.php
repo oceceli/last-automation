@@ -16,21 +16,43 @@ class Address extends Model
         return $this->morphTo();
     }
 
-    public function setCountryAttribute($value)
+
+
+    /****************** MUTATORS AND ACCESSORS *****************/
+
+    public function setAdrCountryAttribute($value)
     {
-        $this->attributes['country'] = strtoupper($value);
+        $this->attributes['adr_country'] = strtoupper($value);
     }
 
-    public function getCountryAttribute($value)
+    public function getAdrCountryAttribute($value)
     {
         return strtoupper($value);
     }
 
-    public function setProvinceAttribute($value)
+    public function setAdrProvinceAttribute($value)
     {
-        $this->attributes['province'] = ucfirst($value);
+        $this->attributes['adr_province'] = ucfirst($value);
     }
-    public function getProvinceAttribute($value)
+    public function getAdrProvinceAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setAdrNameAttribute($value)
+    {
+        $this->attributes['adr_name'] = ucwords($value);
+    }
+    public function getAdrNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+    
+    public function setAdrDistrictAttribute($value)
+    {
+        $this->attributes['adr_district'] = ucfirst($value);
+    }
+    public function getAdrDistrictAttribute($value)
     {
         return ucfirst($value);
     }

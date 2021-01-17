@@ -184,7 +184,7 @@ return [
         // dispatchorders
         'address_id' => 'Adres',
         'company_id' => 'Firma',
-        'do_number' => 'Sevk numarası',
+        'do_number' => 'Sevk kodu',
         'do_datetime' => 'Sevk tarihi',
 
         // reservedstocks

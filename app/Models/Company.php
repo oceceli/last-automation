@@ -35,6 +35,25 @@ class Company extends Model
         parent::delete();
     }
     
+    public function setCmpCommercialTitleAttribute($value)
+    {
+        $this->attributes['cmp_commercial_title'] = strtoupper($value);
+    }
+
+    public function getCmpCommercialTitleAttribute($value)
+    {
+        return strtoupper($value);
+    }
+    
+    public function setCmpNameAttribute($value)
+    {
+        $this->attributes['cmp_name'] = ucwords($value);
+    }
+
+    public function getCmpNameAttribute($value)
+    {
+        return ucwords($value);
+    }
 
     public function getCmpSupplierAttribute($supplier)
     {
@@ -47,22 +66,5 @@ class Company extends Model
     }
 
 
-    // public function setCmpNameAttribute($attribute)
-    // {
-    //     $this->attributes['cmp_name'] = strtolower($attribute);
-    // }
-    // public function getCmpNameAttribute($attribute)
-    // {
-    //     return ucfirst($attribute);
-    // }
-
-    // public function setCmpCommercialTitleAttribute($attribute)
-    // {
-    //     $this->attributes['cmp_commercial_title'] = strtolower($attribute);
-    // }
-    // public function getCmpCommercialTitleAttribute($attribute)
-    // {
-    //     return strtoupper($attribute);
-    // }
 
 }
