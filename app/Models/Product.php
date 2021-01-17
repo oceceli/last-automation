@@ -21,7 +21,7 @@ class Product extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['units', 'recipe']; 
+    // protected $with = ['units', 'recipe'];  // !! kapattım hata olabilir
 
         
     public function category()

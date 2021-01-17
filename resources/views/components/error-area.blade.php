@@ -1,5 +1,5 @@
 @if($errors->any())
-    <div {{ $attributes }}>
+    <div {{ $attributes->merge(['class' => 'shadow-md']) }}>
         <div class="ui error message">    
             <div class="header">
                 <i class="exclamation triangle icon"></i>

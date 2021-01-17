@@ -17,6 +17,7 @@ class CreateDispatchOrdersTable extends Migration
             $table->id();
             $table->integer('do_number');
             $table->datetime('do_datetime');
+            $table->boolean('do_are_lots_specified');
 
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('address_id');

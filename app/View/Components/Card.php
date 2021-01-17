@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class Card extends Component
 {
+    public $atClose;
     public $square;
 
     /**
@@ -13,8 +14,9 @@ class Card extends Component
      *
      * @return void
      */
-    public function __construct($square = null)
+    public function __construct($atClose = null, $square = null)
     {
+        $this->atClose = $atClose;
         $this->square = $square;
     }
 

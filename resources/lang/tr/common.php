@@ -23,6 +23,7 @@ return [
     'save' => 'Kaydet',
     'clear' => 'Temizle',
     'type' => 'Tip',
+    'amount' => 'Miktar',
     // 'least' => 'En az',
     'variable' => 'Değişken',
     'net' => 'Net',
@@ -57,6 +58,7 @@ return [
         'saved_successfully' => 'Başarıyla kaydedildi!',
     ],
 
+    'error_occurred' => 'Bir hata oluştu',
     'error' => [
         'title' => 'Hata',
         'body' => 'Bir hata oluştu!',

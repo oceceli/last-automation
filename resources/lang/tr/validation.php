@@ -161,6 +161,7 @@ return [
         'lot_no' => 'lot no',
         'code' => 'kod',
 
+
         // companies
         'cmp_name' => 'Firma adı',
         'cmp_current_code' => 'Cari kod',
@@ -181,8 +182,14 @@ return [
         'adr_note' => 'Not',
 
         // dispatchorders
+        'address_id' => 'Adres',
+        'company_id' => 'Firma',
         'do_number' => 'Sevk numarası',
         'do_datetime' => 'Sevk tarihi',
+
+        // reservedstocks
+        // 'reserved_lot' => 'Rezerve edilen kaynak',
+        // 'reserved_amount' => 'Rezerve edilen miktar',
     ],
 
 ];
