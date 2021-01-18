@@ -24,7 +24,7 @@
                     <i class="large link project diagram icon"></i>
                 </a>
                 <a href="{{ route('stock-moves.create') }}" data-tooltip="{{ __('stockmoves.stock_moves_create')}}" data-position="top left" data-variation="mini">
-                    <i class="large link exchange icon"></i>
+                    <i class="large link dolly flatbed icon"></i>
                 </a>
                 <a href="{{ route('inventory.index') }}">
                     <i class="large link warehouse icon"></i>

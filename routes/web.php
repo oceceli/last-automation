@@ -25,17 +25,21 @@ Route::middleware('auth')->group(function () {
 	Route::resource('/units', 'UnitController');
 	Route::resource('/categories', 'CategoryController');
     Route::resource('/products', 'ProductController');
-	Route::resource('/recipes', 'RecipeController');
+    Route::resource('/recipes', 'RecipeController');
+    
     Route::get('/work-orders/daily', 'WorkOrderController@daily')->name('work-orders.daily');
     Route::resource('/work-orders', 'WorkOrderController');
+    
     Route::resource('/stock-moves', 'StockMoveController');
     Route::resource('/inventory', 'InventoryController');
     Route::resource('/companies', 'CompanyController');
     // Route::resource('/addresses', 'AddressController');
+
+    Route::get('/dispatchorders/daily/{dispatchOrder}', 'DispatchOrderController@process')->name('dispatchorders.process');
+    Route::get('/dispatchorders/daily', 'DispatchOrderController@daily')->name('dispatchorders.daily');
     Route::resource('/dispatchorders', 'DispatchOrderController');
     
     Route::resource('/roles', 'RoleController');
-    
     
     Route::get('/dashboard', function () {
         return view('web.sections.dashboard.index');

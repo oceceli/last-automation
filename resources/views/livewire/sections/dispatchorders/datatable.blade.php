@@ -34,13 +34,13 @@
                             </x-body-item>
                             <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_datetime }}</x-tbody-item>
                             <x-tbody-item class="collapsing">
-                                <div>
-                                    <x-crud-actions delete edit modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                <x-crud-actions delete edit modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                    <x-slot name="left">
                                         <div wire:click="openShowModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
                                             <i class="link eye icon"></i>
                                         </div>
-                                    </x-crud-actions>
-                                </div>
+                                    </x-slot>
+                                </x-crud-actions>
                             </x-tbody-item>
                         </x-table-row>
                     @empty

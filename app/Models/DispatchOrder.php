@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\CanReserveStocks;
 use App\Models\Traits\Searchable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,5 +38,18 @@ class DispatchOrder extends Model implements CanReserveStocks
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+
+
+
+    public function setDoDatetimeAttribute($value) 
+    {
+        $this->attributes['do_datetime'] = Carbon::parse($value)->format('d.m.Y');
+    }
+
+    public function getDoDatetimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('d.m.Y');
     }
 }

@@ -9,4 +9,8 @@ return [
     'customer' => 'Müşteri',
     'specify_lot_numbers' => 'Lot numaralarını belirt',
     'products_to_be_dispatched' => 'Sevk edilecek ürünler',
+    'there_are_no_dispatchorders_today' => 'Bugün için sevk emri oluşturulmadı',
+    'process_dispatch' => 'Sevk et',
+
+    'do_daily' => 'Günlük Sevk',
 ];

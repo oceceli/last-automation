@@ -128,12 +128,12 @@ class Sidebar extends Component
                     [
                         'name' => 'stock-moves.create', 
                         'label' => 'stockmoves.stock_moves_create', 
-                        'icon' => 'exchange icon',
+                        'icon' => 'sign dolly flatbed icon',
                     ],
                     [
                         'name' => 'stock-moves.index', 
                         'label' => 'common.stock_moves', 
-                        'icon' => 'dolly icon',
+                        'icon' => 'exchange icon',
                     ],
                     [
                         'name' => 'inventory.index', 
@@ -173,6 +173,11 @@ class Sidebar extends Component
                         'name' => 'dispatchorders.index', 
                         'label' => 'dispatchorders.dispatchorders', 
                         'icon' => 'list icon',
+                    ],
+                    [
+                        'name' => 'dispatchorders.daily', 
+                        'label' => 'dispatchorders.do_daily', 
+                        'icon' => 'angle shipping fast icon',
                     ],
                 ],
             ],

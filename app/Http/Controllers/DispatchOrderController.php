@@ -20,4 +20,19 @@ class DispatchOrderController extends Controller
     {
         return view('web.sections.dispatchorders.edit', compact('dispatchOrder'));
     }
+    
+    // public function show(DispatchOrder $dispatchOrder)
+    // {
+    //     return view('web.sections.dispatchorders.show', compact('dispatchOrder'));
+    // }
+
+    public function daily()
+    {
+        return view('web.sections.dispatchorders.daily');
+    }
+
+    public function process(DispatchOrder $dispatchOrder)
+    {
+        return view('web.sections.dispatchorders.process', compact('dispatchOrder'));
+    }
 }
