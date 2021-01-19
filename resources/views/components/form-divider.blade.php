@@ -1,5 +1,5 @@
 <div {{ $attributes->merge(['class' => 'rounded-t'])}}>
-    <div class="grid @if($right) grid-cols-1 md:grid-cols-2 gap-2 @endif border-b border-purple-300">
+    <div class="grid @if($right) grid-cols-1 md:grid-cols-2 gap-2 @endif border-b">
         <div class="p-6 {{ $lClass }}">
             {{ $left }}
         </div>

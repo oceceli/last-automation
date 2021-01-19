@@ -10,4 +10,5 @@ return [
 
     'address_added' => 'Adres eklendi',
     'company_for_add_address' => 'Adres eklenecek firma',
+
 ];

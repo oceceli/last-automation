@@ -20,10 +20,12 @@ class LotNumberService
     {
         $amount = array_sum(array_column($this->allWithAmounts(), 'amount'));
         $availableAmount = array_sum(array_column($this->allWithAmounts(), 'available_amount'));
+        $reservedAmount = array_sum(array_column($this->allWithAmounts(), 'reserved_amount'));
         $unit = $this->product->baseUnit;
         return [
             'amount' => $amount,
             'available_amount' => $availableAmount,
+            'reserved_amount' => $reservedAmount,
             'amount_string' => "$amount {$unit->name}",
             'available_amount_string' => "$availableAmount {$unit->name}",
             'unit' => $unit,
@@ -83,7 +85,7 @@ class LotNumberService
      */
     public function allWithAmounts()
     {
-        $arr = [];
+        // $arr = [];
         foreach($this->uniqueLots() as $lot) {
             $amount = $this->only($lot);
             if($amount == 0) continue;
@@ -93,12 +95,13 @@ class LotNumberService
                 'lot_number' => $lot, 
                 'amount' => $amount,
                 'available_amount' => $amount, // !! reserve edilen kısımlar buradan düşecek
+                'reserved_amount' => null, // ! reserve edilen eklenecek
                 'amount_string' => "$amount {$unit->name}", // presentation is much easy now (:
                 'available_amount_string' => "$amount {$unit->name}",
                 'unit' => $unit,
             ];
         }
-        return $arr;
+        return isset($arr) ? $arr : [];
     }
 
     // get lots which have positive amounts

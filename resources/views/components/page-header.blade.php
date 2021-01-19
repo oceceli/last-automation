@@ -19,9 +19,9 @@
   @if ($buttons)
       <div class="pl-4 flex">
           <div class="shadow rounded-md">
-              <div class="ui buttons">
+              {{-- <div class="ui buttons"> --}}
                   {{ $buttons }}
-              </div>
+              {{-- </div> --}}
           </div>
       </div>
   @endif

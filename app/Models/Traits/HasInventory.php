@@ -3,6 +3,7 @@
 namespace App\Models\Traits;
 
 use App\Common\Facades\StockCalculations;
+use App\Services\Stock\LotNumberService;
 
 trait HasInventory
 {
@@ -13,7 +14,8 @@ trait HasInventory
 
     public function getLotsAttribute()
     {
-        return StockCalculations::lotNumbersAndAmounts($this->id);
+        return (new LotNumberService($this))->allWithAmounts();
+        // return StockCalculations::lotNumbersAndAmounts($this->id); // !! use lotnumberservice instead
     }
 
     public function getIsInStockAttribute()

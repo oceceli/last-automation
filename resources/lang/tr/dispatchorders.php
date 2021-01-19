@@ -12,5 +12,7 @@ return [
     'there_are_no_dispatchorders_today' => 'Bugün için sevk emri oluşturulmadı',
     'process_dispatch' => 'Sevk et',
 
+    'lot_number' => 'Lot numarası',
+
     'do_daily' => 'Günlük Sevk',
 ];
