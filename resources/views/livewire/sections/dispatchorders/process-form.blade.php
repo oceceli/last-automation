@@ -6,8 +6,8 @@
                 {{ __('dispatchorders.dispatch_address') }}
             </h5> --}}
 
-            <div class="p-5 shadow-md relative">
-                <div class="flex justify-between border-b text-ease pb-2">
+            <div class="p-5 shadow-lg relative bg-teal-100">
+                <div class="flex justify-between border-b border-white text-ease pb-2">
                     <div>
                         <h5 class="">
                             {{ $dispatchOrder->company->cmp_commercial_title }}
@@ -37,10 +37,10 @@
 
 
 
-            <div class="p-5 bg-gray-200">
-                <div class="flex flex-col gap-4">
+            <div class="pt-6 bg-cool-gray-50">
+                <div class="flex flex-col gap-5">
                     @foreach ($dispatchOrder->reservedStocks as $index => $reservation)
-                        <div class="white-area p-3" wire:key="do_{{ $index }}">
+                        <div class="bg-white shadow-md border-t border-b relative p-3" wire:key="do_{{ $index }}">
                             <div class="border-b border-dashed pb-2 flex justify-between font-bold">
                                 <div>
                                     {{ $reservation->product->code}} -
@@ -51,27 +51,34 @@
                                     {{ $reservation->product->baseUnit->name }}
                                 </div>
                             </div>
-                            <div class="mt-6">
-                                @if ($cards)
+                            @if ($cards && $reservation->product->isInStock)
+                                <div class="mt-6">
                                     @foreach ($cards[$index]['rows'] as $key => $row)
-                                        <div class="ui tiny form border-b">
+                                        <div class="ui tiny form">
                                             <div class="equal width fields">
-                                                <x-dropdown model="cards.{{$index}}.rows.{{$key}}" :collection="$reservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                                <x-dropdown model="cards.{{$index}}.rows.{{$key}}.lot_number" :collection="$reservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
                                                     placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  />
                                                 
-                                                <x-input model="test" placeholder="{{ __('common.amount') }}" innerLabel="{{ $reservation->product->baseUnit->name }}">
+                                                <x-input model="cards.{{$index}}.rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $reservation->product->baseUnit->name }}">
                                                     
                                                 </x-input>
                                             </div>
                                         </div>
                                     @endforeach
-                                @endif
-                                <div class="text-right">
-                                    <button wire:click="addRow({{ $index }})" class="ui mini icon button">
-                                        <i class="green plus icon"></i>
-                                    </button>
+                                    <div class="w-full flex border-t pt-3">
+                                        <button class="ui mini primary w-full button">
+                                            Kaydet
+                                        </button>
+                                        <button wire:click="addRow({{ $index }})" class="ui black mini icon button">
+                                            <i class="white plus icon"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            @else 
+                                <div class="mt-4 p-4 bg-red-100 shadow-inner">
+                                    <i class="text-ease">{{ __('inventory.out_of_stock') }}</i>
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>

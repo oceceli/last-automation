@@ -9,7 +9,8 @@ trait HasInventory
 {
     public function getTotalStockAttribute()
     {
-        return StockCalculations::getCurrentStockAmountOfProduct($this->id);
+        return (new LotNumberService($this))->total();
+        // return StockCalculations::getCurrentStockAmountOfProduct($this->id);
     }
 
     public function getLotsAttribute()

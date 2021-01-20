@@ -14,11 +14,15 @@ class ProcessForm extends Component
     // model cards
     public $cards;
 
+
     public function mount($dispatchOrder)
     {
         $this->dispatchOrder = $dispatchOrder;
-        $this->addrow(0);
-        $this->addrow(1);
+
+        foreach($this->dispatchOrder->reservedStocks()->select('id')->get() as $key => $reservationId) {
+            $this->addRow($key);
+        }
+        
         $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
     }
 
@@ -32,7 +36,6 @@ class ProcessForm extends Component
             'lot_number' => null,
             'reserved_amount' => null,
         ];
-        // dd($this->cards);
     }
 
     public function render()
