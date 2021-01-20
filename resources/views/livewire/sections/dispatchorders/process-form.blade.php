@@ -21,7 +21,7 @@
                 </div>
 
                 <div>
-                    <div class="flex flex-col py-2 text-ease text-sm">
+                    <div class="flex flex-col py-2 text-ease">
                         <span>{{ $dispatchAddress }}</span>
                         <div>{{ __('validation.attributes.adr_phone') }}: {{ $dispatchOrder->address->adr_phone  }}</div>
                     </div>
@@ -37,10 +37,10 @@
 
 
 
-            <div class="pt-6 bg-cool-gray-50">
+            <div class="bg-cool-gray-50">
                 <div class="flex flex-col gap-5">
                     @foreach ($dispatchOrder->reservedStocks as $index => $reservation)
-                        <div class="bg-white shadow-md border-t border-b relative p-3" wire:key="do_{{ $index }}">
+                        <div class="bg-white shadow-md border hover:border-orange-300 rounded-sm relative p-3" wire:key="do_{{ $index }}">
                             <div class="border-b border-dashed pb-2 flex justify-between font-bold">
                                 <div>
                                     {{ $reservation->product->code}} -
@@ -51,8 +51,8 @@
                                     {{ $reservation->product->baseUnit->name }}
                                 </div>
                             </div>
-                            @if ($cards && $reservation->product->isInStock)
-                                <div class="mt-6">
+                            @if ($reservation->product->isInStock)
+                                <div class="mt-2">
                                     @foreach ($cards[$index]['rows'] as $key => $row)
                                         <div class="ui tiny form">
                                             <div class="equal width fields">
@@ -62,6 +62,11 @@
                                                 <x-input model="cards.{{$index}}.rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $reservation->product->baseUnit->name }}">
                                                     
                                                 </x-input>
+                                                {{-- <button class="ui tiny icon button"> --}}
+                                                <div class="flex items-center w-1/12 cursor-pointer justify-center">
+                                                    <i class="large cancel red icon"></i>
+                                                </div>
+                                                {{-- </button> --}}
                                             </div>
                                         </div>
                                     @endforeach

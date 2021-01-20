@@ -6,14 +6,17 @@ use Illuminate\View\Component;
 
 class container extends Component
 {
+
+    public $theme;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($theme = 'gray')
     {
-        //
+        $this->theme = $theme;
     }
 
     /**
