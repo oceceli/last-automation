@@ -21,7 +21,7 @@
                 </div>
 
                 <div>
-                    <div class="flex flex-col py-2 text-ease">
+                    <div class="flex flex-col py-2 gap-2 text-ease">
                         <span>{{ $dispatchAddress }}</span>
                         <div>{{ __('validation.attributes.adr_phone') }}: {{ $dispatchOrder->address->adr_phone  }}</div>
                     </div>
@@ -34,10 +34,21 @@
                 </div>
             </div>
 
+            <div class="py-5 px-10">
+                <select class="form-select w-full">
+                    <option selected>{{ __('common.dropdown_placeholder') }}</option>
+                    @foreach($dispatchOrder->reservedStocks as $key => $reservation)
+                        <option value="{{ $reservation->product->id }}">
+                            {{ $reservation->product->name }} - ({{ $reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }} gerekli)
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
 
 
-            <div class="bg-cool-gray-50">
+
+            {{-- <div class="bg-cool-gray-50">
                 <div class="flex flex-col gap-5">
                     @foreach ($dispatchOrder->reservedStocks as $index => $reservation)
                         <div class="bg-white shadow-md border hover:border-orange-300 rounded-sm relative p-3" wire:key="do_{{ $index }}">
@@ -62,11 +73,9 @@
                                                 <x-input model="cards.{{$index}}.rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $reservation->product->baseUnit->name }}">
                                                     
                                                 </x-input>
-                                                {{-- <button class="ui tiny icon button"> --}}
                                                 <div class="flex items-center w-1/12 cursor-pointer justify-center">
                                                     <i class="large cancel red icon"></i>
                                                 </div>
-                                                {{-- </button> --}}
                                             </div>
                                         </div>
                                     @endforeach
@@ -87,7 +96,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
 
 
         </div>
