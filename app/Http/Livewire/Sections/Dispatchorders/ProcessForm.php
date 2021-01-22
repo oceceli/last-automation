@@ -16,32 +16,30 @@ class ProcessForm extends Component
     public $cards;
 
     public $doLotModal = false;
-    public $reservation;
+    public $selectedReservation;
 
 
     public function mount($dispatchOrder)
     {
         $this->dispatchOrder = $dispatchOrder;
-
-        foreach($this->dispatchOrder->reservedStocks()->select('id')->get() as $key => $reservationId) {
-            $this->addRow($key);
-        }
         
         $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
     }
 
     public function openDoLotModal($reservationId)
     {
-        $this->reservation = ReservedStock::find($reservationId);
+        $this->reset('cards');
+        $this->addCard();
         $this->doLotModal = true;
+        $this->selectedReservation = ReservedStock::find($reservationId);
     }
 
     /**
      * Add a brand new row into the card
      */
-    public function addRow($index)
+    public function addCard()
     {
-        $this->cards[$index]['rows'][] = [
+        $this->cards[] = [
             'lot_number' => null,
             'reserved_amount' => null,
         ];

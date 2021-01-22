@@ -47,7 +47,7 @@
                     <div class="text-xs text-ease">!!! İlgili ürünün üzerine tıklayarak lot numaralarını belirtebilirsiniz</div>
                     <div class="mt-2 p-2 border shadow-inner rounded border-red-200">
                         @foreach($dispatchOrder->reservedStocks as $key => $reservation)
-                            <div wire:click="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer">
+                            <div wire:click.prevent="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer">
                                 <span class="text-blue-600">{{ $reservation->product->code }}</span>
                                 <span class="text-xs text-ease">{{ $reservation->product->name }}</span>
                                 <span>- {{ $reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }}</span>
@@ -55,26 +55,7 @@
                         @endforeach
                     </div>
                 </div>
-                {{-- <div class="pt-6">
-                    <label>!!! Sevk edilecek ürünü seç</label>
-                    <div>
-                        <select class="form-select w-full">
-                            <option selected>{{ __('common.dropdown_placeholder') }}</option>
-                            @foreach($dispatchOrder->reservedStocks as $key => $reservation)
-                                <option value="{{ $reservation->product->id }}">
-                                    {{ $reservation->product->name }} - ({{ $reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }} gerekli)
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> --}}
             </div>
-
-
-
-
-            
-            
         </div>
     </x-content>
 
@@ -85,27 +66,27 @@
 
                 <div class="bg-cool-gray-50">
                     <div class="flex flex-col gap-5">
-                        @foreach ($dispatchOrder->reservedStocks as $index => $reservation)
-                            <div class="bg-white shadow-md border hover:border-orange-300 rounded-sm relative p-3" wire:key="do_{{ $index }}">
+                        {{-- @foreach ($dispatchOrder->reservedStocks as $index => $reservation) --}}
+                            <div class="bg-white shadow-md border hover:border-orange-300 rounded-sm relative p-3" wire:key="do_{{ $selectedReservation->id }}">
                                 <div class="border-b border-dashed pb-2 flex justify-between font-bold">
                                     <div>
-                                        {{ $reservation->product->code}} -
-                                        {{ $reservation->product->name}}
+                                        {{ $selectedReservation->product->code}} -
+                                        {{ $selectedReservation->product->name}}
                                     </div>
                                     <div class="text-red-700">
-                                        {{ $reservation->reserved_amount }}
-                                        {{ $reservation->product->baseUnit->name }}
+                                        {{ $selectedReservation->reserved_amount }}
+                                        {{ $selectedReservation->product->baseUnit->name }}
                                     </div>
                                 </div>
-                                @if ($reservation->product->isInStock)
+                                @if ($selectedReservation->product->isInStock)
                                     <div class="mt-2">
-                                        @foreach ($cards[$index]['rows'] as $key => $row)
+                                        @foreach ($cards as $key => $card)
                                             <div class="ui tiny form">
                                                 <div class="equal width fields">
-                                                    <x-dropdown model="cards.{{$index}}.rows.{{$key}}.lot_number" :collection="$reservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                                    <x-dropdown model="cards.{{$key}}.lot_number" :collection="$selectedReservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
                                                         placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  />
                                                     
-                                                    <x-input model="cards.{{$index}}.rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $reservation->product->baseUnit->name }}">
+                                                    <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedReservation->product->baseUnit->name }}">
                                                         
                                                     </x-input>
                                                     <div class="flex items-center w-1/12 cursor-pointer justify-center">
@@ -118,7 +99,7 @@
                                             <button class="ui mini primary w-full button">
                                                 Kaydet
                                             </button>
-                                            <button wire:click="addRow({{ $index }})" class="ui black mini icon button">
+                                            <button wire:click="addCard()" class="ui black mini icon button">
                                                 <i class="white plus icon"></i>
                                             </button>
                                         </div>
@@ -129,10 +110,10 @@
                                     </div>
                                 @endif
                             </div>
-                        @endforeach
+                        {{-- @endforeach --}}
                     </div>
                 </div>
-                
+
             </x-custom-modal>
         </div>
     @endif
