@@ -161,7 +161,7 @@ class Sidebar extends Component
             ],
             [
                 'name' => 'dispatchorders.index', 
-                'label' => 'dispatchorders.dispatchorders', 
+                'label' => 'dispatchorders.dispatch', 
                 'icon' => 'truck icon',
                 'submenus' => [
                     [

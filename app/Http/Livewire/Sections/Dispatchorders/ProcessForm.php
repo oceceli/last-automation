@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sections\Dispatchorders;
 
+use App\Models\ReservedStock;
 use App\Services\Address\AddressService;
 use Livewire\Component;
 
@@ -13,6 +14,9 @@ class ProcessForm extends Component
 
     // model cards
     public $cards;
+
+    public $doLotModal = false;
+    public $reservation;
 
 
     public function mount($dispatchOrder)
@@ -26,6 +30,11 @@ class ProcessForm extends Component
         $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
     }
 
+    public function openDoLotModal($reservationId)
+    {
+        $this->reservation = ReservedStock::find($reservationId);
+        $this->doLotModal = true;
+    }
 
     /**
      * Add a brand new row into the card
