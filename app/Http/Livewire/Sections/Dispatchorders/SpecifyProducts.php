@@ -75,9 +75,9 @@ trait SpecifyProducts
     {
         foreach($this->cards as $card) {
             $baseAmount = Conversions::toBase($card['unitId'], $card['reserved_amount'])['amount'];
-            $dispatchOrder->reservedStocks()->create([
+            $dispatchOrder->dispatchProducts()->create([
                 'product_id' => $card['product_id'],
-                'reserved_amount' => $baseAmount,
+                'dp_amount' => $baseAmount,
             ]);
         }
         return true;

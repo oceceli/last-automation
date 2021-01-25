@@ -12,13 +12,14 @@ class Form extends Component
     use SpecifyProducts;
     // use SpecifyLots;
     
-    public $do_are_lots_specified = false; // sevk emri oluştururken lotları seçmek istersen bunu true yap, ekstra bir form gerekecek muhtemelen
+    // public $do_are_lots_specified = false; // sevk emri oluştururken lotları seçmek istersen bunu true yap, ekstra bir form gerekecek muhtemelen
 
     // dispatchorders attributes
     public $company_id;
     public $address_id;
     public $do_number;
     public $do_datetime;
+    public $do_note; // !! note alanı forma eklenecek
 
     public $selectedCompany;
 
@@ -29,7 +30,7 @@ class Form extends Component
             'address_id' => 'required|integer',
             'do_number' => 'required|numeric',
             'do_datetime' => 'required|date',
-            'do_are_lots_specified' => 'required|boolean',
+            'do_note' => 'nullable',
         ];
     }
 
@@ -37,9 +38,7 @@ class Form extends Component
     protected function validationAttributes() 
     {
         $array = [];
-        if($this->do_are_lots_specified === false) {
-            $array = array_merge($array, $this->spValidationAttributes);
-        }
+        $array = array_merge($array, $this->spValidationAttributes);
         return $array;
     }
 
@@ -47,9 +46,7 @@ class Form extends Component
     public function mount()
     {
         $this->do_datetime = Carbon::today();
-        if($this->do_are_lots_specified === false) {
-            $this->addCard();
-        }
+        $this->addCard();
     }
     
 
@@ -82,20 +79,19 @@ class Form extends Component
     {
         $validatedDoData = $this->validate();
 
-        if($this->do_are_lots_specified === false) {
-            
-            // spRules refers to SpecifyProduct trait's rules
-            $this->validate($this->spRules);
-            
-            $dispatchOrder = DispatchOrder::create($validatedDoData);
+        // spRules refers to SpecifyProduct trait's rules
+        $this->validate($this->spRules);
+        
+        $dispatchOrder = DispatchOrder::create($validatedDoData);
 
-            if($this->spSubmit($dispatchOrder)) {
-                session()->flash('success', __('dispatchorders.dispatchorder_created'));
-                return redirect()->route('dispatchorders.index');
-            } else {
-                $this->emit('toast', __('common.error_occurred'), __('dispatchorders.an_error_occurred_while_creating_dispatchorder_please_reload_page_and_try_again'), 'error'); 
-                $dispatchOrder->delete();
-            }
-        }
+        if($this->spSubmit($dispatchOrder)) {
+            session()->flash('success', __('dispatchorders.dispatchorder_created'));
+            return redirect()->route('dispatchorders.index');
+        } 
+        // else {
+        //     $this->emit('toast', __('common.error_occurred'), __('dispatchorders.an_error_occurred_while_creating_dispatchorder_please_reload_page_and_try_again'), 'error'); 
+        //     $dispatchOrder->delete();
+        // }
+
     }
 }

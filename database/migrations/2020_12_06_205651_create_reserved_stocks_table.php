@@ -16,7 +16,7 @@ class CreateReservedStocksTable extends Migration
         Schema::create('reserved_stocks', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
-            $table->string('reserved_lot')->nullable();
+            $table->string('reserved_lot');
             $table->integer('reserved_amount');
             
             $table->string('reservable_type');

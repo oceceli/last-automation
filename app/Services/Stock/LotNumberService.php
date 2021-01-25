@@ -65,6 +65,13 @@ class LotNumberService
         return $this->positive($lot) - $this->negative($lot);
     }
 
+
+    public function count()
+    {
+        return count($this->uniqueLots());
+    }
+
+
     /**
      *  Drops down into one all stockmove lot occurrences
      * 

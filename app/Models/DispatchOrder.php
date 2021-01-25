@@ -25,6 +25,11 @@ class DispatchOrder extends Model implements CanReserveStocks
         return $this->morphMany(ReservedStock::class, 'reservable');
     }
 
+    public function dispatchProducts()
+    {
+        return $this->hasMany(DispatchProduct::class);
+    }
+
     public function stockMoves()
     {
         return $this->morphMany('App\Models\StockMove', 'stockable');

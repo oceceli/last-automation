@@ -41,16 +41,16 @@
                     <div class="text-red-700 cursor-default">
                         <i class="shipping fast icon"></i>
                         <span class="font-bold">
-                            {{ __('dispatchorders.there_are_number_variety_of_products_which_is_waiting_for_the_dispatch', ['number' => $dispatchOrder->reservedStocks->count()]) }}
+                            {{ __('dispatchorders.there_are_number_variety_of_products_which_is_waiting_for_the_dispatch', ['number' => $dispatchOrder->dispatchProducts->count()]) }}
                         </span>
                     </div>
                     <div class="text-xs text-ease">!!! İlgili ürünün üzerine tıklayarak lot numaralarını belirtebilirsiniz</div>
                     <div class="mt-2 p-2 border shadow-inner rounded border-red-200">
-                        @foreach($dispatchOrder->reservedStocks as $key => $reservation)
+                        @foreach($dispatchOrder->dispatchProducts as $key => $reservation)
                             <div wire:click.prevent="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer">
                                 <span class="text-blue-600">{{ $reservation->product->code }}</span>
                                 <span class="text-xs text-ease">{{ $reservation->product->name }}</span>
-                                <span>- {{ $reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }}</span>
+                                <span>- {{ $reservation->dp_amount }} {{ $reservation->product->baseUnit->name }}</span>
                             </div>
                         @endforeach
                     </div>
@@ -67,26 +67,26 @@
                 <div class="bg-cool-gray-50">
                     <div class="flex flex-col gap-5">
                         {{-- @foreach ($dispatchOrder->reservedStocks as $index => $reservation) --}}
-                            <div class="bg-white shadow-md relative p-3" wire:key="do_{{ $selectedReservation->id }}">
+                            <div class="bg-white shadow-md relative p-3" wire:key="do_{{ $selectedDP->id }}">
                                 <div class="border-b border-dashed pb-2 flex justify-between font-bold">
                                     <div>
-                                        {{ $selectedReservation->product->code}} -
-                                        {{ $selectedReservation->product->name}}
+                                        {{ $selectedDP->product->code}} -
+                                        {{ $selectedDP->product->name}}
                                     </div>
                                     <div class="text-red-700">
-                                        {{ $selectedReservation->reserved_amount }}
-                                        {{ $selectedReservation->product->baseUnit->name }}
+                                        {{ $selectedDP->dp_amount }}
+                                        {{ $selectedDP->product->baseUnit->name }}
                                     </div>
                                 </div>
-                                @if ($selectedReservation->product->isInStock)
+                                @if ($selectedDP->product->isInStock)
                                     <div class="mt-2">
                                         @foreach ($cards as $key => $card)
                                             <div wire:key="card_{{ $key }}" class="ui tiny form">
                                                 <div class="equal width fields">
-                                                    <x-dropdown model="cards.{{$key}}.lot_number" :collection="$selectedReservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                                    <x-dropdown model="cards.{{$key}}.lot_number" :collection="$selectedDP->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
                                                         placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  />
                                                         
-                                                    <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedReservation->product->baseUnit->name }}">
+                                                    <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedDP->product->baseUnit->name }}">
                                                         
                                                     </x-input>
                                                     <div wire:click="removeCard({{ $key }})" class="flex items-center w-1/12 cursor-pointer justify-center">

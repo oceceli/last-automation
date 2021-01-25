@@ -28,11 +28,11 @@
 
 
                 <x-slot name="bottom">
-                    @if ($do_are_lots_specified)
-                        @include('web.sections.dispatchorders.specifyLots')
-                    @else
+                    {{-- @if ($do_are_lots_specified) --}}
+                        {{-- @include('web.sections.dispatchorders.specifyLots') --}}
+                    {{-- @else --}}
                         @include('web.sections.dispatchorders.specifyProducts')
-                    @endif
+                    {{-- @endif --}}
                 </x-slot>
 
 

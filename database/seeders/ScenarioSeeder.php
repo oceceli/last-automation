@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\Unit;
@@ -116,6 +117,27 @@ class ScenarioSeeder extends Seeder
             $ribonSm->id => ['amount' => '7.5', 'unit_id' => $ribonSmCm->id, 'literal' => false],
         ]);
 
+
+
+        // müşteri ve adres
+        $company = Company::create([
+            'cmp_name' => 'Rfm',
+            'cmp_commercial_title' => 'Rfm Aş',
+            'cmp_current_code' => '28346',
+            'cmp_supplier' => true,
+            'cmp_customer' => true,
+            'cmp_note' => 'Firma notu',
+            'cmp_phone' => '03124357589',
+            'cmp_tax_number' => '11111',
+        ]);
+        $address = $company->addresses()->create([
+            'adr_name' => 'Ankara Numune Hast',
+            'adr_country' => 'Türkiye',
+            'adr_province' => 'Ankara',
+            'adr_district' => 'Çankaya',
+            'adr_body' => 'Cebeci Mah. Keskin cad 234/2',
+            'adr_phone' => '03124758374',
+        ]);
 
         
     }
