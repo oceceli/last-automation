@@ -67,19 +67,33 @@
                 <div class="bg-cool-gray-50">
                     <div class="flex flex-col gap-5">
                         {{-- @foreach ($dispatchOrder->reservedStocks as $index => $reservation) --}}
-                            <div class="bg-white shadow-md relative p-3" wire:key="do_{{ $selectedDP->id }}">
-                                <div class="border-b border-dashed pb-2 flex justify-between font-bold">
+                            <div class="bg-white shadow-md relative" wire:key="do_{{ $selectedDP->id }}">
+                                <div class="border-b border-dashed pb-2 md:flex justify-between font-bold p-3">
                                     <div>
                                         {{ $selectedDP->product->code}} -
                                         {{ $selectedDP->product->name}}
                                     </div>
-                                    <div class="text-red-700">
-                                        {{ $selectedDP->dp_amount }}
-                                        {{ $selectedDP->product->baseUnit->name }}
+                                    <div>
+                                        <span class="text-xs text-ease">
+                                            {{ __('dispatchorders.needed_amount') }}
+                                        </span>
+                                        <span class="text-red-700 text-sm">
+                                            {{ $selectedDP->dp_amount }}
+                                            {{ $selectedDP->product->baseUnit->name }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="text-ease text-xs">
+                                            {{ __('dispatchorders.total_covered') }}
+                                        </span>
+                                        <span class="text-green-800 text-sm">
+                                            {{ $this->coveredAmount() }}
+                                            {{ $selectedDP->product->baseUnit->name }}
+                                        </span>
                                     </div>
                                 </div>
                                 @if ($selectedDP->product->isInStock)
-                                    <div class="mt-2">
+                                    <div class="mt-2 p-3 shadow">
                                         @foreach ($cards as $key => $card)
                                             <div wire:key="card_{{ $key }}" class="ui tiny form">
                                                 <div class="equal width fields">
@@ -90,19 +104,19 @@
                                                         
                                                     </x-input>
                                                     <div wire:click="removeCard({{ $key }})" class="flex items-center w-1/12 cursor-pointer justify-center">
-                                                        <i class="large link cancel red icon"></i>
+                                                        <i class="large cancel red icon @if($this->cannotRemoveCard()) disabled @else link @endif"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endforeach
-                                        <div class="w-full flex border-t pt-3">
-                                            <button wire:click="submitLots()" class="ui mini primary w-full button">
-                                                !!Kaydet
-                                            </button>
-                                            <button wire:click="addCard()" class="ui green mini icon button">
-                                                <i class="white plus icon"></i>
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="w-full flex border-t p-3 bg-gray-100">
+                                        <button wire:click="submitLots()" class="ui mini primary w-full button">
+                                            !!Kaydet
+                                        </button>
+                                        <button wire:click="addCard()" class="ui green mini icon button @if($this->cannotAddCard()) disabled @endif">
+                                            <i class="white plus icon"></i>
+                                        </button>
                                     </div>
                                 @else 
                                     <div class="mt-4 p-4 bg-red-100 shadow-inner">

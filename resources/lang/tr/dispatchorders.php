@@ -13,6 +13,8 @@ return [
     'process_dispatch' => 'Sevk et',
 
     'dispatch' => 'Sevkiyat',
+    'total_covered' => 'Karşılanan miktar',
+    'needed_amount' => 'Gerekli miktar',
 
     'lot_number' => 'Lot numarası',
     'there_are_number_variety_of_products_which_is_waiting_for_the_dispatch' => 'Sevk edilmeyi bekleyen :number ürün var',

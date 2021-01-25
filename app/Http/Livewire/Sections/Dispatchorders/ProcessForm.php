@@ -41,16 +41,37 @@ class ProcessForm extends Component
      */
     public function addCard()
     {
-        if($this->lotCount == count($this->cards)) return; // !! devam
+        if($this->cannotAddCard()) return;
         $this->cards[] = [
             'lot_number' => null,
             'reserved_amount' => null,
         ];
     }
 
+    
+    public function cannotAddCard()
+    {
+        return $this->cards && $this->lotCount <= count($this->cards);
+    }
+
+
+
     public function removeCard($index)
     {
+        if($this->cannotRemoveCard()) return;
         unset($this->cards[$index]);
+    }
+
+
+    public function cannotRemoveCard()
+    {
+        return count($this->cards) === 1;
+    }
+
+
+    public function coveredAmount()
+    {
+        return array_sum(array_column($this->cards, 'reserved_amount'));
     }
 
     public function submitLots()
