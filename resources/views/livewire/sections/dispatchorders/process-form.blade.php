@@ -67,7 +67,7 @@
                 <div class="bg-cool-gray-50">
                     <div class="flex flex-col gap-5">
                         {{-- @foreach ($dispatchOrder->reservedStocks as $index => $reservation) --}}
-                            <div class="bg-white shadow-md border hover:border-orange-300 rounded-sm relative p-3" wire:key="do_{{ $selectedReservation->id }}">
+                            <div class="bg-white shadow-md relative p-3" wire:key="do_{{ $selectedReservation->id }}">
                                 <div class="border-b border-dashed pb-2 flex justify-between font-bold">
                                     <div>
                                         {{ $selectedReservation->product->code}} -
@@ -81,25 +81,25 @@
                                 @if ($selectedReservation->product->isInStock)
                                     <div class="mt-2">
                                         @foreach ($cards as $key => $card)
-                                            <div class="ui tiny form">
+                                            <div wire:key="card_{{ $key }}" class="ui tiny form">
                                                 <div class="equal width fields">
                                                     <x-dropdown model="cards.{{$key}}.lot_number" :collection="$selectedReservation->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
                                                         placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  />
-                                                    
+                                                        
                                                     <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedReservation->product->baseUnit->name }}">
                                                         
                                                     </x-input>
-                                                    <div class="flex items-center w-1/12 cursor-pointer justify-center">
-                                                        <i class="large cancel red icon"></i>
+                                                    <div wire:click="removeCard({{ $key }})" class="flex items-center w-1/12 cursor-pointer justify-center">
+                                                        <i class="large link cancel red icon"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endforeach
                                         <div class="w-full flex border-t pt-3">
-                                            <button class="ui mini primary w-full button">
-                                                Kaydet
+                                            <button wire:click="submitLots()" class="ui mini primary w-full button">
+                                                !!Kaydet
                                             </button>
-                                            <button wire:click="addCard()" class="ui black mini icon button">
+                                            <button wire:click="addCard()" class="ui green mini icon button">
                                                 <i class="white plus icon"></i>
                                             </button>
                                         </div>

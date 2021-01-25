@@ -19,6 +19,11 @@ trait HasInventory
         // return StockCalculations::lotNumbersAndAmounts($this->id); // !! use lotnumberservice instead
     }
 
+    public function onlyLot($lotNumber)
+    {
+        return (new LotNumberService($this))->only($lotNumber);
+    }
+
     public function getIsInStockAttribute()
     {
         return $this->totalStock['amount'] > 0;
