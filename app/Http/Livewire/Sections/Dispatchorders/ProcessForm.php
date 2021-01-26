@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Sections\Dispatchorders;
 
 use App\Models\DispatchProduct;
-use App\Models\ReservedStock;
 use App\Services\Address\AddressService;
 use Livewire\Component;
 
@@ -17,7 +16,7 @@ class ProcessForm extends Component
     public $cards;
 
     public $doLotModal = false;
-    public $selectedDP;
+    public $dispatchPivot;
     public $lotCount;
 
 
@@ -27,14 +26,91 @@ class ProcessForm extends Component
         $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
     }
 
-    public function openDoLotModal($reservationId)
+    public function openDoLotModal($id)
     {
         $this->reset('cards');
         $this->addCard();
         $this->doLotModal = true;
-        $this->selectedDP = DispatchProduct::find($reservationId);
-        $this->lotCount = $this->selectedDP->product->lotCount();
+        $this->dispatchPivot = DispatchProduct::find($id);
+        $this->lotCount = $this->dispatchPivot->product->lotCount();
     }
+
+    /**
+     * Extract cards' indexes, values and call the related function
+     */
+    public function updatedCards($value, $location)
+    {
+        $array = explode('.', $location);
+        $index = $array[0];
+        $field = $array[1];
+
+        if($field == 'lot_number') {
+            return $this->updatedLotNumber($index, $value);
+        } else {
+            return $this->updatedReservedAmount($index, $value);
+        }
+    }
+
+    
+    public function updatedLotNumber($index, $value)
+    {
+        $this->updatedReservedAmount($index, $value);
+    }
+
+
+    public function updatedReservedAmount($index, $value)
+    {
+        $card = $this->cards[$index];
+        $lotMax = $this->lotMax($card['lot_number']);
+
+        if(! $card['lot_number']) 
+            return $this->cards[$index]['reserved_amount'] = 0;
+
+        if($this->coveredAmount() > $this->dispatchPivot->dp_amount) {
+            // if($this->dispatchPivot->dp_amount > $lotMax) 
+            //     $this->cards[$index]['reserved_amount'] = $lotMax;
+            // else 
+            //     $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
+
+            $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount > $lotMax
+                ? $lotMax
+                : $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
+
+        } elseif($card['reserved_amount'] > $lotMax) {
+            $this->cards[$index]['reserved_amount'] = $lotMax;
+        }
+    }
+
+
+    private function lotMax($lotNumber)
+    {
+        return $this->dispatchPivot->product->onlyLot($lotNumber); // ?? index geç içine
+    }
+
+    private function lotIsEnough($index) // ?? kullanılmıyor
+    {
+        return $this->lotMax($this->cards[$index]['lot_number']) >= $this->cards[$index]['reserved_amount'];
+    }
+
+    private function siblingsTotalAmount($index)
+    {
+        return $this->coveredAmount() - $this->cards[$index]['reserved_amount'];
+    }
+
+    private function amountOf($index) // ?? kullan bunu
+    {
+        return $this->cards[$index]['reserved_amount'];
+    }
+
+
+    public function coveredAmount()
+    {
+        return array_sum(array_column($this->cards, 'reserved_amount'));
+    }
+
+
+    
+
 
     /**
      * Add a brand new row into the card
@@ -69,48 +145,48 @@ class ProcessForm extends Component
     }
 
 
-    public function coveredAmount()
-    {
-        return array_sum(array_column($this->cards, 'reserved_amount'));
-    }
+    // public function coveredAmount()
+    // {
+    //     return array_sum(array_column($this->cards, 'reserved_amount'));
+    // }
 
     public function submitLots()
     {
-        $product = $this->selectedDP->product;
+        if(! $this->dispatchPivot) return;
+        if($this->cannotSubmit()) return;
         
-        if(! $this->selectedDP) return;
-        
-        $totalInputAmount = array_sum(array_column($this->cards, 'reserved_amount'));
+        $coveredAmount = $this->coveredAmount();
 
-        // is input-amount equals or smaller of actual amount of lot source 
+        // is input-amount equals or smaller of actual amount of lot source
         foreach($this->cards as $card) {
-            $lotMax = $product->onlyLot($card['lot_number']);
+            $lotMax = $this->lotMax($card['lot_number']);
             if($card['reserved_amount'] > $lotMax)
-                $this->emit('toast', '!!Lot yetersiz', '!!!Belirtilen kaynak yeterli miktarı karşılamıkyor', 'warning');
+                return $this->emit('toast', '!!Lot yetersiz', '!!!Belirtilen kaynak yeterli miktarı karşılamıyor', 'warning');
         }
 
 
-        if($totalInputAmount < $this->selectedDP->dp_amount) 
+        if($coveredAmount < $this->dispatchPivot->dp_amount) 
             dd("eksik");
 
         
         foreach($this->cards as $card) {
             $this->dispatchOrder->reservedStocks()->create([
-                'product_id' => $product,
+                'product_id' => $this->dispatchPivot->product,
                 'reserved_lot' => $card['lot_number'],
                 'reserved_amount' => $card['reserved_amount'],
             ]);
         }
-
-        
-        
-        
-
         
         // !! tanımlanan lotlar(cards) sevk emrindeki miktarı karşılasın
         // !! dispatchorder üzerinden reservedstocks oluştur, lotlar ile
 
     }
+
+    public function cannotSubmit()
+    {
+        return $this->dispatchPivot->dp_amount != $this->coveredAmount();
+    }
+
 
     public function render()
     {

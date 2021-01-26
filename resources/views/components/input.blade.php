@@ -1,19 +1,19 @@
 <div {{ $attributes->merge(['class' => 'field']) }}>
     <label>{{ ucfirst(__($label)) }}</label>
     @if ($action)
-        <div class="ui action input">
-            <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
+        <div class="ui action input flex-1">
+            <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model.lazy="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
             {{ $action }}
         </div>
     @elseif($innerLabel)
-        <div class="ui right labeled input">
-            <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
+        <div class="ui right labeled input flex-1">
+            <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model.lazy="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
             <div class="ui basic label">
                 {{ $innerLabel }}
             </div>
         </div>
     @else
-        <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
+        <input @if($defer) wire:model.defer="{{ $model }}" @else wire:model.lazy="{{ $model }}" @endif type="{{ $type }}" placeholder="{{ ucfirst(__($placeholder)) }}">
     @endif
 
 

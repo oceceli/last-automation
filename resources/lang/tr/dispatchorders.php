@@ -17,6 +17,7 @@ return [
     'needed_amount' => 'Gerekli miktar',
 
     'lot_number' => 'Lot numarası',
+    'select_lot_number' => 'Lot seçiniz...',
     'there_are_number_variety_of_products_which_is_waiting_for_the_dispatch' => 'Sevk edilmeyi bekleyen :number ürün var',
 
     'do_daily' => 'Günlük Sevk',
