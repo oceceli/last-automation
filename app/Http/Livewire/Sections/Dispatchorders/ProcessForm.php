@@ -26,90 +26,6 @@ class ProcessForm extends Component
         $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
     }
 
-    public function openDoLotModal($id)
-    {
-        $this->reset('cards');
-        $this->addCard();
-        $this->doLotModal = true;
-        $this->dispatchPivot = DispatchProduct::find($id);
-        $this->lotCount = $this->dispatchPivot->product->lotCount();
-    }
-
-    /**
-     * Extract cards' indexes, values and call the related function
-     */
-    public function updatedCards($value, $location)
-    {
-        $array = explode('.', $location);
-        $index = $array[0];
-        $field = $array[1];
-
-        if($field == 'lot_number') {
-            return $this->updatedLotNumber($index, $value);
-        } else {
-            return $this->updatedReservedAmount($index, $value);
-        }
-    }
-
-    
-    public function updatedLotNumber($index, $value)
-    {
-        $this->updatedReservedAmount($index, $value);
-    }
-
-
-    public function updatedReservedAmount($index, $value)
-    {
-        $card = $this->cards[$index];
-        $lotMax = $this->lotMax($card['lot_number']);
-
-        if(! $card['lot_number']) 
-            return $this->cards[$index]['reserved_amount'] = 0;
-
-        if($this->coveredAmount() > $this->dispatchPivot->dp_amount) {
-            // if($this->dispatchPivot->dp_amount > $lotMax) 
-            //     $this->cards[$index]['reserved_amount'] = $lotMax;
-            // else 
-            //     $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
-
-            $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount > $lotMax
-                ? $lotMax
-                : $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
-
-        } elseif($card['reserved_amount'] > $lotMax) {
-            $this->cards[$index]['reserved_amount'] = $lotMax;
-        }
-    }
-
-
-    private function lotMax($lotNumber)
-    {
-        return $this->dispatchPivot->product->onlyLot($lotNumber); // ?? index geç içine
-    }
-
-    private function lotIsEnough($index) // ?? kullanılmıyor
-    {
-        return $this->lotMax($this->cards[$index]['lot_number']) >= $this->cards[$index]['reserved_amount'];
-    }
-
-    private function siblingsTotalAmount($index)
-    {
-        return $this->coveredAmount() - $this->cards[$index]['reserved_amount'];
-    }
-
-    private function amountOf($index) // ?? kullan bunu
-    {
-        return $this->cards[$index]['reserved_amount'];
-    }
-
-
-    public function coveredAmount()
-    {
-        return array_sum(array_column($this->cards, 'reserved_amount'));
-    }
-
-
-    
 
 
     /**
@@ -124,7 +40,137 @@ class ProcessForm extends Component
         ];
     }
 
+
+
+    /**
+     * Open modal for specifying lot sources to dispatch
+     */
+    public function openDoLotModal($id)
+    {
+        $this->reset('cards');
+        $this->addCard();
+        $this->doLotModal = true;
+        $this->dispatchPivot = DispatchProduct::find($id);
+        $this->lotCount = $this->dispatchPivot->product->lotCount();
+    }
+
     
+
+    /**
+     * Index stands for cards' index
+     */
+    public function updatedLotNumber($index, $value)
+    {
+        $this->updatedReservedAmount($index, $value);
+    }
+
+
+
+    /**
+     * Index stands for cards' index
+     */
+    // public function updatedReservedAmount($index, $value)
+    // {
+    //     $card = $this->cards[$index];
+    //     $lotMax = $this->lotMax($card['lot_number']);
+
+    //     if(! $card['lot_number']) 
+    //         return $this->cards[$index]['reserved_amount'] = 0;
+
+    //     if($this->coveredAmount() > $this->dispatchPivot->dp_amount) {
+            // if($this->dispatchPivot->dp_amount > $lotMax) 
+            //     $this->cards[$index]['reserved_amount'] = $lotMax;
+            // else 
+            //     $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
+
+    //         $this->cards[$index]['reserved_amount'] = $this->dispatchPivot->dp_amount > $lotMax
+    //             ? $lotMax
+    //             : $this->dispatchPivot->dp_amount - $this->siblingsTotalAmount($index);
+
+    //     } elseif($card['reserved_amount'] > $lotMax) {
+    //         $this->cards[$index]['reserved_amount'] = $lotMax;
+    //     }
+    // }
+
+
+
+    /**
+     * Index stands for cards' index
+     */
+    public function updatedReservedAmount($index, $value)
+    {
+        $card = $this->cards[$index];
+        $inputAmount = $card['reserved_amount'];
+        $lotMax = $this->lotMax($card['lot_number']);
+
+        if(! $card['lot_number']) 
+            return $this->cards[$index]['reserved_amount'] = null;
+
+        // if($inputAmount <= $lotMax) {
+            if(($this->dispatchPivot->dp_amount - $this->siblingsCovered($index)) <= $inputAmount) {
+                if($inputAmount <= $lotMax) {
+                    $this->cards[$index]['reserved_amount'] = ($this->dispatchPivot->dp_amount - $this->siblingsCovered($index));
+                } else {
+                    $this->cards[$index]['reserved_amount'] = 1; // ????? devam et
+                }
+            }
+        // }
+        
+    }
+
+
+
+    /**
+     * Gives actual stock amount which depends on lot number
+     */
+    private function lotMax($lotNumber)
+    {
+        return $this->dispatchPivot->product->onlyLot($lotNumber); // ?? index geç içine
+    }
+
+
+
+    // private function lotIsEnough($index) // ?? kullanılmıyor
+    // {
+    //     return $this->lotMax($this->cards[$index]['lot_number']) >= $this->cards[$index]['reserved_amount'];
+    // }
+
+
+    /**
+     * Sum of cards' reserved_amount columns except card itself(index)
+     */
+    private function siblingsCovered($index)
+    {
+        return $this->coveredAmount() - $this->cards[$index]['reserved_amount'];
+    }
+
+
+
+    private function amountOf($index) // ?? kullan bunu
+    {
+        return $this->cards[$index]['reserved_amount'];
+    }
+
+
+
+    /**
+     * Total covered amount by user
+     */
+    public function coveredAmount()
+    {
+        return array_sum(array_column($this->cards, 'reserved_amount'));
+    }
+
+
+
+    public function necessaryAmount()
+    {
+        return $this->dispatchPivot->dp_amount - $this->coveredAmount();
+    }
+
+
+
+
     public function cannotAddCard()
     {
         return $this->cards && $this->lotCount <= count($this->cards);
@@ -139,17 +185,18 @@ class ProcessForm extends Component
     }
 
 
+
+
     public function cannotRemoveCard()
     {
         return count($this->cards) === 1;
     }
 
 
-    // public function coveredAmount()
-    // {
-    //     return array_sum(array_column($this->cards, 'reserved_amount'));
-    // }
 
+    /**
+     * Submits the form
+     */
     public function submitLots()
     {
         if(! $this->dispatchPivot) return;
@@ -179,13 +226,33 @@ class ProcessForm extends Component
         
         // !! tanımlanan lotlar(cards) sevk emrindeki miktarı karşılasın
         // !! dispatchorder üzerinden reservedstocks oluştur, lotlar ile
-
     }
 
+
+
+    
     public function cannotSubmit()
     {
         return $this->dispatchPivot->dp_amount != $this->coveredAmount();
     }
+
+
+    /**
+     * Extract cards' indexes, values and call the related function
+     */
+    public function updatedCards($value, $location)
+    {
+        $array = explode('.', $location);
+        $index = $array[0];
+        $field = $array[1];
+
+        if($field == 'lot_number') {
+            return $this->updatedLotNumber($index, $value);
+        } else {
+            return $this->updatedReservedAmount($index, $value);
+        }
+    }
+
 
 
     public function render()

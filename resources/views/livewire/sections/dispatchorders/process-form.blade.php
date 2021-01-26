@@ -64,82 +64,70 @@
         <div x-data="{doLotModal: @entangle('doLotModal')}">
             <x-custom-modal active="doLotModal">
 
-                <div class="bg-cool-gray-50">
-                    <div class="flex flex-col gap-5">
-                        {{-- @foreach ($dispatchOrder->reservedStocks as $index => $reservation) --}}
-                            <div class="bg-white shadow-md relative" wire:key="do_{{ $dispatchPivot->id }}">
-                                <div class="border-b border-dashed pb-2 font-bold p-3">
-                                    <x-slot name="header">
-                                        <div>
-                                            {{ $dispatchPivot->product->code}}
-                                            <span class="text-ease text-xs">({{ $dispatchPivot->product->name}})</span> -
-                                            <span>
-                                                <span class="">
-                                                    {{ $dispatchPivot->dp_amount }}
-                                                    {{ $dispatchPivot->product->baseUnit->name }}
-                                                </span>
-                                            </span>
+                <x-slot name="header">
+                    <div>
+                        {{ $dispatchPivot->product->code}}
+                        <span class="text-sm">({{ $dispatchPivot->product->name}})</span>
+                    </div>
+                </x-slot>
+
+                <div class="bg-white" wire:key="do_{{ $dispatchPivot->id }}">
+                    <div class="p-3 shadow font-bold text-sm">
+                        <div>
+                            <span>{{ __('dispatchorders.total_covered') }}:</span>
+                            <span class="text-green-600">
+                                {{ $this->coveredAmount() }}
+                                {{ $dispatchPivot->product->baseUnit->name }}
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ __('dispatchorders.needed_amount' )}}:</span>
+                            <span class="text-red-600">
+                                {{ $this->necessaryAmount() }}
+                                {{ $dispatchPivot->product->baseUnit->name }}
+                            </span>
+                        </div>
+                    </div>
+
+                    @if ($dispatchPivot->product->isInStock)
+                        <div class="p-6 shadow-md flex flex-col gap-8 md:gap-4">
+                            @foreach ($cards as $key => $card)
+                                <div wire:key="card_{{ $key }}" class="flex flex-col md:flex-row gap-3 border border-dashed p-3 rounded-lg hover:border-orange-400 ease-in-out duration-200">
+                                    {{-- <x-dropdown model="cards.{{$key}}.lot_number" :collection="$dispatchPivot->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                        placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
+                                    <select class="form-select text-sm flex-1" wire:model="cards.{{$key}}.lot_number">
+                                        <option selected>{{ __('dispatchorders.select_lot_number') }}</option>
+                                        @foreach ($dispatchPivot->product->lots as $lot)
+                                            <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
+                                                {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                        
+                                    <div class="flex gap-4">
+                                        <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" class="ui tiny input flex-1" />
+                                        <div  class="flex items-center w-1/12 justify-center">
+                                            <i wire:click="removeCard({{ $key }})" class="large cancel red icon @if($this->cannotRemoveCard()) disabled @else cursor-pointer link @endif"></i>
                                         </div>
-                                    </x-slot>
-                                    <div>
-                                        <span class="text-ease text-xs">
-                                            {{ __('dispatchorders.total_covered') }}:
-                                        </span>
-                                        <span class="text-green-800 text-sm">
-                                            {{ $this->coveredAmount() }}
-                                            {{ $dispatchPivot->product->baseUnit->name }}
-                                        </span>
-                                    </div>
-                                    <div class="text-ease">
-                                        <span class="text-xs">{{ __('dispatchorders.needed_amount' )}}</span>:
-                                        <span class="font-bold text-sm text-red-600">
-                                            {{ $dispatchPivot->dp_amount - $this->coveredAmount() }}
-                                            {{ $dispatchPivot->product->baseUnit->name }}
-                                        </span>
                                     </div>
                                 </div>
-                                @if ($dispatchPivot->product->isInStock)
-                                    <div class="mt-2 py-4 px-6 shadow flex flex-col gap-6">
-                                        @foreach ($cards as $key => $card)
-                                            <div wire:key="card_{{ $key }}">
-                                                <div class="flex flex-col md:flex-row gap-4">
-                                                    {{-- <x-dropdown model="cards.{{$key}}.lot_number" :collection="$dispatchPivot->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
-                                                        placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
-                                                    <select class="form-select text-xs flex-1" wire:model="cards.{{$key}}.lot_number">
-                                                        <option selected>{{ __('dispatchorders.select_lot_number') }}</option>
-                                                        @foreach ($dispatchPivot->product->lots as $lot)
-                                                            <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
-                                                                {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                        
-                                                    <div class="flex gap-4">
-                                                        <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" class="ui tiny input flex-1" />
-                                                        <div  class="flex items-center w-1/12 justify-center">
-                                                            <i wire:click="removeCard({{ $key }})" class="large cancel red icon @if($this->cannotRemoveCard()) disabled @else cursor-pointer link @endif"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="w-full flex border-t p-3 bg-gray-100">
-                                        <button wire:click="submitLots()" class="ui mini primary w-full button @if($this->cannotSubmit()) disabled @endif">
-                                            {{ __('common.save') }}
-                                        </button>
-                                        <button wire:click="addCard()" class="ui green mini icon button @if($this->cannotAddCard()) disabled @endif">
-                                            <i class="white plus icon"></i>
-                                        </button>
-                                    </div>
-                                @else 
-                                    <div class="mt-4 p-4 bg-red-100 shadow-inner">
-                                        <i class="text-ease">{{ __('inventory.out_of_stock') }}</i>
-                                    </div>
-                                @endif
-                            </div>
-                        {{-- @endforeach --}}
-                    </div>
+                            @endforeach
+                        </div>
+
+                        <div class="flex p-3">
+                            <button wire:click="submitLots()" class="ui mini primary w-full button @if($this->cannotSubmit()) disabled @endif">
+                                {{ __('common.save') }}
+                            </button>
+                            <button wire:click="addCard()" class="ui green mini icon button @if($this->cannotAddCard()) disabled @endif">
+                                <i class="white plus icon"></i>
+                            </button>
+                        </div>
+
+                    @else 
+                        <div class="mt-4 p-4 bg-red-100 shadow-inner">
+                            <i class="text-ease">{{ __('inventory.out_of_stock') }}</i>
+                        </div>
+                    @endif
                 </div>
 
             </x-custom-modal>
