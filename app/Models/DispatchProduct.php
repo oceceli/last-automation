@@ -27,4 +27,9 @@ class DispatchProduct extends Model
     {
         return $this->update(['dp_is_ready' => true]);
     }
+
+    public function isReady()
+    {
+        return $this->dp_is_ready;
+    }
 }

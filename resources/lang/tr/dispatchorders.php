@@ -14,6 +14,9 @@ return [
     'sources_are_enough' => 'Kaynaklar yeterli',
     'ready_to_dispatch' => 'Sevke hazır',
 
+    'this_lot_selected_already' => 'Bu lot zaten seçilmiş',
+    'lot_sources_not_specified_yet' => 'Lot kaynakları henüz belirtilmedi',
+
     'dispatch' => 'Sevkiyat',
     'total_covered' => 'Karşılanan miktar',
     'needed_amount' => 'Gerekli miktar',

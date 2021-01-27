@@ -17,8 +17,6 @@ class DoToday extends Component
 
 
 
-
-
     public function render()
     {
         return view('livewire.sections.dispatchorders.do-today');

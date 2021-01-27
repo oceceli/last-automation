@@ -12,27 +12,27 @@ class ProcessForm extends Component
     public $dispatchOrder;
     public $dispatchAddress;
 
-    // model cards
-    public $cards;
+    // model rows
+    public $rows;
 
     public $doLotModal = false;
-    public $dispatchPivot;
-    public $lotCount;
+    public $selectedDispatchProduct;
 
+    protected $listeners = ['refresh' => '$refresh'];
     
     protected function rules()
     {
         return [
-            'cards.*.lot_number' => 'required',
-            'cards.*.reserved_amount' => 'required|numeric',
+            'rows.*.lot_number' => 'required',
+            'rows.*.reserved_amount' => 'required|numeric',
         ];
     }
 
     protected function validationAttributes()
     {
         return [
-            'cards.*.lot_number' => __('dispatchorders.lot_number'),
-            'cards.*.reserved_amount' => __('common.amount'),
+            'rows.*.lot_number' => __('dispatchorders.lot_number'),
+            'rows.*.reserved_amount' => __('common.amount'),
         ];
     }
 
@@ -40,18 +40,18 @@ class ProcessForm extends Component
     public function mount($dispatchOrder)
     {
         $this->dispatchOrder = $dispatchOrder;        
-        $this->dispatchAddress = AddressService::concatenated($this->dispatchOrder->address);
+        $this->dispatchAddress = AddressService::concatenated($dispatchOrder->address);
     }
 
 
 
     /**
-     * Add a brand new row into the card
+     * Add a brand new row into the row
      */
-    public function addCard()
+    public function addRow()
     {
-        if($this->cannotAddCard()) return;
-        $this->cards[] = [
+        if($this->cannotAddRow()) return;
+        $this->rows[] = [
             'lot_number' => null,
             'reserved_amount' => null,
         ];
@@ -60,9 +60,9 @@ class ProcessForm extends Component
 
     public function siblings($index)
     {
-        $cards = $this->cards;
-        unset($cards[$index]);
-        return $cards;
+        $rows = $this->rows;
+        unset($rows[$index]);
+        return $rows;
     }
 
 
@@ -71,25 +71,38 @@ class ProcessForm extends Component
      */
     public function openDoLotModal($id)
     {
-        $this->reset('cards');
-        $this->addCard();
+        $this->selectedDispatchProduct = DispatchProduct::find($id);
+        // if($this->selectedDispatchProduct->isReady()) {
+        //     return "hava";
+        // }
+
+        $this->addRow();
         $this->doLotModal = true;
-        $this->dispatchPivot = DispatchProduct::find($id);
-        $this->lotCount = $this->dispatchPivot->product->lotCount();
+    }
+
+
+    public function closeDoLotModal()
+    {
+        $this->reset('rows', 'doLotModal', 'selectedDispatchProduct');
+    }
+
+
+    public function updatedDoLotModal($bool)
+    {
+        if(!$bool) $this->closeDoLotModal();
     }
 
     
 
     /**
-     * Index stands for cards' index
+     * Index stands for rows' index
      */
     public function updatedLotNumber($index, $lotNumber)
     {
-        // don't let selected lot numbers same in all cards
+        // don't let selected lot numbers to be same in all rows
         if(in_array($lotNumber, array_column($this->siblings($index), 'lot_number'))) {
-            $this->cards[$index]['lot_number'] = null;
-            $this->cards[$index]['reserved_amount'] = null;
-            return;
+            $this->rows[$index]['lot_number'] = null;
+            $this->emit('toast', '', __('dispatchorders.this_lot_selected_already'), 'error');
         }
         
         $this->updatedReservedAmount($index);
@@ -99,28 +112,28 @@ class ProcessForm extends Component
 
 
     /**
-     * Index stands for cards' index
+     * Index stands for rows' index
      */
     public function updatedReservedAmount($index, $value = null)
     {
-        $card = $this->cards[$index];
-        $inputAmount = $card['reserved_amount'];
-        $lotMax = $this->lotMax($card['lot_number']);
+        $row = $this->rows[$index];
+        $inputAmount = $row['reserved_amount'];
+        $lotMax = $this->lotMax($row['lot_number']);
         
-        if(! $card['lot_number'] || ! $card['reserved_amount'])
-            return $this->cards[$index]['reserved_amount'] = null;
+        if(! $row['lot_number'] || ! $row['reserved_amount'])
+            return $this->rows[$index]['reserved_amount'] = null;
         
-        $need = $this->dispatchPivot->dp_amount - $this->siblingsCovered($index);
+        $need = $this->selectedDispatchProduct->dp_amount - $this->siblingsCovered($index);
 
         if($inputAmount <= $lotMax) {
             if($inputAmount >= $need) {
-                $this->cards[$index]['reserved_amount'] = $need;
+                $this->rows[$index]['reserved_amount'] = $need;
             }
         } else {
             if($need <= $lotMax) {
-                $this->cards[$index]['reserved_amount'] = $need;
+                $this->rows[$index]['reserved_amount'] = $need;
             } else {
-                $this->cards[$index]['reserved_amount'] = $lotMax;
+                $this->rows[$index]['reserved_amount'] = $lotMax;
             }
         }
 
@@ -134,30 +147,30 @@ class ProcessForm extends Component
      */
     private function lotMax($lotNumber)
     {
-        return $this->dispatchPivot->product->onlyLot($lotNumber); // ?? index geç içine
+        return $this->selectedDispatchProduct->product->onlyLot($lotNumber); // ?? index geç içine
     }
 
 
 
     // private function lotIsEnough($index) // ?? kullanılmıyor
     // {
-    //     return $this->lotMax($this->cards[$index]['lot_number']) >= $this->cards[$index]['reserved_amount'];
+    //     return $this->lotMax($this->rows[$index]['lot_number']) >= $this->rows[$index]['reserved_amount'];
     // }
 
 
     /**
-     * Sum of cards' reserved_amount columns except card itself(index)
+     * Sum of rows' reserved_amount columns except row itself(index)
      */
     private function siblingsCovered($index)
     {
-        return $this->coveredAmount() - $this->cards[$index]['reserved_amount'];
+        return $this->coveredAmount() - $this->rows[$index]['reserved_amount'];
     }
 
 
 
     private function amountOf($index) // ?? kullan bunu
     {
-        return $this->cards[$index]['reserved_amount'];
+        return $this->rows[$index]['reserved_amount'];
     }
 
 
@@ -167,44 +180,46 @@ class ProcessForm extends Component
      */
     public function coveredAmount()
     {
-        return array_sum(array_column($this->cards, 'reserved_amount'));
+        return array_sum(array_column($this->rows, 'reserved_amount'));
     }
 
 
 
     public function necessaryAmount()
     {
-        return $this->dispatchPivot->dp_amount - $this->coveredAmount();
+        return $this->selectedDispatchProduct->dp_amount - $this->coveredAmount();
+    }
+
+
+
+    /**
+     * Limit addable rows by count of existing lot sources
+     */
+    public function cannotAddRow()
+    {
+        return $this->rows && $this->selectedDispatchProduct->product->lotCount() <= count($this->rows);
+    }
+
+
+
+    public function removeRow($index)
+    {
+        if($this->cannotRemoveRow()) return;
+        unset($this->rows[$index]);
     }
 
 
 
 
-    public function cannotAddCard()
+    public function cannotRemoveRow()
     {
-        return $this->cards && $this->lotCount <= count($this->cards);
-    }
-
-
-
-    public function removeCard($index)
-    {
-        if($this->cannotRemoveCard()) return;
-        unset($this->cards[$index]);
-    }
-
-
-
-
-    public function cannotRemoveCard()
-    {
-        return count($this->cards) === 1;
+        return count($this->rows) === 1;
     }
 
 
     public function inputDisabled($index)
     {
-        return $this->cards[$index]['lot_number'] === null;
+        return $this->rows[$index]['lot_number'] == null;
     }
 
 
@@ -214,37 +229,47 @@ class ProcessForm extends Component
      */
     public function submitLots()
     {
-        if(! $this->dispatchPivot) return;
+        if(! $this->selectedDispatchProduct) return;
         if($this->cannotSubmit()) return;
 
         $this->validate();
         
-        foreach($this->cards as $card) {
+        foreach($this->rows as $row) {
             $this->dispatchOrder->reservedStocks()->create([
-                'product_id' => $this->dispatchPivot->product_id,
-                'reserved_lot' => $card['lot_number'],
-                'reserved_amount' => $card['reserved_amount'],
+                'product_id' => $this->selectedDispatchProduct->product_id,
+                'reserved_lot' => $row['lot_number'],
+                'reserved_amount' => $row['reserved_amount'],
             ]);
         }
 
-        $this->dispatchPivot->setReady();
+        $this->selectedDispatchProduct->setReady();
+        $this->closeDoLotModal();
+        $this->refresh();
 
     }
-
-
 
     
+
+    /**
+     * Custom validations just before the submit
+     */
     public function cannotSubmit() : bool
     {
-        return $this->dispatchPivot->dp_amount != $this->coveredAmount()
-               || count(array_unique(array_column($this->cards, 'lot_number'))) !== count($this->cards);
+        // Needs for order must be covered and lots must be different from one another
+        return $this->selectedDispatchProduct->dp_amount != $this->coveredAmount()
+               || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows);
     }
 
 
+    public function refresh()
+    {
+        $this->emitSelf('refresh');
+    }
+
     /**
-     * Extract cards' indexes, values and call the related function
+     * Extract rows' indexes, values and call the related function
      */
-    public function updatedCards($value, $location)
+    public function updatedRows($value, $location)
     {
         $array = explode('.', $location);
         $index = $array[0];

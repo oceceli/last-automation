@@ -46,21 +46,30 @@
                     </div>
                     <div class="text-xs text-ease">!!! İlgili ürünün üzerine tıklayarak lot numaralarını belirtebilirsiniz</div>
                     <div class="mt-2 p-2 border shadow-inner rounded border-red-200">
-                        @foreach($dispatchOrder->dispatchProducts as $key => $reservation)
-                            <div class="flex gap-4 justify-between items-center">
-                                <div wire:click.prevent="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer flex-1">
-                                    <span class="text-blue-600">{{ $reservation->product->code }}</span>
-                                    <span class="text-xs text-ease">{{ $reservation->product->name }}</span>
-                                    <span>- {{ $reservation->dp_amount }} {{ $reservation->product->baseUnit->name }}</span>
+                        @foreach($dispatchOrder->dispatchProducts as $key => $dispatchProduct)
+                            <div class="pl-3 flex gap-4 justify-between items-center">
+                                <div>
+                                    @if (optional($dispatchProduct)->isReady())
+                                        <x-span tooltip="{{ __('dispatchorders.ready_to_dispatch') }}" position="top left">
+                                            <i class="green checkmark icon"></i>
+                                        </x-span>
+                                    @else
+                                        <x-span tooltip="{{ __('dispatchorders.lot_sources_not_specified_yet') }}" position="top left">
+                                            <i class="orange wait icon"></i>
+                                        </x-span>
+                                    @endif
                                 </div>
-                                <x-span tooltip="{{ __('dispatchorders.ready_to_dispatch') }}" position="left center">
-                                    <i class="green checkmark icon"></i>
-                                </x-span>
+                                <div wire:click.prevent="openDoLotModal({{ $dispatchProduct->id }})" class="font-bold hover:bg-orange-100 hover:shadow p-1 rounded cursor-pointer flex-1">
+                                    <span class="text-blue-600">{{ $dispatchProduct->product->code }}</span>
+                                    <span class="text-xs text-ease">{{ $dispatchProduct->product->name }}</span>
+                                    <span>- {{ $dispatchProduct->dp_amount }} {{ $dispatchProduct->product->baseUnit->name }}</span>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+
 
         </div>
     </x-content>
@@ -75,85 +84,85 @@
 
                 <x-slot name="header">
                     <div>
-                        {{ $dispatchPivot->product->code}}
-                        <span class="text-sm">({{ $dispatchPivot->product->name}})</span>
+                        {{ $selectedDispatchProduct->product->code}}
+                        <span class="text-sm">({{ $selectedDispatchProduct->product->name}})</span>
                     </div>
                 </x-slot>
 
-                <div class="bg-white" wire:key="do_{{ $dispatchPivot->id }}">
-                    <div class="p-3 shadow font-bold text-sm flex justify-between">
-                        <div>
-                            <span>{{ __('dispatchorders.total_covered') }}:</span>
-                            <span class="text-green-600">
-                                {{ $this->coveredAmount() }} /
-                                <span class="text-ease">
-                                    {{ $dispatchPivot->dp_amount }}
-                                    {{ $dispatchPivot->product->baseUnit->name }}
+                @if ($selectedDispatchProduct->product->isInStock)
+                    <div class="bg-white" wire:key="do_{{ $selectedDispatchProduct->id }}">
+                        <div class="py-3 px-4 shadow font-bold text-sm flex justify-between">
+                            <div>
+                                <span>{{ __('dispatchorders.total_covered') }}:</span>
+                                <span class="text-green-600">
+                                    {{ $this->coveredAmount() }} /
+                                    <span class="text-ease">
+                                        {{ $selectedDispatchProduct->dp_amount }}
+                                        {{ $selectedDispatchProduct->product->baseUnit->name }}
+                                    </span>
                                 </span>
-                            </span>
+                            </div>
+                            <div>
+                                @if ($this->necessaryAmount() == 0)
+                                    <span class="text-sm text-green-600">
+                                        <i class="checkmark icon"></i>
+                                        {{ __('dispatchorders.sources_are_enough') }}
+                                    </span>
+                                @else
+                                    <span>{{ __('dispatchorders.needed_amount' )}}:</span>
+                                    <span class="text-red-600">
+                                        {{ $this->necessaryAmount() }}
+                                        {{ $selectedDispatchProduct->product->baseUnit->name }}
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                        <div>
-                            @if ($this->necessaryAmount() == 0)
-                                <span class="text-sm text-ease-green">
-                                    <i class="checkmark icon"></i>
-                                    {{ __('dispatchorders.sources_are_enough') }}
-                                </span>
-                            @else
-                                <span>{{ __('dispatchorders.needed_amount' )}}:</span>
-                                <span class="text-red-600">
-                                    {{ $this->necessaryAmount() }}
-                                    {{ $dispatchPivot->product->baseUnit->name }}
-                                </span>
-                            @endif
-                        </div>
-                    </div>
 
-                    @if ($dispatchPivot->product->isInStock)
-                        <div class="p-6 shadow-md flex flex-col gap-8 md:gap-4">
-                            @foreach ($cards as $key => $card)
-                                <div wire:key="card_{{ $key }}" class="flex flex-col md:flex-row gap-3 border border-dashed p-3 rounded-lg hover:border-orange-400 ease-in-out duration-200">
-                                    {{-- <x-dropdown model="cards.{{$key}}.lot_number" :collection="$dispatchPivot->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
-                                        placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
-                                    <select class="form-select text-sm flex-1" wire:model="cards.{{$key}}.lot_number">
-                                        <option selected>{{ __('dispatchorders.select_lot_number') }}</option>
-                                        @foreach ($dispatchPivot->product->lots as $index => $lot)
-                                            <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
-                                                {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                        
-                                    <div class="flex gap-4">
-                                        @if ($this->inputDisabled($key))
-                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" iClass="disabled" noErrors class="ui tiny input flex-1" />
-                                        @else
-                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" noErrors class="ui tiny input flex-1" />
-                                        @endif
-                                        <div  class="flex items-center w-1/12 justify-center">
-                                            <i wire:click="removeCard({{ $key }})" class="large cancel red icon @if($this->cannotRemoveCard()) disabled @else cursor-pointer link @endif"></i>
+                            <div class="p-6 shadow-md flex flex-col gap-8 md:gap-4">
+                                @foreach ($rows as $key => $row)
+                                    <div wire:key="row_{{ $key }}" class="flex flex-col md:flex-row gap-3 border border-dashed p-3 rounded-lg hover:border-orange-400 ease-in-out duration-200">
+                                        {{-- <x-dropdown model="rows.{{$key}}.lot_number" :collection="$selectedDispatchProduct->product->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                            placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
+                                        <select class="form-select text-sm flex-1" wire:model="rows.{{$key}}.lot_number">
+                                            <option value="" selected>{{ __('dispatchorders.select_lot_number') }}</option>
+                                            @foreach ($selectedDispatchProduct->product->lots as $index => $lot)
+                                                <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
+                                                    {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                            
+                                        <div class="flex gap-4">
+                                            @if ($this->inputDisabled($key))
+                                                <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedDispatchProduct->product->baseUnit->name }}" iClass="disabled" noErrors class="ui tiny input flex-1" />
+                                            @else
+                                                <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedDispatchProduct->product->baseUnit->name }}" noErrors class="ui tiny input flex-1" />
+                                            @endif
+                                            <div  class="flex items-center w-1/12 justify-center">
+                                                <i wire:click="removeRow({{ $key }})" class=" cancel red icon @if($this->cannotRemoveRow()) disabled @else cursor-pointer link @endif"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
 
-                        <div class="flex p-3">
-                            <button wire:click="submitLots()" class="ui mini orange w-full button @if($this->cannotSubmit()) disabled @endif">
-                                {{ __('common.save') }}
-                            </button>
-                            <button wire:click="addCard()" class="ui black mini icon button @if($this->cannotAddCard()) disabled @endif">
-                                <i class="white plus icon"></i>
-                            </button>
-                        </div>
+                            <div class="flex p-3">
+                                <button wire:click="submitLots()" class="ui mini orange w-full button @if($this->cannotSubmit()) disabled @endif">
+                                    {{ __('common.save') }}
+                                </button>
+                                <button wire:click="addRow()" class="ui mini icon button @if($this->cannotAddRow()) disabled @endif">
+                                    <i class="orange plus icon"></i>
+                                </button>
+                            </div>
 
-                        <x-error-area class="p-4 shadow-inner" />
-
-                    @else 
-                        <div class="mt-4 p-4 bg-red-100 shadow-inner">
-                            <i class="text-ease">{{ __('inventory.out_of_stock') }}</i>
-                        </div>
-                    @endif
-                </div>
+                            <x-error-area class="p-4 shadow-inner" />
+                    </div>
+                @else 
+                    <div class="p-4 shadow-inner bg-red-500">
+                        <i class="text-white exclamation triangle icon"></i>
+                        <i class="text-white font-bold">{{ __('inventory.out_of_stock') }}</i>
+                    </div>
+                @endif
 
             </x-custom-modal>
         </div>

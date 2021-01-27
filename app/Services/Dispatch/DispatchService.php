@@ -10,7 +10,10 @@ class DispatchService
     public static function getDaily()
     {
         return DispatchOrder
-                ::where('do_datetime', Carbon::today()->format('d.m.Y'))
-                ->get();
+            ::where([
+                'do_datetime' => Carbon::today()->format('d.m.Y'),
+                'status' => 'active',
+            ])
+            ->get();
     }
 }
