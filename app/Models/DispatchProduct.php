@@ -20,4 +20,11 @@ class DispatchProduct extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    
+
+    public function setReady()
+    {
+        return $this->update(['dp_is_ready' => true]);
+    }
 }

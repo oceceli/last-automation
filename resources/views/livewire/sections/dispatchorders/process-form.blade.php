@@ -72,20 +72,30 @@
                 </x-slot>
 
                 <div class="bg-white" wire:key="do_{{ $dispatchPivot->id }}">
-                    <div class="p-3 shadow font-bold text-sm">
+                    <div class="p-3 shadow font-bold text-sm flex justify-between">
                         <div>
                             <span>{{ __('dispatchorders.total_covered') }}:</span>
                             <span class="text-green-600">
-                                {{ $this->coveredAmount() }}
-                                {{ $dispatchPivot->product->baseUnit->name }}
+                                {{ $this->coveredAmount() }} /
+                                <span class="text-ease">
+                                    {{ $dispatchPivot->dp_amount }}
+                                    {{ $dispatchPivot->product->baseUnit->name }}
+                                </span>
                             </span>
                         </div>
                         <div>
-                            <span>{{ __('dispatchorders.needed_amount' )}}:</span>
-                            <span class="text-red-600">
-                                {{ $this->necessaryAmount() }}
-                                {{ $dispatchPivot->product->baseUnit->name }}
-                            </span>
+                            @if ($this->necessaryAmount() == 0)
+                                <span class="text-sm text-ease-green">
+                                    <i class="checkmark icon"></i>
+                                    {{ __('dispatchorders.sources_are_enough') }}
+                                </span>
+                            @else
+                                <span>{{ __('dispatchorders.needed_amount' )}}:</span>
+                                <span class="text-red-600">
+                                    {{ $this->necessaryAmount() }}
+                                    {{ $dispatchPivot->product->baseUnit->name }}
+                                </span>
+                            @endif
                         </div>
                     </div>
 
@@ -97,7 +107,7 @@
                                         placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
                                     <select class="form-select text-sm flex-1" wire:model="cards.{{$key}}.lot_number">
                                         <option selected>{{ __('dispatchorders.select_lot_number') }}</option>
-                                        @foreach ($dispatchPivot->product->lots as $lot)
+                                        @foreach ($dispatchPivot->product->lots as $index => $lot)
                                             <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
                                                 {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
                                             </option>
@@ -105,7 +115,11 @@
                                     </select>
                                         
                                     <div class="flex gap-4">
-                                        <x-input model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" class="ui tiny input flex-1" />
+                                        @if ($this->inputDisabled($key))
+                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" iClass="disabled" noErrors class="ui tiny input flex-1" />
+                                        @else
+                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="cards.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $dispatchPivot->product->baseUnit->name }}" noErrors class="ui tiny input flex-1" />
+                                        @endif
                                         <div  class="flex items-center w-1/12 justify-center">
                                             <i wire:click="removeCard({{ $key }})" class="large cancel red icon @if($this->cannotRemoveCard()) disabled @else cursor-pointer link @endif"></i>
                                         </div>
@@ -115,13 +129,15 @@
                         </div>
 
                         <div class="flex p-3">
-                            <button wire:click="submitLots()" class="ui mini primary w-full button @if($this->cannotSubmit()) disabled @endif">
+                            <button wire:click="submitLots()" class="ui mini orange w-full button @if($this->cannotSubmit()) disabled @endif">
                                 {{ __('common.save') }}
                             </button>
-                            <button wire:click="addCard()" class="ui green mini icon button @if($this->cannotAddCard()) disabled @endif">
+                            <button wire:click="addCard()" class="ui black mini icon button @if($this->cannotAddCard()) disabled @endif">
                                 <i class="white plus icon"></i>
                             </button>
                         </div>
+
+                        <x-error-area class="p-4 shadow-inner" />
 
                     @else 
                         <div class="mt-4 p-4 bg-red-100 shadow-inner">
@@ -136,15 +152,3 @@
 
 
 </div>
-
-
-
-{{-- <x-page-header header="test">
-    <x-slot name="buttons">
-        <div class="ui mini icon buttons">
-            <button wire:click.prevent="addCard" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
-                <i class="plus icon"></i>
-            </button>
-        </div>
-    </x-slot>
-</x-page-header> --}}

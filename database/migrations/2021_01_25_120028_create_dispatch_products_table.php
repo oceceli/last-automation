@@ -16,7 +16,7 @@ class CreateDispatchProductsTable extends Migration
         Schema::create('dispatch_products', function (Blueprint $table) {
             $table->id();
             $table->float('dp_amount');
-            $table->boolean('dp_is_ready')->nullable();
+            $table->boolean('dp_is_ready')->default('false');
 
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('dispatch_order_id');
