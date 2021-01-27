@@ -12,6 +12,7 @@ trait DispatchLotPicker
     public $doLotModal = false;
     public $selectedDispatchProduct;
 
+
     protected function rules()
     {
         return [
@@ -37,12 +38,12 @@ trait DispatchLotPicker
     public function openDoLotModal($id)
     {
         $this->selectedDispatchProduct = DispatchProduct::find($id);
-        // if($this->selectedDispatchProduct->isReady()) {
-        //     return $this->setEditMode();
-        // }
+        if($this->isInEditMode()) {
+            return $this->setEditMode();
+        }
 
-        $this->addRow();
         $this->doLotModal = true;
+        $this->addRow();
     }
 
 
@@ -137,34 +138,6 @@ trait DispatchLotPicker
 
 
 
-
-    /**
-     * Validates and submits the form
-     */
-    public function submitLots()
-    {
-        if(! $this->selectedDispatchProduct) return;
-        if($this->cannotSubmit()) return;
-
-        $this->validate();
-        
-        foreach($this->rows as $row) {
-            $this->dispatchOrder->reservedStocks()->create([
-                'product_id' => $this->selectedDispatchProduct->product_id,
-                'reserved_lot' => $row['lot_number'],
-                'reserved_amount' => $row['reserved_amount'],
-            ]);
-        }
-
-        $this->selectedDispatchProduct->setReady();
-        $this->closeDoLotModal();
-        $this->refresh();
-
-    }
-
-
-
-
     /**
      * Extracts rows' indexes, values and calls the related function
      */
@@ -183,10 +156,68 @@ trait DispatchLotPicker
 
 
 
+    /**
+     * Validates and submits the form
+     */
+    public function submitLots()
+    {
+        if(! $this->selectedDispatchProduct) return;
+        if($this->cannotSubmit()) return;
+
+        $this->validate();
+
+        // if($this->isInEditMode()) $this->selectedDpReserveds() // !! devam et
+        
+        foreach($this->rows as $row) {
+            $this->dispatchOrder->reservedStocks()->create([
+                'product_id' => $this->selectedDispatchProduct->product_id,
+                'reserved_lot' => $row['lot_number'],
+                'reserved_amount' => $row['reserved_amount'],
+            ]);
+        }
+
+        $this->selectedDispatchProduct->setReady();
+        $this->closeDoLotModal();
+        $this->refresh();
+
+    }
 
 
-    /************ Helpers ********************************************** */
-    /***************************************************************** */
+
+
+
+    /************ Edit Mode ********************************************** */
+    /********************************************************************* */
+
+    private function setEditMode()
+    {
+        foreach($this->selectedDpReserveds() as $reservation) {
+            $this->rows[] = [
+                'lot_number' => $reservation->reserved_lot,
+                'reserved_amount' => $reservation->reserved_amount,
+            ];
+        }
+        $this->doLotModal = true;
+    }
+
+
+    private function isInEditMode()
+    {
+        return $this->selectedDispatchProduct->isReady();
+    }
+
+
+    /************ Logical Helpers ********************************************** */
+    /*************************************************************************** */
+
+    private function selectedDpReserveds()
+    {
+        return $this->dispatchOrder->reservedStocks()
+            ->where('product_id', $this->selectedDispatchProduct->product_id)
+            ->get();
+    }
+
+
 
     /**
      * Gives all rows except itself(index)
