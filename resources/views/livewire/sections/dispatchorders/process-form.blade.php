@@ -47,19 +47,28 @@
                     <div class="text-xs text-ease">!!! İlgili ürünün üzerine tıklayarak lot numaralarını belirtebilirsiniz</div>
                     <div class="mt-2 p-2 border shadow-inner rounded border-red-200">
                         @foreach($dispatchOrder->dispatchProducts as $key => $reservation)
-                            <div wire:click.prevent="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer">
-                                <span class="text-blue-600">{{ $reservation->product->code }}</span>
-                                <span class="text-xs text-ease">{{ $reservation->product->name }}</span>
-                                <span>- {{ $reservation->dp_amount }} {{ $reservation->product->baseUnit->name }}</span>
+                            <div class="flex gap-4 justify-between items-center">
+                                <div wire:click.prevent="openDoLotModal({{ $reservation->id }})" class="font-bold hover:bg-orange-200 hover:shadow p-1 rounded cursor-pointer flex-1">
+                                    <span class="text-blue-600">{{ $reservation->product->code }}</span>
+                                    <span class="text-xs text-ease">{{ $reservation->product->name }}</span>
+                                    <span>- {{ $reservation->dp_amount }} {{ $reservation->product->baseUnit->name }}</span>
+                                </div>
+                                <x-span tooltip="{{ __('dispatchorders.ready_to_dispatch') }}" position="left center">
+                                    <i class="green checkmark icon"></i>
+                                </x-span>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+
         </div>
     </x-content>
 
     
+
+
+
     @if ($doLotModal)
         <div x-data="{doLotModal: @entangle('doLotModal')}">
             <x-custom-modal active="doLotModal">

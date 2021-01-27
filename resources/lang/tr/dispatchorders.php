@@ -12,6 +12,7 @@ return [
     'there_are_no_dispatchorders_today' => 'Bugün için sevk emri oluşturulmadı',
     'process_dispatch' => 'Sevk et',
     'sources_are_enough' => 'Kaynaklar yeterli',
+    'ready_to_dispatch' => 'Sevke hazır',
 
     'dispatch' => 'Sevkiyat',
     'total_covered' => 'Karşılanan miktar',
