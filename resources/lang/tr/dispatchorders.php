@@ -13,6 +13,7 @@ return [
     'process_dispatch' => 'Sevk et',
     'sources_are_enough' => 'Kaynaklar yeterli',
     'ready_to_dispatch' => 'Sevke hazır',
+    'unload_products' => 'Ürünleri geri al',
 
     'this_lot_selected_already' => 'Bu lot zaten seçilmiş',
     'lot_sources_not_specified_yet' => 'Lot kaynakları henüz belirtilmedi',

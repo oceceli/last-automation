@@ -2,6 +2,7 @@
 
 return [
     'empty' => 'Boş', 
+    // 'empty_inside' => 'İçini boşalt',
     'search_in_database' => 'Veritabanında ara...',
     'saved_successfully' => 'Başarıyla kaydedildi!',
     'dropdown_placeholder' => 'Lütfen seçiniz...',

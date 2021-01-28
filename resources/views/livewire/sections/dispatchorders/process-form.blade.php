@@ -44,7 +44,6 @@
                             {{ __('dispatchorders.there_are_number_variety_of_products_which_is_waiting_for_the_dispatch', ['number' => $dispatchOrder->dispatchProducts->count()]) }}
                         </span>
                     </div>
-                    <div class="text-xs text-ease">!!! İlgili ürünün üzerine tıklayarak lot numaralarını belirtebilirsiniz</div>
                     <div class="mt-2 p-1 border shadow-inner rounded border-blue-200">
                         @foreach($dispatchOrder->dispatchProducts as $key => $dispatchProduct)
                             <div class="pl-3 flex gap-4 justify-between items-center hover:bg-blue-50 rounded">
@@ -75,10 +74,10 @@
                                             <i class="orange plus link icon"></i>
                                         </x-span>
                                     @else
-                                        <x-span wire:click.prevent="openDoLotModal({{ $dispatchProduct->id }})" tooltip="test" position="top right">
+                                        <x-span wire:click.prevent="openDoLotModal({{ $dispatchProduct->id }})" tooltip="{{ __('common.edit') }}" position="top right">
                                             <i class="green edit alternate   link icon"></i>
                                         </x-span>
-                                        <x-span wire:click.prevent="emptyDpReserveds({{ $dispatchProduct->id }})" tooltip="test" position="top right">
+                                        <x-span wire:click.prevent="emptyDpReserveds({{ $dispatchProduct->id }})" tooltip="{{ __('dispatchorders.unload_products') }}" position="top right">
                                             <i class="red trash alternate outline link icon"></i>
                                         </x-span>
                                     @endif

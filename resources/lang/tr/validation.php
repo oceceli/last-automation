@@ -186,6 +186,7 @@ return [
         'company_id' => 'Firma',
         'do_number' => 'Sevk kodu',
         'do_datetime' => 'Sevk tarihi',
+        'do_status' => 'Durum',
 
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',

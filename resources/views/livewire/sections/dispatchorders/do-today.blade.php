@@ -22,7 +22,7 @@
                         @endif --}}
                     </div>
                     <div>
-                        {{-- <span class="font-bold text-gray-500">{{ $todayDate }}</span> --}}
+                        <span class="text-xs text-ease">{{ date('d.m.Y') }}</span>
                     </div>
                 </div>
             {{-- StatusBar -----------------------------------------------------------}}
@@ -33,6 +33,7 @@
 
                 <thead>
                     <tr>
+                        <x-thead-item class="collapsing">{{ __('validation.attributes.do_status') }}</x-thead-item>
                         <x-thead-item class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
                         <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
@@ -44,6 +45,9 @@
                 <x-tbody>
                     @forelse($dispatchOrders as $dispatchOrder) 
                         <x-table-row>
+                            <x-tbody-item>
+                                
+                            </x-tbody-item>
                             <x-tbody-item class="center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
                             <x-tbody-item>
                                 {{ $dispatchOrder->company->cmp_commercial_title }}
@@ -57,7 +61,7 @@
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
                             </x-body-item>
-                            {{-- <x-tbody-item class="collapsing text-xs">{{ $dispatchorder->do_datetime }}</x-tbody-item> --}}
+                            
                             <x-tbody-item class="right aligned">
                                 <a href="{{ route('dispatchorders.process', ['dispatchOrder' => $dispatchOrder]) }}" class="ui red label button">
                                     {{ __('dispatchorders.process_dispatch') }}
@@ -66,6 +70,7 @@
                                 {{-- <span data-tooltip="{{ __('dispatchorders.process_dispatch') }}" data-variation="mini" data-position="top right" >
                                 </span> --}}
                             </x-tbody-item>
+                            
                         </x-table-row>
                     @empty
                     <tr>

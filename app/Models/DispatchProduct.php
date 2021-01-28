@@ -35,19 +35,27 @@ class DispatchProduct extends Model
 
     public function undoReady()
     {
-        
+        $this->reservedStocks()->delete();
+        return $this->update(['dp_is_ready' => false]);
     }
 
-
-    private function aQuery()
+    
+    /**
+     * Calls reservedstocks depend on product
+     */
+    private function reservedStocks()
     {
         return $this->dispatchOrder->reservedStocks()
             ->where('product_id', $this->product_id);
     }
 
-    public function getReservedStocks()
+
+    /**
+     * Works just like this pivot model has relation to reservedstocks table
+     */
+    public function getReservedStocksAttribute()
     {
-        return $this->aQuery()->get();
+        return $this->reservedStocks()->get();
     }
 
 }
