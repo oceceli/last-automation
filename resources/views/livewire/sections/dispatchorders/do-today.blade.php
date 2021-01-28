@@ -33,10 +33,10 @@
 
                 <thead>
                     <tr>
-                        <x-thead-item class="collapsing">{{ __('validation.attributes.do_status') }}</x-thead-item>
-                        <x-thead-item class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
-                        <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
+                        <x-thead-item class="collapsing center aligned">{{ __('validation.attributes.do_status') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
+                        <x-thead-item class="collapsing">{{ __('validation.attributes.company_id') }}</x-thead-item>
+                        <x-thead-item class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
                         {{-- <x-thead-item class="collapsing">{{ __('validation.attributes.do_datetime') }}</x-thead-item> --}}
                         <x-thead-item></x-thead-item>
                     </tr>
@@ -45,15 +45,28 @@
                 <x-tbody>
                     @forelse($dispatchOrders as $dispatchOrder) 
                         <x-table-row>
-                            <x-tbody-item>
-                                
-                            </x-tbody-item>
-                            <x-tbody-item class="center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
-                            <x-tbody-item>
-                                {{ $dispatchOrder->company->cmp_commercial_title }}
-                                <span class="text-xs text-ease">
-                                    ({{ __('validation.attributes.cmp_current_code')}}: {{ $dispatchOrder->company->cmp_current_code }})
-                                </span>
+                            <x-tbody-item class="center aligned">
+                                @if ($dispatchOrder->isApproved())
+                                    <x-span tooltip="{{ __('common.approved') }}" position="top left">
+                                        <i class="large green check double icon"></i>
+                                    </x-span>
+                                @elseif ($dispatchOrder->isCompleted())
+                                    <x-span tooltip="{{ __('dispatchorders.all_products_loaded_into_vehicle_waiting_for_approval') }}" position="top left">
+                                        <i class=" green checkmark icon"></i>
+                                    </x-span>
+                                @elseif ($dispatchOrder->isInProgress())
+                                    <x-span tooltip="{{ __('dispatchorders.products_loading_into_the_vehicle') }}" position="top left">
+                                        <i class="large yellow loading cog icon"></i>
+                                    </x-span>
+                                @elseif ($dispatchOrder->isActive())
+                                    <x-span tooltip="{{ __('dispatchorders.waiting_for_dispatch') }}" position="top left">
+                                        <i class="large primary clock outline icon"></i>
+                                    </x-span>
+                                @else ($dispatchOrder->isSuspended())
+                                    <x-span tooltip="{{ __('common.suspended') }}" position="top left">
+                                        <i class="large grey ban icon"></i>
+                                    </x-span>
+                                @endif
                             </x-tbody-item>
                             <x-tbody-item>
                                 {{ $dispatchOrder->address->adr_name }}
@@ -61,14 +74,19 @@
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
                             </x-body-item>
+                            <x-tbody-item class="collapsing">
+                                {{ $dispatchOrder->company->cmp_commercial_title }}
+                                <span class="text-xs text-ease">
+                                    ({{ __('validation.attributes.cmp_current_code')}}: {{ $dispatchOrder->company->cmp_current_code }})
+                                </span>
+                            </x-tbody-item>
+                            <x-tbody-item class="font-bold center aligned">{{ $dispatchOrder->do_number }}</x-tbody-item>
                             
                             <x-tbody-item class="right aligned">
                                 <a href="{{ route('dispatchorders.process', ['dispatchOrder' => $dispatchOrder]) }}" class="ui red label button">
-                                    {{ __('dispatchorders.process_dispatch') }}
+                                    {{ __('dispatchorders.get_ready') }}
                                     <i class="right arrow icon"></i>
                                 </a>
-                                {{-- <span data-tooltip="{{ __('dispatchorders.process_dispatch') }}" data-variation="mini" data-position="top right" >
-                                </span> --}}
                             </x-tbody-item>
                             
                         </x-table-row>

@@ -24,6 +24,11 @@ class ProcessForm extends Component
     }
 
 
+    public function markAsCompleted()
+    {
+        $this->dispatchOrder->markAsCompleted();
+    }
+
     
     public function refresh()
     {

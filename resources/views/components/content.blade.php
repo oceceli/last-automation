@@ -9,4 +9,11 @@
                         <x-form-buttons />
                 @endif
         </div>
+
+        @if ($bottom)
+                <div class="mt-3">
+                        {{ $bottom }}
+                </div>
+        @endif
+
 </x-container>

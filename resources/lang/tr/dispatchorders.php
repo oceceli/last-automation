@@ -14,6 +14,14 @@ return [
     'sources_are_enough' => 'Kaynaklar yeterli',
     'ready_to_dispatch' => 'Sevke hazır',
     'unload_products' => 'Ürünleri geri al',
+    'get_ready' => 'Hazırla',
+    'mark_as_ready' => 'Hazır olarak işaretle',
+    'whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready' => 'Ürünler hazırlandıktan / araca yüklendikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
+
+    // 'all_products_loaded_into_vehicle_and_approved' => 'Tüm ürünler araca yüklendi ve onaylandı.',
+    'all_products_loaded_into_vehicle_waiting_for_approval' => 'Tüm ürünler araca yüklendi, onay bekleniyor...',
+    'waiting_for_dispatch' => 'Sevk bekleniyor',
+    'products_loading_into_the_vehicle' => 'Ürünler araca yükleniyor',
 
     'this_lot_selected_already' => 'Bu lot zaten seçilmiş',
     'lot_sources_not_specified_yet' => 'Lot kaynakları henüz belirtilmedi',

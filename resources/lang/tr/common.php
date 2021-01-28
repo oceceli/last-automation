@@ -17,6 +17,7 @@ return [
     'add_explanation' => 'Açıklama ekle',
     'edit' => 'Düzenle',
     'added' => 'Eklendi',
+    'approved' => 'Onaylandı',
     'remove' => 'Kaldır',
     'delete' => 'Sil',
     'cancel' => 'Vazgeç',

@@ -9,11 +9,10 @@ class DispatchService
 {
     public static function getDaily()
     {
-        return DispatchOrder
-            ::where([
-                'do_datetime' => Carbon::today()->format('d.m.Y'),
-                'status' => 'active',
-            ])
+        return DispatchOrder // !! burayı geliştir
+            ::where('do_datetime', Carbon::today()->format('d.m.Y'))
+            ->orWhere('status', 'active')
+            ->orWhere('status', 'completed')
             ->get();
     }
 }

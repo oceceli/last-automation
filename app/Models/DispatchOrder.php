@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\CanReserveStocks;
+use App\Models\Traits\DispatchOrder\DispatchStates;
 use App\Models\Traits\Searchable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,8 @@ class DispatchOrder extends Model implements CanReserveStocks
 {
     use HasFactory;
     use Searchable;
+    use DispatchStates;
+    
 
     protected $guarded = [];
 
@@ -47,7 +50,6 @@ class DispatchOrder extends Model implements CanReserveStocks
 
 
 
-
     public function setDoDatetimeAttribute($value) 
     {
         $this->attributes['do_datetime'] = Carbon::parse($value)->format('d.m.Y');
@@ -57,4 +59,17 @@ class DispatchOrder extends Model implements CanReserveStocks
     {
         return Carbon::parse($value)->format('d.m.Y');
     }
+
+
+
+
+    public function isAllReady()
+    {
+        foreach($this->dispatchProducts as $dispatchProduct) {
+            if(! $dispatchProduct->isReady()) 
+                return false;
+        }
+        return true;
+    }
+
 }

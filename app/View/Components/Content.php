@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 class Content extends Component
 {
     public $header = null; // slot
+    public $bottom = null; // slot
 
     public $theme;
     public $buttons;
