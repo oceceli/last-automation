@@ -46,7 +46,7 @@ trait DispatchLotPicker
         $this->addRow();
     }
 
-
+    
 
 
     public function closeDoLotModal()
@@ -166,7 +166,8 @@ trait DispatchLotPicker
 
         $this->validate();
 
-        // if($this->isInEditMode()) $this->selectedDpReserveds() // !! devam et
+        if($this->isInEditMode()) 
+            $this->clearDpReserveds();
         
         foreach($this->rows as $row) {
             $this->dispatchOrder->reservedStocks()->create([
@@ -176,7 +177,9 @@ trait DispatchLotPicker
             ]);
         }
 
-        $this->selectedDispatchProduct->setReady();
+        if(!$this->isInEditMode()) 
+            $this->selectedDispatchProduct->setReady();
+
         $this->closeDoLotModal();
         $this->refresh();
 
@@ -191,6 +194,10 @@ trait DispatchLotPicker
 
     private function setEditMode()
     {
+        // just a protection 
+        if($this->selectedDpReserveds()->isEmpty()) return; 
+
+        // fill in the rows with incoming data
         foreach($this->selectedDpReserveds() as $reservation) {
             $this->rows[] = [
                 'lot_number' => $reservation->reserved_lot,
@@ -201,20 +208,47 @@ trait DispatchLotPicker
     }
 
 
-    private function isInEditMode()
+    public function isInEditMode()
     {
         return $this->selectedDispatchProduct->isReady();
+    }
+
+
+
+    public function emptyDpReserveds($id)
+    {
+        $this->selectedDispatchProduct = DispatchProduct::find($id);
+        $this->clearDpReserveds();
+        $this->selectedDispatchProduct->undoReady();
+
+        $this->reset('selectedDispatchProduct');
+        $this->refresh();
     }
 
 
     /************ Logical Helpers ********************************************** */
     /*************************************************************************** */
 
-    private function selectedDpReserveds()
+
+    private function selectedDpReservedsQuery()
     {
         return $this->dispatchOrder->reservedStocks()
-            ->where('product_id', $this->selectedDispatchProduct->product_id)
+            ->where('product_id', $this->selectedDispatchProduct->product_id);
+    }
+
+
+
+    private function selectedDpReserveds()
+    {
+        return $this->selectedDpReservedsQuery()
             ->get();
+    }
+
+
+
+    private function clearDpReserveds()
+    {
+        return $this->selectedDpReservedsQuery()->delete();
     }
 
 

@@ -32,4 +32,22 @@ class DispatchProduct extends Model
     {
         return $this->dp_is_ready;
     }
+
+    public function undoReady()
+    {
+        
+    }
+
+
+    private function aQuery()
+    {
+        return $this->dispatchOrder->reservedStocks()
+            ->where('product_id', $this->product_id);
+    }
+
+    public function getReservedStocks()
+    {
+        return $this->aQuery()->get();
+    }
+
 }
