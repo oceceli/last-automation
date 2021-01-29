@@ -11,10 +11,12 @@
                     </div>
                     <button class="focus:outline-none opacity-75 hover:opacity-100 ease-in-out duration-150"
                             wire:click.prevent="{{ $atClose }}" @if(!$atClose) @click="{{ $active }} = false" @endif>
-                        <i class="black shadow rounded-full large cancel icon"></i>
+                        <i class="black shadow rounded-full cancel icon"></i>
                     </button>
                 </div>
-                {{ $slot }} 
+                <div {{ $attributes }}>
+                    {{ $slot }} 
+                </div>
             </div>
         </div>
 

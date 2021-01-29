@@ -14,7 +14,9 @@ return [
     'sources_are_enough' => 'Kaynaklar yeterli',
     'ready_to_dispatch' => 'Sevke hazır',
     'unload_products' => 'Ürünleri geri al',
-    'get_ready' => 'Hazırla',
+    'dispatch_details' => 'Sevk detayları',
+    'prepared_amount' => 'Hazırlanan miktar',
+    'make_a_review_request' => 'Hazırlanan/araca yüklenen ürünlerin tekrar gözden geçirilmesini iste',
     'mark_as_ready' => 'Hazır olarak işaretle',
     'whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready' => 'Ürünler hazırlandıktan / araca yüklendikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
 

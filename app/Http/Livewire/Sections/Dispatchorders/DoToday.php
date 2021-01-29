@@ -9,6 +9,9 @@ class DoToday extends Component
 {
 
     public $dispatchOrders;
+
+    public $approveModal = false;
+    public $tobeApprovedDispatchOrder;
     
     public function mount()
     {
@@ -16,6 +19,32 @@ class DoToday extends Component
     }
 
 
+    public function approve()
+    {
+        $this->tobeApprovedDispatchOrder->approve();
+    }
+
+    public function deny()
+    {
+        $this->tobeApprovedDispatchOrder->deny();
+    }
+
+
+    public function openApproveModal($id)
+    {
+        $this->tobeApprovedDispatchOrder = $this->dispatchOrders->find($id);
+        $this->approveModal = true;
+    }
+
+    private function closeApproveModal()
+    {
+        $this->reset('tobeApprovedDispatchOrder', 'approveModal');
+    }
+
+    public function updatedApproveModal($bool)
+    {
+        if(!$bool) $this->closeApproveModal();
+    }
 
     public function render()
     {

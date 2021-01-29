@@ -109,14 +109,16 @@
 
         </div>
 
-        @if ($dispatchOrder->isNotCompleted())
-            <x-slot name="bottom">
-                <div class="text-xs text-ease shadow rounded p-2 bg-white">
+        <x-slot name="bottom">
+            <div class="text-xs text-ease shadow rounded p-2 bg-white">
+                @if ($dispatchOrder->isNotCompleted())
                     <i class="triangle exclamation icon"></i>
                     {{ __('dispatchorders.whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready') }}
-                </div>
-            </x-slot>
-        @endif
+                @else
+                    asdf
+                @endif
+            </div>
+        </x-slot>
 
     </x-content>
 
