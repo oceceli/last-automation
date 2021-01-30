@@ -145,12 +145,12 @@ class Form extends Component
     {
         // Return if ingredient is already in card
         if($this->isInCard($ingredient['id'])) {
-            return $this->emit('toast', __('common.already_exist'), __('sections/recipes.this_ingredient_already_added'));
+            return $this->emit('toast', __('common.already_exist'), __('recipes.this_ingredient_already_added'));
         } 
 
         // Return if ingredient is $selectedProduct
         if($ingredient['id'] == $this->selectedProduct->id) {
-            return $this->emit('toast', __('common.somethings_wrong'), __('sections/recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
+            return $this->emit('toast', __('common.somethings_wrong'), __('recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
 
         $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
@@ -433,7 +433,7 @@ class Form extends Component
         try {
             $recipe->ingredients()->sync(array_combine($IDs, $pivot));
         } catch (\Throwable $th) {
-            $this->emit('toast', 'common.error.title', 'sections/recipes.an_error_occurred_while_adding_ingredients', 'error');
+            $this->emit('toast', 'common.error.title', 'recipes.an_error_occurred_while_adding_ingredients', 'error');
         }
         $this->emit('toast', 'common.saved.title', 'common.saved.changes', 'success');
     }
@@ -466,8 +466,8 @@ class Form extends Component
     public function literalTooltip($key)
     {
         return [
-            true => __('sections/recipes.literal'),
-            false => __('sections/recipes.non_literal'),
+            true => __('recipes.literal'),
+            false => __('recipes.non_literal'),
         ][$this->cards[$key]['literal']];
     }
 
@@ -476,17 +476,17 @@ class Form extends Component
         if($this->recipeExists) {
             return $this->isLocked() 
                 ? [
-                    'main' => __('sections/recipes.recipe_details'),
-                    'sub' => __('sections/recipes.see_recipe_details'),
+                    'main' => __('recipes.recipe_details'),
+                    'sub' => __('recipes.see_recipe_details'),
                 ]
                 : [
-                    'main' => __('sections/recipes.edit_recipe'),
-                    'sub' => __('sections/recipes.add_edit_or_delete_ingredients'),
+                    'main' => __('recipes.edit_recipe'),
+                    'sub' => __('recipes.add_edit_or_delete_ingredients'),
                 ];
         } else {
             return [
-                'main' => __('sections/recipes.recipe_create'),
-                'sub' => __('sections/recipes.create_recipe_for_production'),
+                'main' => __('recipes.recipe_create'),
+                'sub' => __('recipes.create_recipe_for_production'),
             ];
         }
     }

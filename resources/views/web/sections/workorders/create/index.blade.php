@@ -1,6 +1,6 @@
 <x-app-layout>
     <div>
-        {{-- <x-page-header icon="project diagram" header="sections/workorders.create.header" subheader="sections/workorders.create.subheader" /> --}}
+        {{-- <x-page-header icon="project diagram" header="workorders.create.header" subheader="workorders.create.subheader" /> --}}
         {{-- <x-content theme="purple"> --}}
             <livewire:work-orders.form>
         {{-- </x-content> --}}

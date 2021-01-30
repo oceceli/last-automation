@@ -6,14 +6,14 @@
         <table class="ui celled sortable very compact unstackable table">
             <thead>
                 <tr>
-                    <x-thead-item sortBy="status">{{ __('sections/workorders.wo_status') }}</x-thead-item>
-                    <x-thead-item sortBy="queue">{{ __('sections/workorders.queue') }}</x-thead-item>
-                    <x-thead-item sortBy="code">{{ __('sections/workorders.code') }}</x-thead-item>
-                    <x-thead-item>{{ __('sections/products.name') }}</x-thead-item>
-                    <x-thead-item sortBy="amount">{{ __('sections/workorders.amount') }}</x-thead-item>
-                    <x-thead-item sortBy="lot_no">{{ __('sections/workorders.lot_no') }}</x-thead-item>
-                    <x-thead-item sortBy="datetime">{{ __('sections/workorders.datetime') }}</x-thead-item>
-                    {{-- <x-thead-item sortBy="">{{ __('sections/workorders.in_progress') }}</x-thead-item>     --}}
+                    <x-thead-item sortBy="status">{{ __('workorders.wo_status') }}</x-thead-item>
+                    <x-thead-item sortBy="queue">{{ __('workorders.queue') }}</x-thead-item>
+                    <x-thead-item sortBy="code">{{ __('workorders.code') }}</x-thead-item>
+                    <x-thead-item>{{ __('products.name') }}</x-thead-item>
+                    <x-thead-item sortBy="amount">{{ __('workorders.amount') }}</x-thead-item>
+                    <x-thead-item sortBy="lot_no">{{ __('workorders.lot_no') }}</x-thead-item>
+                    <x-thead-item sortBy="datetime">{{ __('workorders.datetime') }}</x-thead-item>
+                    {{-- <x-thead-item sortBy="">{{ __('workorders.in_progress') }}</x-thead-item>     --}}
                     <x-thead-item></x-thead-item>
                 </tr>
             </thead>
@@ -21,7 +21,7 @@
                 @forelse ($data as $key => $workOrder)
                     @if ($workOrder->isFinalized())
                         <tr class="positive">
-                            <td class="center aligned collapsing" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini">
+                            <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }}" data-variation="mini">
                                 <i class="large green checkmark icon"></i>
                             </td>
                             <td class="left marked green center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
@@ -49,11 +49,11 @@
                         <tr class="@if($workOrder->isInProgress()) left teal marked @elseif($workOrder->isActive()) left primary marked @else left grey marked text-gray-400 @endif">
                             <td class="center aligned collapsing">
                                 @if($workOrder->isInProgress())
-                                    <span data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini">
+                                    <span data-tooltip="{{ __('workorders.production_continues') }}" data-variation="mini">
                                         <i class="large loading cog icon"></i>
                                     </span>
                                 @elseif($workOrder->isActive())
-                                    <span data-tooltip="{{ __('sections/workorders.waiting_for_production') }}" data-variation="mini">
+                                    <span data-tooltip="{{ __('workorders.waiting_for_production') }}" data-variation="mini">
                                         <i class="large primary clock outline icon"></i>
                                     </span>
                                 @else
@@ -89,7 +89,7 @@
                     <tr>
                         <td colspan="10">
                             <x-placeholder icon="project diagram">
-                                {{ __('sections/workorders.no_workorder_found') }}
+                                {{ __('workorders.no_workorder_found') }}
                             </x-placeholder>
                         </td>
                     </tr>

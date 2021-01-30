@@ -3,10 +3,10 @@
         @if ($locked)
             <x-page-header icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->name }} ürününe ait reçete" />
         @else
-            <x-page-header icon="mortar pestle" header="common.edit" subheader="{{ __('sections/recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
+            <x-page-header icon="mortar pestle" header="common.edit" subheader="{{ __('recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
         @endif
     @else
-        <x-page-header icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
+        <x-page-header icon="mortar pestle" header="recipes.header" subheader="recipes.subheader" />
     @endif
     {{-- <div class="p-6 bg-white bg-opacity-25 shadow rounded-lg "> --}}
 
@@ -27,7 +27,7 @@
                 @if ( ! isset($recipe))
                     <div class="equal width fields pb-4">
                         <div wire:ignore class="required field">
-                            <label>{{ __('sections/recipes.recipe_product') }}</label>
+                            <label>{{ __('recipes.recipe_product') }}</label>
                             <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" id="selectProduct" class="ui search selection dropdown" />
                             @error('product_id')
                                 <p class="text-red-500 py-2">{{ucfirst($message)}}</p>
@@ -37,12 +37,12 @@
                             @endif
                         </div>
                         <div class="required field">
-                            <label>{{ __('sections/recipes.code') }}</label>
+                            <label>{{ __('recipes.code') }}</label>
                             <div class="ui action input">
-                                <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                                <input wire:model.lazy="code" type="text" placeholder="{{ __('recipes.code') }}">
                                 <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
                                     <i class="icon random"></i>
-                                    {{ __('sections/recipes.random_code') }}
+                                    {{ __('recipes.random_code') }}
                                 </button>
                             </div>
                             
@@ -54,12 +54,12 @@
                 @else
                     @if ( ! $locked)
                         <div class="field pb-4">
-                            <label>{{ __('sections/recipes.code') }}</label>
+                            <label>{{ __('recipes.code') }}</label>
                             <div class="ui action input">
-                                <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                                <input wire:model.lazy="code" type="text" placeholder="{{ __('recipes.code') }}">
                                 <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
                                     <i class="icon random"></i>
-                                    {{ __('sections/recipes.random_code') }}
+                                    {{ __('recipes.random_code') }}
                                 </button>
                             </div>
                             
@@ -82,14 +82,14 @@
                             
                             {{-- <div class="h-3"></div> --}}
                             {{-- BAŞLIK VE BUTONLAR --}}
-                            <x-page-header header="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('sections/recipes.includes') }}" icon="flask" class="pt-4 px-4 bg-cool-gray-50" >
+                            <x-page-header header="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('recipes.includes') }}" icon="flask" class="pt-4 px-4 bg-cool-gray-50" >
                                 @if ( ! $locked)
                                     <x-slot name="buttons">
                                         <div class="ui small icon buttons">
-                                            <button wire:click.prevent @click="materials = true" class="ui teal button" id="button1" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                            <button wire:click.prevent @click="materials = true" class="ui teal button" id="button1" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('recipes.add_ingredients') }}">
                                                 <i class="plus icon"></i>
                                             </button>
-                                            <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                            <button wire:click.prevent="clearIngredients" class="ui gray basic button" :class="{'disabled': $wire.locked}" data-tooltip="{{ __('recipes.remove_ingredients') }}">
                                                 <i class="red trash icon"></i>
                                             </button>
                                         </div>
@@ -129,9 +129,9 @@
                                                         {{ print_r($units) }}
                                                             <div class="field flex items-center">
                                                                 {{-- {{ $amounts[$key] }} --}}
-                                                                <x-input-drop iModel="amounts.{{ $key }}" iPlaceholder="sections/recipes.amount" iType="number" class="ui small input"
+                                                                <x-input-drop iModel="amounts.{{ $key }}" iPlaceholder="recipes.amount" iType="number" class="ui small input"
                                                                     sModel="units.{{ $key }}" sData="getUnitsOfIngredient" :key="$key" :sId="'selectId'.$key" 
-                                                                    sValue="id" sText="name" sPlaceholder="{{ __('sections/units.unit') }}" />
+                                                                    sValue="id" sText="name" sPlaceholder="{{ __('units.unit') }}" />
 
                                                                     {{-- :sData="$ingredients[$key]['units']" --}}
                                                                 
@@ -193,7 +193,7 @@
 
 <x-custom-modal active="materials">
     <x-slot name="header">
-        <x-page-header icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
+        <x-page-header icon="sitemap" header="recipes.add_ingredients" subheader="recipes.add_recipe_ingredients" />
     </x-slot>
     @foreach ($this->categories as $category)
         <div class="relative" x-data="{caret: false}">
@@ -205,7 +205,7 @@
                     <i class="layer group icon"></i>
                     <div class="content">
                         <div class="header">{{ $category->name }}</div>
-                        <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                        <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('products.product')) }}</div>
                         @foreach ($category->unproducibleProducts as $key => $product)
                             <div class="ui animated list selection" x-show="caret" x-transition:enter="transition ease-out duration-500" 
                                                                         x-transition:enter-start="opacity-0 transform scale-60" 

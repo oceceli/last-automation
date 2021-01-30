@@ -2,7 +2,7 @@
     <x-table class="small">
         <x-thead>
             <x-table-row>
-                <x-thead-item>{{ __('sections/products.code') }}</x-thead-item>
+                <x-thead-item>{{ __('products.code') }}</x-thead-item>
                 <x-thead-item>{{ __('dispatchorders.lot_number') }}</x-thead-item>
                 <x-thead-item class="right aligned">{{ __('common.amount') }}</x-thead-item>
             </x-table-row>

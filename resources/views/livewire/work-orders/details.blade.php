@@ -6,11 +6,11 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2">
         <div class="border-b md:border-b-0 md:border-r p-3 flex flex-col gap-3">
-            <x-label-value label="{{ __('sections/workorders.lot_no') }}" value="{{ $workOrder->lot_no }}"                              hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.lot_no') }}" value="{{ $workOrder->lot_no }}"                              hover="{{ $statusColor }}" />
             <x-label-value label="{{ __('modelnames.product') }}" value="{{ $workOrder->product->name }}"                               hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('sections/products.code') }}" value="{{ $workOrder->product->code }}"                           hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('sections/workorders.amount') }}" value="{{ $workOrder->amount }} {{ $workOrder->unit->name }}" hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('sections/workorders.queue') }}" value="{{ $workOrder->queue }}"                                hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('products.code') }}" value="{{ $workOrder->product->code }}"                           hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.amount') }}" value="{{ $workOrder->amount }} {{ $workOrder->unit->name }}" hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.queue') }}" value="{{ $workOrder->queue }}"                                hover="{{ $statusColor }}" />
         </div>
 
         <div class="p-3 m-4 rounded shadow-md border leading-8 cursor-default">
@@ -39,7 +39,7 @@
                 </div>
             @elseif($workOrder->isInProgress())
                 <span data-tooltip="{{ $this->inProduction->startedAt()->format('H:i:s') }}" data-variation="mini" data-position="top left">
-                    <span class="font-bold text-yellow-500">{{ __('sections/workorders.production_started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}...</span>
+                    <span class="font-bold text-yellow-500">{{ __('workorders.production_started_at_time', ['time' => $this->inProduction->startedAt()->diffForHumans()]) }}...</span>
                 </span>
             @elseif($workOrder->isActive()) @endif
                 {{-- <x-necessary-ingredients :product="$workOrder->product" :amount="$amount" :unitId="$unit_id" /> --}}
@@ -54,7 +54,7 @@
                 @endforeach
 
                                     <div>
-                                        <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
+                                        <div class="font-bold pb-2 text-gray-400">{{ __('workorders.wo_status') }}</div>
                                         <div class="ui toggle checkbox">
                                             <input type="checkbox" wire:model="status">
                                             <label></label>
@@ -62,7 +62,7 @@
                                     </div>
             @else
                                     <div>
-                                        <div class="font-bold pb-2 text-gray-400">{{ __('sections/workorders.wo_status') }}</div>
+                                        <div class="font-bold pb-2 text-gray-400">{{ __('workorders.wo_status') }}</div>
                                         <div class="ui toggle checkbox">
                                             <input type="checkbox" wire:model="status">
                                             <label></label>

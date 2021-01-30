@@ -7,7 +7,7 @@
         </x-slot>
         <x-slot name="buttons">
             <div class="ui mini icon buttons">
-                <button wire:click.prevent="addCard" class="ui mini teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}" data-variation="mini">
+                <button wire:click.prevent="addCard" class="ui mini teal button" data-tooltip="{{ __('recipes.add_ingredients') }}" data-variation="mini">
                     <i class="plus icon"></i>
                 </button>
             </div>
@@ -25,12 +25,12 @@
                     <div class="flex gap-3 items-center px-4 flex-1">
                         <div class="pt-2 equal width fields w-full">
                             <x-dropdown model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="code,name" sClass="search" noErrors
-                                placeholder="{{ __('sections/products.product') }}" sId="dp_product_{{$key}}" />
+                                placeholder="{{ __('products.product') }}" sId="dp_product_{{$key}}" />
                                 
                                                 
                             {{-- <x-input defer model="cards.{{ $key }}.reserved_amount" placeholder="{{ __('common.amount') }}" /> --}}
     
-                            <x-dropdown iType="number" iModel="cards.{{ $key }}.reserved_amount" iPlaceholder="{{ __('common.amount') }}" placeholder="{{ __('sections/units.unit') }}" sClass="basic" noErrors
+                            <x-dropdown iType="number" iModel="cards.{{ $key }}.reserved_amount" iPlaceholder="{{ __('common.amount') }}" placeholder="{{ __('units.unit') }}" sClass="basic" noErrors
                                 model="cards.{{ $key }}.unitId" initnone triggerOnEvent="sp_product_selected{{ $key }}" dataSourceFunction="getUnitsProperty" value="id" text="name" 
                                 sId="sp_unitId_{{$key}}" />
                             

@@ -42,7 +42,7 @@
                             </button>
                         @endif
                         @if ($recipeExists)
-                                <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="{{ __('sections/recipes.delete_recipe') }}" data-variation="mini" data-position="bottom right">
+                                <button wire:click.prevent="openDeleteConfirmModal()" class="ui mini basic button" data-tooltip="{{ __('recipes.delete_recipe') }}" data-variation="mini" data-position="bottom right">
                                     <i class="red trash icon"></i>
                                 </button>
                             @endif
@@ -56,18 +56,18 @@
             <div class="p-6 shadow-md">
                 <form class="ui small form">
                     <div class="equal width fields">
-                        {{-- <x-dropdown.search model="product_id" label="sections/recipes.recipe_product"
+                        {{-- <x-dropdown.search model="product_id" label="recipes.recipe_product"
                         :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" /> --}}
 
-                        <x-dropdown model="product_id" label="sections/recipes.recipe_product" sId="selectProduct" sClass="search" class="required"
+                        <x-dropdown model="product_id" label="recipes.recipe_product" sId="selectProduct" sClass="search" class="required"
                         :collection="$this->producibles" value="id" text="name,code" />
                         
                         <div class="@if($this->isLocked()) disabled @endif field">
-                            <x-input action model="code" label="sections/recipes.code" placeholder="sections/recipes.code" class="required">
+                            <x-input action model="code" label="recipes.code" placeholder="recipes.code" class="required">
                                 <x-slot name="action">
                                     <button wire:click.prevent="suggestCode" class="ui teal right labeled icon button @if( ! $selectedProduct) disabled @endif" >
                                         <i class="icon random"></i>
-                                        {{ __('sections/recipes.suggest_code') }}
+                                        {{ __('recipes.suggest_code') }}
                                     </button>
                                 </x-slot>
                             </x-input>
@@ -140,9 +140,9 @@
                                                 </div>
                                             @else
                                                 <div class="flex gap-2 items-center ui mini">
-                                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="sections/recipes.amount" iType="number"
+                                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="recipes.amount" iType="number"
                                                         model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :sId="'unit'.$key" sClass="basic"
-                                                        value="id" text="name" placeholder="{{ __('sections/units.unit') }}">
+                                                        value="id" text="name" placeholder="{{ __('units.unit') }}">
                                                     </x-dropdown>
                                                 </div>
                                             @endif

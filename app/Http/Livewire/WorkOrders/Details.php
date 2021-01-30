@@ -36,8 +36,8 @@ class Details extends Component
     //     $this->workOrder->setActivation($value);
     //     $this->statusColor = $this->workOrder->statusColor;
     //     $value 
-    //         ? $this->emit('toast', '', __('sections/workorders.wo_unsuspended'), 'success')
-    //         : $this->emit('toast', '', __('sections/workorders.wo_suspended'), 'info');
+    //         ? $this->emit('toast', '', __('workorders.wo_unsuspended'), 'success')
+    //         : $this->emit('toast', '', __('workorders.wo_suspended'), 'info');
     // }
 
     public function getInProductionProperty()

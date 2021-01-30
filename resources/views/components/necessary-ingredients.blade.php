@@ -38,7 +38,7 @@
     @else
         <x-placeholder icon="primary tasks">
             <span class="text-sm">
-                {{ __('sections/workorders.please_fill_in_the_amount_and_unit_fields') }}
+                {{ __('workorders.please_fill_in_the_amount_and_unit_fields') }}
             </span>
         </x-placeholder>
     @endif

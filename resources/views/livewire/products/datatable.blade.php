@@ -8,17 +8,17 @@
         <table class="ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
-                    <x-thead-item sortBy="code">{{ __('sections/products.code') }}</x-thead-item>
+                    <x-thead-item sortBy="code">{{ __('products.code') }}</x-thead-item>
                     <th wire:click="sortBy('name')">
-                        {{ __('sections/products.name') }}
+                        {{ __('products.name') }}
                         <i class="{{ $this->getDirectionClass('name') }} icon"></i>
                     </th>
                     <x-thead-item>{{ __('modelnames.category') }}</x-thead-item>
-                    <x-thead-item sortBy="barcode">{{ __('sections/products.barcode') }}</x-thead-item>
-                    <x-thead-item sortBy="shelf_life">{{ __('sections/products.shelf_life') }}</x-thead-item>
-                    {{-- <th>{{ __('sections/products.min_threshold') }}</th> --}}
+                    <x-thead-item sortBy="barcode">{{ __('products.barcode') }}</x-thead-item>
+                    <x-thead-item sortBy="shelf_life">{{ __('products.shelf_life') }}</x-thead-item>
+                    {{-- <th>{{ __('products.min_threshold') }}</th> --}}
                     <x-thead-item>{{ __('inventory.in_stock') }}</x-thead-item>
-                    {{-- <x-thead-item sortBy="note">{{ __('sections/products.note') }}</x-thead-item> --}}
+                    {{-- <x-thead-item sortBy="note">{{ __('products.note') }}</x-thead-item> --}}
                     <x-thead-item></x-thead-item>
                 </tr>
             </thead>

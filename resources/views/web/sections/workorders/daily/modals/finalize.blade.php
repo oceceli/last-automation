@@ -55,9 +55,9 @@
             <div class="p-4 text-sm text-ease-red" x-data="{confirmation: false}">
                 <div x-show="!confirmation">
                     <span @click="confirmation = true" class="cursor-pointer">
-                        {{ __('sections/workorders.abort_this_work_order') }}
+                        {{ __('workorders.abort_this_work_order') }}
                     </span>
-                    <span data-tooltip="{{ __('sections/workorders.production_results_will_not_be_processed')}}" data-variation="mini" data-position="bottom center">
+                    <span data-tooltip="{{ __('workorders.production_results_will_not_be_processed')}}" data-variation="mini" data-position="bottom center">
                         <i class="small circular question mark icon"></i>
                     </span>
                 </div>

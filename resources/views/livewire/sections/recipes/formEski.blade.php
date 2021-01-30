@@ -3,24 +3,24 @@
     <h3 class="ui horizontal left aligned divider header">
         <i class="mortar pestle icon"></i>
         <div class="content">
-          {{ __('sections/recipes.header') }}
-          <div class="sub header">{{ __('sections/recipes.subheader') }}</div>
+          {{ __('recipes.header') }}
+          <div class="sub header">{{ __('recipes.subheader') }}</div>
         </div>
     </h3>
     <form class="ui form" wire:submit.prevent="submit" wire:loading.class="loading">
         <div class="ui raised teal padded segment">
             <div class="equal width fields pb-4">
                 <div wire:ignore class="required field">
-                    <label>{{ __('sections/recipes.recipe_product') }}</label>
+                    <label>{{ __('recipes.recipe_product') }}</label>
                     <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
                 </div>
                 <div class="required field">
-                    <label>{{ __('sections/recipes.code') }}</label>
+                    <label>{{ __('recipes.code') }}</label>
                     <div class="ui action input">
-                        <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                        <input wire:model.lazy="code" type="text" placeholder="{{ __('recipes.code') }}">
                         <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
                             <i class="icon random"></i>
-                            {{ __('sections/recipes.random_code') }}
+                            {{ __('recipes.random_code') }}
                         </button>
                     </div>
                     
@@ -62,7 +62,7 @@
                                                 <i class="layer group icon"></i>
                                                 <div class="content">
                                                     <div class="header">{{ $category->name }}</div>
-                                                    <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                                                    <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('products.product')) }}</div>
                                                     @foreach ($category->unproducibleProducts as $product)
                                                         <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
                                                                                                    x-transition:enter-start="opacity-0 transform scale-60" 
@@ -109,8 +109,8 @@
                                                         <div class="field">
                                                             <div class="ui right action left icon small input" wire:ignore>
                                                                 <i class="calculator icon"></i> 
-                                                                <input wire:model.lazy="amount.{{ $key }}" type="text" placeholder="{{ __('sections/recipes.amount') }}">
-                                                                <x-dropdown.search model="unit.{{ $key }}" :collection="$this->units" value="id" placeholder="sections/units.unit" text="name" class="ui search selection dropdown" />
+                                                                <input wire:model.lazy="amount.{{ $key }}" type="text" placeholder="{{ __('recipes.amount') }}">
+                                                                <x-dropdown.search model="unit.{{ $key }}" :collection="$this->units" value="id" placeholder="units.unit" text="name" class="ui search selection dropdown" />
                                                             </div>
                                                         </div>
                                                     </div>

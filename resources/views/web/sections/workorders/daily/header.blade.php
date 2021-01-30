@@ -1,5 +1,5 @@
 <div x-data="{wo_modal: false}">
-    <x-page-header icon="settings" header="sections/workorders.daily_work_orders">
+    <x-page-header icon="settings" header="workorders.daily_work_orders">
         <x-slot name="buttons">
             <button @click="wo_modal = true" class="ui icon mini teal button"
                 data-tooltip="{{ __('common.add_new') }}" data-variation="mini">

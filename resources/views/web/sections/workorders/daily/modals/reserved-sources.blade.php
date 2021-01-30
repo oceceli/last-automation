@@ -1,13 +1,13 @@
 @if ($reservedSourcesModal)
     <div x-data="{reservedSourcesModal: @entangle('reservedSourcesModal')}">
-        <x-custom-modal active="reservedSourcesModal" header="{{ __('sections/workorders.reserved_resources_for_manufacturing_product', ['product' => $reservedSourcesData->product->name]) }}">
+        <x-custom-modal active="reservedSourcesModal" header="{{ __('workorders.reserved_resources_for_manufacturing_product', ['product' => $reservedSourcesData->product->name]) }}">
                 <div class="p-4">
                     <x-table>
                         <x-thead>
                             <x-table-row>
-                                <x-thead-item>{{ __('sections/products.name') }}</x-thead-item>
-                                <x-thead-item>{{ __('sections/workorders.reserve_lot') }}</x-thead-item>
-                                <x-thead-item class="right aligned">{{ __('sections/workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
+                                <x-thead-item>{{ __('products.name') }}</x-thead-item>
+                                <x-thead-item>{{ __('workorders.reserve_lot') }}</x-thead-item>
+                                <x-thead-item class="right aligned">{{ __('workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
                             </x-table-row>
                         </x-thead>
                         <x-tbody>
@@ -24,7 +24,7 @@
                         </x-tbody>
                     </x-table>
                     <div class="text-xs text-red-800 border-t pt-4">
-                        *{{ __('sections/workorders.reserved_sources_will_be_used_as_needed_when_production_is_finalized') }}
+                        *{{ __('workorders.reserved_sources_will_be_used_as_needed_when_production_is_finalized') }}
                     </div>
                 </div>
         </x-custom-modal>

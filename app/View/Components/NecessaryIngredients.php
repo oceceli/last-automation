@@ -38,7 +38,7 @@ class NecessaryIngredients extends Component
         if($headerText) {
             $this->headerText = $headerText;
         } else {
-            $this->headerText = __('sections/workorders.items_to_be_used_in_production');
+            $this->headerText = __('workorders.items_to_be_used_in_production');
         }
 
         if(! empty($this->amount) && ! empty($this->unitId))

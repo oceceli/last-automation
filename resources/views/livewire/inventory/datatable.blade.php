@@ -8,8 +8,8 @@
         <x-table class="celled ui celled sortable table tablet stackable very compact">
             <thead>
                 <tr>
-                    <x-thead-item sortBy="code" class="">{{ __('sections/products.code')}} </x-thead-item>
-                    <x-thead-item sortBy="name">{{ __('sections/products.name')}} </x-thead-item>
+                    <x-thead-item sortBy="code" class="">{{ __('products.code')}} </x-thead-item>
+                    <x-thead-item sortBy="name">{{ __('products.name')}} </x-thead-item>
                     <x-thead-item>{{ __('inventory.available_quantity') }}</x-thead-item>
                     <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
                     <x-thead-item></x-thead-item>

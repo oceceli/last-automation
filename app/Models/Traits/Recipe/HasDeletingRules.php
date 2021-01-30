@@ -14,7 +14,7 @@ trait HasDeletingRules
             
         $this->ingredients()->detach();
         parent::delete();
-        return ['message' => __('sections/recipes.recipe_deleted_successfully'), 'type' => 'success'];
+        return ['message' => __('recipes.recipe_deleted_successfully'), 'type' => 'success'];
         
     }
 

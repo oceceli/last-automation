@@ -8,7 +8,7 @@
             @if($this->isLocked($key))
                 <h3 class="font-bold text-red-700">1</h3>
             @else
-                <x-input model="cards.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input tiny max-w-full" noErrors />
+                <x-input model="cards.{{ $key }}.name" placeholder="units.new_unit_name" class="ui input tiny max-w-full" noErrors />
             @endif
         </div>
 
@@ -17,7 +17,7 @@
                 <span class="font-bold text-lg text-red-600">{{ $card['name'] }}</span>
                 <span class="text-xs text-ease">({{ $card['abbreviation']}})</span>
             @else
-                <x-input model="cards.{{ $key }}.abbreviation" placeholder="sections/units.new_unit_name_short" class="ui input tiny max-w-full" noErrors />
+                <x-input model="cards.{{ $key }}.abbreviation" placeholder="units.new_unit_name_short" class="ui input tiny max-w-full" noErrors />
             @endif
         </div>
 
@@ -126,8 +126,8 @@
                 </div>
             @else
                 <div class="flex items-center gap-2">
-                    <x-input model="cards.{{ $key }}.name" placeholder="sections/units.new_unit_name" class="ui input tiny" />
-                    <x-input model="cards.{{ $key }}.abbreviation" placeholder="sections/units.new_unit_name_short" class="ui input tiny w-15" />
+                    <x-input model="cards.{{ $key }}.name" placeholder="units.new_unit_name" class="ui input tiny" />
+                    <x-input model="cards.{{ $key }}.abbreviation" placeholder="units.new_unit_name_short" class="ui input tiny w-15" />
                 </div>
             @endif
 

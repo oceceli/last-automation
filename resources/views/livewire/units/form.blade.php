@@ -6,7 +6,7 @@
     {{ print_r($backupCards) }} --}}
     <x-content theme="red">
         <x-slot name="header">
-            <x-page-header icon="balance scale" header="sections/units.header" subheader="sections/units.subheader" />
+            <x-page-header icon="balance scale" header="units.header" subheader="units.subheader" />
         </x-slot>
         <div class="p-4 shadow-md">
             <div class="ui small form">

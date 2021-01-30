@@ -1,6 +1,6 @@
 @if ($reserveSourcesModal)
         <div x-data="{reserveSourcesModal: @entangle('reserveSourcesModal')}">
-            <x-custom-modal active="reserveSourcesModal" header="{{ __('sections/workorders.reserve_sources_for_product', ['product' => $woStartData->product->name]) }}">
+            <x-custom-modal active="reserveSourcesModal" header="{{ __('workorders.reserve_sources_for_product', ['product' => $woStartData->product->name]) }}">
 
                 <div class="w-full">
 
@@ -17,14 +17,14 @@
                                     <div class="text-ease">
                                         @if ($lotCard['ingredient']['pivot']['literal'])
                                             <span class="text-xs text-red-800">{{ __('common.net') }}</span>
-                                            <span class="text-sm" data-tooltip="{{ __('sections/workorders.necessary_amount') }}" data-variation="mini" data-position="left center">
+                                            <span class="text-sm" data-tooltip="{{ __('workorders.necessary_amount') }}" data-variation="mini" data-position="left center">
                                                 {{ number_format($lotCard['amount'], 3, ',', '') }}
                                                 {{ $lotCard['unit']['name']}}
                                             </span>
                                         @else 
                                             <span class="text-xs text-green-800">{{ __('common.variable') }}</span>
                                             <span class="text-sm">
-                                                <span data-tooltip="{{ __('sections/workorders.necessary_amount') }}" data-variation="mini" data-position="top center">
+                                                <span data-tooltip="{{ __('workorders.necessary_amount') }}" data-variation="mini" data-position="top center">
                                                     {{ number_format($lotCard['amount'], 3, ',', '') }}
                                                 </span>
                                                 <span class="text-lg text-green-700 font-bold">±</span>
@@ -39,16 +39,16 @@
                                 </div>
 
                                 <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
-                                    {{-- {{ __('sections/workorders.lot_no')}}:  --}}
+                                    {{-- {{ __('workorders.lot_no')}}:  --}}
                                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
 
                                         @foreach(App\Models\Product::find($lotCard['ingredient']['id'])->lots as $selectLot)
                                             @if ($selectLot['available_amount'] > 0 || $selectLot['reserved_amount'])
                                                 <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
                                                     <span>{{ $selectLot['lot_number'] }}</span> | 
-                                                    <span class="text-xs">{{ __('sections/workorders.available' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['name'] }}</span>
+                                                    <span class="text-xs">{{ __('workorders.available' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['name'] }}</span>
                                                     @if($selectLot['reserved_amount'])
-                                                        | {{ __('sections/workorders.reserved') }}: {{ $selectLot['reserved_amount'] }} {{ $selectLot['unit']['abbreviation'] }}
+                                                        | {{ __('workorders.reserved') }}: {{ $selectLot['reserved_amount'] }} {{ $selectLot['unit']['abbreviation'] }}
                                                     @endif
                                                 </option>
                                             @endif
@@ -70,7 +70,7 @@
                         <button class="ui orange button w-full" wire:click="confirmStart()">
                             {{ __('common.confirm') }}
                             <i class="right arrow icon"></i>
-                            {{-- {{ __('sections/workorders.start')}} --}}
+                            {{-- {{ __('workorders.start')}} --}}
                         </button>
                     </div>
 

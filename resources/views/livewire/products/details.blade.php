@@ -1,7 +1,7 @@
 <div>
     <x-content>
         <x-slot name="header">
-            <x-page-header icon="blue open box" header="sections/products.details.header" subheader="{{ __('sections/products.details.subheader', ['product' => $product->name]) }}" >
+            <x-page-header icon="blue open box" header="products.details.header" subheader="{{ __('products.details.subheader', ['product' => $product->name]) }}" >
                 <x-slot name="buttons">
                     <div class="ui mini icon buttons">
                         <a href="{{ route('products.edit', ['product' => $product]) }}" class="ui teal button" data-variation="mini" data-tooltip="{{ __('common.edit') }}">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="pt-3 font-semibold text-sm text-gray-500">
                                 <i class="barcode icon"></i>
-                                <span>{{ $product->barcode ?? __('sections/products.no_barcode_defined') }}</span>
+                                <span>{{ $product->barcode ?? __('products.no_barcode_defined') }}</span>
                             </div>
                         </div>
     
@@ -46,19 +46,19 @@
     
                             @if ($product->producible)
                                 @if ($recipe)
-                                <div data-tooltip="{{ __('sections/recipes.see_recipe') }}" data-variation="mini">
+                                <div data-tooltip="{{ __('recipes.see_recipe') }}" data-variation="mini">
                                     <a href="{{ route('recipes.show', ['recipe' => $recipe->id]) }}" class="pt-2 font-semibold text-sm text-green-600" >{{ $recipe->code }}</a>
                                     <i class="mortar pestle icon"></i>
                                 </div>
                                 @else
-                                <div data-tooltip="{{ __('sections/products.products_with_no_recipes_cannot_be_manufactured') }}" data-variation="mini" data-position="top right">
-                                    <span class="font-semibold text-sm text-orange-400">{{ __('sections/recipes.no_recipe_defined_for_this_product') }}</span>
+                                <div data-tooltip="{{ __('products.products_with_no_recipes_cannot_be_manufactured') }}" data-variation="mini" data-position="top right">
+                                    <span class="font-semibold text-sm text-orange-400">{{ __('recipes.no_recipe_defined_for_this_product') }}</span>
                                     <i class="circular tiny question mark icon link"></i>
                                 </div>
                                 @endif
                             @else
                                 <div>
-                                    <span class="pt-2 font-semibold text-sm text-red-500">{{ __('sections/products.this_product_cannot_be_manufactured') }}</span>
+                                    <span class="pt-2 font-semibold text-sm text-red-500">{{ __('products.this_product_cannot_be_manufactured') }}</span>
                                 </div>
                             @endif
     
@@ -71,15 +71,15 @@
                         {{-- Raf ömrü, Min stok vs. orta alan  --}}
                         <div class="flex gap-8">
                             <div>
-                                <label class="text-gray-600 font-bold">{{ __('sections/products.shelf_life') }}</label>
+                                <label class="text-gray-600 font-bold">{{ __('products.shelf_life') }}</label>
                                 <div class="flex gap-1 items-center">
                                     <i class="calendar alternate teal icon"></i>
-                                    <p>{{ __('sections/products.count_years', ['count' => $product->shelf_life ]) }}</p>
+                                    <p>{{ __('products.count_years', ['count' => $product->shelf_life ]) }}</p>
                                 </div>
                                 
                             </div>
                             <div>
-                                <label class="text-gray-600 font-bold">{{ __('sections/products.min_threshold') }}</label>
+                                <label class="text-gray-600 font-bold">{{ __('products.min_threshold') }}</label>
                                 <div class="flex gap-1 items-center">
                                     <i class="calculator teal icon"></i>
                                     <p>{{ $product->min_threshold }} @if($baseUnit) {{ $baseUnit->name }} @else <strong class="text-red-600">Birim tanımlanmamış</strong> @endif </p>
@@ -89,7 +89,7 @@
     
                         <div class="flex gap-8">
                             <div class="flex flex-col items-center">
-                                <label class="text-gray-600 font-bold">{{ __('sections/products.is_active') }}</label>
+                                <label class="text-gray-600 font-bold">{{ __('products.is_active') }}</label>
                                 @if ($product->is_active)
                                     <i class="green checkmark icon"></i>
                                 @else
@@ -97,7 +97,7 @@
                                 @endif
                             </div>
                             <div class="flex flex-col items-center">
-                                <label class="text-gray-600 font-bold">{{ __('sections/products.producible') }}</label>
+                                <label class="text-gray-600 font-bold">{{ __('products.producible') }}</label>
                                 @if ($product->producible)
                                     <i class="green checkmark icon"></i>
                                 @else
@@ -111,7 +111,7 @@
     
                     {{-- Ölçü birimleri alanı --}}
                     <div class="py-8">
-                        <label class="text-gray-600 font-bold">{{ __('sections/products.measure_units_that_belongs_to_product') }}</label>
+                        <label class="text-gray-600 font-bold">{{ __('products.measure_units_that_belongs_to_product') }}</label>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 pt-4">
                             @foreach ($product->units as $unit)
                                 <div class="text-sm p-2">

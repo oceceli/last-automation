@@ -57,7 +57,7 @@ trait ReserveSourcesModal
         if(! $resolvedInputModels = $this->validateInputs()) return; 
 
         if(! $this->woStartData->start())
-            return $this->emit('toast', '', __('sections/workorders.a_work_order_already_in_progress'), 'error');
+            return $this->emit('toast', '', __('workorders.a_work_order_already_in_progress'), 'error');
 
 
         foreach($resolvedInputModels as $index => $inputs) {
@@ -90,7 +90,7 @@ trait ReserveSourcesModal
         $this->refreshTable();
         $this->closeReserveSourcesModal();
 
-        return $this->emit('toast', __('sections/workorders.production_started'), __('sections/workorders.specified_resources_reserved_to_use_in_production'), 'success');
+        return $this->emit('toast', __('workorders.production_started'), __('workorders.specified_resources_reserved_to_use_in_production'), 'success');
     }
     
 
@@ -116,8 +116,8 @@ trait ReserveSourcesModal
             $difference = $this->totalNecessaryAmount($index) - $this->totalCovered($index);
             $unitName = $this->lotCards[$index]['unit']['name'];
             return $this->isResourcesEnough($index)
-                ? ['text' => __('sections/workorders.specified_sources_are_enough_for_manufacturing'), 'class' => 'text-green-600']
-                : ['text' => __('sections/workorders.amount_more_required', ['amount' => number_format($difference, 2, ',', '') . " " . strtolower($unitName)]), 'class' => 'text-red-600'];
+                ? ['text' => __('workorders.specified_sources_are_enough_for_manufacturing'), 'class' => 'text-green-600']
+                : ['text' => __('workorders.amount_more_required', ['amount' => number_format($difference, 2, ',', '') . " " . strtolower($unitName)]), 'class' => 'text-red-600'];
             
         }
         return ['text' => __('common.not_specified'), 'class' => 'text-ease-red'];
@@ -138,14 +138,14 @@ trait ReserveSourcesModal
 
         // are both arrays have equal elements?
         if(count($this->lotCards) !== count($resolvedInputModels)) {
-            $this->emit('toast', __('common.there_are_missing_fields'), __('sections/workorders.please_specify_all_necessary_sources_for_production'), 'error');
+            $this->emit('toast', __('common.there_are_missing_fields'), __('workorders.please_specify_all_necessary_sources_for_production'), 'error');
             return false;
         }
         
         // are provided sources enough for production?
         foreach($resolvedInputModels as $index => $sources) {
             if(! $this->isResourcesEnough($index)) {
-                $this->emit('toast', __('sections/workorders.insufficient_sources'), __('sections/workorders.please_reserve_enough_amount_of_sources_in_order_to_continue_production'), 'warning');
+                $this->emit('toast', __('workorders.insufficient_sources'), __('workorders.please_reserve_enough_amount_of_sources_in_order_to_continue_production'), 'warning');
                 return false;
             }
         }

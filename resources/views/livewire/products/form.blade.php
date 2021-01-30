@@ -3,21 +3,21 @@
     <x-form-divider>
 
         <x-slot name="left">
-            <x-input model="name" label="sections/products.name" placeholder="sections/products.name" class="required field" />
-            <x-input model="code" label="sections/products.code" placeholder="sections/products.code" class="required field" />                
-            <x-input model="barcode" label="sections/products.barcode" placeholder="EAN13" class="required field" />
+            <x-input model="name" label="products.name" placeholder="products.name" class="required field" />
+            <x-input model="code" label="products.code" placeholder="products.code" class="required field" />                
+            <x-input model="barcode" label="products.barcode" placeholder="EAN13" class="required field" />
 
             
             <div x-data="{categoryModal: false}" class="equal width fields">
                 <x-dropdown model="category_id" dataSourceFunction="getCategoriesProperty" value="id" text="name" sId="categories" sClass="search" triggerOnEvent="categoryUpdated"
-                    label="modelnames.category" placeholder="sections/categories.select_a_category" transition="slide down">
+                    label="modelnames.category" placeholder="categories.select_a_category" transition="slide down">
                     <div class="pt-0.5">
-                        <span class="cursor-pointer pt-1 text-blue-400 text-sm font-bold ease-in-out duration-200 hover:text-blue-600" @click="categoryModal = true">{{ __('sections/categories.add_new_category') }}</span>
+                        <span class="cursor-pointer pt-1 text-blue-400 text-sm font-bold ease-in-out duration-200 hover:text-blue-600" @click="categoryModal = true">{{ __('categories.add_new_category') }}</span>
                     </div>
                 </x-dropdown>
                 <x-custom-modal active="categoryModal" theme="green">
                     <x-slot name="header">
-                        <x-page-header icon="small layer group" header="sections/categories.create_category" />
+                        <x-page-header icon="small layer group" header="categories.create_category" />
                     </x-slot>
                     <livewire:categories.form />
                 </x-custom-modal>
@@ -27,10 +27,10 @@
 
         <x-slot name="right">
             <x-dropdown model="unit_id" dataSourceFunction="getUnitsProperty" value="id" text="name" sId="units"
-                label="sections/units.unit" placeholder="sections/units.unit" transition="slide down" class="required field"
+                label="units.unit" placeholder="units.unit" transition="slide down" class="required field"
             />
-            <x-input model="shelf_life" label="sections/products.shelf_life" placeholder="sections/products.shelf_life" class="required field" />
-            <x-input model="min_threshold" label="sections/products.min_threshold" placeholder="sections/products.min_threshold"  class="field" />
+            <x-input model="shelf_life" label="products.shelf_life" placeholder="products.shelf_life" class="required field" />
+            <x-input model="min_threshold" label="products.min_threshold" placeholder="products.min_threshold"  class="field" />
 
         </x-slot>
 

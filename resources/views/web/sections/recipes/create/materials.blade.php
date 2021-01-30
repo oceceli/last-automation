@@ -1,6 +1,6 @@
 <x-custom-modal active="materials" padding>
     <x-slot name="header">
-        <x-page-header icon="sitemap" header="sections/recipes.add_ingredients" subheader="sections/recipes.add_recipe_ingredients" />
+        <x-page-header icon="sitemap" header="recipes.add_ingredients" subheader="recipes.add_recipe_ingredients" />
     </x-slot>
     @foreach ($this->categories as $category)
         <div class="relative" x-data="{caret: false}">
@@ -12,7 +12,7 @@
                     <i class="layer group icon"></i>
                     <div class="content">
                         <div class="header">{{ $category->name }}</div>
-                        <div class="description">{{ $category->products->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                        <div class="description">{{ $category->products->count() }} {{ ucfirst(__('products.product')) }}</div>
                         @foreach ($category->products as $product)
                             <div class="ui animated list selection" x-show="caret" x-transition:enter="transition ease-out duration-500" 
                                                                         x-transition:enter-start="opacity-0 transform scale-60" 

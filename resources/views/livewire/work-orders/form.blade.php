@@ -2,7 +2,7 @@
     <x-content theme="purple">
         <x-slot name="header">
             @if ($editMode)
-                <x-page-header icon="project diagram" header="sections/workorders.edit.header">
+                <x-page-header icon="project diagram" header="workorders.edit.header">
                     <x-slot name="buttons">
                         <div class="ui mini icon buttons">
                             @if ($workOrder->isSuspended())
@@ -10,11 +10,11 @@
                                     <i class="gray circle icon"></i>
                                 </button>
                             @elseif($workOrder->isFinalized())
-                                <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
+                                <button class="ui mini basic button" data-tooltip="{{ __('workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
                                     <i class="green checkmark icon"></i>
                                 </button>
                             @elseif($workOrder->isInProgress())
-                                <button class="ui mini basic button" data-tooltip="{{ __('sections/workorders.production_continues') }}" data-variation="mini" data-position="bottom right">
+                                <button class="ui mini basic button" data-tooltip="{{ __('workorders.production_continues') }}" data-variation="mini" data-position="bottom right">
                                     <i class="orange loading cog icon"></i>
                                 </button>
                             @else 
@@ -23,7 +23,7 @@
                                 </button>
                             @endif
                             @if (!$workOrder->isInProgress())
-                                <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('sections/workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
+                                <button wire:click.prevent="openDeleteModal()" class="ui mini basic button" data-tooltip="{{ __('workorders.wo_delete') }}" data-variation="mini" data-position="bottom right">
                                     <i class="red trash icon"></i>
                                 </button>
                             @endif
@@ -31,7 +31,7 @@
                     </x-slot>
                 </x-page-header>
             @else
-                <x-page-header icon="project diagram" header="sections/workorders.create.header" subheader="sections/workorders.create.subheader" />
+                <x-page-header icon="project diagram" header="workorders.create.header" subheader="workorders.create.subheader" />
             @endif
         </x-slot>
         <form class="ui tiny form" wire:submit.prevent="submit">
@@ -40,26 +40,26 @@
                 <x-slot name="left">
                     @if ($editMode)
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
-                            value="id" text="name,code" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
+                            value="id" text="name,code" label="products.product" placeholder="{{ __('units.unit') }}" />
                     @else
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
-                            value="id" text="name,code" label="sections/products.product" placeholder="{{ __('sections/units.unit') }}" />
+                            value="id" text="name,code" label="products.product" placeholder="{{ __('units.unit') }}" />
                     @endif
-                    <x-input model="lot_no" label="sections/workorders.lot_no" placeholder="sections/workorders.lot_no" class="required field" />
+                    <x-input model="lot_no" label="workorders.lot_no" placeholder="workorders.lot_no" class="required field" />
                     @if ($editMode)
-                    <x-dropdown iModel="amount" iPlaceholder="sections/recipes.amount" label="sections/workorders.amount" class="required"
+                    <x-dropdown iModel="amount" iPlaceholder="recipes.amount" label="workorders.amount" class="required"
                         model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
-                        value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
+                        value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
                     @else 
-                    <x-dropdown iModel="amount" iPlaceholder="sections/recipes.amount" label="sections/workorders.amount" class="required"
+                    <x-dropdown iModel="amount" iPlaceholder="recipes.amount" label="workorders.amount" class="required"
                         initnone model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
-                        value="id" text="name" placeholder="{{ __('sections/units.unit') }}" 
+                        value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
                     @endif
-                    <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="sections/workorders.datetime"   class="required field" />
-                    <x-input model="code" label="sections/workorders.code" placeholder="sections/workorders.code" class="required field" />                
-                    <x-input model="queue" label="sections/workorders.queue" placeholder="sections/workorders.queue" class="required field" /> 
+                    <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="workorders.datetime"   class="required field" />
+                    <x-input model="code" label="workorders.code" placeholder="workorders.code" class="required field" />                
+                    <x-input model="queue" label="workorders.queue" placeholder="workorders.queue" class="required field" /> 
                 </x-slot>
         
         
@@ -73,11 +73,11 @@
                             @if($selectedProduct->recipe->ingredients->isEmpty())
                                 <x-placeholder icon="red exclamation">
                                     <div class="text-sm">
-                                        <div>{{ __('sections/recipes.no_recipe_ingredients_found') }}</div>
-                                        <div>{{ __('sections/workorders.recipe_ingredients_must_be_correct_for_keep_inventory_flawless') }}</div>
+                                        <div>{{ __('recipes.no_recipe_ingredients_found') }}</div>
+                                        <div>{{ __('workorders.recipe_ingredients_must_be_correct_for_keep_inventory_flawless') }}</div>
                                         <div class="pt-5">
                                             <button wire:click.prevent="redirectForAddIngredients()" class="ui mini button">
-                                                {{ __('sections/recipes.add_recipe_ingredients') }}
+                                                {{ __('recipes.add_recipe_ingredients') }}
                                             </button>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                 <x-necessary-ingredients :product="$selectedProduct" :amount="$amount" :unitId="$unit_id" noHeader>
                                     {{-- <x-slot name="actions">
                                         <button wire:click.prevent="activatePreferStockForm()" class="ui primary tiny button">
-                                            {{ __('sections/workorders.specify_sources') }}
+                                            {{ __('workorders.specify_sources') }}
                                         </button>
                                     </x-slot> --}}
                                 </x-necessary-ingredients>
@@ -96,7 +96,7 @@
                     @else 
                         <x-placeholder icon="primary tasks">
                             <span class="text-sm">
-                                {{ __('sections/workorders.necessary_items_and_amounts_will_be_shown_here') }}...
+                                {{ __('workorders.necessary_items_and_amounts_will_be_shown_here') }}...
                             </span>
                         </x-placeholder>
                     @endif
@@ -129,7 +129,7 @@
                 @if ($workOrder->isFinalized())
                     <div class="pb-3"><i class="large red exclamation icon"></i></div>
                     <div>{{ __('common.are_you_sure_you_want_to_delete') }}</div>
-                    <div class="text-xs text-ease-red pt-5">{{ __('sections/workorders.all_stock_moves_will_be_deleted_which_is_added_by_this_wo') }}</div>
+                    <div class="text-xs text-ease-red pt-5">{{ __('workorders.all_stock_moves_will_be_deleted_which_is_added_by_this_wo') }}</div>
                 @else 
                     <div>{{ __('common.are_you_sure_you_want_to_delete') }}</div>
                 @endif

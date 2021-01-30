@@ -5,7 +5,7 @@
             <div class="flex">
                 <div>
                     <span class="text-red-600">{{ $selectedProduct->name }}</span>
-                    <span class="text-sm">{{ __('sections/units.units') }}</span>
+                    <span class="text-sm">{{ __('units.units') }}</span>
                 </div>
                 <span></span>
             </div>

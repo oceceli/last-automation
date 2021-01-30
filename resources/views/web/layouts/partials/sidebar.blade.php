@@ -20,7 +20,7 @@
 
             <div class="h-20 p-3 px-5 flex justify-between items-center bg-gradient-to-b from-white to-gray-100">
 
-                <a href="{{ route('work-orders.create') }}" data-tooltip="{{ __('sections/workorders.create_work_order')}}" data-position="top left" data-variation="mini">
+                <a href="{{ route('work-orders.create') }}" data-tooltip="{{ __('workorders.create_work_order')}}" data-position="top left" data-variation="mini">
                     <i class="large link project diagram icon"></i>
                 </a>
                 <a href="{{ route('stock-moves.create') }}" data-tooltip="{{ __('stockmoves.stock_moves_create')}}" data-position="top left" data-variation="mini">

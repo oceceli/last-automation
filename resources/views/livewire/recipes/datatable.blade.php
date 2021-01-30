@@ -9,9 +9,9 @@
                 <thead>
                     <tr>
                         <x-thead-item>Sıra</x-thead-item>
-                        <x-thead-item sortBy="code">{{ __('sections/recipes.code') }}</x-thead-item>
-                        <x-thead-item>{{ __('sections/recipes.belongs_to') }}</x-thead-item>
-                        <x-thead-item>{{ __('sections/recipes.count_of_ingredients') }}</x-thead-item>
+                        <x-thead-item sortBy="code">{{ __('recipes.code') }}</x-thead-item>
+                        <x-thead-item>{{ __('recipes.belongs_to') }}</x-thead-item>
+                        <x-thead-item>{{ __('recipes.count_of_ingredients') }}</x-thead-item>
                         <x-thead-item></x-thead-item>
                     </tr>
                 </thead>
@@ -24,10 +24,10 @@
                             <td>
                                 @if (count($recipe->ingredients) > 0)
                                     <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) {{ $ingredient->name }} @endforeach">
-                                        {{ __('sections/recipes.different_products', ['number' => $recipe->ingredients->count() ]) }}
+                                        {{ __('recipes.different_products', ['number' => $recipe->ingredients->count() ]) }}
                                     </span>
                                 @else 
-                                    <span class="text-xs text-orange-600 ">{{ __('sections/recipes.there_is_no_content_yet') }}</span>
+                                    <span class="text-xs text-orange-600 ">{{ __('recipes.there_is_no_content_yet') }}</span>
                                 @endif
                             </td>
                             <td class="collapsing">

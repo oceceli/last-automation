@@ -1,21 +1,21 @@
 <div>
-    <x-page-title icon="mortar pestle" header="sections/recipes.header" subheader="sections/recipes.subheader" />
+    <x-page-title icon="mortar pestle" header="recipes.header" subheader="recipes.subheader" />
     <div class="p-6 bg-white bg-opacity-25 shadow rounded-lg ">
 
         <form class="ui form" wire:submit.prevent="submit" wire:loading.class="loading">
             <div class="ui raised teal padded segment">
                 <div class="equal width fields pb-4">
                     <div wire:ignore class="required field">
-                        <label>{{ __('sections/recipes.recipe_product') }}</label>
+                        <label>{{ __('recipes.recipe_product') }}</label>
                         <x-dropdown.search model="product_id" :collection="$this->producibleProducts" value="id" text="name,code" class="ui search selection dropdown" />
                     </div>
                     <div class="required field">
-                        <label>{{ __('sections/recipes.code') }}</label>
+                        <label>{{ __('recipes.code') }}</label>
                         <div class="ui action input">
-                            <input wire:model.lazy="code" type="text" placeholder="{{ __('sections/recipes.code') }}">
+                            <input wire:model.lazy="code" type="text" placeholder="{{ __('recipes.code') }}">
                             <button wire:click.prevent="random" class="ui teal bordered right labeled icon button" >
                                 <i class="icon random"></i>
-                                {{ __('sections/recipes.random_code') }}
+                                {{ __('recipes.random_code') }}
                             </button>
                         </div>
                         
@@ -44,10 +44,10 @@
                                 </div>
                                 <div class="pl-4 flex">
                                     <div class="ui buttons">
-                                        <button wire:click.prevent @click="materials = true" class="ui icon small teal button" data-tooltip="{{ __('sections/recipes.add_ingredients') }}">
+                                        <button wire:click.prevent @click="materials = true" class="ui icon small teal button" data-tooltip="{{ __('recipes.add_ingredients') }}">
                                             <i class="plus icon"></i>
                                         </button>
-                                        <button wire:click.prevent="clearIngredients" class="ui icon small gray basic button" data-tooltip="{{ __('sections/recipes.remove_ingredients') }}">
+                                        <button wire:click.prevent="clearIngredients" class="ui icon small gray basic button" data-tooltip="{{ __('recipes.remove_ingredients') }}">
                                             <i class="red trash icon"></i>
                                         </button>
                                     </div>
@@ -100,7 +100,7 @@
                                                     <i class="layer group icon"></i>
                                                     <div class="content">
                                                         <div class="header">{{ $category->name }}</div>
-                                                        <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('sections/products.product')) }}</div>
+                                                        <div class="description">{{ $category->unproducibleProducts->count() }} {{ ucfirst(__('products.product')) }}</div>
                                                         @foreach ($category->unproducibleProducts as $key => $product)
                                                             <div class="ui animated list selection" x-show="open" x-transition:enter="transition ease-out duration-500" 
                                                                                                         x-transition:enter-start="opacity-0 transform scale-60" 

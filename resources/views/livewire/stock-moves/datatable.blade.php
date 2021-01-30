@@ -9,7 +9,7 @@
                 <tr>
                     <x-thead-item>Sıra</x-thead-item>
                     <x-thead-item sortBy="type" class="center aligned">{{ __('stockmoves.type') }}</x-thead-item>
-                    <x-thead-item>{{ __('sections/products.code') }}</x-thead-item>
+                    <x-thead-item>{{ __('products.code') }}</x-thead-item>
                     <x-thead-item>{{ __('stockmoves.amount') }}</x-thead-item>
                     <x-thead-item sortBy="lot_number">{{ __('stockmoves.lot_number') }}</x-thead-item>
                     <x-thead-item sortBy="datetime">{{ __('common.datetime') }}</x-thead-item>
@@ -55,7 +55,7 @@
                             @if ($stockMove->isProduction())
                                 <x-crud-actions modelName="stock-move" :modelId="$stockMove->id">
                                     <div x-data="{detailModal: false}"
-                                        data-tooltip="{{ __('sections/workorders.belonged_workorder') }}" data-variation="mini" data-position="left center">
+                                        data-tooltip="{{ __('workorders.belonged_workorder') }}" data-variation="mini" data-position="left center">
                                         <a @click="detailModal = true" href="{{ route('work-orders.show', ['work_order' => $stockMove->stockable]) }}">
                                             <i class="purple cog link icon"></i>
                                         </a>
