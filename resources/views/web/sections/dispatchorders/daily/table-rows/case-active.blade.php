@@ -5,10 +5,10 @@
         </x-span>
     </x-tbody-item>
 
-    @include('web.sections.dispatchorders.todaytablerows.row-common')
+    @include('web.sections.dispatchorders.daily.table-rows.row-common')
 
     <x-tbody-item class="right aligned">
-        <a href="{{ route('dispatchorders.process', ['dispatchOrder' => $dispatchOrder]) }}" class="ui red label button">
+        <a href="{{ route('dispatchorders.prepare', ['dispatchOrder' => $dispatchOrder]) }}" class="ui orange label button">
             <i class="open box icon"></i>
             {{ __('common.prepare') }}
         </a>

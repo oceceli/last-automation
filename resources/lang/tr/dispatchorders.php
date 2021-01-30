@@ -13,10 +13,13 @@ return [
     'process_dispatch' => 'Sevk et',
     'sources_are_enough' => 'Kaynaklar yeterli',
     'ready_to_dispatch' => 'Sevke hazır',
+    'prepared_products' => 'Hazırlanan ürünler',
     'unload_products' => 'Ürünleri geri al',
+    'preparing_or_loading_on_vehicle_in_progress' => 'Hazırlama/araca yükleme süreci devam ediyor...',
     'dispatch_details' => 'Sevk detayları',
     'prepared_amount' => 'Hazırlanan miktar',
     'make_a_review_request' => 'Hazırlanan/araca yüklenen ürünlerin tekrar gözden geçirilmesini iste',
+    'relevant_units_will_be_informed' => 'İlgili birimler bilgilendirilecek',
     'mark_as_ready' => 'Hazır olarak işaretle',
     'whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready' => 'Ürünler hazırlandıktan / araca yüklendikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
 

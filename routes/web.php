@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/companies', 'CompanyController');
     // Route::resource('/addresses', 'AddressController');
 
-    Route::get('/dispatchorders/daily/{dispatchOrder}', 'DispatchOrderController@process')->name('dispatchorders.process');
+    Route::get('/dispatchorders/daily/{dispatchOrder}/prepare', 'DispatchOrderController@prepare')->name('dispatchorders.prepare');
     Route::get('/dispatchorders/daily', 'DispatchOrderController@daily')->name('dispatchorders.daily');
     Route::resource('/dispatchorders', 'DispatchOrderController');
     

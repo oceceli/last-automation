@@ -28,11 +28,11 @@ class DispatchOrderController extends Controller
 
     public function daily()
     {
-        return view('web.sections.dispatchorders.daily');
+        return view('web.sections.dispatchorders.daily.index');
     }
 
-    public function process(DispatchOrder $dispatchOrder)
+    public function prepare(DispatchOrder $dispatchOrder)
     {
-        return view('web.sections.dispatchorders.process', compact('dispatchOrder'));
+        return view('web.sections.dispatchorders.daily.prepare.index', compact('dispatchOrder'));
     }
 }

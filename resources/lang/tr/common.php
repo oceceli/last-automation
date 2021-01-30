@@ -20,6 +20,7 @@ return [
     'approve' => 'Onayla',
     'approved' => 'Onaylandı',
     'prepare' => 'Hazırla',
+    'prepare_or_review' => 'Hazırla/Gözden geçir',
     'remove' => 'Kaldır',
     'delete' => 'Sil',
     'deny' => 'Reddet',
