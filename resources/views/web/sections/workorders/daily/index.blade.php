@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.work-orders.today>
+    <livewire:work-orders.today>
 </x-app-layout>

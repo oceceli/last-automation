@@ -1,5 +1,5 @@
 <x-app-layout>
     <x-container>
-        <livewire:sections.recipes.datatable>
+        <livewire:recipes.datatable>
     </x-container>
 </x-app-layout>

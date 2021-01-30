@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.companies.form>
+    <livewire:companies.form>
 </x-app-layout>

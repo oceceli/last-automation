@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.units.form />
+    <livewire:units.form />
 </x-app-layout>

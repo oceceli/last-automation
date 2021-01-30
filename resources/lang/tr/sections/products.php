@@ -14,6 +14,7 @@ return [
 
     'count_years' => ':count yıl',
     'defined_base_unit_for_the_product' => ':product için tanımlanmış temel birim',
+    'no_barcode_defined' => 'Barkod tanımlanmadı',
 
     'create' => [
         'header' => 'Ürün Oluştur',

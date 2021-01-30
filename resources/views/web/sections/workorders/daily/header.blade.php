@@ -8,6 +8,6 @@
         </x-slot>
     </x-page-header>
     <x-custom-modal active="wo_modal" position="center">
-        <livewire:sections.work-orders.form>
+        <livewire:work-orders.form>
     </x-custom-modal>
 </div>

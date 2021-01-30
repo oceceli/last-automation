@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.dispatchorders.datatable>
+    <livewire:dispatch-orders.datatable>
 </x-app-layout>

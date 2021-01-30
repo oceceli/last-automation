@@ -1,3 +1,3 @@
 {{-- <x-app-layout>
-    <livewire:sections.addresses.form>
+    <livewire:addresses.form>
 </x-app-layout> --}}

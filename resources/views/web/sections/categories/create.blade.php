@@ -1,5 +1,5 @@
 <x-app-layout>
     <x-content>
-        <livewire:sections.categories.form>
+        <livewire:categories.form>
     </x-content>
 </x-app-layout> 

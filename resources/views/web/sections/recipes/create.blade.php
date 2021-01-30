@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.recipes.form>
+    <livewire:recipes.form>
 </x-app-layout>

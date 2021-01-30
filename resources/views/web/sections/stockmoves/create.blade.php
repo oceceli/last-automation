@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.stockmoves.form>
+    <livewire:stock-moves.form>
 </x-app-layout>

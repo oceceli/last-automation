@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.dispatchorders.form>
+    <livewire:dispatch-orders.form>
 </x-app-layout>

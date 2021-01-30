@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.companies.form :company="$company">
+    <livewire:companies.form :company="$company">
 </x-app-layout>

@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:sections.dispatchorders.do-today>
+    <livewire:dispatch-orders.daily.do-daily>
 </x-app-layout>

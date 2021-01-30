@@ -1,4 +1,4 @@
 <x-app-layout>
-    <livewire:sections.stockmoves.datatable> 
+    <livewire:stock-moves.datatable> 
         {{-- değişecek --}}
 </x-app-layout>
