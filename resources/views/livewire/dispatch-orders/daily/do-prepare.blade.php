@@ -37,7 +37,7 @@
             
 
             <div class="p-5">
-                @if ($dispatchOrder->isNotCompleted())
+                {{-- @if ($dispatchOrder->isNotCompleted())
                     <div class="flex items-center justify-between">
                         <div class="text-red-700 cursor-default">
                             <i class="shipping fast icon"></i>
@@ -56,8 +56,70 @@
                     <div class="text-ease-green font-bold">
                         !! Tüm ürünler hazırlandı / araca yüklendi, onay bekliyor...
                     </div>
-                @endif
-                <div class="mt-2 p-1 border shadow-inner rounded border-blue-200">
+                @endif --}}
+                
+                {{-- <x-table class="single line selectable red ">
+                    <x-thead>
+                        <x-thead-item class="collapsing center aligned">{{ __('common.status')}} </x-thead-item>
+                        <x-thead-item class="collapsing">{{ __('products.product')}}</x-thead-item>
+                        <x-thead-item>{{ __('common.amount')}}</x-thead-item>
+                        <x-thead-item></x-thead-item>
+                    </x-thead>
+                    <x-tbody>
+                        @foreach($dispatchOrder->dispatchProducts as $key => $dp)
+                            <x-tbody-item class="collapsing center aligned">
+                                icon
+                            </x-tbody-item>
+                            <x-tbody-item class="collapsing">
+                                <span class="font-bold">{{ $dp->product->code }}</span>
+                                <span class="text-xs text-ease">{{ $dp->product->name }}</span>
+                            </x-tbody-item>
+                            <x-tbody-item class="">
+                                <span class="font-bold">{{ (float)$dp->dp_amount }} </span>
+                                <span class="text-sm">{{ $dp->product->baseUnit->name }}</span>
+                            </x-tbody-item>
+                            <x-tbody-item class="right aligned">
+                                buton
+                            </x-tbody-item>
+                        @endforeach
+                    </x-tbody>
+                </x-table> --}}
+
+                @switch($dispatchOrder)
+                    @case($dispatchOrder->isApproved())
+                        @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-approved')
+                        @break
+                    @case($dispatchOrder->isCompleted())
+                        @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-completed')
+                        @break
+                    @case($dispatchOrder->isInProgress())
+                        @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-inprogress')
+                        @break
+                    @case($dispatchOrder->isActive())
+                        @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-active')
+                        @break
+                    @case($dispatchOrder->isSuspended())
+                        @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-suspended')
+                        @break
+                    @default
+                @endswitch
+                    
+                
+            </div>
+        </div>
+
+
+    </x-content>
+
+    
+    @include('web.sections.dispatchorders.daily.prepare.dispatch-lot-picker')
+
+
+</div>
+
+
+
+{{-- <div class="mt-2 p-1 border shadow-inner rounded border-blue-200">
                     @foreach($dispatchOrder->dispatchProducts as $key => $dispatchProduct)
                         <div class="pl-3 flex gap-4 justify-between items-center hover:bg-blue-50 rounded">
                             <div class="p-1 flex gap-4 items-center">
@@ -72,7 +134,6 @@
                                         </x-span>
                                     @endif
                                 </div>
-                                {{-- <dive wire:click.prevent="openDoLotModal({{ $dispatchProduct->id }})" class="font-bold hover:bg-orange-100 hover:shadow p-1 rounded cursor-pointer flex-1"> --}}
                                 <div class="font-bold  p-1">
                                     <span class="text-blue-600">{{ $dispatchProduct->product->code }}</span>
                                     <span class="text-xs text-ease">{{ $dispatchProduct->product->name }}</span>
@@ -96,34 +157,10 @@
                                     @endif
                                 </div>
                             @else
-                                <x-span wire:click.prevent="openDoLotModal({{ $dispatchProduct->id }})" tooltip="test" position="top right">
+                                <x-span tooltip="test" position="top right">
                                     <i class="green eye link icon"></i>
                                 </x-span>
                             @endif
                         </div>
                     @endforeach
-                </div>
-                
-                    
-            </div>
-
-        </div>
-
-        <x-slot name="bottom">
-            <div class="text-xs text-ease shadow rounded p-2 bg-white">
-                @if ($dispatchOrder->isNotCompleted())
-                    <i class="triangle exclamation icon"></i>
-                    {{ __('dispatchorders.whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready') }}
-                @else
-                    asdf
-                @endif
-            </div>
-        </x-slot>
-
-    </x-content>
-
-    
-    @include('web.sections.dispatchorders.daily.prepare.dispatch-lot-picker')
-
-
-</div>
+                </div> --}}

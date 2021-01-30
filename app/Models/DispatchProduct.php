@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\CanReserveStocks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DispatchProduct extends Model
+class DispatchProduct extends Model implements CanReserveStocks
 {
     use HasFactory;
 
@@ -40,10 +41,16 @@ class DispatchProduct extends Model
     }
 
     
+    public function stockMoves()
+    {
+        // faking it, for able to use reserved stocks table component
+    }
+
+
     /**
      * Calls reservedstocks depend on product
      */
-    private function reservedStocks()
+    public function reservedStocks()
     {
         return $this->dispatchOrder->reservedStocks()
             ->where('product_id', $this->product_id);

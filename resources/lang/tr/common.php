@@ -30,6 +30,8 @@ return [
     'clear' => 'Temizle',
     'type' => 'Tip',
     'amount' => 'Miktar',
+    // 'prepared' => 'Hazırlandı',
+    'ready' => 'Hazır',
     // 'least' => 'En az',
     'variable' => 'Değişken',
     'net' => 'Net',

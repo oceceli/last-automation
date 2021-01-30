@@ -113,7 +113,9 @@ trait DispatchStates
 
     public function markAsCompleted()
     {
-        $this->setStatus('completed');
+        if($this->isAllReady()) {
+            $this->setStatus('completed');
+        }
     }
 
 
