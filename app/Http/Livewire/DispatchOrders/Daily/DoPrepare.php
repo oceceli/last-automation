@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\DispatchOrders\Daily;
 
-use App\Http\Livewire\Traits\Dispatchorders\DispatchLotPicker;
+use App\Http\Livewire\Traits\DispatchOrders\DispatchLotPicker;
 use App\Services\Address\AddressService;
 use Livewire\Component;
 

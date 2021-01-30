@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Traits\Dispatchorders;
+namespace App\Http\Livewire\Traits\DispatchOrders;
 
 use App\Common\Facades\Conversions;
 use App\Models\Product;
