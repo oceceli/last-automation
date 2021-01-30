@@ -8,7 +8,7 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return view('web.sections.companies.index');
+        return view('web.sections.companies.index.index');
     }
 
     public function create()

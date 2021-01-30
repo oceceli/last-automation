@@ -157,7 +157,7 @@
                                     </div>
 
                                     {{-- MALZEMELER BÖLÜMÜ - MODAL --}}
-                                    @include('web.sections.recipes.materials');
+                                    @include('web.sections.recipes.create.materials');
 
                                 </div>
                             </div>                

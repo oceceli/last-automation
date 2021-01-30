@@ -24,7 +24,7 @@
         @if ($selectedProduct)
             <div class="px-5 pb-5">
 
-                @include('web.sections.units.unitsHeader')
+                @include('web.sections.units.create.units-header')
 
                 <div class="relative rounded-t" style="min-height: 60%">
                     {{-- x-data="{'materials' : false}" --}}
@@ -45,7 +45,7 @@
                                         <div wire:key="{{ $key }}">
                                             {{-- {{ App\Models\Unit::find($cards[$key]['id'])->id}} --}}
                                             <div >
-                                                @include('web.sections.units.unitCard')
+                                                @include('web.sections.units.create.unit-card')
                                             </div>
                                         </div>
                                     @endforeach

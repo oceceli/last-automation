@@ -20,7 +20,7 @@
                 <x-tbody>
                     @forelse ($data as $company)
                         <x-table-row wire:key="{{ $loop->index }}">
-                            <x-tbody-item class="collapsing center aligned text-sm">@include('web.sections.companies.companyType')</x-tbody-item>
+                            <x-tbody-item class="collapsing center aligned text-sm">@include('web.sections.companies.index.company-type')</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_name }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_commercial_title }}</x-tbody-item>
                             <x-tbody-item class="collapsing">{{ $company->cmp_current_code }}</x-tbody-item>
@@ -62,12 +62,12 @@
         @if ($addressModal)
             <div x-data="{addressModal: @entangle('addressModal')}">
                 <x-custom-modal active="addressModal" header="{{ __('companies.add_address_to_name_company', ['name' => $selectedCompany->cmp_name]) }}">
-                    @include('web.sections.addresses.AddressForm')
+                    @include('web.sections.addresses.address-form')
                 </x-custom-modal>
             </div>
         @endif
         
-        @include('web.sections.companies.showModal')
+        @include('web.sections.companies.index.show-modal')
 
     </x-container>
 

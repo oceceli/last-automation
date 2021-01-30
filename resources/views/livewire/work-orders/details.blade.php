@@ -1,6 +1,6 @@
 <div class="rounded-md bg-{{ $statusColor }}-50 shadow-md">
 
-    @include('web.sections.workorders.show.detailsHeadstick')
+    @include('web.sections.workorders.show.details-headstick')
     
 
 

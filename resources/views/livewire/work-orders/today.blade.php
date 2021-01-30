@@ -173,9 +173,9 @@
     
 
 
-    @include('web.sections.workorders.reserveSources')
-    @include('web.sections.workorders.reservedSources')
-    @include('web.sections.workorders.finalize')
+    @include('web.sections.workorders.daily.modals.reserve-sources')
+    @include('web.sections.workorders.daily.modals.reserved-sources')
+    @include('web.sections.workorders.daily.modals.finalize')
 
 
 

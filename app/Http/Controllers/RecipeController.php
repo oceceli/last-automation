@@ -31,7 +31,7 @@ class RecipeController extends Controller
     
     public function create()
     {
-        return view('web.sections.recipes.create');
+        return view('web.sections.recipes.create.create');
     }
 
     public function index()

@@ -13,7 +13,7 @@ class DispatchOrderController extends Controller
 
     public function create()
     {
-        return view('web.sections.dispatchorders.create');
+        return view('web.sections.dispatchorders.create.create');
     }
 
     public function edit(DispatchOrder $dispatchOrder)
@@ -33,6 +33,6 @@ class DispatchOrderController extends Controller
 
     public function prepare(DispatchOrder $dispatchOrder)
     {
-        return view('web.sections.dispatchorders.daily.prepare.index', compact('dispatchOrder'));
+        return view('web.sections.dispatchorders.daily.prepare.prepare', compact('dispatchOrder'));
     }
 }

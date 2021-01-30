@@ -87,11 +87,11 @@
             {{-- INGREDIENTS ---------------------------------------------------------------------------}}
             @if ($selectedProduct)
                 <div x-data="{materials: false}" class="p-6 pb-8 shadow-md">
-                    @include('web.sections.recipes.ingredientHeader')     
+                    @include('web.sections.recipes.create.sub-header')     
 
                     <div class="p-4 rounded-md border border-blue-200">
                         @if ( ! $this->isCardsExists())
-                            @include('web.sections.recipes.recipePlaceholder')
+                            @include('web.sections.recipes.create.recipe-placeholder')
                         @else
                             {{-- CARDS ------------------------------------}}
                             <div class="flex flex-col gap-6 fields">
@@ -165,7 +165,7 @@
                     </div>
 
                     {{-- MALZEMELER BÖLÜMÜ - MODAL ----------------------------}}
-                    @include('web.sections.recipes.materials')
+                    @include('web.sections.recipes.create.materials')
 
                 </div>
             @endif
@@ -180,5 +180,5 @@
             @endif
     </x-content>
     
-    @include('web.sections.recipes.recipeModals')
+    @include('web.sections.recipes.create.recipe-modals')
 </div>

@@ -123,7 +123,7 @@
     </x-content>
 
     
-    @include('web.sections.dispatchorders.dispatchLotPicker')
+    @include('web.sections.dispatchorders.daily.prepare.dispatch-lot-picker')
 
 
 </div>

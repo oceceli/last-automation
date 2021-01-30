@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Companies;
 
-use App\Http\Livewire\Sections\Polymorphic\AddressForm;
+use App\Http\Livewire\Traits\Polymorphic\AddressForm;
 use App\Http\Livewire\SmartTable;
 use App\Models\Address;
 use App\Models\Company;

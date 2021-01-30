@@ -31,7 +31,7 @@
                     {{-- @if ($do_are_lots_specified) --}}
                         {{-- @include('web.sections.dispatchorders.specifyLots') --}}
                     {{-- @else --}}
-                        @include('web.sections.dispatchorders.specifyProducts')
+                        @include('web.sections.dispatchorders.create.specify-products')
                     {{-- @endif --}}
                 </x-slot>
 

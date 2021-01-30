@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\DispatchOrders;
 
-use App\Http\Livewire\Sections\Dispatchorders\SpecifyProducts;
+use App\Http\Livewire\Traits\Dispatchorders\SpecifyProducts;
 use App\Models\Company;
 use App\Models\DispatchOrder;
 use Carbon\Carbon;

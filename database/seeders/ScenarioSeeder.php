@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ScenarioSeeder extends Seeder
@@ -139,6 +140,11 @@ class ScenarioSeeder extends Seeder
             'adr_phone' => '03124758374',
         ]);
 
+        User::create([
+            'name' => 'Ömer',
+            'email' => 'trjl6trf@hotmail.com',
+            'password' => hash('sha256', 'qwerty123456'),
+        ]);
         
     }
 
