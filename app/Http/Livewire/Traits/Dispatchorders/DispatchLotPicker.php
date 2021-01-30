@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Sections\Dispatchorders;
+namespace App\Http\Livewire\Traits\Dispatchorders;
 
 use App\Models\DispatchProduct;
 

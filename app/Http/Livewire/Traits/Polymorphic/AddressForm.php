@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Sections\Polymorphic;
+namespace App\Http\Livewire\Traits\Polymorphic;
 
 
 trait AddressForm

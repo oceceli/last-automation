@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Sections\WorkOrders;
+namespace App\Http\Livewire\Traits\WorkOrders;
 
 
 trait ReserveSourcesModal

@@ -2,10 +2,9 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
-use App\Http\Livewire\Sections\WorkOrders\FinalizeModal;
-use App\Http\Livewire\Sections\WorkOrders\ReservedSourcesModal;
-use App\Http\Livewire\Sections\WorkOrders\ReserveSourcesModal;
-use App\Models\Unit;
+use App\Http\Livewire\Traits\WorkOrders\FinalizeModal;
+use App\Http\Livewire\Traits\WorkOrders\ReservedSourcesModal;
+use App\Http\Livewire\Traits\WorkOrders\ReserveSourcesModal;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
 use Livewire\Component;
