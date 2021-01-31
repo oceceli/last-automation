@@ -12,6 +12,8 @@ trait DispatchLotPicker
     public $doLotModal = false;
     public $selectedDispatchProduct;
 
+    public $reservationViewModal = false;
+
 
     protected function rules()
     {
@@ -51,7 +53,6 @@ trait DispatchLotPicker
 
     
 
-
     public function closeDoLotModal()
     {
         $this->reset('rows', 'doLotModal', 'selectedDispatchProduct');
@@ -65,6 +66,18 @@ trait DispatchLotPicker
         if(!$bool) $this->closeDoLotModal();
     }
 
+
+    
+    public function openReservationViewModal($id)
+    {
+        $this->selectedDispatchProduct = DispatchProduct::find($id);
+        $this->reservationViewModal = true;
+    }
+
+    public function updatedReservationViewModal($bool)
+    {
+        if(!$bool) $this->reset('selectedDispatchProduct');
+    }
 
     
 
@@ -170,7 +183,7 @@ trait DispatchLotPicker
         $this->validate();
 
         if($this->isInEditMode()) 
-            $this->selectedDispatchProduct->undoReady();
+            $this->selectedDispatchProduct->reservedStocks()->delete();
         
         foreach($this->rows as $row) {
             $this->dispatchOrder->reservedStocks()->create([
@@ -219,9 +232,10 @@ trait DispatchLotPicker
     public function emptyDpReserveds($id)
     {
         $dispatchProduct = DispatchProduct::find($id);
-        $dispatchProduct->undoReady();
-
-        $this->refresh();
+        if($dispatchProduct->dispatchOrder->isInProgress()) {
+            $dispatchProduct->undoReady();
+            $this->refresh();
+        }
     }
 
 
@@ -320,7 +334,8 @@ trait DispatchLotPicker
     {
         // Needs for order must be covered and lots must be different from one another
         return $this->selectedDispatchProduct->dp_amount != $this->coveredAmount()
-               || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows);
+               || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows)
+               || ! $this->selectedDispatchProduct->dispatchOrder->isNotFinalized();
     }
 
 }

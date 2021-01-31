@@ -11,8 +11,16 @@ class DispatchService
     {
         return DispatchOrder // !! burayı geliştir
             ::where('do_datetime', Carbon::today()->format('d.m.Y'))
-            ->orWhere('status', 'active')
-            ->orWhere('status', 'completed')
+            ->orWhere('do_status', 'completed')
+            ->orWhere('do_status', 'in_progress')
+            ->orWhere('do_status', 'active')
+            ->orWhere('do_status', 'suspended')
             ->get();
     }
 }
+
+// 'approved',
+// 'completed',
+// 'in_progress',
+// 'active',
+// 'suspended',

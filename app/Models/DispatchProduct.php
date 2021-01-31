@@ -26,19 +26,27 @@ class DispatchProduct extends Model implements CanReserveStocks
 
     public function setReady()
     {
+        $this->dispatchOrder->setInProgress();
         return $this->update(['dp_is_ready' => true]);
     }
+
+    
+    public function undoReady()
+    {
+        $this->reservedStocks()->delete();
+
+        $this->update(['dp_is_ready' => false]);
+        
+        // whenever emptied prepared lots, we must detect and set dispatchorder's progress status as in_progress or active in case of if any other product/products are ready
+        $this->dispatchOrder->detectIsInProgress();
+    }
+
 
     public function isReady()
     {
         return $this->dp_is_ready;
     }
 
-    public function undoReady()
-    {
-        $this->reservedStocks()->delete();
-        return $this->update(['dp_is_ready' => false]);
-    }
 
     
     public function stockMoves()

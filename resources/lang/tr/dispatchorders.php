@@ -21,13 +21,14 @@ return [
     'make_a_review_request' => 'Hazırlanan/araca yüklenen ürünlerin tekrar gözden geçirilmesini iste',
     'relevant_units_will_be_informed' => 'İlgili birimler bilgilendirilecek',
     'mark_as_prepared' => 'Hazırlandı olarak işaretle',
-    'see_prepared_products' => 'Hazırlanan ürünleri gör',
+    // 'see_prepared_products' => 'Hazırlanan ürünleri gör',
     'whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready' => 'Ürünler hazırlandıktan / araca yüklendikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
     'not_prepared_yet' => 'Henüz hazırlanmadı',
     'select_products' => 'Ürünleri seç',
 
     // 'all_products_loaded_into_vehicle_and_approved' => 'Tüm ürünler araca yüklendi ve onaylandı.',
     'all_products_loaded_into_vehicle_waiting_for_approval' => 'Tüm ürünler araca yüklendi, onay bekleniyor...',
+    'all_products_prepared_or_loaded_into_vehicle_waiting_for_approval' => 'Tüm ürünler hazırlandı/araca yüklendi, yetkili onayı bekleniyor...',
     'waiting_for_dispatch' => 'Sevk bekleniyor',
     'products_loading_into_the_vehicle' => 'Ürünler araca yükleniyor',
 
@@ -40,7 +41,11 @@ return [
 
     'lot_number' => 'Lot numarası',
     'select_lot_number' => 'Lot seçiniz...',
-    'there_are_number_variety_of_products_which_is_waiting_for_the_dispatch' => 'Sevk edilmeyi bekleyen :number ürün var',
+    // 'there_are_number_variety_of_products_which_is_waiting_for_the_dispatch' => 'Sevk edilmeyi bekleyen :number ürün var',
+    'there_are_number_of_products_that_need_to_be_prepared' => 'Hazırlanması gereken :number ürün var',
+    'products_are_ready_to_dispatch' => 'Ürünler sevk için hazır',
+    'products_preparing' => 'Ürünler hazırlanıyor...',
+    'dispatch_process_finalized' => 'Sevk işlemi tamamlandı',
 
     'do_daily' => 'Günlük Sevk',
 ];

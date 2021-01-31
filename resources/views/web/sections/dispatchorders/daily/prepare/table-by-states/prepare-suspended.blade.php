@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     <x-table class="single line selectable red ">
         @include('web.sections.dispatchorders.daily.prepare.table-by-states.prepare-common')
         <x-tbody>
@@ -20,4 +20,4 @@
             @endforeach
         </x-tbody>
     </x-table>
-</div>
+</div> --}}

@@ -36,7 +36,10 @@ trait DispatchStates
     }
 
 
-    public function isNotCompleted()
+    /**
+     * finalized means completed or approved
+     */
+    public function isNotFinalized()
     {
         return ! $this->isCompleted() && ! $this->checkStatus('approved');
     }
@@ -46,7 +49,7 @@ trait DispatchStates
      * At least one of the products has started to load on a vehicle, that means this dispatch order is in progress
      * Keep database column in line by set it as in_progress
      */
-    public function isInProgress()
+    public function detectIsInProgress()
     {
         if($this->dispatchProducts()->where('dp_is_ready', true)->get()->isNotEmpty()) {
             $this->setInProgress();
@@ -55,6 +58,12 @@ trait DispatchStates
             $this->activate();
             return false;
         }
+    }
+
+
+    public function isInProgress()
+    {
+        return $this->checkStatus('in_progress');
     }
 
 
@@ -91,9 +100,9 @@ trait DispatchStates
     }
 
 
-    private function setInProgress()
+    public function setInProgress()
     {
-        if($this->checkStatus('is_active'))
+        if($this->checkStatus('active'))
             $this->setStatus('in_progress');
     }
 
@@ -113,7 +122,7 @@ trait DispatchStates
 
     public function markAsCompleted()
     {
-        if($this->isAllReady()) {
+        if($this->isAllReady() && $this->checkStatus('in_progress')) {
             $this->setStatus('completed');
         }
     }
