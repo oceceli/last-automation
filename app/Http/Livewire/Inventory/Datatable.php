@@ -19,11 +19,6 @@ class Datatable extends Component
     public $lotModal = false;
     public $selectedProduct;
  
-    // public function mount()
-    // {
-    //     $service = (new LotNumberService(Product::where('code', 'SDYMBKR')->first()));
-    //     dd($service->allWithAmounts());
-    // }
     
     public function lots($productId)
     {
