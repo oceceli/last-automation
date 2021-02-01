@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Inventory;
 use App\Http\Livewire\SmartTable;
 use App\Models\Product;
 use App\Models\StockMove;
+use App\Services\Stock\LotNumberService;
 use Livewire\Component;
 
 class Datatable extends Component
@@ -18,6 +19,11 @@ class Datatable extends Component
     public $lotModal = false;
     public $selectedProduct;
  
+    // public function mount()
+    // {
+    //     $service = (new LotNumberService(Product::where('code', 'SDYMBKR')->first()));
+    //     dd($service->allWithAmounts());
+    // }
     
     public function lots($productId)
     {

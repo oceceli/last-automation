@@ -3,6 +3,7 @@
 namespace App\Services\Stock;
 
 use App\Models\Product;
+use App\Models\ReservedStock;
 use App\Models\StockMove;
 
 class LotNumberService
@@ -14,6 +15,9 @@ class LotNumberService
     {
         $this->product = $product;
     }
+
+
+
 
 
     public function total()
@@ -32,6 +36,7 @@ class LotNumberService
         ];
     }
 
+    
 
     /**
      * Get total amount of updirection stockmoves
@@ -45,6 +50,9 @@ class LotNumberService
         ])->sum('base_amount');
     }
 
+
+
+
     /**
      * Get total amount of downdirection stockmoves
      */
@@ -57,6 +65,9 @@ class LotNumberService
         ])->sum('base_amount');
     }
 
+
+
+
     /**
      * @return float actual amount of given lot
      */
@@ -66,10 +77,14 @@ class LotNumberService
     }
 
 
+
+
     public function count()
     {
         return count($this->uniqueLots());
     }
+
+
 
 
     /**
@@ -87,6 +102,8 @@ class LotNumberService
     }
 
 
+
+
     /**
      * @return array lot numbers and amounts
      */
@@ -97,25 +114,35 @@ class LotNumberService
             $amount = $this->only($lot);
             if($amount == 0) continue;
 
+            $reservedAmount = $this->reservedAmount($lot);
+            $availableAmount = $amount - $reservedAmount;
+            
             $unit = $this->product->baseUnit;
             $arr[] = [
                 'lot_number' => $lot, 
                 'amount' => $amount,
-                'available_amount' => $amount, // !! reserve edilen kısımlar buradan düşecek
-                'reserved_amount' => null, // ! reserve edilen eklenecek
+                'available_amount' => $availableAmount,
+                'reserved_amount' => (float)$reservedAmount,
                 'amount_string' => "$amount {$unit->name}", // presentation is much easy now (:
-                'available_amount_string' => "$amount {$unit->name}",
+                'available_amount_string' => "$availableAmount {$unit->name}",
                 'unit' => $unit,
             ];
         }
         return isset($arr) ? $arr : [];
     }
 
-    // get lots which have positive amounts
-    // get lots which have negative amounts
-    // sum amounts and substract them
-    // find product's all lot occurrences as unique 
-    // find actual amount each given lot
-    // push them into array
+
+
+
+    public function reservedAmount($lot)
+    {
+        return ReservedStock::where(
+            [
+                'reserved_lot' => $lot, 
+                'product_id' => $this->product->id,
+                // 'is_archived' => false, // !! bunu ekleyeceğim gibi duruyor
+            ]
+        )->sum('reserved_amount');
+    }
 
 }

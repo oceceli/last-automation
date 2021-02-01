@@ -34,7 +34,7 @@ trait HasInventory
         return $this->totalStock['amount'] > 0;
     }
 
-    public function getLastMoveAttribute()
+    public function getLastMoveAttribute() // !! buna gerek olmayabilir
     {
         $lastMove = StockCalculations::lastMove($this->id);
         if($lastMove) return [
