@@ -2,6 +2,8 @@
 
 namespace App\Models\Traits\DispatchOrder;
 
+use App\Services\Stock\ReservedStockService;
+use App\Stocks\DispatchTotalMove;
 
 /**
  * Used by App\Models\DispatchOrder
@@ -83,11 +85,14 @@ trait DispatchStates
 
     
 
+    /**
+     * Set status as approved and deduct reserved lots from stock
+     */
     public function approve()
     {
         if($this->checkStatus('completed')) {
+            (new DispatchTotalMove($this))->saveReserveds();
             $this->setStatus('approved');
-            // !! Stoktan düşürme işlemi bu kısımda yapılmalı
         }
     }
 

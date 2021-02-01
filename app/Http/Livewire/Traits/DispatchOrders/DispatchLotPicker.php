@@ -155,10 +155,13 @@ trait DispatchLotPicker
 
 
     /**
-     * Extracts rows' indexes, values and calls the related function
+     * Extracts rows' indexes, values and calls to the related function
      */
     public function updatedRows($value, $location)
     {
+        // prepare-inprogress eye ikonuna tıkladığımda bu fonksiyon alakasız bir şekilde tetik alıyor, önüne böyle geçtim..
+        if(! $this->doLotModal) return;
+
         $array = explode('.', $location);
         $index = $array[0];
         $field = $array[1];

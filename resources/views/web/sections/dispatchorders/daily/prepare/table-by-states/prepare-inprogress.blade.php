@@ -15,18 +15,18 @@
                 <x-tbody-item class="right aligned">
                     <div class="ui mini buttons">
                         @if ($dp->isReady())
-                            <button wire:click.prevent="emptyDpReserveds({{ $dp->id }})"  class="ui mini orange basic icon button" data-tooltip="{{ __('dispatchorders.unload_products') }}" data-position="top right" data-variation="mini">
+                            <button wire:key="empty_{{$key}}" wire:click.prevent="emptyDpReserveds({{ $dp->id }})"  class="ui mini orange basic icon button" data-tooltip="{{ __('dispatchorders.unload_products') }}" data-position="top right" data-variation="mini">
                                 <i class="red trash alternate link icon"></i>
                             </button>
-                            <button wire:click.prevent="openReservationViewModal({{ $dp->id }})" class="ui  icon basic orange button ">
+                            <button wire:key="viewModal_{{$key}}" wire:click.prevent="openReservationViewModal({{ $dp->id }})" class="ui  icon basic orange button ">
                                 <i class="eye icon"></i>
                             </button>
-                            <button wire:click.prevent="openDoLotModal({{ $dp->id }})" class="ui mini orange button ">
+                            <button wire:key="doLotModal_{{$key}}" wire:click.prevent="openDoLotModal({{ $dp->id }})" class="ui mini orange button ">
                                 <i class="dolly icon"></i>
                                 {{ __('common.edit') }}
                             </button>
                         @else 
-                            <button wire:click.prevent="openDoLotModal({{ $dp->id }})" class="ui mini red button ">
+                            <button wire:key="doLotModal2_{{$key}}" wire:click.prevent="openDoLotModal({{ $dp->id }})" class="ui mini red button ">
                                 <i class="dolly icon"></i>
                                 {{ __('dispatchorders.select_products') }}
                             </button>

@@ -52,26 +52,19 @@
                         <td class="text-sm">{{ $stockMove->datetime }}</td>
 
                         <td class="collapsing">
-                            @if ($stockMove->isProduction())
-                                <x-crud-actions modelName="stock-move" :modelId="$stockMove->id">
-                                    <div x-data="{detailModal: false}"
-                                        data-tooltip="{{ __('workorders.belonged_workorder') }}" data-variation="mini" data-position="left center">
-                                        <a @click="detailModal = true" href="{{ route('work-orders.show', ['work_order' => $stockMove->stockable]) }}">
-                                            <i class="purple cog link icon"></i>
-                                        </a>
-                                        <div x-show="detailModal" x-cloak>
-                                            {{-- @include('web.sections.stockmoves.detailModal')  --}}
-                                            {{-- !!!  devam --}}
-                                        </div>
-                                    </div>
-                                </x-crud-actions>
-                            @elseif($stockMove->isTypeManual())
-                                {{-- modal olacak burada --}}
-                                <div>
+                            <x-span tooltip="{{ __('common.see_details') }}" position="left center">
+                                @if ($stockMove->isProduction())
+                                    <a href="{{ route('work-orders.show', ['work_order' => $stockMove->stockable]) }}">
+                                        <i class="purple project diagram link icon"></i>
+                                    </a>
+                                @elseif($stockMove->isDispatch())
+                                    <a href="{{ route('dispatchorders.prepare', ['dispatchOrder' => $stockMove->stockable]) }}">
+                                        <i class="teal truck link icon"></i>
+                                    </a>
+                                @elseif($stockMove->isTypeManual())
                                     <i class="eye link icon"></i>
-                                </div>
-                                {{-- <x-crud-actions show modelName="stock-move" :modelId="$stockMove->id" /> --}}
-                            @endif
+                                @endif
+                            </x-span>
                         </td>
 
                     </tr>

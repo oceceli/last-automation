@@ -45,6 +45,11 @@ class StockMove extends Model
         return $this->stockable_type === "App\Models\WorkOrder";
     }
 
+    public function isDispatch()
+    {
+        return $this->stockable_type === "App\Models\DispatchOrder";
+    }
+
     public function isTypeManual()
     {
         return $this->type === 'manual';

@@ -15,7 +15,15 @@ class Moves
     protected $lotNumber;
     protected $datetime;
 
-    // protected $stockableType; // !! kullanılmıyorlar şu an, lazım olur mu bilemedim
+    protected $types = [
+        'manual',
+        'production_ingredient',
+        'production_total',
+        'production_waste',
+        'dispatch_total',
+    ];
+
+    // protected $stockableType; // ?? kullanılmıyorlar şu an, lazım olur mu bilemedim
     // protected $stockableId;
 
     private $manualEntry = "manual";
@@ -28,20 +36,37 @@ class Moves
 
     public function save() 
     {
-        if( ! $this->direction) {
+        if($this->amount <= 0) return;
+
+        // If process is deduction then check if selected lot is in stock
+        if($this->direction == false) {
             $lot = StockMove::where(['product_id' => $this->productId, 'lot_number' => strtoupper($this->lotNumber)])->get();
             if($lot->isEmpty()) 
                 dd("todo: ".__CLASS__ . ", save fonksiyonu. Bu lot numarasına ait yeterli miktarda kaynak var mı diye sorulacak! muhtemelen vardır yani ama.."); // !! eksik 
         }
 
-        if($this->amount <= 0) return;
-
         if($this->instance) {
+            if(! in_array($this->type, $this->types))
+                throw new \Exception('Stok hareketi tipi yanlış!', 422);
+                
             $this->instance->stockMoves()->create($this->data());
         }
         else {
             $this->type = $this->manualEntry;
             StockMove::create($this->data());
+        }
+    }
+
+
+    public function saveReserveds()
+    {
+        $reservedStocks = $this->instance->reservedStocks;
+        foreach($reservedStocks as $reservation) {
+            $this->productId = $reservation->product_id;
+            $this->lotNumber = $reservation->reserved_lot;
+            $this->amount = $reservation->reserved_amount;
+
+            $this->save();
         }
     }
 
