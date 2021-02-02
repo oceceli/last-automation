@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('web.layouts.welcome');
+    return view('web.layouts.welcome'); // !! değişecek
 });
 
 
@@ -41,9 +41,7 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('/roles', 'RoleController');
     
-    Route::get('/dashboard', function () {
-        return view('web.sections.dashboard.index');
-    })->name('dashboard');
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 });
 

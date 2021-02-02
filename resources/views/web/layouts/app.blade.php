@@ -55,7 +55,7 @@
                         <!-- Page Content -->
                         <div class="overflow-x-hidden flex flex-col flex-1">
                             
-                            <div class="md:p-5 p-0 flex-1 shadow relative">
+                            <div class="flex-1 shadow relative">
                                 <x-info-area />
                                 {{ $slot }}
                             </div>

@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits\DispatchOrder;
 
-use App\Services\Stock\ReservedStockService;
 use App\Stocks\DispatchTotalMove;
 
 /**
