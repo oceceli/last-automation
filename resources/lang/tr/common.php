@@ -23,6 +23,7 @@ return [
     'prepare_or_review' => 'Hazırla/Gözden geçir',
     'remove' => 'Kaldır',
     'delete' => 'Sil',
+    'available' => 'Kullanılabilir',
     'deny' => 'Reddet',
     'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',

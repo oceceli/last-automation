@@ -46,7 +46,7 @@ return [
     'create_workorder' => 'iş emri oluşturun',
     'select_lot_number' => 'Lot seçiniz',
     'necessary_amount' => 'Gerekli miktar',
-    'available' => 'Kullanılabilir',
+    // 'available' => 'Kullanılabilir',
     'reserve_sources' => 'Kaynakları rezerve et',
     'reserved_sources' => 'Rezerve edilen kaynaklar',
     'reserve_sources_for_product' => ':product Üretimi İçin Kaynak Rezervi',

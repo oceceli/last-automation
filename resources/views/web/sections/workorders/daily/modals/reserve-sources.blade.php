@@ -46,9 +46,9 @@
                                             @if ($selectLot['available_amount'] > 0 || $selectLot['reserved_amount'])
                                                 <option value="{{ $selectLot['lot_number'] }},{{ $selectLot['available_amount'] }}">
                                                     <span>{{ $selectLot['lot_number'] }}</span> | 
-                                                    <span class="text-xs">{{ __('workorders.available' )}}: {{ number_format($selectLot['available_amount'], 2, ',', '') }} {{ $selectLot['unit']['name'] }}</span>
+                                                    <span class="text-xs">{{ __('common.available' )}}: {{ $selectLot['available_amount_string'] }}</span>
                                                     @if($selectLot['reserved_amount'])
-                                                        | {{ __('workorders.reserved') }}: {{ $selectLot['reserved_amount'] }} {{ $selectLot['unit']['abbreviation'] }}
+                                                        | {{ __('workorders.reserved') }}: {{ $selectLot['reserved_amount_string'] }}
                                                     @endif
                                                 </option>
                                             @endif

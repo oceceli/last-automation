@@ -32,6 +32,7 @@ class LotNumberService
             'reserved_amount' => $reservedAmount,
             'amount_string' => "$amount {$unit->name}",
             'available_amount_string' => "$availableAmount {$unit->name}",
+            'reserved_amount_string' => "$reservedAmount {$unit->name}",
             'unit' => $unit,
         ];
     }
@@ -125,6 +126,7 @@ class LotNumberService
                 'reserved_amount' => (float)$reservedAmount,
                 'amount_string' => "$amount {$unit->name}", // presentation is much easy now (:
                 'available_amount_string' => "$availableAmount {$unit->name}",
+                'reserved_amount_string' => "$reservedAmount {$unit->name}",
                 'unit' => $unit,
             ];
         }

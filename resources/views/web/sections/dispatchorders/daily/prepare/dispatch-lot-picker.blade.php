@@ -47,7 +47,11 @@
                                         <option value="" selected>{{ __('dispatchorders.select_lot_number') }}</option>
                                         @foreach ($selectedDispatchProduct->product->lots as $index => $lot)
                                             <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
-                                                {{ $lot['lot_number'] }} | {{ __('inventory.in_stock')}}: {{ $lot['available_amount_string'] }}
+                                                <span>{{ $lot['lot_number'] }}</span> | 
+                                                <span class="text-xs">{{ __('common.available' )}}: {{ $lot['available_amount_string'] }}</span>
+                                                @if($lot['reserved_amount'])
+                                                    | {{ __('workorders.reserved') }}: {{ $lot['reserved_amount_string'] }}
+                                                @endif
                                             </option>
                                         @endforeach
                                     </select>
