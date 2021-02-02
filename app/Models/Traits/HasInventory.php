@@ -46,23 +46,21 @@ trait HasInventory
     
     public function getStockStatusAttribute()
     {
-        if($this->totalStock['amount'] > 0 && $this->totalStock['amount'] < 100)
-        $array = [
-            'tr' => 'warning', 
-            'icon' => 'exclamation circle icon', 
-            'explanation' => __('inventory.lower_than_count_unit', ['count' => $this->min_threshold, 'unit' => $this->baseUnit->abbreviation]),
-        ];
+        if($this->totalStock['amount'] > 0 && $this->totalStock['amount'] < 100) {
+            $array = [
+                'tr' => 'warning left yellow marked', 
+                'icon' => 'exclamation circle icon', 
+            ];
+            $array['explanation'] = $this->min_threshold
+                ? __('inventory.lower_than_count_unit', ['count' => $this->min_threshold, 'unit' => $this->baseUnit->abbreviation])
+                : __('inventory.stock_under_100_unit', ['unit' => $this->baseUnit->abbreviation]);
+            
+        }
         elseif($this->totalStock['amount'] <= 0) 
             $array = [
                 'tr' => 'negative left red marked', 
                 'icon' => 'exclamation triangle  icon', 
                 'explanation' => __('inventory.out_of_stock'),
-            ];
-        elseif($this->totalStock['amount'] > 0 && $this->totalStock['amount'] < $this->min_threshold) 
-            $array = [
-                'tr' => 'warning left yellow marked', 
-                'icon' => 'exclamation circle icon', 
-                'explanation' => __('inventory.stock_under_100_unit', ['unit' => $this->baseUnit->abbreviation]),
             ];
         else 
             $array = [

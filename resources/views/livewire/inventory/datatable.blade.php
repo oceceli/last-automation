@@ -2,98 +2,144 @@
     
     <x-table-toolbar :perPage="$perPage" /> 
 
-    <div x-data="{lotModal: @entangle('lotModal')}">
         
-        <x-table class="celled ui celled sortable table tablet stackable very compact selectable">
-            <x-thead>
-                <tr>
-                    <x-thead-item sortBy="code" class="">{{ __('products.code')}} </x-thead-item>
-                    <x-thead-item sortBy="name">{{ __('products.name')}} </x-thead-item>
-                    <x-thead-item>{{ __('inventory.available_quantity') }}</x-thead-item>
-                    <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
-                    <x-thead-item></x-thead-item>
-                </tr>
-            </x-thead>
-            <x-tbody>
-                @forelse ($data as $product)
-                <tr class="{{ $product->stockStatus['tr'] }} font-semibold ease-in-out duration-150 cursor-default" wire:key="{{ $loop->index }}">
-                    <td class="collapsing font-bold ">
-                        <span data-tooltip="{{ $product->stockStatus['explanation'] }}" data-variation="mini" data-position="top left">
-                            <i class="{{ $product->stockStatus['icon'] }}"></i>
-                        </span>
-                        {{ $product->code }}
-                    </td>
-                    <td class="">{{ $product->name }}</td>
-                    <td class="font-bold">{{ $product->totalStock['amount'] }} {{ $product->totalStock['unit']->name}}</td>
-                    <td class=" text-sm collapsing">
-                        <i class="{{ $product->lastMove['direction'] }}"></i>
-                        {{ $product->lastMove['date'] }} 
-                    </td>
-                    <td class=" collapsing center aligned">
-                        <div wire:click="lots({{ $product->id }})"
-                            class="border bg-white shadow text-blue-400 hover:text-blue-700 ease-in-out duration-200 cursor-pointer">
-                            <span class="p-1">LOT</span>
-                            <i class="search alternate icon"></i>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="10">
-                        <x-placeholder icon="warehouse">
-                            {{ __('common.no_results') }}
-                        </x-placeholder>
-                    </td>
-                </tr>
-                @endforelse
-            </x-tbody>
-        </x-table>
-
-        <div class="w-full">
-            {{ $data->links('components.tailwind-pagination') }}
+        <div>
+            <x-table class="selectable">
+                <x-thead>
+                    <x-table-row>
+                        <x-thead-item class="collapsing">{{ __('common.status') }}</x-thead-item>
+                        <x-thead-item sortBy="code" class="cursor-pointer">{{ __('products.code')}} </x-thead-item>
+                        <x-thead-item>{{ __('inventory.total') }}</x-thead-item>
+                        <x-thead-item>{{ __('inventory.available') }}</x-thead-item>
+                        <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
+                        <x-thead-item></x-thead-item>
+                    </x-table-row>
+                </x-thead>
+                <x-tbody>
+                    @forelse ($data as $product)
+                    <x-table-row wire:key="inventory_row_{{ $loop->index }}" wire:click="showLots({{ $product->id }})" class="{{ $product->stockStatus['tr'] }}" >
+                        <x-tbody-item class="center aligned collapsing">
+                            <span data-tooltip="{{ $product->stockStatus['explanation'] }}" data-variation="mini" data-position="top left">
+                                <i class="{{ $product->stockStatus['icon'] }}"></i>
+                            </span>
+                        </x-tbody-item>
+                        <x-tbody-item class="font-bold">
+                            {{ $product->code }}
+                            <span class="text-xs text-ease">{{ $product->name }}</span>
+                        </x-tbody-item>
+                        <x-tbody-item class="font-semibold">
+                            @if ($product->totalStock['reserved_amount'])
+                                {{ $product->totalStock['amount'] }} 
+                                <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
+                                    - {{ $product->totalStock['reserved_amount_string'] }}
+                                </x-span>
+                            @else
+                                {{ $product->totalStock['amount_string'] }}
+                            @endif
+                        </x-tbody-item>
+                        <x-tbody-item class="font-bold">
+                            {{ $product->totalStock['available_amount_string'] }}
+                        </x-tbody-item>
+                        <x-tbody-item class=" text-sm collapsing">
+                            <i class="{{ $product->lastMove['direction'] }}"></i>
+                            {{ $product->lastMove['date'] }} 
+                        </x-tbody-item>
+                        <x-tbody-item class=" collapsing center aligned">
+                            <div wire:click="showLots({{ $product->id }})"
+                                class="border bg-white shadow text-blue-400 hover:text-blue-700 ease-in-out duration-200 cursor-pointer">
+                                <span class="p-1">LOT</span>
+                                <i class="search alternate icon"></i>
+                            </div>
+                        </x-tbody-item>
+                    </x-table-row>
+                    @empty
+                    <tr>
+                        <td colspan="10">
+                            <x-placeholder icon="warehouse">
+                                {{ __('common.no_results') }}
+                            </x-placeholder>
+                        </td>
+                    </tr>
+                    @endforelse
+                </x-tbody>
+            </x-table>
+    
+            <div class="w-full">
+                {{ $data->links('components.tailwind-pagination') }}
+            </div>
         </div>
         
+
+
+
+
         {{-- Product lots MODAL --------------------------------------------------}}
-        <x-custom-modal active="lotModal">
-            <div class="py-2 px-6">
-                @if ($selectedProduct)
-                    <h4 class="font-bold px-2 pt-2 text-ease">{{ $selectedProduct->name }}</h4>
-                    <table class="ui center aligned table unstackable very compact">
-                        <thead>
-                            <tr>
-                                <x-thead-item>{{ __('stockmoves.lot_number') }}</x-thead-item>
-                                <x-thead-item>{{ __('inventory.available_quantity') }}</x-thead-item>
-                                <x-thead-item class="text-sm collapsing">{{ __('stockmoves.last_move') }}</x-thead-item>
-                                <x-thead-item></x-thead-item>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($selectedProduct->lots as $lot)
-                            <tr wire:key="{{ $loop->index }}">
-                                <td class="text-ease">{{ $lot['lot_number'] }}</td>
-                                <td class="text-ease">{{ $lot['amount']}} {{ $lot['unit']->abbreviation }} </td>
-                                <td class="collapsing"></td>
-                                <td class="collapsing center aligned">
-                                    <i class="truck icon"></i>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr class="p-2 bg-red-50 text-center text ease text-red-600">
-                                <td colspan="10">{{ __('common.empty') }}</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    <div class="text-ease font-bold text-right p-4">
-                        <span>Toplam</span>
-                        <u>{{ $selectedProduct->totalStock['amount'] }} {{ $selectedProduct->totalStock['unit']->name }}</u>
+        @if ($selectedProduct)
+        <div x-data="{lotModal: @entangle('lotModal')}">
+            <x-custom-modal active="lotModal" header="{{ $selectedProduct->name }}">
+
+                <div class="p-2 bg-smoke-lightest">
+                    <div class="bg-white rounded-t p-2 shadow-md relative">
+                        <x-table class="center aligned">
+                            <thead>
+                                <x-table-row>
+                                    <x-thead-item>{{ __('stockmoves.lot_number') }}</x-thead-item>
+                                    <x-thead-item>{{ __('inventory.total') }}</x-thead-item>
+                                    <x-thead-item>{{ __('inventory.available') }}</x-thead-item>
+                                </x-table-row>
+                            </thead>
+                            <tbody>
+                                @forelse ($selectedProduct->lots as $lot)
+                                <x-table-row wire:key="lots_rows_{{ $loop->index }}">
+                                    <x-tbody-item class="text-ease">{{ $lot['lot_number'] }}</x-tbody-item>
+                                    <x-tbody-item class="font-semibold">
+                                        @if ($lot['reserved_amount'])
+                                            {{ $lot['amount'] }} 
+                                            <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
+                                                - {{ $lot['reserved_amount_string'] }}
+                                            </x-span>
+                                        @else
+                                            {{ $lot['amount_string'] }}
+                                        @endif
+                                    </x-tbody-item>
+                                    <x-tbody-item class="font-bold">
+                                        {{ $lot['available_amount_string'] }}
+                                    </x-tbody-item>
+                                    
+                                </x-table-row>
+                                @empty
+                                <x-table-row class="p-2 bg-red-50 text-center text ease text-red-600">
+                                    <x-tbody-item colspan="10">{{ __('common.empty') }}</x-tbody-item>
+                                </x-table-row>
+                                @endforelse
+                            </tbody>
+                        </x-table>
+                            
                     </div>
-                @endif
-            </div>
-        </x-custom-modal>   
+                    <div class="p-4 bg-gray-700 text-white rounded-b flex justify-between font-bold shadow-md">
+                        <div>
+                            {{ __('common.total') }}
+                            @if ($selectedProduct->totalStock['reserved_amount'])
+                                {{ $selectedProduct->totalStock['amount'] }} 
+                                <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
+                                    - {{ $selectedProduct->totalStock['reserved_amount_string'] }}
+                                </x-span>
+                            @else
+                                {{ $selectedProduct->totalStock['amount_string'] }}
+                            @endif
+                        </div>
+                        <div>
+                            <span>{{ $selectedProduct->totalStock['available_amount_string'] }} </span>
+                            <span class="text-xs">{{ __('inventory.available') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </x-custom-modal>      
+        </div> 
+        @endif
         {{-- Product lots MODAL --------------------------------------------------}}
 
-    </div>
 </div>
 
 

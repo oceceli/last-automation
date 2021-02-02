@@ -20,9 +20,14 @@ class Datatable extends Component
     public $selectedProduct;
  
     
-    public function lots($productId)
+    public function showLots($productId)
     {
         $this->selectedProduct = $this->model::find($productId);
         $this->lotModal = true;
+    }
+
+    public function updatedLotModal($bool)
+    {
+        if(!$bool) $this->reset('lotModal', 'selectedProduct');
     }
 }
