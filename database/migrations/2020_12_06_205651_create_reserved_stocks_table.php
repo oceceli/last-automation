@@ -19,6 +19,8 @@ class CreateReservedStocksTable extends Migration
             $table->string('reserved_lot');
             $table->integer('reserved_amount');
             
+            $table->boolean('reserved_is_archived')->default(false);
+            
             $table->string('reservable_type');
             $table->unsignedBigInteger('reservable_id');
             

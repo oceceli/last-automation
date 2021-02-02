@@ -140,11 +140,11 @@ class ScenarioSeeder extends Seeder
             'adr_phone' => '03124758374',
         ]);
 
-        User::create([
-            'name' => 'Ömer',
-            'email' => 'trjl6trf@hotmail.com',
-            'password' => hash('sha256', 'qwerty123456'),
-        ]);
+        // User::create([
+        //     'name' => 'Ömer',
+        //     'email' => 'trjl6trf@hotmail.com',
+        //     'password' => hash('sha256', 'qwerty123456'),
+        // ]);
         
     }
 

@@ -142,7 +142,7 @@ class LotNumberService
             [
                 'reserved_lot' => $lot, 
                 'product_id' => $this->product->id,
-                // 'is_archived' => false, // !! bunu ekleyeceğim gibi duruyor
+                'reserved_is_archived' => false,
             ]
         )->sum('reserved_amount');
     }

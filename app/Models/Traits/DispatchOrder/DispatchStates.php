@@ -93,6 +93,7 @@ trait DispatchStates
         if($this->checkStatus('completed')) {
             (new DispatchTotalMove($this))->saveReserveds();
             $this->setStatus('approved');
+            $this->markReservationsAsArchived();
         }
     }
 
@@ -150,5 +151,12 @@ trait DispatchStates
         return $this->do_status === $state;
     }
 
+
+    private function markReservationsAsArchived()
+    {
+        foreach($this->reservedStocks as $reservation) {
+            $reservation->update(['reserved_is_archived' => true]);
+        }
+    }
 
 }
