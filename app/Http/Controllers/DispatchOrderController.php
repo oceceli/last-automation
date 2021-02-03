@@ -16,8 +16,9 @@ class DispatchOrderController extends Controller
         return view('web.sections.dispatchorders.create.create');
     }
 
-    public function edit(DispatchOrder $dispatchOrder)
+    public function edit($dispatchOrder)
     {
+        $dispatchOrder = DispatchOrder::findOrFail($dispatchOrder);
         return view('web.sections.dispatchorders.edit', compact('dispatchOrder'));
     }
     

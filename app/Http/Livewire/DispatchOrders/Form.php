@@ -11,10 +11,7 @@ use Livewire\Component;
 class Form extends Component
 {
     use SpecifyProducts;
-    // use SpecifyLots;
     
-    // public $do_are_lots_specified = false; // sevk emri oluştururken lotları seçmek istersen bunu true yap, ekstra bir form gerekecek muhtemelen
-
     // dispatchorders attributes
     public $company_id;
     public $address_id;
@@ -23,6 +20,9 @@ class Form extends Component
     public $do_note; // !! note alanı forma eklenecek
 
     public $selectedCompany;
+
+    private $dispatchOrder; // ?? kullanılmıyor şu an
+    private $editMode = true;
 
     protected function rules()
     {
@@ -36,6 +36,8 @@ class Form extends Component
     }
 
 
+
+
     protected function validationAttributes() 
     {
         $array = [];
@@ -44,18 +46,30 @@ class Form extends Component
     }
 
     
-    public function mount()
+
+    
+    public function mount($dispatchOrder = null)
     {
-        $this->do_datetime = Carbon::today();
-        $this->addCard();
+        if($dispatchOrder) {
+            $this->dispatchOrder = $dispatchOrder;
+            $this->setEditMode($dispatchOrder);
+        } else {
+            $this->do_datetime = Carbon::today();
+            $this->addCard();
+        }
     }
     
+
+
 
     public function updatedCompanyId($id)
     {
         $this->selectedCompany = Company::findOrFail($id);
         $this->emit('do_company_selected');
     }
+
+
+
 
     public function getCompanyAddressesProperty()
     {
@@ -64,17 +78,14 @@ class Form extends Component
 
     
 
+
     public function getCompaniesProperty()
     {
         return Company::all();
     }
 
 
-    public function render()
-    {
-        return view('livewire.dispatch-orders.form');
-    }
-
+    
 
     public function submit()
     {
@@ -88,11 +99,29 @@ class Form extends Component
         if($this->spSubmit($dispatchOrder)) {
             session()->flash('success', __('dispatchorders.dispatchorder_created'));
             return redirect()->route('dispatchorders.index');
-        } 
-        // else {
-        //     $this->emit('toast', __('common.error_occurred'), __('dispatchorders.an_error_occurred_while_creating_dispatchorder_please_reload_page_and_try_again'), 'error'); 
-        //     $dispatchOrder->delete();
-        // }
+        }
+    }
 
+
+
+
+    private function setEditMode($dispatchOrder)
+    {
+        $this->editMode = true;
+
+        $this->company_id = $dispatchOrder->company_id;
+        $this->address_id = $dispatchOrder->address_id;
+        $this->do_number = $dispatchOrder->do_number;
+        $this->do_datetime = $dispatchOrder->do_datetime;
+        $this->do_note = $dispatchOrder->do_note;
+
+        $this->spProductsEditMode($dispatchOrder);
+    }
+
+
+
+    public function render()
+    {
+        return view('livewire.dispatch-orders.form');
     }
 }

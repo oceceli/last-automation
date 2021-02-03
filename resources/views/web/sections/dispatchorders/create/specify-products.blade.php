@@ -31,8 +31,9 @@
                             {{-- <x-input defer model="cards.{{ $key }}.reserved_amount" placeholder="{{ __('common.amount') }}" /> --}}
     
                             <x-dropdown iType="number" iModel="cards.{{ $key }}.reserved_amount" iPlaceholder="{{ __('common.amount') }}" placeholder="{{ __('units.unit') }}" sClass="basic" noErrors
-                                model="cards.{{ $key }}.unitId" initnone triggerOnEvent="sp_product_selected{{ $key }}" dataSourceFunction="getUnitsProperty" value="id" text="name" 
+                                model="cards.{{ $key }}.unitId"  triggerOnEvent="sp_product_selected{{ $key }}" dataSourceFunction="getUnitsProperty" value="id" text="name" 
                                 sId="sp_unitId_{{$key}}" />
+
                             
                         </div>
                         

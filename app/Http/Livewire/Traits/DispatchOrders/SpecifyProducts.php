@@ -7,10 +7,8 @@ use App\Models\Product;
 
 trait SpecifyProducts
 {
-    // public $product_id;
-    // public $reserved_amount;
 
-    public $selectedProduct;
+    public $staticSelectedProduct;
 
     // model cards
     public $cards;
@@ -49,11 +47,11 @@ trait SpecifyProducts
     {
         if(strpos($location, 'product_id')) {
             $index = strtok($location, '.');
-            $this->selectedProduct = $this->getProductsProperty()->find($id);
+            $this->staticSelectedProduct = $this->getProductsProperty()->find($id);
             $this->emit('sp_product_selected'.$index);
             
             // set base unit as default unit, also user will be able to change unit in dropdown
-            $this->cards[$index]['unitId'] = $this->selectedProduct->baseUnit->id; // !! yavaş bilgisayarda seçemiyor olabilir, kontrol et
+            $this->cards[$index]['unitId'] = $this->staticSelectedProduct->baseUnit->id; // !! devam
         }
     }
 
@@ -67,7 +65,7 @@ trait SpecifyProducts
 
     public function getUnitsProperty()
     {
-        return $this->selectedProduct->units->toArray();
+        return $this->staticSelectedProduct->units->toArray();
     }
 
 
@@ -81,6 +79,19 @@ trait SpecifyProducts
             ]);
         }
         return true;
+    }
+
+
+    private function spProductsEditMode($dispatchOrder)
+    {
+        foreach($dispatchOrder->dispatchProducts as $key => $dp) {
+            $this->cards[] = [
+                'product_id' => $dp->product_id,
+                'reserved_amount' => $dp->dp_amount,
+                'unitId' => $dp->product->baseUnit->id,
+            ];
+            $this->updatedCards((int)$dp->product_id, "$key.product_id");
+        }
     }
 
 }
