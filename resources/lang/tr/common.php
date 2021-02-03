@@ -37,6 +37,7 @@ return [
     'variable' => 'Değişken',
     'net' => 'Net',
     'NA' => 'Yok',
+    'look_into' => 'İncele',
     'add' => 'Ekle',
     'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',

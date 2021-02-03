@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:dispatchorders.form :dispatchOrder="$dispatchOrder">
+    <livewire:dispatch-orders.form :dispatchOrder="$dispatchOrder">
 </x-app-layout>

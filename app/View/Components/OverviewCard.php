@@ -9,16 +9,18 @@ class OverviewCard extends Component
 
     public $color;
     public $icon;
+    public $href;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($icon = 'ship', $color = 'teal')
+    public function __construct($icon = 'ship', $color = 'teal', $href = '#')
     {
         $this->color = $color;
         $this->icon = $icon;
+        $this->href = $href;
     }
 
     /**

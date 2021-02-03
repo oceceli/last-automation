@@ -37,6 +37,7 @@
   .white-area {
     @apply bg-white p-4 shadow-md border rounded;
   }
+
 }
 
 @layer utilities {
