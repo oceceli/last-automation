@@ -10,34 +10,60 @@ trait SpecifyProducts
 
     public $staticSelectedProduct;
 
+    public $spModal = false;
+
     // model cards
     public $cards;
 
     protected $spRules = [
+        'cards' => 'array',
         'cards.*.product_id' => 'required|integer',
-        'cards.*.reserved_amount' => 'required|numeric',
-        'cards.*.unitId' => 'required|integer',
+        'cards.*.dp_amount' => 'required|numeric',
+        'cards.*.unit_id' => 'required|integer',
     ];
 
-    protected $spValidationAttributes = [ // dil dosyasına geçecek
-        'cards.*.product_id' => 'Ürün',
-        'cards.*.reserved_amount' => 'Miktar',
-        'cards.*.unitId' => 'Birim',
-    ];
+
+
+    protected function spValidationAttributes()
+    {
+        return [
+            'cards.*.product_id' => __('products.product'),
+            'cards.*.dp_amount' => __('common.amount'),
+            'cards.*.unit_id' => __('units.unit'),
+        ];
+    }
+
+
+    
+    public function openSpModal()
+    {
+        $this->spModal = true;
+    }
+
 
     public function getProductsProperty()
     {
         return Product::select('id', 'name', 'code')->get();
     }
 
+
+
+    
     public function addCard()
     {
         $this->cards[] = [
             'product_id' => null,
-            'reserved_amount' => null,
-            'unitId' => null,
+            'dp_amount' => null,
+            'unit_id' => null,
         ];
     }
+
+
+    public function getCountFilledCards()
+    {
+        return count(array_filter(array_column($this->cards, 'product_id')));
+    }
+
 
      /**
      * Nested product_id on updated event 
@@ -51,9 +77,12 @@ trait SpecifyProducts
             $this->emit('sp_product_selected'.$index);
             
             // set base unit as default unit, also user will be able to change unit in dropdown
-            $this->cards[$index]['unitId'] = $this->staticSelectedProduct->baseUnit->id; // !! devam
+            $this->cards[$index]['unit_id'] = $this->staticSelectedProduct->baseUnit->id;
         }
     }
+
+
+
 
 
     public function removeCard($id)
@@ -63,23 +92,33 @@ trait SpecifyProducts
     }
 
 
+
+
+
     public function getUnitsProperty()
     {
         return $this->staticSelectedProduct->units->toArray();
     }
 
 
+
+
+
     private function spSubmit($dispatchOrder)
     {
         foreach($this->cards as $card) {
-            $baseAmount = Conversions::toBase($card['unitId'], $card['reserved_amount'])['amount'];
+            // $baseAmount = Conversions::toBase($card['unit_id'], $card['dp_amount'])['amount'];
             $dispatchOrder->dispatchProducts()->create([
                 'product_id' => $card['product_id'],
-                'dp_amount' => $baseAmount,
+                'dp_amount' => $card['dp_amount'],
+                'unit_id' => $card['unit_id'],
             ]);
         }
         return true;
     }
+
+
+
 
 
     private function spProductsEditMode($dispatchOrder)
@@ -87,10 +126,10 @@ trait SpecifyProducts
         foreach($dispatchOrder->dispatchProducts as $key => $dp) {
             $this->cards[] = [
                 'product_id' => $dp->product_id,
-                'reserved_amount' => $dp->dp_amount,
-                'unitId' => $dp->product->baseUnit->id,
+                'dp_amount' => $dp->dp_amount,
+                // 'unit_id' => $dp->product->baseUnit->id,
             ];
-            $this->updatedCards((int)$dp->product_id, "$key.product_id");
+            // $this->updatedCards((int)$dp->product_id, "$key.product_id");
         }
     }
 

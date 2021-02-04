@@ -187,6 +187,7 @@ return [
         'do_number' => 'Sevk kodu',
         'do_datetime' => 'Sevk tarihi',
         'do_status' => 'Durum',
+        'do_note' => 'Not',
 
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',

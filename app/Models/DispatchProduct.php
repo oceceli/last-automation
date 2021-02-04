@@ -22,6 +22,11 @@ class DispatchProduct extends Model implements CanReserveStocks
         return $this->belongsTo(Product::class);
     }
 
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
     
 
     public function setReady()

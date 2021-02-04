@@ -41,7 +41,7 @@ class Form extends Component
     protected function validationAttributes() 
     {
         $array = [];
-        $array = array_merge($array, $this->spValidationAttributes);
+        $array = array_merge($array, $this->spValidationAttributes());
         return $array;
     }
 
@@ -89,6 +89,7 @@ class Form extends Component
 
     public function submit()
     {
+        if(!$this->cards) return;
         $validatedDoData = $this->validate();
 
         // spRules refers to SpecifyProduct trait's rules

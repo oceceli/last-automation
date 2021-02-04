@@ -34,6 +34,8 @@ return [
 
     'this_lot_selected_already' => 'Bu lot zaten seçilmiş',
     'lot_sources_not_specified_yet' => 'Lot kaynakları henüz belirtilmedi',
+    'count_dispatch_product_selected' => ':count kalem ürün seçildi',
+    'please_select_products_to_be_dispatched' => 'Lütfen sevk etmek istediğiniz ürünleri seçin',
 
     'dispatch' => 'Sevkiyat',
     'total_covered' => 'Karşılanan miktar',

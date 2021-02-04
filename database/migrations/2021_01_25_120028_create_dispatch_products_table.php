@@ -17,7 +17,8 @@ class CreateDispatchProductsTable extends Migration
             $table->id();
             $table->float('dp_amount');
             $table->boolean('dp_is_ready')->default(false);
-
+            
+            $table->unsignedBigInteger('unit_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('dispatch_order_id');
 

@@ -17,28 +17,42 @@
                     
                     {{-- <x-checkbox model="do_are_lots_specified" label="{{ __('dispatchorders.specify_lot_numbers') }}" class="pt-4" /> --}}
                     
+                    <x-input defer model="do_number" label="{{ __('validation.attributes.do_number') }}" placeholder="{{ __('validation.attributes.do_number') }}" class="required" noErrors />
                 </x-slot>
                 
                 <x-slot name="right">
-                    <x-input defer model="do_number" label="{{ __('validation.attributes.do_number') }}" placeholder="{{ __('validation.attributes.do_number') }}" class="required" noErrors />
                     {{-- <x-input defer model="do_datetime" label="{{ __('validation.attributes.do_datetime') }}" placeholder="{{ __('validation.attributes.do_datetime') }}" class="required" /> --}}
                     <x-datepicker model="do_datetime" initialDate="{{ $do_datetime }}" label="{{ __('validation.attributes.do_datetime') }}" class="required field" />
+                
+                    <div class="field">
+                        <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
+                        <textarea wire:model.lazy="do_note" rows="5"></textarea>
+                    </div>
                 </x-slot>
 
 
 
                 <x-slot name="bottom">
-                    {{-- @if ($do_are_lots_specified) --}}
-                        {{-- @include('web.sections.dispatchorders.specifyLots') --}}
-                    {{-- @else --}}
-                        @include('web.sections.dispatchorders.create.specify-products')
-                    {{-- @endif --}}
+                    <button wire:click.prevent="openSpModal()" class="ui primary mini icon button">
+                        <i class="plus icon"></i>
+                    </button>
+                    @if ($this->getCountFilledCards())
+                        <span class="text-sm text-ease">
+                            {{ __('dispatchorders.count_dispatch_product_selected', ['count' => $this->getCountFilledCards()]) }}
+                        </span>
+                    @else
+                        <span class="text-sm text-blue-600 font-bold">
+                            {{ __('dispatchorders.please_select_products_to_be_dispatched') }}
+                        </span> 
+                    @endif
                 </x-slot>
 
 
 
             </x-form-divider>
         </form>
+        @include('web.sections.dispatchorders.create.specify-products')
+
     </x-content>
 
 

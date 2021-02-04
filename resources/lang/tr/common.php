@@ -38,6 +38,7 @@ return [
     'net' => 'Net',
     'NA' => 'Yok',
     'look_into' => 'İncele',
+    'ok' => 'Tamam',
     'add' => 'Ekle',
     'do_not_save' => 'Kaydetme',
     'display' => 'Görüntüle',
