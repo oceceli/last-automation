@@ -12,6 +12,7 @@ class FormDivider extends Component
 
     public $lClass;
     public $rClass;
+    public $bottomClass;
 
 
 
@@ -20,7 +21,7 @@ class FormDivider extends Component
      *
      * @return void
      */
-    public function __construct($bottom = false, $right = false, $noButtons = false, $lClass = null, $rClass= null)
+    public function __construct($bottom = false, $right = false, $noButtons = false, $lClass = null, $rClass= null, $bottomClass = null)
     {
         $this->right = $right;
         $this->bottom = $bottom;
@@ -28,6 +29,7 @@ class FormDivider extends Component
 
         $this->lClass = $lClass;
         $this->rClass = $rClass;
+        $this->bottomClass = $bottomClass;
     }
 
     /**

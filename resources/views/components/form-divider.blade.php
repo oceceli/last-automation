@@ -12,12 +12,12 @@
 
     </div>
     @if ($bottom)
-    <div class="p-6 shadow-md">
+    <div class="p-6 shadow-md {{ $bottomClass }}">
         {{ $bottom }}
     </div>
     @endif
     @if (! $noButtons)
-    <div class="p-6 rounded-b-md">
+    <div class="p-6 rounded-b-md border-t">
         <x-form-buttons />
     </div>
     @endif

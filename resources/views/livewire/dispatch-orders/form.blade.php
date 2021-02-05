@@ -1,12 +1,14 @@
 <div>
     <x-error-area class="mb-5" />
+    
+    <x-inputdrop></x-inputdrop>
 
     <x-content>
         <x-slot name="header">
             <x-page-header icon="truck" header="{{ __('dispatchorders.create_dispatchorder') }}" />
         </x-slot>
         <form class="ui tiny form" wire:submit.prevent="submit">
-            <x-form-divider>
+            <x-form-divider bottomClass="bg-gray-100 shadow-inner">
 
                 <x-slot name="left">
                     <x-dropdown model="company_id" :collection="$this->companies" value="id" text="cmp_name,cmp_current_code" sClass="search" class="required" noErrors
@@ -28,30 +30,19 @@
                         <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
                         <textarea wire:model.lazy="do_note" rows="5"></textarea>
                     </div>
+
                 </x-slot>
 
 
 
                 <x-slot name="bottom">
-                    <button wire:click.prevent="openSpModal()" class="ui primary mini icon button">
-                        <i class="plus icon"></i>
-                    </button>
-                    @if ($this->getCountFilledCards())
-                        <span class="text-sm text-ease">
-                            {{ __('dispatchorders.count_dispatch_product_selected', ['count' => $this->getCountFilledCards()]) }}
-                        </span>
-                    @else
-                        <span class="text-sm text-blue-600 font-bold">
-                            {{ __('dispatchorders.please_select_products_to_be_dispatched') }}
-                        </span> 
-                    @endif
+                    @include('web.sections.dispatchorders.create.specify-products')
                 </x-slot>
 
 
 
             </x-form-divider>
         </form>
-        @include('web.sections.dispatchorders.create.specify-products')
 
     </x-content>
 

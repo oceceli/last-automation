@@ -10,7 +10,7 @@ trait SpecifyProducts
 
     public $staticSelectedProduct;
 
-    public $spModal = false;
+    // public $spModal = false;
 
     // model cards
     public $cards;
@@ -35,10 +35,10 @@ trait SpecifyProducts
 
 
     
-    public function openSpModal()
-    {
-        $this->spModal = true;
-    }
+    // public function openSpModal()
+    // {
+    //     $this->spModal = true;
+    // }
 
 
     public function getProductsProperty()
