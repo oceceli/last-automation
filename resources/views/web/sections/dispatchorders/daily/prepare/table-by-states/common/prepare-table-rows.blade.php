@@ -17,5 +17,5 @@
 </x-tbody-item>
 <x-tbody-item class="">
     <span class="font-bold">{{ (float)$dp->dp_amount }} </span>
-    <span class="text-sm">{{ $dp->product->baseUnit->name }}</span>
+    <span class="text-sm">{{ $dp->unit->name }}</span>
 </x-tbody-item>

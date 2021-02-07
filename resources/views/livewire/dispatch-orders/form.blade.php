@@ -1,7 +1,6 @@
 <div>
     <x-error-area class="mb-5" />
     
-    <x-inputdrop></x-inputdrop>
 
     <x-content>
         <x-slot name="header">
@@ -14,7 +13,7 @@
                     <x-dropdown model="company_id" :collection="$this->companies" value="id" text="cmp_name,cmp_current_code" sClass="search" class="required" noErrors
                                 label="{{ __('dispatchorders.customer') }}" placeholder="{{ __('dispatchorders.customer') }}" sId="do_company" />
     
-                    <x-dropdown model="address_id" initnone dataSourceFunction="getCompanyAddressesProperty" value="id" text="adr_name,adr_province,adr_phone" triggerOnEvent="do_company_selected" sClass="search" class="required" 
+                    <x-dropdown model="address_id" dataSource="companyAddresses" value="id" text="adr_name,adr_province,adr_phone" triggerOnEvent="do_company_selected" sClass="search" class="required" 
                                 label="{{ __('dispatchorders.dispatch_address') }}" placeholder="{{ __('dispatchorders.dispatch_address') }}" sId="do_address" noErrors  />
                     
                     {{-- <x-checkbox model="do_are_lots_specified" label="{{ __('dispatchorders.specify_lot_numbers') }}" class="pt-4" /> --}}

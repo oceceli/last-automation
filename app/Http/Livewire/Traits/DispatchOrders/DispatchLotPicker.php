@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Traits\DispatchOrders;
 
+use App\Common\Facades\Conversions;
 use App\Models\DispatchProduct;
 
 trait DispatchLotPicker
@@ -136,7 +137,7 @@ trait DispatchLotPicker
         if(! $row['lot_number'] || ! $row['reserved_amount'])
             return $this->rows[$index]['reserved_amount'] = null;
         
-        $need = $this->selectedDispatchProduct->dp_amount - $this->siblingsCovered($index);
+        $need = $this->getToBase()['amount'] - $this->siblingsCovered($index);
 
         if($inputAmount <= $lotMax) {
             if($inputAmount >= $need) {
@@ -294,7 +295,16 @@ trait DispatchLotPicker
      */
     public function necessaryAmount()
     {
-        return $this->selectedDispatchProduct->dp_amount - $this->coveredAmount();
+        $amount = $this->getToBase()['amount'];
+        return $amount - $this->coveredAmount();
+    }
+
+
+
+
+    public function getToBase()
+    {
+        return Conversions::toBase($this->selectedDispatchProduct->unit, $this->selectedDispatchProduct->dp_amount);
     }
 
 
@@ -336,7 +346,7 @@ trait DispatchLotPicker
     public function cannotSubmit() : bool
     {
         // Needs for order must be covered and lots must be different from one another
-        return $this->selectedDispatchProduct->dp_amount != $this->coveredAmount()
+        return $this->getToBase()['amount'] != $this->coveredAmount()
                || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows)
                || ! $this->selectedDispatchProduct->dispatchOrder->isNotFinalized();
     }

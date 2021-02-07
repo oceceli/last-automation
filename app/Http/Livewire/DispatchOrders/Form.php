@@ -20,9 +20,10 @@ class Form extends Component
     public $do_note; // !! note alanı forma eklenecek
 
     public $selectedCompany;
+    public $companyAddresses = [];
 
-    private $dispatchOrder; // ?? kullanılmıyor şu an
-    private $editMode = true;
+    public $dispatchOrder;
+    public $editMode = false;
 
     protected function rules()
     {
@@ -51,7 +52,6 @@ class Form extends Component
     public function mount($dispatchOrder = null)
     {
         if($dispatchOrder) {
-            $this->dispatchOrder = $dispatchOrder;
             $this->setEditMode($dispatchOrder);
         } else {
             $this->do_datetime = Carbon::today();
@@ -65,18 +65,12 @@ class Form extends Component
     public function updatedCompanyId($id)
     {
         $this->selectedCompany = Company::findOrFail($id);
+        $this->companyAddresses = $this->selectedCompany->addresses->toArray();
+
         $this->emit('do_company_selected');
     }
 
-
-
-
-    public function getCompanyAddressesProperty()
-    {
-        return $this->selectedCompany->addresses->toArray();
-    }
-
-    
+ 
 
 
     public function getCompaniesProperty()
@@ -95,12 +89,21 @@ class Form extends Component
         // spRules refers to SpecifyProduct trait's rules
         $this->validate($this->spRules);
         
-        $dispatchOrder = DispatchOrder::create($validatedDoData);
+        if($this->editMode === true) {
+            $this->dispatchOrder->dispatchProducts()->delete();
+            
+            $this->dispatchOrder->update($validatedDoData);
 
-        if($this->spSubmit($dispatchOrder)) {
+            $this->spSubmit($this->dispatchOrder);
+
+            session()->flash('success', __('dispatchorders.do_number_dispatchorder_updated', ['do_number' => $this->dispatchOrder->do_number]));
+        } else {
+            $dispatchOrder = DispatchOrder::create($validatedDoData);
+            $this->spSubmit($dispatchOrder);
             session()->flash('success', __('dispatchorders.dispatchorder_created'));
-            return redirect()->route('dispatchorders.index');
         }
+
+        return redirect()->route('dispatchorders.index');
     }
 
 
@@ -109,14 +112,18 @@ class Form extends Component
     private function setEditMode($dispatchOrder)
     {
         $this->editMode = true;
-
+        $this->dispatchOrder = $dispatchOrder;
+        
         $this->company_id = $dispatchOrder->company_id;
         $this->address_id = $dispatchOrder->address_id;
         $this->do_number = $dispatchOrder->do_number;
         $this->do_datetime = $dispatchOrder->do_datetime;
         $this->do_note = $dispatchOrder->do_note;
-
+        
         $this->spProductsEditMode($dispatchOrder);
+
+        // fill in the address dropdown
+        $this->updatedCompanyId($dispatchOrder->company_id);
     }
 
 

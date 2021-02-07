@@ -18,9 +18,27 @@
                                                
                                         {{-- <x-input defer model="cards.{{ $key }}.reserved_amount" placeholder="{{ __('common.amount') }}" /> --}}
                 
-                                        <x-dropdown iType="number" iModel="cards.{{ $key }}.dp_amount" iPlaceholder="{{ __('common.amount') }}" placeholder="{{ __('units.unit') }}" sClass="basic" noErrors
-                                            model="cards.{{ $key }}.unit_id" initnone triggerOnEvent="sp_product_selected{{ $key }}" dataSourceFunction="getUnitsProperty" value="id" text="name" 
-                                            sId="sp_unit_id_{{$key}}" />
+                                        {{-- @if ($editMode)
+                                            <x-input model="cards.{{ $key }}.dp_amount" placeholder="{{ __('units.unit') }}">
+                                                <x-slot name="innerLabel">
+                                                    {{ App\Models\Unit::find($card['unit_id'])->name }}
+                                                </x-slot>
+                                            </x-input>
+                                        @else --}}
+                                            <x-dropdown iType="number" iModel="cards.{{ $key }}.dp_amount" iPlaceholder="{{ __('common.amount') }}" placeholder="{{ __('units.unit') }}" sClass="basic" noErrors
+                                                model="cards.{{ $key }}.unit_id" triggerOnEvent="sp_product_selected{{ $key }}" dataSource="cards.{{ $key }}.units" value="id" text="name" 
+                                                sId="sp_unit_id_{{$key}}" />
+                                        {{-- @endif --}}
+
+
+                                        {{-- {{ $cards[$key]['unit_id'] }}
+
+                                        <x-inputdrop iModel="cards.{{ $key }}.dp_amount" iPlaceholder="{{ __('common.amount') }}" model="cards.{{ $key }}.unit_id">
+                                            @foreach($this->units as $unit)
+                                                <div class="item" data-value="{{ $unit['id'] }}">{{ $unit['name'] }}</div>
+                                            @endforeach                        
+                                        </x-inputdrop> --}}
+
                                     </div>
                                 </div>
                             </x-card>
@@ -29,6 +47,7 @@
                     <div class="flex justify-between items-center">
                         @if ($this->getCountFilledCards())
                             <span class="text-sm text-ease">
+                                <i class="edit icon"></i>
                                 {{ __('dispatchorders.count_dispatch_product_selected', ['count' => $this->getCountFilledCards()]) }}
                             </span>
                         @else

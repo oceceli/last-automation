@@ -4,6 +4,7 @@ return [
     'dispatchorders' => 'Sevk emirleri', 
     'create_dispatchorder' => 'Sevk emri oluştur',
     'dispatchorder_created' => 'Sevk emri oluşturuldu',
+    'do_number_dispatchorder_updated' => ':do_number numaralı sevk emri güncellendi',
     // 'an_error_occurred_while_creating_dispatchorder_please_reload_page_and_try_again' => 'Sevk emri oluşturulurken bir hata oluştu, lütfen sayfayı yenileyip tekrar deneyin',
     'dispatch_address' => 'Sevk adresi',
     'customer' => 'Müşteri',

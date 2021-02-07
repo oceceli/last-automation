@@ -17,7 +17,7 @@
                             <span class="text-green-600">
                                 {{ $this->coveredAmount() }} /
                                 <span class="text-ease">
-                                    {{ $selectedDispatchProduct->dp_amount }}
+                                    {{ $this->getToBase()['amount'] }}
                                     {{ $selectedDispatchProduct->product->baseUnit->name }}
                                 </span>
                             </span>

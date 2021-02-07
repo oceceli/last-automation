@@ -8,7 +8,6 @@ use App\Models\Product;
 trait SpecifyProducts
 {
 
-    public $staticSelectedProduct;
 
     // public $spModal = false;
 
@@ -55,6 +54,7 @@ trait SpecifyProducts
             'product_id' => null,
             'dp_amount' => null,
             'unit_id' => null,
+            'units' => [],
         ];
     }
 
@@ -73,11 +73,12 @@ trait SpecifyProducts
     {
         if(strpos($location, 'product_id')) {
             $index = strtok($location, '.');
-            $this->staticSelectedProduct = $this->getProductsProperty()->find($id);
+            $product = $this->getProductsProperty()->find($id);
+            $this->cards[$index]['units'] = $product->units;
             $this->emit('sp_product_selected'.$index);
             
             // set base unit as default unit, also user will be able to change unit in dropdown
-            $this->cards[$index]['unit_id'] = $this->staticSelectedProduct->baseUnit->id;
+            $this->cards[$index]['unit_id'] = $product->baseUnit->id;
         }
     }
 
@@ -95,10 +96,14 @@ trait SpecifyProducts
 
 
 
-    public function getUnitsProperty()
-    {
-        return $this->staticSelectedProduct->units->toArray();
-    }
+    // public function getUnitsProperty()
+    // {
+    //     $arr = [];
+    //     if($this->staticSelectedProduct) {
+    //         $arr = $this->staticSelectedProduct->units->toArray();
+    //     }
+    //     return $arr;
+    // }
 
 
 
@@ -114,7 +119,6 @@ trait SpecifyProducts
                 'unit_id' => $card['unit_id'],
             ]);
         }
-        return true;
     }
 
 
@@ -127,9 +131,9 @@ trait SpecifyProducts
             $this->cards[] = [
                 'product_id' => $dp->product_id,
                 'dp_amount' => $dp->dp_amount,
-                // 'unit_id' => $dp->product->baseUnit->id,
+                'unit_id' => $dp->unit_id,
+                'units' => $dp->product->units,
             ];
-            // $this->updatedCards((int)$dp->product_id, "$key.product_id");
         }
     }
 
