@@ -21,7 +21,7 @@
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
                         <x-thead-item class="collapsing">{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item class="right aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
-                        {{-- <x-thead-item class="collapsing">{{ __('validation.attributes.do_datetime') }}</x-thead-item> --}}
+                        {{-- <x-thead-item class="collapsing">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item> --}}
                         <x-thead-item></x-thead-item>
                     </tr>
                 </thead>

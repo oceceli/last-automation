@@ -16,7 +16,7 @@ class Form extends Component
     public $company_id;
     public $address_id;
     public $do_number;
-    public $do_datetime;
+    public $do_planned_datetime;
     public $do_note; // !! note alanı forma eklenecek
 
     public $selectedCompany;
@@ -30,8 +30,8 @@ class Form extends Component
         return [
             'company_id' => 'required|integer',
             'address_id' => 'required|integer',
-            'do_number' => 'required|numeric',
-            'do_datetime' => 'required|date',
+            'do_number' => 'required|numeric|unique:dispatch_orders,do_number,' . optional($this->dispatchOrder)->id,
+            'do_planned_datetime' => 'required|date',
             'do_note' => 'nullable',
         ];
     }
@@ -54,7 +54,7 @@ class Form extends Component
         if($dispatchOrder) {
             $this->setEditMode($dispatchOrder);
         } else {
-            $this->do_datetime = Carbon::today();
+            $this->do_planned_datetime = Carbon::today();
             $this->addCard();
         }
     }
@@ -117,7 +117,7 @@ class Form extends Component
         $this->company_id = $dispatchOrder->company_id;
         $this->address_id = $dispatchOrder->address_id;
         $this->do_number = $dispatchOrder->do_number;
-        $this->do_datetime = $dispatchOrder->do_datetime;
+        $this->do_planned_datetime = $dispatchOrder->do_planned_datetime;
         $this->do_note = $dispatchOrder->do_note;
         
         $this->spProductsEditMode($dispatchOrder);

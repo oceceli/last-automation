@@ -105,6 +105,8 @@ return [
     'work-orders-daily' => 'Günlük iş emri',
     'inventory' => 'Envanter',
     'stocks' => 'Stok',
+    'customer' => 'Müşteri',
+    'copy' => 'Kopyala',
 
 
     'total' => 'Toplam',

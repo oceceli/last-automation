@@ -37,13 +37,24 @@ trait DispatchStates
     }
 
 
+
+
+    private function isFinalized() // bir yerde kullanılmadı
+    {
+        return $this->isCompleted() || $this->isApproved();
+    }
+
+
+
     /**
-     * finalized means completed or approved
+     * finalize means completed or approved
      */
     public function isNotFinalized()
     {
-        return ! $this->isCompleted() && ! $this->checkStatus('approved');
+        return ! $this->isFinalized();
+        // return ! $this->isCompleted() && ! $this->isApproved();
     }
+
 
 
     /**
@@ -92,6 +103,7 @@ trait DispatchStates
         if($this->checkStatus('completed')) {
             (new DispatchTotalMove($this))->saveReserveds();
             $this->setStatus('approved');
+            $this->markActualDispatchDate();
             $this->markReservationsAsArchived();
         }
     }
@@ -132,6 +144,11 @@ trait DispatchStates
         }
     }
 
+
+    private function markActualDispatchDate()
+    {
+        $this->update(['do_actual_datetime' => now()]);
+    }
 
 
 

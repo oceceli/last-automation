@@ -22,8 +22,8 @@
                 </x-slot>
                 
                 <x-slot name="right">
-                    {{-- <x-input defer model="do_datetime" label="{{ __('validation.attributes.do_datetime') }}" placeholder="{{ __('validation.attributes.do_datetime') }}" class="required" /> --}}
-                    <x-datepicker model="do_datetime" initialDate="{{ $do_datetime }}" label="{{ __('validation.attributes.do_datetime') }}" class="required field" />
+                    {{-- <x-input defer model="do_planned_datetime" label="{{ __('validation.attributes.do_planned_datetime') }}" placeholder="{{ __('validation.attributes.do_planned_datetime') }}" class="required" /> --}}
+                    <x-datepicker model="do_planned_datetime" initialDate="{{ $do_planned_datetime }}" label="{{ __('validation.attributes.do_planned_datetime') }}" class="required field" />
                 
                     <div class="field">
                         <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>

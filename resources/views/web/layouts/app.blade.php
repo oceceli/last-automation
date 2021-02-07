@@ -26,6 +26,24 @@
         
         {{-- Datatable .. --}}
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+
+
+
+        {{-- // taşınacak -------------------------------------  --}}
+        <script>
+            function copy(id, message = 'Kopyalandı') {
+                var text = document.getElementById(id).innerHTML
+                var input = document.createElement('textarea');
+                input.innerHTML = text;
+                document.body.appendChild(input);
+                input.select();
+                var result = document.execCommand('copy');
+                document.body.removeChild(input);
+                alert(message);
+            }
+        </script>
+        {{-- // --------------------------------------------- --}}
+
         
     </head>
 

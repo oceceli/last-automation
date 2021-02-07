@@ -38,7 +38,9 @@
                 <i class="check double icon"></i>
                 {{ __('common.approved') }}
             </span>
-            -fiili sevk tarihi-
+            <span class="text-ease">
+                - {{ $dispatchOrder->do_actual_datetime }}
+            </span>
 
         </div>
     </x-slot>
