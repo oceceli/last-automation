@@ -1,4 +1,4 @@
-<div class="flex justify-around items-center gap-2 px-1 rounded-sm hover:shadow bg-gray-50 shadow-md ease-in-out duration-150 {{ $addClass }}">
+<div class="flex justify-between items-center gap-2 px-1 rounded-sm hover:shadow bg-gray-50 shadow-md ease-in-out duration-150">
     {{ $left }}
     @if ($show)
         <div data-tooltip="{{ __('common.detail') }}" data-variation="mini">

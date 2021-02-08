@@ -107,6 +107,7 @@ return [
     'stocks' => 'Stok',
     'customer' => 'Müşteri',
     'copy' => 'Kopyala',
+    'examine' => 'İncele',
 
 
     'total' => 'Toplam',

@@ -19,14 +19,13 @@ class CrudActions extends Component
     public $edit;
     public $delete;
     
-    public $addClass;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($modelName = null, $modelId = null, $show = false, $edit = false, $delete = false, $gray = false, $addClass = null)
+    public function __construct($modelName = null, $modelId = null, $show = false, $edit = false, $delete = false, $gray = false)
     {
         if($modelName) {
             $this->modelName = Generic::kebabToSnake($modelName);
@@ -39,7 +38,6 @@ class CrudActions extends Component
         $this->delete = $delete;
 
         $this->gray = $gray;
-        $this->addClass = $addClass;
     }
 
     /**

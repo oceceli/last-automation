@@ -10,7 +10,7 @@ class DispatchService
     public static function getDaily()
     {
         return DispatchOrder // !! burayı geliştir
-            ::where('do_planned_datetime', Carbon::today()->format('d.m.Y'))
+            ::where('do_planned_datetime', Carbon::today())
             ->orWhere('do_status', 'completed')
             ->orWhere('do_status', 'in_progress')
             ->orWhere('do_status', 'active')

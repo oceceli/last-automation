@@ -70,7 +70,25 @@
             <x-custom-modal active="approveModal" class="p-2 bg-gray-200">
 
                 <div class="shadow-md bg-white rounded relative">
-                    <x-reserved-stocks-table :model="$tobeApprovedDispatchOrder" class="p-2" />
+
+                    <div class="p-4 flex flex-col gap-5 shadow-md">
+                        @foreach ($tobeApprovedDispatchOrder->dispatchProducts as $dp)
+                            <div x-data="{reservedLots: false}" class="border p-4 border-red-400 rounded cursor-pointer hover:bg-cool-gray-50 border-dashed" @click="reservedLots = ! reservedLots">
+                                <div class="flex justify-between text-ease cursor-pointer"  >
+                                    <span>{{ $dp->product->name }}</span>
+                                    <div>
+                                        <span>{{ $dp->dp_amount }} {{ $dp->unit->name }}</span>
+                                        <span x-show="!reservedLots" class="pl-6"><i class="caret right icon"></i></span>
+                                        <span x-show="reservedLots" class="pl-6"><i class="caret down icon"></i></span>
+                                    </div>
+                                </div>
+                                <div x-show="reservedLots" class="pt-2">
+                                    <x-reserved-stocks-table :model="$dp" noHead noProduct />
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    {{-- <x-reserved-stocks-table :model="$tobeApprovedDispatchOrder" class="p-2" /> --}}
                         
                     <div class="p-3">
                         <div class="ui mini buttons w-full">

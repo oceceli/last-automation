@@ -27,6 +27,7 @@ return [
     'whenever_products_prepared_or_loaded_on_vehicle_then_it_must_be_marked_as_ready' => 'Ürünler hazırlandıktan / araca yüklendikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
     'not_prepared_yet' => 'Henüz hazırlanmadı',
     'select_products' => 'Ürünleri seç',
+    'not_ready_yet' => 'Henüz hazırlanmadı',
     'do_number_numbered_dispatchorder' => ':do_number numaralı sevkiyat',
 
     // 'all_products_loaded_into_vehicle_and_approved' => 'Tüm ürünler araca yüklendi ve onaylandı.',

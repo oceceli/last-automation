@@ -8,7 +8,7 @@ class DispatchOrderController extends Controller
 {
     public function index()
     {
-        return view('web.sections.dispatchorders.index');
+        return view('web.sections.dispatchorders.index.index');
     }
 
     public function create()

@@ -10,6 +10,7 @@
                         <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
                         <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
+                        <x-thead-item sortBy="do_actual_datetime">{{ __('validation.attributes.do_actual_datetime') }}</x-thead-item>
                         <x-thead-item>{{ __('validation.attributes.do_status') }}</x-thead-item>
             
                         <x-thead-item></x-thead-item>
@@ -17,7 +18,7 @@
                 </x-thead>
                 <x-tbody>
                     @forelse ($data as $dispatchOrder)
-                        <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['row'] }} font-semibold">
+                        <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['tableRow'] }} font-semibold">
                             <x-tbody-item class="collapsing center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
 
                             <x-tbody-item class="collapsing">
@@ -34,26 +35,32 @@
                                 </span>
                             </x-body-item>
                             <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
-                            <x-tbody-item class="collapsing text-xs">
-                                <i class="{{ $this->tableClass($dispatchOrder)['status']}}"></i>
+                            <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
+                            <x-tbody-item class="collapsing text-sm">
+                                <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
                                 {{ __("dispatchorders.{$dispatchOrder->do_status}") }}
                             </x-tbody-item>
                             <x-tbody-item class="collapsing">
-                                @if ($dispatchOrder->isDeletable())
-                                    <x-crud-actions delete edit modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                @if ($dispatchOrder->isEditable())
+                                    <x-crud-actions edit delete modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                        <x-slot name="left">
+                                            <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                                <i class="link eye icon"></i>
+                                            </span>
+                                        </x-slot>
+                                    </x-crud-actions>
+                                @else
+                                    <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
                                         <x-slot name="left">
                                             <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
                                                 <i class="link eye icon"></i>
                                             </div>
                                         </x-slot>
-                                    </x-crud-actions>
-                                @else
-                                    <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                    <div class="text-center">
-                                        <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                            <i class="link eye icon"></i>
-                                        </span>
-                                    </div>
+                                        @if ($dispatchOrder->isCompleted() || $dispatchOrder->isInProgress())
+                                            <a href="{{ route('dispatchorders.daily') }}" data-tooltip="{{ __('common.examine') }}" data-variation="mini">
+                                                <i class="right arrow link icon"></i>
+                                            </a>
+                                        @endif
                                     </x-crud-actions>
                                 @endif
                             </x-tbody-item>
@@ -83,9 +90,10 @@
         <div x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('dispatchorders.do_number_numbered_dispatchorder', ['do_number' => $selectedDo->do_number]) }}">
 
-                <x-form-divider noButtons bottomClass="{{ $this->statusClass()['bottomClass'] }}" lClass="{{ $this->statusClass()['lClass'] }}" rClass="{{ $this->statusClass()['rClass'] }}">
+                <x-form-divider noButtons bottomClass="{{ $this->tableClass($selectedDo)['bottomClass'] }}">
                     <x-slot name="left">
-                        <div class="p-4 shadow-md border rounded">
+                        
+                        <div class="p-4 shadow-lg border rounded border-{{ $this->tableClass($selectedDo)['statusColor'] }}">
                             <x-list-item>
                                 <span>{{ __('validation.attributes.do_number') }}</span>
                                 <span>{{ $selectedDo->do_number }}</span>
@@ -101,45 +109,64 @@
                             @if ($selectedDo->isApproved())
                             <x-list-item>
                                 <span>
-                                    <i class="double check icon green" ></i>
+                                    {{-- <i class="double check icon green" ></i> --}}
                                     {{ __('validation.attributes.do_actual_datetime') }}
                                 </span>
                                 <span>{{ $selectedDo->do_actual_datetime }}</span>
                             </x-list-item>
                             @endif
                         </div>
+                        <div class="pt-5 text-{{ $this->tableClass($selectedDo)['statusColor'] }}">
+                            <i class="{{ $this->tableClass($selectedDo)['icon'] }}"></i>
+                            <span class="font-bold">
+                                {{ __("dispatchorders.{$selectedDo->do_status}") }}
+                            </span>
+                        </div>
                     </x-slot>
 
                     <x-slot name="right">
-                        @foreach ($selectedDo->dispatchProducts as $dp)
-                            <x-list-item>
-                                <span>{{ $dp->product->name }}</span>
-                                <span>{{ $dp->dp_amount }} {{ $dp->unit->name }}</span>
-                            </x-list-item>
-                        @endforeach
+                        <div class="flex flex-col gap-3">
+                            @foreach ($selectedDo->dispatchProducts as $dp)
+                                <div x-data="{reservedLots: false}"  class="border p-4 border-{{ $this->tableClass($selectedDo)['statusColor'] }} rounded hover:bg-cool-gray-50 border-dashed">
+                                    <div class="flex justify-between text-ease cursor-pointer" @click="reservedLots = ! reservedLots" >
+                                        <span class="font-bold">{{ $dp->product->name }}</span>
+                                        <div>
+                                            <span>{{ $dp->dp_amount }} {{ $dp->unit->name }}</span>
+                                            <span x-show="!reservedLots" class="pl-6"><i class="caret right icon"></i></span>
+                                            <span x-show="reservedLots" class="pl-6"><i class="caret down icon"></i></span>
+                                        </div>
+                                    </div>
+                                    <div x-show="reservedLots" class="pt-2">
+                                        <x-reserved-stocks-table :model="$dp" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </x-slot>
 
                     <x-slot name="bottom">
-                        <div class="flex justify-between">
-                            <div>
-                                {{ __('dispatchorders.dispatch_address') }}
-                                <div class="flex flex-col py-2 gap-2 text-ease">
-                                    <span id="copy-area">{{ $selectedDo->fullAddress() }}</span>
-                                    <div>{{ __('validation.attributes.adr_phone') }}: {{ $selectedDo->address->adr_phone }}</div>
+                        <div class="text-white">
+                            <div class="flex justify-between">
+                                <div>
+                                    {{ __('dispatchorders.dispatch_address') }}
+                                    <div class="flex flex-col py-2 gap-2">
+                                        <span id="copy-area">{{ $selectedDo->fullAddress() }}</span>
+                                        <div>{{ __('validation.attributes.adr_phone') }}: {{ $selectedDo->address->adr_phone }}</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button onclick="copy('copy-area', '{{ __('addresses.address_copied') }}')" class="focus:outline-none hover:text-red-800" data-tooltip="{{ __('common.copy') }}" data-position="left center" data-variation="mini">
+                                        <i class="copy outline icon"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div>
-                                <button onclick="copy('copy-area', '{{ __('addresses.address_copied') }}')" class="focus:outline-none hover:text-red-800" data-tooltip="{{ __('common.copy') }}" data-position="left center" data-variation="mini">
-                                    <i class="copy outline icon"></i>
-                                </button>
-                            </div>
+                            @if ($selectedDo->do_note)
+                                <div class="mt-4 p-2 border rounded shadow">
+                                    <i class="comment alternate outline flipped icon"></i>
+                                    <i class="">“{{ $selectedDo->do_note }}”</i>
+                                </div>
+                            @endif
                         </div>
-                        @if ($selectedDo->do_note)
-                            <div class="mt-4 p-2 border rounded shadow">
-                                <i class="comment alternate outline flipped icon"></i>
-                                <i class="text-green-700">“{{ $selectedDo->do_note }}”</i>
-                            </div>
-                        @endif
                     </x-slot>
 
                 </x-form-divider>

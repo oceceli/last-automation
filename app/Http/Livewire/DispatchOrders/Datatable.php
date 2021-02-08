@@ -40,69 +40,40 @@ class Datatable extends Component
     {
         if($dispatchOrder->isApproved()) {
             $arr = [
-                'status' => 'double check icon',
-                'row' => 'positive',
+                'icon' => 'double check icon',
+                'tableRow' => 'positive',
+                'statusColor' => 'green-500',
+                'bottomClass' => 'bg-green-500',
             ];
         } elseif($dispatchOrder->isCompleted()) {
             $arr = [
-                'status' => 'checkmark icon',
-                'row' => 'red font-bold',
+                'icon' => 'checkmark icon',
+                'tableRow' => 'red font-bold',
+                'statusColor' => 'red-500',
+                'bottomClass' => 'bg-red-500',
             ];
         } elseif($dispatchOrder->isInProgress()) {
             $arr = [
-                'status' => 'loading cog icon',
-                'row' => 'yellow font-bold',
+                'icon' => 'loading cog icon',
+                'tableRow' => 'yellow font-bold',
+                'statusColor' => 'yellow-400',
+                'bottomClass' => 'bg-yellow-400',
             ];
         } elseif($dispatchOrder->isActive()) {
             $arr = [
-                'status' => 'clock icon',
-                'row' => '',
+                'icon' => 'clock icon',
+                'tableRow' => '',
+                'statusColor' => 'teal-900',
+                'bottomClass' => 'bg-teal-900',
             ];
         } elseif($dispatchOrder->isSuspended()) {
             $arr = [
-                'status' => 'ban icon',
-                'row' => 'grey',
+                'icon' => 'ban icon',
+                'tableRow' => 'grey',
+                'statusColor' => 'gray-500',
+                'bottomClass' => 'bg-gray-500',
             ];
         }
-        return $arr;
-    }
-
-
-
-
-    public function statusClass()
-    {
-        if($this->selectedDo->isApproved()) {
-            $arr = [
-                'bottomClass' => 'bg-green-100',
-                'lClass' => '',
-                'rClass' => '',
-            ];
-        } elseif($this->selectedDo->isCompleted()) {
-            $arr = [
-                'bottomClass' => 'bg-orange-100',
-                'lClass' => '',
-                'rClass' => '',
-            ];
-        } elseif($this->selectedDo->isInProgress()) {
-            $arr = [
-                'bottomClass' => 'bg-yellow-200',
-                'lClass' => '',
-                'rClass' => '',
-            ];
-        } elseif($this->selectedDo->isActive()) {
-            $arr = [
-                'bottomClass' => '',
-                'lClass' => '',
-                'rClass' => '',
-            ];
-        } elseif($this->selectedDo->isSuspended()) {
-            $arr = [
-                'bottomClass' => 'bg-gray-100',
-                'lClass' => '',
-                'rClass' => '',
-            ];
-        } 
         return $arr;
     }
 
