@@ -96,23 +96,9 @@ trait SpecifyProducts
 
 
 
-    // public function getUnitsProperty()
-    // {
-    //     $arr = [];
-    //     if($this->staticSelectedProduct) {
-    //         $arr = $this->staticSelectedProduct->units->toArray();
-    //     }
-    //     return $arr;
-    // }
-
-
-
-
-
     private function spSubmit($dispatchOrder)
     {
         foreach($this->cards as $card) {
-            // $baseAmount = Conversions::toBase($card['unit_id'], $card['dp_amount'])['amount'];
             $dispatchOrder->dispatchProducts()->create([
                 'product_id' => $card['product_id'],
                 'dp_amount' => $card['dp_amount'],

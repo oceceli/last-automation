@@ -39,7 +39,7 @@ trait DispatchStates
 
 
 
-    private function isFinalized() // bir yerde kullanılmadı
+    public function isFinalized() 
     {
         return $this->isCompleted() || $this->isApproved();
     }

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Interfaces\CanReserveStocks;
+use App\Models\Traits\DispatchOrder\DispatchOrderRules;
 use App\Models\Traits\DispatchOrder\DispatchStates;
+use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
 use App\Services\Address\AddressService;
 use Carbon\Carbon;
@@ -15,6 +17,8 @@ class DispatchOrder extends Model implements CanReserveStocks
     use HasFactory;
     use Searchable;
     use DispatchStates;
+    use DispatchOrderRules;
+    use ModelHelpers;
     
 
     protected $guarded = [];

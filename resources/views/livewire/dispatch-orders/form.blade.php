@@ -4,7 +4,11 @@
 
     <x-content>
         <x-slot name="header">
-            <x-page-header icon="truck" header="{{ __('dispatchorders.create_dispatchorder') }}" />
+            @if ($editMode)
+                <x-page-header icon="truck" header="{{ __('dispatchorders.edit_dispatchorder') }}" />
+            @else
+                <x-page-header icon="truck" header="{{ __('dispatchorders.create_dispatchorder') }}" />
+            @endif
         </x-slot>
         <form class="ui tiny form" wire:submit.prevent="submit">
             <x-form-divider bottomClass="bg-gray-100 shadow-inner">
@@ -44,6 +48,7 @@
         </form>
 
     </x-content>
+    
 
 
 </div>

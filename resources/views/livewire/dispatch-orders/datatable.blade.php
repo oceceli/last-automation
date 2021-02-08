@@ -10,37 +10,52 @@
                         <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
                         <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
+                        <x-thead-item>{{ __('validation.attributes.do_status') }}</x-thead-item>
             
                         <x-thead-item></x-thead-item>
                     </x-table-row>
                 </x-thead>
                 <x-tbody>
                     @forelse ($data as $dispatchOrder)
-                        <x-table-row wire:key="{{ $loop->index }}">
+                        <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['row'] }} font-semibold">
                             <x-tbody-item class="collapsing center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
 
-                            <x-tbody-item>
+                            <x-tbody-item class="collapsing">
                                 {{ $dispatchOrder->company->cmp_commercial_title }}
                                 <span class="text-xs text-ease">
                                     ({{ __('validation.attributes.cmp_current_code')}}: {{ $dispatchOrder->company->cmp_current_code }})
                                 </span>
                             </x-tbody-item>
 
-                            <x-tbody-item>
+                            <x-tbody-item class="collapsing">
                                 {{ $dispatchOrder->address->adr_name }}
                                 <span class="text-xs text-ease">
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
                             </x-body-item>
                             <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
+                            <x-tbody-item class="collapsing text-xs">
+                                <i class="{{ $this->tableClass($dispatchOrder)['status']}}"></i>
+                                {{ __("dispatchorders.{$dispatchOrder->do_status}") }}
+                            </x-tbody-item>
                             <x-tbody-item class="collapsing">
-                                <x-crud-actions delete edit modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                    <x-slot name="left">
-                                        <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                @if ($dispatchOrder->isDeletable())
+                                    <x-crud-actions delete edit modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                        <x-slot name="left">
+                                            <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                                <i class="link eye icon"></i>
+                                            </div>
+                                        </x-slot>
+                                    </x-crud-actions>
+                                @else
+                                    <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                    <div class="text-center">
+                                        <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
                                             <i class="link eye icon"></i>
-                                        </div>
-                                    </x-slot>
-                                </x-crud-actions>
+                                        </span>
+                                    </div>
+                                    </x-crud-actions>
+                                @endif
                             </x-tbody-item>
                         </x-table-row>
                     @empty
@@ -70,7 +85,7 @@
 
                 <x-form-divider noButtons bottomClass="{{ $this->statusClass()['bottomClass'] }}" lClass="{{ $this->statusClass()['lClass'] }}" rClass="{{ $this->statusClass()['rClass'] }}">
                     <x-slot name="left">
-                        <div class="p-4 shadow-md bg-cool-gray-200">
+                        <div class="p-4 shadow-md border rounded">
                             <x-list-item>
                                 <span>{{ __('validation.attributes.do_number') }}</span>
                                 <span>{{ $selectedDo->do_number }}</span>

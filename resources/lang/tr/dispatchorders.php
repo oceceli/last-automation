@@ -3,6 +3,7 @@
 return [
     'dispatchorders' => 'Sevk emirleri', 
     'create_dispatchorder' => 'Sevk emri oluştur',
+    'edit_dispatchorder' => 'İş emrini düzenle',
     'dispatchorder_created' => 'Sevk emri oluşturuldu',
     'do_number_dispatchorder_updated' => ':do_number numaralı sevk emri güncellendi',
     // 'an_error_occurred_while_creating_dispatchorder_please_reload_page_and_try_again' => 'Sevk emri oluşturulurken bir hata oluştu, lütfen sayfayı yenileyip tekrar deneyin',
@@ -52,4 +53,11 @@ return [
     'dispatch_process_finalized' => 'Sevk işlemi tamamlandı',
 
     'do_daily' => 'Günlük Sevk',
+
+    // states
+    'approved' => 'Onaylandı',
+    'completed' => 'Tamamlandı, onay bekleniyor',
+    'in_progress' => 'Hazırlanıyor/araca yükleniyor',
+    'active' => 'Sevk bekleniyor',
+    'suspended' => 'Askıya alındı',
 ];
