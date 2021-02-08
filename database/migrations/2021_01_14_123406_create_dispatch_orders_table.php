@@ -20,6 +20,7 @@ class CreateDispatchOrdersTable extends Migration
             $table->datetime('do_planned_datetime');
             $table->datetime('do_actual_datetime')->nullable();
             $table->string('do_note')->nullable();
+            $table->string('do_sales_type');
 
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('address_id');

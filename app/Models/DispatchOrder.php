@@ -57,13 +57,13 @@ class DispatchOrder extends Model implements CanReserveStocks
     
     public function getDoPlannedDatetimeAttribute($value)
     {
-        return Carbon::parse($value)->format('d.m.Y - H:i:s');
+        return Carbon::parse($value)->format('d.m.Y H:i:s');
     }
 
     public function getDoActualDatetimeAttribute($value)
     {
         if($value)
-            return Carbon::parse($value)->format('d.m.Y - H:i:s');
+            return Carbon::parse($value)->format('d.m.Y H:i:s');
     }
 
 
