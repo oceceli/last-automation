@@ -62,11 +62,12 @@
                 
 
                     <div class="flex-1 h-screen flex flex-col">
-                        <div id="TOPBAR">
+
+                        <div id="TOPBAR" class="border-b md:border-b-0">
                             <x-layouts.partials.topbar/>
                         </div>
 
-                        <div class="px-6 leading-loose border-b shadow bg-gray-50">
+                        <div class="px-6 hidden md:block leading-loose border-b shadow bg-gray-50">
                             <x-breadcrumb/>
                         </div>
                         
@@ -81,6 +82,7 @@
                                 <x-layouts.partials.footer/>
                             </div>
                         </div>
+                        
                     </div>
 
                 </div>
