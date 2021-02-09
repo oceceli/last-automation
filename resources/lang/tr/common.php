@@ -60,6 +60,7 @@ return [
     
     'unable_to_delete' => 'Silinmedi!',
     'phone' => 'Telefon',
+    'number_abbreviation' => 'No',
 
 
     'saved' => [

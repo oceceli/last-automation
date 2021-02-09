@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <table class="ui unstackable table basic">
+            <table class="ui table basic">
                 <thead>
                     <tr>
                         <x-thead-item class="collapsing center aligned">{{ __('validation.attributes.do_status') }}</x-thead-item>

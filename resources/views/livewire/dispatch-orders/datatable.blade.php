@@ -6,7 +6,7 @@
             <x-table class="ui celled sortable table tablet stackable very compact">
                 <x-thead>
                     <x-table-row>
-                        <x-thead-item sortBy="do_number" class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
+                        <x-thead-item sortBy="do_number" class="center aligned">{{ __('common.number_abbreviation') }}</x-thead-item>
                         <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
                         <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
@@ -19,7 +19,7 @@
                 <x-tbody>
                     @forelse ($data as $dispatchOrder)
                         <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['tableRow'] }} font-semibold">
-                            <x-tbody-item class="collapsing center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
+                            <x-tbody-item class=" center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
 
                             <x-tbody-item class="collapsing">
                                 {{ $dispatchOrder->company->cmp_commercial_title }}
@@ -33,14 +33,15 @@
                                 <span class="text-xs text-ease">
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
-                            </x-body-item>
-                            <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
-                            <x-tbody-item class="collapsing text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
-                            <x-tbody-item class="collapsing text-sm">
-                                <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
-                                {{ __("dispatchorders.{$dispatchOrder->do_status}") }}
                             </x-tbody-item>
-                            <x-tbody-item class="collapsing">
+                            <x-tbody-item class=" text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
+                            <x-tbody-item class=" text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
+                            <x-tbody-item class="text-sm center aligned">
+                                <span data-tooltip="{{ __("dispatchorders.{$dispatchOrder->do_status}") }}" data-variation="mini">
+                                    <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
+                                </span>
+                            </x-tbody-item>
+                            <x-tbody-item class="">
                                 @if ($dispatchOrder->isEditable())
                                     <x-crud-actions edit delete modelName="dispatchorder" :modelId="$dispatchOrder->id">
                                         <x-slot name="left">

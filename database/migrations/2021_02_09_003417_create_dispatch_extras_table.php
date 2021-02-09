@@ -17,7 +17,7 @@ class CreateDispatchExtrasTable extends Migration
             $table->id();
             $table->string('de_license_plate');
             $table->string('de_driver_name');
-            $table->string('de_driver_number');
+            $table->string('de_driver_phone');
             $table->decimal('de_dispatch_expense');
             $table->decimal('de_handling_expense');
             $table->timestamps();

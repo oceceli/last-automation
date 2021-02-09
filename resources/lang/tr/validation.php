@@ -185,8 +185,8 @@ return [
         'address_id' => 'Adres',
         'company_id' => 'Firma',
         'do_number' => 'Sevk kodu',
-        'do_planned_datetime' => 'Planlanan sevk tarihi',
-        'do_actual_datetime' => 'Gerçekleşen sevk tarihi',
+        'do_planned_datetime' => 'Planlanan tarih',
+        'do_actual_datetime' => 'Gerçekleşen tarih',
         'do_status' => 'Durum',
         'do_note' => 'Not',
 
