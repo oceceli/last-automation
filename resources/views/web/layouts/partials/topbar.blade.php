@@ -1,20 +1,13 @@
 
 <div class="px-2 py-2 shadow bg-white relative">
-    <div class="flex-1 h-full grid md:grid-cols-3 gap-4">
+    <div class="flex justify-between items-center">
 
-        <div class="text-center md:flex items-center">
-            <div>
-                <i  class="link hamburger icon hover:text-red-600" @click="sidebar = !sidebar"></i>
-            </div>
+        <div class="">
+            <i class="link hamburger icon hover:text-red-600" @click="sidebar = !sidebar"></i>
         </div>
 
 
-        <div class="text-center md:flex justify-center items-center">
-            
-        </div>
-
-
-        <div class="flex justify-center md:justify-end gap-4 items-center">
+        <div class="flex gap-4">
             <div>
                 <i class="large link bell icon"></i>
             </div>
