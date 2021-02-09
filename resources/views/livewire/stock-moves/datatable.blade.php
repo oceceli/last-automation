@@ -80,8 +80,9 @@
             </tbody>
         </table>
         
-        {{ $data->links('components.tailwind-pagination') }}
-    
     </div>
+
+    {{ $data->links('components.tailwind-pagination') }}
+    
 </div>
 

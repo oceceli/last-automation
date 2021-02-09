@@ -97,13 +97,14 @@
             </tbody>
         </table>
         
-        {{ $data->links('components.tailwind-pagination') }}
-
+        
         {{-- <div class="ui toggle checkbox">
             <input wire:model.lazy="isActive()" type="checkbox">
             <label>Aktif</label>
         </div> --}}
         
-        
     </div>
+
+    {{ $data->links('components.tailwind-pagination') }}
+    
 </div>
