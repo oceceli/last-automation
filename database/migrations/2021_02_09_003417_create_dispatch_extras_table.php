@@ -20,6 +20,8 @@ class CreateDispatchExtrasTable extends Migration
             $table->string('de_driver_phone');
             $table->decimal('de_dispatch_expense');
             $table->decimal('de_handling_expense');
+            
+            $table->unsignedBigInteger('dispatch_order_id');
             $table->timestamps();
         });
     }

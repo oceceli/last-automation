@@ -5,6 +5,7 @@ namespace App\Http\Livewire\DispatchOrders;
 use App\Http\Livewire\Traits\DispatchOrders\SpecifyProducts;
 use App\Models\Company;
 use App\Models\DispatchOrder;
+use App\Models\SalesType;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class Form extends Component
     // dispatchorders attributes
     public $company_id;
     public $address_id;
+    public $sales_type_id;
     public $do_number;
     public $do_planned_datetime;
     public $do_note; // !! note alanı forma eklenecek
@@ -30,6 +32,7 @@ class Form extends Component
         return [
             'company_id' => 'required|integer',
             'address_id' => 'required|integer',
+            'sales_type_id' => 'required|integer',
             'do_number' => 'required|numeric|unique:dispatch_orders,do_number,' . optional($this->dispatchOrder)->id,
             'do_planned_datetime' => 'required|date',
             'do_note' => 'nullable',
@@ -77,6 +80,12 @@ class Form extends Component
     public function getCompaniesProperty()
     {
         return Company::all();
+    }
+
+
+    public function getSalesTypesProperty()
+    {
+        return SalesType::all();
     }
 
 

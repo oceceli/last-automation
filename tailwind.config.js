@@ -1,7 +1,12 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: ['./storage/framework/views/*.php', './resources/views/**/*.blade.php'],
+    purge: [
+        './storage/framework/views/*.php', 
+        './resources/views/**/*.blade.php',
+        './app/Http/Livewire/**/*.php',
+        './app/View/Components/**/*.php', // livewire ve laravvel components
+    ],
 
     theme: {
         extend: {

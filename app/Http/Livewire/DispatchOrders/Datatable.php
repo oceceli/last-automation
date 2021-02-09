@@ -42,35 +42,40 @@ class Datatable extends Component
             $arr = [
                 'icon' => 'double check icon',
                 'tableRow' => 'positive',
-                'statusColor' => 'green-500',
+                'statusColor' => 'text-green-500',
+                'borderColor' => 'border-green-500',
                 'bottomClass' => 'bg-green-500',
             ];
         } elseif($dispatchOrder->isCompleted()) {
             $arr = [
                 'icon' => 'checkmark icon',
                 'tableRow' => 'red font-bold',
-                'statusColor' => 'red-500',
+                'statusColor' => 'text-red-500',
+                'borderColor' => 'border-red-500',
                 'bottomClass' => 'bg-red-500',
             ];
         } elseif($dispatchOrder->isInProgress()) {
             $arr = [
                 'icon' => 'loading cog icon',
                 'tableRow' => 'yellow font-bold',
-                'statusColor' => 'yellow-400',
+                'statusColor' => 'text-yellow-500',
+                'borderColor' => 'border-yellow-400',
                 'bottomClass' => 'bg-yellow-400',
             ];
         } elseif($dispatchOrder->isActive()) {
             $arr = [
                 'icon' => 'clock icon',
                 'tableRow' => '',
-                'statusColor' => 'teal-900',
+                'statusColor' => 'text-teal-500',
+                'borderColor' => 'border-teal-900',
                 'bottomClass' => 'bg-teal-900',
             ];
         } elseif($dispatchOrder->isSuspended()) {
             $arr = [
                 'icon' => 'ban icon',
                 'tableRow' => 'grey',
-                'statusColor' => 'gray-500',
+                'statusColor' => 'text-gray-500',
+                'borderColor' => 'border-gray-500',
                 'bottomClass' => 'bg-gray-500',
             ];
         }

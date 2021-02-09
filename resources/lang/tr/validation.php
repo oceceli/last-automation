@@ -184,12 +184,14 @@ return [
         // dispatchorders
         'address_id' => 'Adres',
         'company_id' => 'Firma',
+        'sales_type_id' => 'Satış şekli',
         'do_number' => 'Sevk kodu',
         'do_planned_datetime' => 'Planlanan tarih',
         'do_actual_datetime' => 'Gerçekleşen tarih',
         'do_status' => 'Durum',
         'do_note' => 'Not',
 
+        
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',
         // 'reserved_amount' => 'Rezerve edilen miktar',

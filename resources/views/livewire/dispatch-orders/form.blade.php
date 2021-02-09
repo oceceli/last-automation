@@ -10,7 +10,7 @@
                 <x-page-header icon="truck" header="{{ __('dispatchorders.create_dispatchorder') }}" />
             @endif
         </x-slot>
-        <form class="ui tiny form" wire:submit.prevent="submit">
+        <form class="ui mini form" wire:submit.prevent="submit">
             <x-form-divider bottomClass="bg-gray-100 shadow-inner">
 
                 <x-slot name="left">
@@ -29,9 +29,34 @@
                     {{-- <x-input defer model="do_planned_datetime" label="{{ __('validation.attributes.do_planned_datetime') }}" placeholder="{{ __('validation.attributes.do_planned_datetime') }}" class="required" /> --}}
                     <x-datepicker model="do_planned_datetime" initialDate="{{ $do_planned_datetime }}" label="{{ __('validation.attributes.do_planned_datetime') }}" class="required field" />
                 
-                    <div class="field">
+                    
+                    <div x-data="{salesTypeModal: false}" class="equal width fields">
+                        <x-dropdown model="sales_type_id" :collection="$this->salesTypes" value="id" text="st_abbr,st_name" sClass="search" class="required" 
+                                    label="{{ __('validation.attributes.sales_type_id') }}" placeholder="{{ __('validation.attributes.sales_type_id') }}" sId="sales_type_id" noErrors>
+                            <div class="pt-0.5">
+                                <span class="cursor-pointer pt-1 text-blue-400 text-xs font-semibold ease-in-out duration-200 hover:text-blue-600" @click="salesTypeModal = true">{{ __('dispatchorders.add_sales_type') }}</span>
+                            </div>
+                        </x-dropdown>
+                        
+                        <x-custom-modal active="salesTypeModal" theme="green" header="{{ __('dispatchorders.add_sales_type') }}">
+                            component
+                        </x-custom-modal>
+                    </div>
+
+                    {{-- <div class="field">
                         <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
                         <textarea wire:model.lazy="do_note" rows="5"></textarea>
+                    </div> --}}
+
+                    <div x-data="{addNote: false}">
+                        <div x-show="!addNote">
+                            <i class="write icon"></i>
+                            <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
+                        </div>
+                        <div x-show="addNote" class="field">
+                            <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
+                            <textarea wire:model.lazy="do_note" rows="1"></textarea>
+                        </div>
                     </div>
 
                 </x-slot>

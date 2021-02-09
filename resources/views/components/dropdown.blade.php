@@ -2,7 +2,10 @@
 <div class="field">
     <div {{ $attributes->merge(['class' => 'field']) }} >
 
-        <label>{{ __($label)}}</label>
+        <div class="flex justify-between">
+            <div><label>{{ __($label)}}</label></div>
+            <div>{{ $slot }}</div>
+        </div>
     
         @if ($iModel)
         <div class="ui right labeled input" wire:loading.class="disabler">
@@ -29,7 +32,6 @@
     </div>
 
 
-    {{ $slot }}
 
     {{-- @if (!$noErrors) 
         @error($iModel)

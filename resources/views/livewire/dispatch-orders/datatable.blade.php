@@ -94,7 +94,7 @@
                 <x-form-divider noButtons bottomClass="{{ $this->tableClass($selectedDo)['bottomClass'] }}">
                     <x-slot name="left">
                         
-                        <div class="p-4 shadow-lg border rounded border-{{ $this->tableClass($selectedDo)['statusColor'] }}">
+                        <div class="p-4 shadow-lg border rounded {{ $this->tableClass($selectedDo)['borderColor'] }}">
                             <x-list-item>
                                 <span>{{ __('validation.attributes.do_number') }}</span>
                                 <span>{{ $selectedDo->do_number }}</span>
@@ -117,7 +117,7 @@
                             </x-list-item>
                             @endif
                         </div>
-                        <div class="pt-5 text-{{ $this->tableClass($selectedDo)['statusColor'] }}">
+                        <div class="pt-5 {{ $this->tableClass($selectedDo)['statusColor'] }}">
                             <i class="{{ $this->tableClass($selectedDo)['icon'] }}"></i>
                             <span class="font-bold">
                                 {{ __("dispatchorders.{$selectedDo->do_status}") }}
@@ -128,7 +128,7 @@
                     <x-slot name="right">
                         <div class="flex flex-col gap-3">
                             @foreach ($selectedDo->dispatchProducts as $dp)
-                                <div x-data="{reservedLots: false}"  class="border p-4 border-{{ $this->tableClass($selectedDo)['statusColor'] }} rounded hover:bg-cool-gray-50 border-dashed">
+                                <div x-data="{reservedLots: false}"  class="border p-4 {{ $this->tableClass($selectedDo)['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed">
                                     <div class="flex justify-between text-ease cursor-pointer" @click="reservedLots = ! reservedLots" >
                                         <span class="font-bold">{{ $dp->product->name }}</span>
                                         <div>
