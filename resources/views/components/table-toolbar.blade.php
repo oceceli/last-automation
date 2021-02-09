@@ -1,6 +1,6 @@
 
 
-<div class="bg-white border-t border-r border-l rounded-t-md p-4 flex justify-between items-center">
+<div class="bg-white md:border-t md:border-r md:border-l md:rounded-t-md p-4 flex justify-between items-center">
     <div class="ui tiny icon input" >
         <i class="search icon"></i>
         <input wire:model.debounce.150ms="searchQuery" type="text" placeholder="{{ __('common.search_in_database') }}">
