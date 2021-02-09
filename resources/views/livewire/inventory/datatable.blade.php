@@ -64,9 +64,7 @@
                 </x-tbody>
             </x-table>
     
-            <div class="w-full">
-                {{ $data->links('components.tailwind-pagination') }}
-            </div>
+            {{ $data->links('components.tailwind-pagination') }}
         </div>
         
 

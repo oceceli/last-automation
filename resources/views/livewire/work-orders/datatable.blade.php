@@ -97,9 +97,7 @@
             </tbody>
         </table>
         
-        <div class="w-full">
-            {{ $data->links('components.tailwind-pagination') }}
-        </div>
+        {{ $data->links('components.tailwind-pagination') }}
 
         {{-- <div class="ui toggle checkbox">
             <input wire:model.lazy="isActive()" type="checkbox">
