@@ -29,6 +29,7 @@ class Form extends Component
     public $dispatchOrder;
     public $editMode = false;
 
+
     protected $listeners = ['st_updated' => 'salesTypeUpdated', 'refresh' => '$refresh'];
 
     protected function rules()
@@ -114,17 +115,22 @@ class Form extends Component
         
         if($this->editMode === true) {
             if($this->dispatchOrder->isNotEditable()) abort(404);
-            
-            $this->dispatchOrder->dispatchProducts()->delete();
-            
-            $this->dispatchOrder->update($validatedDoData);
 
+            $this->dispatchOrder->dispatchProducts()->delete();
+            $this->dispatchOrder->update($validatedDoData);
+            
+            $this->deUpdate($this->dispatchOrder->dispatchExtra); // dispatchextra
             $this->spSubmit($this->dispatchOrder);
 
             session()->flash('success', __('dispatchorders.do_number_dispatchorder_updated', ['do_number' => $this->dispatchOrder->do_number]));
-        } else {
+        } 
+        
+        else {
             $dispatchOrder = DispatchOrder::create($validatedDoData);
-            $this->spSubmit($dispatchOrder);
+
+            $this->deSubmit($dispatchOrder); // dispatchextra
+            $this->spSubmit($dispatchOrder); // dispatchproducts
+            
             session()->flash('success', __('dispatchorders.dispatchorder_created'));
         }
 
@@ -141,11 +147,13 @@ class Form extends Component
         
         $this->company_id = $dispatchOrder->company_id;
         $this->address_id = $dispatchOrder->address_id;
+        $this->sales_type_id = $dispatchOrder->sales_type_id;
         $this->do_number = $dispatchOrder->do_number;
         $this->do_planned_datetime = $dispatchOrder->do_planned_datetime;
         $this->do_note = $dispatchOrder->do_note;
         
         $this->spProductsEditMode($dispatchOrder);
+        $this->deSetEditMode($dispatchOrder->dispatchExtra);
 
         // fill in the address dropdown
         $this->updatedCompanyId($dispatchOrder->company_id);

@@ -9,6 +9,7 @@
                         <x-thead-item sortBy="do_number" class="center aligned">{{ __('common.number_abbreviation') }}</x-thead-item>
                         <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
                         <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
+                        <x-thead-item>{{ __('validation.attributes.sales_type_id') }}</x-thead-item>
                         <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
                         <x-thead-item sortBy="do_actual_datetime">{{ __('validation.attributes.do_actual_datetime') }}</x-thead-item>
                         <x-thead-item>{{ __('validation.attributes.do_status') }}</x-thead-item>
@@ -34,8 +35,9 @@
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
                             </x-tbody-item>
-                            <x-tbody-item class=" text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
-                            <x-tbody-item class=" text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
+                            <x-tbody-item class="center aligned">{{ $dispatchOrder->salesType->st_abbr }}</x-tbody-item>
+                            <x-tbody-item class="text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
+                            <x-tbody-item class="text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
                             <x-tbody-item class="text-sm center aligned">
                                 <span data-tooltip="{{ __("dispatchorders.{$dispatchOrder->do_status}") }}" data-variation="mini">
                                     <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
@@ -102,6 +104,10 @@
                             <x-list-item>
                                 <span>{{ __('common.customer') }}</span>
                                 <span>{{ $selectedDo->company->cmp_commercial_title }}</span>
+                            </x-list-item>
+                            <x-list-item>
+                                <span>{{ __('validation.attributes.sales_type_id') }}</span>
+                                <span>{{ ucfirst($selectedDo->salesType->st_name) }}</span>
                             </x-list-item>
                             <x-list-item>
                                 <span>{{ __('validation.attributes.do_planned_datetime') }}</span>

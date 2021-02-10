@@ -20,6 +20,8 @@ class Datatable extends Component
         'company.cmp_name', 
         'company.cmp_current_code',
         'address.adr_name',
+        'salesType.st_name',
+        'salesType.st_abbr',
     ];
 
     public function openDetailsModal($dispatchOrderId)

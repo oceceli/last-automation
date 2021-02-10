@@ -52,7 +52,8 @@ return [
     'products_are_ready_to_dispatch' => 'Ürünler sevk için hazır',
     'products_preparing' => 'Ürünler hazırlanıyor...',
     'dispatch_process_finalized' => 'Sevk işlemi tamamlandı',
-  
+    'enter_extra_information' => 'Ek bilgi ekle',
+    'plate_number_driver_expenses_etc' => 'Araç plakası, şoför, sevk ücretleri...',
 
     'do_daily' => 'Günlük Sevk',
 

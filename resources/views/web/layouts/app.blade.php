@@ -54,7 +54,7 @@
 
                 <div class="flex" x-data="{sidebar: false}">
 
-                    <template id="SIDEBAR"  x-if="sidebar" x-cloak>
+                    <template id="SIDEBAR"  x-if="!sidebar" x-cloak>
                         <div class="w-96 h-screen bg-white relative">
                             <x-layouts.partials.sidebar/>
                         </div>

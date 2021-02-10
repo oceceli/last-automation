@@ -58,6 +58,11 @@ class DispatchOrder extends Model implements CanReserveStocks
         return $this->belongsTo(SalesType::class);
     }
 
+    public function dispatchExtra()
+    {
+        return $this->hasOne(DispatchExtra::class);
+    }
+
 
     
     public function getDoPlannedDatetimeAttribute($value)

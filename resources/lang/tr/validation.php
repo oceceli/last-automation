@@ -195,6 +195,14 @@ return [
         'st_name' => 'Satış tipi adı',
         'st_abbr' => 'Satış tipi kısaltma',
 
+        // dispatchorder exstras
+        // 'dispatch_order_id' => '',
+        'de_license_plate' => 'Araç plakası',
+        'de_driver_name' => 'Sürücü adı',
+        'de_driver_phone' => 'Sürücü telefon',
+        'de_dispatch_expense' => 'Sevk bedeli',
+        'de_handling_expense' => 'İndirme bedeli',
+
         
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',
