@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\DispatchOrders;
 
 use App\Http\Livewire\Traits\DispatchOrders\SpecifyProducts;
+use App\Http\Livewire\Traits\SalesTypeTrait;
 use App\Models\Company;
 use App\Models\DispatchOrder;
 use App\Models\SalesType;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class Form extends Component
 {
     use SpecifyProducts;
+    use SalesTypeTrait;
     
     // dispatchorders attributes
     public $company_id;
@@ -19,13 +21,15 @@ class Form extends Component
     public $sales_type_id;
     public $do_number;
     public $do_planned_datetime;
-    public $do_note; // !! note alanı forma eklenecek
+    public $do_note;
 
     public $selectedCompany;
     public $companyAddresses = [];
 
     public $dispatchOrder;
     public $editMode = false;
+
+    protected $listeners = ['st_updated' => 'salesTypeUpdated', 'refresh' => '$refresh'];
 
     protected function rules()
     {
@@ -39,6 +43,15 @@ class Form extends Component
         ];
     }
 
+
+    public function salesTypeUpdated($salesTypeId = null)
+    {
+        if($salesTypeId) {
+            $this->sales_type_id = $salesTypeId;
+        } else {
+            $this->sales_type_id = null;
+        }
+    }
 
 
 
@@ -85,7 +98,7 @@ class Form extends Component
 
     public function getSalesTypesProperty()
     {
-        return SalesType::all();
+        return SalesType::all()->toArray();
     }
 
 

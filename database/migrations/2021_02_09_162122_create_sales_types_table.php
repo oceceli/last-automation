@@ -15,8 +15,8 @@ class CreateSalesTypesTable extends Migration
     {
         Schema::create('sales_types', function (Blueprint $table) {
             $table->id();
-            $table->string('st_name');
-            $table->string('st_abbr');
+            $table->string('st_name')->unique();
+            $table->string('st_abbr')->unique();
             $table->timestamps();
         });
     }

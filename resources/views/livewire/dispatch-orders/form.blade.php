@@ -23,23 +23,48 @@
                     {{-- <x-checkbox model="do_are_lots_specified" label="{{ __('dispatchorders.specify_lot_numbers') }}" class="pt-4" /> --}}
                     
                     <x-input defer model="do_number" label="{{ __('validation.attributes.do_number') }}" placeholder="{{ __('validation.attributes.do_number') }}" class="required" noErrors />
+
+                    <div x-data="{addNote: false}" class="pt-2">
+                        <div x-show="!addNote">
+                            <i class="write icon"></i>
+                            <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
+                        </div>
+                        <div x-show="addNote" class="field" x-cloak>
+                            <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
+                            <textarea wire:model.lazy="do_note" rows="1"></textarea>
+                        </div>
+                    </div>
                 </x-slot>
                 
+
                 <x-slot name="right">
                     {{-- <x-input defer model="do_planned_datetime" label="{{ __('validation.attributes.do_planned_datetime') }}" placeholder="{{ __('validation.attributes.do_planned_datetime') }}" class="required" /> --}}
                     <x-datepicker model="do_planned_datetime" initialDate="{{ $do_planned_datetime }}" label="{{ __('validation.attributes.do_planned_datetime') }}" class="required field" />
                 
                     
                     <div x-data="{salesTypeModal: false}" class="equal width fields">
-                        <x-dropdown model="sales_type_id" :collection="$this->salesTypes" value="id" text="st_abbr,st_name" sClass="search" class="required" 
+                        <x-dropdown model="sales_type_id" triggerOnEvent="st_updated" dataSourceFunction="getSalesTypesProperty" value="id" text="st_abbr,st_name" sClass="search" class="required" 
                                     label="{{ __('validation.attributes.sales_type_id') }}" placeholder="{{ __('validation.attributes.sales_type_id') }}" sId="sales_type_id" noErrors>
-                            <div class="pt-0.5">
-                                <span class="cursor-pointer pt-1 text-blue-400 text-xs font-semibold ease-in-out duration-200 hover:text-blue-600" @click="salesTypeModal = true">{{ __('dispatchorders.add_sales_type') }}</span>
-                            </div>
+                            <x-slot name="right">
+                                <div class="pt-0.5 flex justify-end gap-2 items-center" id="BUTTONS">
+                                    @if ($sales_type_id)
+                                        <span wire:click.prevent="stDelete({{ $sales_type_id }})" class="cursor-pointer text-red-400 hover:text-red-600 ">
+                                            <i class="trash icon"></i>
+                                        </span>
+                                        <span wire:click.prevent="stEdit({{ $sales_type_id }})" @click="salesTypeModal = true" class="cursor-pointer text-yellow-400 hover:text-yellow-600 ">
+                                            <i class="edit icon"></i>
+                                        </span>
+                                    @endif
+                                    <div @click="salesTypeModal = true" class=" cursor-pointer text-blue-400 ease-in-out duration-200 hover:text-blue-600">
+                                        <i class="plus icon"></i>
+                                        {{-- <span>{{ __('common.add_new') }}</span> --}}
+                                    </div>
+                                </div>
+                            </x-slot>
                         </x-dropdown>
                         
                         <x-custom-modal active="salesTypeModal" theme="green" header="{{ __('dispatchorders.add_sales_type') }}">
-                            component
+                            @include('web.sections.salestype.baseform')
                         </x-custom-modal>
                     </div>
 
@@ -48,16 +73,7 @@
                         <textarea wire:model.lazy="do_note" rows="5"></textarea>
                     </div> --}}
 
-                    <div x-data="{addNote: false}">
-                        <div x-show="!addNote">
-                            <i class="write icon"></i>
-                            <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
-                        </div>
-                        <div x-show="addNote" class="field">
-                            <label><i class="write icon"></i>{{ __('validation.attributes.do_note' )}}</label>
-                            <textarea wire:model.lazy="do_note" rows="1"></textarea>
-                        </div>
-                    </div>
+                    
 
                 </x-slot>
 

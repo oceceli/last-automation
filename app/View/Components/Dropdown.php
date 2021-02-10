@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class Dropdown extends Component
 {
+    public $right = null;
 
     public $label;
     public $key;

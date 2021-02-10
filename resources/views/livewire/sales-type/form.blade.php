@@ -1,0 +1,1 @@
+@include('web.sections.salestype.baseform')

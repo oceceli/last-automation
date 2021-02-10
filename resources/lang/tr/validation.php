@@ -191,6 +191,10 @@ return [
         'do_status' => 'Durum',
         'do_note' => 'Not',
 
+        // salestype
+        'st_name' => 'Satış tipi adı',
+        'st_abbr' => 'Satış tipi kısaltma',
+
         
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',

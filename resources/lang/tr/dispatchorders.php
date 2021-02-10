@@ -52,7 +52,7 @@ return [
     'products_are_ready_to_dispatch' => 'Ürünler sevk için hazır',
     'products_preparing' => 'Ürünler hazırlanıyor...',
     'dispatch_process_finalized' => 'Sevk işlemi tamamlandı',
-    'add_sales_type' => 'Satış şekli ekle',
+  
 
     'do_daily' => 'Günlük Sevk',
 

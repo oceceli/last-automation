@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dispatchorders/daily', 'DispatchOrderController@daily')->name('dispatchorders.daily');
     Route::resource('/dispatchorders', 'DispatchOrderController');
     
+    Route::resource('/salestype', 'SalesTypeController');
+
     Route::resource('/roles', 'RoleController');
     
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
