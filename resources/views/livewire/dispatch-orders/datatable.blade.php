@@ -35,7 +35,11 @@
                                     ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
                                 </span>
                             </x-tbody-item>
-                            <x-tbody-item class="center aligned">{{ $dispatchOrder->salesType->st_abbr }}</x-tbody-item>
+                            <x-tbody-item class="center aligned">
+                                <x-span tooltip="{{ $dispatchOrder->salesType->st_name }}">
+                                    {{ $dispatchOrder->salesType->st_abbr }}
+                                </x-span>
+                            </x-tbody-item>
                             <x-tbody-item class="text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
                             <x-tbody-item class="text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
                             <x-tbody-item class="text-sm center aligned">
@@ -113,6 +117,28 @@
                                 <span>{{ __('validation.attributes.do_planned_datetime') }}</span>
                                 <span>{{ $selectedDo->do_planned_datetime }}</span>
                             </x-list-item>
+                            @if ($selectedDo->dispatchExtra)
+                                <x-list-item>
+                                    <span>{{ __('validation.attributes.de_license_plate') }}</span>
+                                    <span>{{ $selectedDo->dispatchExtra->de_license_plate }}</span>
+                                </x-list-item>
+                                <x-list-item>
+                                    <span>{{ __('validation.attributes.de_driver_name') }}</span>
+                                    <span>{{ $selectedDo->dispatchExtra->de_driver_name }}</span>
+                                </x-list-item>
+                                <x-list-item>
+                                    <span>{{ __('validation.attributes.de_driver_phone') }}</span>
+                                    <span>{{ $selectedDo->dispatchExtra->de_driver_phone }}</span>
+                                </x-list-item>
+                                <x-list-item>
+                                    <span>{{ __('validation.attributes.de_dispatch_expense') }}</span>
+                                    <span>{{ $selectedDo->dispatchExtra->de_dispatch_expense }}₺</span>
+                                </x-list-item>
+                                <x-list-item>
+                                    <span>{{ __('validation.attributes.de_handling_expense') }}</span>
+                                    <span>{{ $selectedDo->dispatchExtra->de_handling_expense }}₺</span>
+                                </x-list-item>
+                            @endif
                             @if ($selectedDo->isApproved())
                             <x-list-item>
                                 <span>

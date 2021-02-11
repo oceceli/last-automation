@@ -12,8 +12,10 @@ trait DispatchExtrasForm
     public $de_driver_phone;
     public $de_dispatch_expense;
     public $de_handling_expense;
+
+    public $extrasField = false;
     
-    protected function rules()
+    protected function deRules()
     {
         return [
             // 'dispatch_order_id' => 'required',
@@ -26,31 +28,41 @@ trait DispatchExtrasForm
     }
 
 
-    public function deSubmit($dispatchOrder)
+    private function deSubmit($dispatchOrder)
     {
-        if($this->shouldBeCreated()) {
-            $data = $this->validate();
+        if($this->deShouldBeCreated()) {
+            $data = $this->validate($this->deRules());
             $dispatchOrder->dispatchExtra()->create($data);
         }
     }
 
+
+
     private function deUpdate($dispatchExtra)
     {
         if($dispatchExtra) {
-            $data = $this->validate();
+            $data = $this->validate($this->deRules());
             $dispatchExtra->update($data);
         } else {
             $this->deSubmit($dispatchExtra->dispatchOrder);
         }
     }
 
-    private function shouldBeCreated() : bool
+
+
+    /**
+     * If any property is filled then it should be created
+     */
+    public function deShouldBeCreated() : bool
     {
-        return true;
+        return ($this->de_license_plate || $this->de_driver_name || $this->de_driver_phone || $this->de_dispatch_expense || $this->de_handling_expense);
     }
 
+    
     public function deSetEditMode($dispatchExtra)
     {
+        if(!$dispatchExtra) return;
+        $this->extrasField = true;
         // $this->dispatch_order_id = $dispatchExtra->dispatch_order_id;
         $this->de_license_plate = $dispatchExtra->de_license_plate;
         $this->de_driver_name = $dispatchExtra->de_driver_name;

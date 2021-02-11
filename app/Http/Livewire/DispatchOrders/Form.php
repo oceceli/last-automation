@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\DispatchOrders;
 
+use App\Http\Livewire\Traits\DispatchExtras\DispatchExtrasForm;
 use App\Http\Livewire\Traits\DispatchOrders\SpecifyProducts;
 use App\Http\Livewire\Traits\SalesTypeTrait;
 use App\Models\Company;
@@ -14,6 +15,7 @@ class Form extends Component
 {
     use SpecifyProducts;
     use SalesTypeTrait;
+    use DispatchExtrasForm;
     
     // dispatchorders attributes
     public $company_id;
@@ -109,7 +111,7 @@ class Form extends Component
     {
         if(!$this->cards) return;
         $validatedDoData = $this->validate();
-
+        
         // spRules refers to SpecifyProduct trait's rules
         $this->validate($this->spRules);
         
@@ -152,11 +154,11 @@ class Form extends Component
         $this->do_planned_datetime = $dispatchOrder->do_planned_datetime;
         $this->do_note = $dispatchOrder->do_note;
         
-        $this->spProductsEditMode($dispatchOrder);
-        $this->deSetEditMode($dispatchOrder->dispatchExtra);
-
         // fill in the address dropdown
         $this->updatedCompanyId($dispatchOrder->company_id);
+        
+        $this->spProductsEditMode($dispatchOrder);
+        $this->deSetEditMode($dispatchOrder->dispatchExtra);
     }
 
 

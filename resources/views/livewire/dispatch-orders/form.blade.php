@@ -59,19 +59,19 @@
                 
 
                 <x-slot name="right">
-                    <div x-data="{dispatchExtras: false}" class="h-full">
+                    <div x-data="{extrasField: @entangle('extrasField')}" class="h-full">
 
-                        <div class="w-full h-full border bg-teal-800 rounded flex items-center justify-center" x-show="!dispatchExtras">
+                        <div class="w-full h-full border bg-gray-100 rounded flex items-center justify-center" x-show="!extrasField">
                             <div class="text-center">
-                                <button wire:click.prevent @click="dispatchExtras = true" class="ui primary label button">
+                                <button wire:click.prevent @click="extrasField = true" class="ui primary label button">
                                     {{ __('dispatchorders.enter_extra_information') }}
                                 </button>
-                                <div class="pt-2 text-xs text-ease text-white">{{ __('dispatchorders.plate_number_driver_expenses_etc')}}</div>
+                                <div class="pt-2 text-xs text-ease">{{ __('dispatchorders.plate_number_driver_expenses_etc')}}</div>
                             </div>
                         </div>
                         
 
-                        <div x-show="dispatchExtras">
+                        <div x-show="extrasField">
                             <x-input defer model="de_license_plate" label="{{ __('validation.attributes.de_license_plate') }}" placeholder="{{ __('validation.attributes.de_license_plate') }}" noErrors />
                             <x-input defer model="de_driver_name" label="{{ __('validation.attributes.de_driver_name') }}" placeholder="{{ __('validation.attributes.de_driver_name') }}" noErrors />
                             <x-input defer model="de_driver_phone" label="{{ __('validation.attributes.de_driver_phone') }}" placeholder="{{ __('validation.attributes.de_driver_phone') }}" noErrors />
