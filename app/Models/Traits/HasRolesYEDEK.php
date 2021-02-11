@@ -4,7 +4,10 @@ namespace App\Models\Traits;
 
 use App\Role;
 
-trait HasRoles
+/**
+ * Spatie permissions kullanılacak
+ */
+trait HasRolesYEDEK
 {
 
     protected $assignedRoles;

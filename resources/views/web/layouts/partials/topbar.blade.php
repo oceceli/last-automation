@@ -20,11 +20,20 @@
                 </div>
                 <div x-show="userModal" @click.away="userModal = false" 
                     class="absolute right-0 mt-1 z-40  border shadow bg-white rounded flex flex-col " style="min-width: 15rem;">
-
-                    <div class="border-b border-dashed px-3 py-2 text-ease">
+                
+                    <div class="border-b border-dashed px-3 py-2 text-ease cursor-pointer hover:bg-gray-100">
                         <i class="user icon"></i>
                         <span>{{ auth()->user()->name}}</span>
                     </div>
+                    
+                    <a href="{{ route('roles.index') }}" class="border-b border-dashed px-3 py-2 text-ease cursor-pointer hover:bg-gray-100">
+                        <i class="users icon"></i>
+                        <span>{{ __('roles.manage_users')}}</span>
+                    </a>
+                    <a href="#" class="border-b border-dashed px-3 py-2 text-ease cursor-pointer hover:bg-gray-100">
+                        <i class="users icon"></i>
+                        <span>{{ __('roles.define_roles')}}</span>
+                    </a>
 
                     <div class="p-2 text-center">
                         <span>{{ __('auth.logout')}}</span>
