@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:roles.datatable>
+    <livewire:roles.roles>
 </x-app-layout>

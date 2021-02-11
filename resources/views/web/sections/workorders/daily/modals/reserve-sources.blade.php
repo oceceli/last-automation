@@ -38,7 +38,7 @@
 
                                 </div>
 
-                                <div class="pt-2" wire:key="dropdown{{ $key }}" wire:ignore>
+                                <div class="pt-2" wire:key="dropdown{{ $key }}">
                                     {{-- {{ __('workorders.lot_no')}}:  --}}
                                     <x-dropdown-multiple model="inputModels.{{ $key }}" sId="{{ 'multipledropdown'. $key }}" class="mini">
 

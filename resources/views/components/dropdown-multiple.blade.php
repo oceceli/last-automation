@@ -8,9 +8,11 @@
 </div> --}}
 
 
-<select name="" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}}>
-    {{ $slot }}
-</select>
+<div wire:ignore>
+    <select name="" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}}>
+        {{ $slot }}
+    </select>
+</div>
 
 
 
