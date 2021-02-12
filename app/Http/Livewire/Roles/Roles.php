@@ -10,7 +10,8 @@ class Roles extends Component
 {
 
     public $permissionsModal = false;
-    public $permissionIds;
+    public $selectedRole;
+    public $permissionIds = [];
      
     public $newRoleModal = false;
     public $name;
@@ -32,6 +33,23 @@ class Roles extends Component
         return Permission::all();
     }
 
+    public function openPermissionsModal($roleId)
+    {
+        $this->selectedRole = $this->getRolesProperty()->find($roleId);
+        $this->permissionIds = $this->selectedRole->permissions->pluck('id')->toArray();
+        $this->permissionsModal = true;
+    }
+
+    public function closePermissionsModal()
+    {
+        $this->reset('permissionsModal', 'selectedRole', 'permissionIds');
+    }
+
+    public function updatedPermissionsModal($bool)
+    {
+        if($bool == false) $this->closePermissionsModal();
+    }
+
     public function delete($id)
     {
         Role::findAndDelete($id);
@@ -45,6 +63,13 @@ class Roles extends Component
         $this->closeNewRoleModal();
 
         $this->emit('toast', '', __('common.saved.saved_successfully'), 'success');
+    }
+
+    public function submitPermissions()
+    {
+        if(!$this->selectedRole) return;
+        $this->selectedRole->syncPermissions($this->permissionIds);
+        $this->closePermissionsModal();
     }
 
     public function closeNewRoleModal()

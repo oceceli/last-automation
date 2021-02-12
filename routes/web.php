@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/salestype', 'SalesTypeController');
 
     Route::resource('/roles', 'RoleController');
+
+    Route::get('/user-roles', 'UserController@userRoles')->name('user-roles');
     
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 

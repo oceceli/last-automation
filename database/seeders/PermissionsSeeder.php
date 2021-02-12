@@ -14,16 +14,30 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'create product']);
-        Permission::create(['name' => 'update product']);
-        Permission::create(['name' => 'delete product']);
+        Permission::create(['name' => 'view_products']);
+        Permission::create(['name' => 'create_update_products']);
+        Permission::create(['name' => 'delete_products']);
         
-        Permission::create(['name' => 'create recipe']);
-        Permission::create(['name' => 'update recipe']);
-        Permission::create(['name' => 'delete recipe']);
+        Permission::create(['name' => 'view_recipes']);
+        Permission::create(['name' => 'create_update_recipes']);
+        Permission::create(['name' => 'delete_recipes']);
         
-        Permission::create(['name' => 'create workorder']);
-        Permission::create(['name' => 'update workorder']);
-        Permission::create(['name' => 'delete workorder']);
+        Permission::create(['name' => 'view_workorders']);
+        Permission::create(['name' => 'create_update_workorders']);
+        Permission::create(['name' => 'delete_workorders']);
+        Permission::create(['name' => 'process_workorders']);
+        
+        Permission::create(['name' => 'view_stockmoves']);
+        Permission::create(['name' => 'create_update_stockmoves']);
+        Permission::create(['name' => 'delete_stockmoves']);
+
+        Permission::create(['name' => 'view_companies']);
+        Permission::create(['name' => 'create_update_companies']);
+        Permission::create(['name' => 'delete_companies']);
+
+        Permission::create(['name' => 'view_dispatchorders']);
+        Permission::create(['name' => 'create_update_dispatchorders']);
+        Permission::create(['name' => 'delete_dispatchorders']);
+        Permission::create(['name' => 'process_dispatchorders']);
     }
 }

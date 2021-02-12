@@ -16,18 +16,21 @@ class DropdownMultiple extends Component
     public $sId;
     public $maxSelections;
 
+    public $label;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
     // public function __construct($collection, $value, $text, $sId)
-    public function __construct($model, $sId, $maxSelections = null)
+    public function __construct($model, $label, $sId, $maxSelections = null)
     {
         // $this->collection = $collection;
         // $this->value = $value;
         // $this->text = $text;
         $this->model = $model;
+        $this->label = $label;
         $this->sId = $sId;
         $this->maxSelections = $maxSelections;
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasQueries;
 use App\Models\Traits\HasSettings;
+use App\Models\Traits\ModelHelpers;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use ModelHelpers;
 
     /**
      * The attributes that are mass assignable.
@@ -64,4 +66,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function delete()
+    {
+        $this->roles()->detach();
+        parent::delete();
+    }
+
 }

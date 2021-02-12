@@ -1,19 +1,17 @@
 <x-content>
     
     <x-slot name="header">
-        <x-page-header icon="dna" header="{{ __('roles.define_roles') }}" />
+        <x-page-header icon="dna" header="{{ __('roles.define_roles') }}">
+            <x-slot name="buttons">
+                <button wire:click="$set('newRoleModal', true)" class="ui green mini icon button">
+                    <i class="plus icon"></i> {{ __('roles.new_role' )}}
+                </button>
+            </x-slot>
+        </x-page-header>
     </x-slot>
 
     <div class="p-4">
         <x-table class="selectable">
-
-            {{-- <x-thead>
-                <x-table-row>
-                    <x-thead-item>
-                        sadf
-                    </x-thead-item>
-                </x-table-row>
-            </x-thead> --}}
 
             <x-tbody>
                 @forelse ($this->roles as $role)
@@ -30,8 +28,8 @@
                             </span>
                         </x-tbody-item>
                         <x-tbody-item class="collapsing">
-                            <x-crud-actions show delete edit modelName="role" :modelId="$role->id">
-                                <div wire:click.prevent="$set('permissionsModal', true)" data-tooltip="{{ __('roles.set_permissions') }}" data-variation="mini">
+                            <x-crud-actions delete modelName="role" :modelId="$role->id">
+                                <div wire:click.prevent="openPermissionsModal({{ $role->id }})" data-tooltip="{{ __('permissions.permissions') }}" data-variation="mini">
                                     <i class="settings icon"></i>
                                 </div>
                             </x-crud-actions>
@@ -44,18 +42,40 @@
                 @endforelse
             </x-tbody>
 
-            <tfoot class="">
-                <tr>
-                    <th colspan="4">
-                        <button wire:click="$set('newRoleModal', true)" class="ui right floated mini primary labeled mini icon button">
-                            <i class="cog icon"></i> !Yeni rol
-                        </button>
-                    </th>
-                </tr>
-            </tfoot>
-
         </x-table>
-        
+
+
+
+        {{-- PERMISSIONS MODAL --}}
+        <div x-data="{permissionsModal: @entangle('permissionsModal')}">
+            <x-custom-modal active="permissionsModal">
+                <div class="p-6 bg-red-800">
+                    @if ($selectedRole)
+                        <div class="p-3 border rounded shadow bg-white">
+                            <x-dropdown-multiple label="{{ __('roles.the_user_with_model_role', ['model' => ucfirst($selectedRole->name)]) }}" model="permissionIds" sId="permission_select" class="mini">
+                                @foreach ($this->permissions as $permission)
+                                    <option value="{{ $permission->id }}">
+                                        {{ __("permissions.$permission->name") }}
+                                    </option>
+                                @endforeach
+                            </x-dropdown-multiple>
+                            <div class="pt-4" wire:loading.class="bg-red-700 invisible" wire:target="permissionIds">
+                                <button wire:click.prevent="submitPermissions()" class="ui mini green button">
+                                    {{ __('common.save') }}
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </x-custom-modal>
+        </div>
+
+
+
+
+
+
+        {{-- ROLE CREATE MODAL --}}
         <div x-data="{newRoleModal: @entangle('newRoleModal')}">
             <x-custom-modal active="newRoleModal">
                 <div class="p-3">
@@ -67,22 +87,6 @@
                             {{ __('common.save') }}
                         </button>
                     </div>
-                </div>
-            </x-custom-modal>
-        </div>
-
-
-
-        <div x-data="{permissionsModal: @entangle('permissionsModal')}">
-            <x-custom-modal active="permissionsModal">
-                <div class="p-3">
-                    <x-dropdown-multiple model="permissionIds" sId="permission_select" class="mini">
-                        @foreach ($this->permissions as $permission)
-                            <option value="{{ $permission->id }}">
-                                {{ __("permissions.$permission->name") }}
-                            </option>
-                        @endforeach
-                    </x-dropdown-multiple>
                 </div>
             </x-custom-modal>
         </div>

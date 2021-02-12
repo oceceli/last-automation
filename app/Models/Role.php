@@ -9,9 +9,10 @@ class Role extends SpatieRoleModel
 {
     use ModelHelpers;
 
-    // public function delete()
-    // {
-        
-    // }
+    public function delete()
+    {
+        $this->permissions()->detach();
+        parent::delete();
+    }
 
 }

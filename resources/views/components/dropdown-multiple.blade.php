@@ -9,7 +9,8 @@
 
 
 <div wire:ignore>
-    <select name="" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}}>
+    <label class="font-bold pb-2" for="">{{ $label }}</label>
+    <select name="" id="{{ $sId }}" multiple="" {{ $attributes->merge(['class' => 'ui search fluid dropdown'])}} wire:model="{{ $model }}">
         {{ $slot }}
     </select>
 </div>
@@ -23,15 +24,15 @@
             maxSelections: "{{ $maxSelections }}",
             // sortSelect: false,
             fullTextSearch: true,
-            onAdd: function(addedValue, addedText, $addedChoice) {
-                a.push(addedValue);
-                @this.set("{{ $model }}", a);
-            },
-            onRemove: function(removedValue, removedText, $removedChoice) {
-                let index = a.indexOf(removedValue);
-                a.splice(index,1);
-                @this.set("{{ $model }}", a);
-            }
+            // onAdd: function(addedValue, addedText, $addedChoice) {
+            //     a.push(addedValue);
+            //     @this.set("{{ $model }}", a);
+            // },
+            // onRemove: function(removedValue, removedText, $removedChoice) {
+            //     let index = a.indexOf(removedValue);
+            //     a.splice(index,1);
+            //     @this.set("{{ $model }}", a);
+            // }
         });
     })
 </script>
