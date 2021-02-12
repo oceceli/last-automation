@@ -31,22 +31,30 @@ class RecipeController extends Controller
     
     public function create()
     {
+        if(auth()->user()->cannot('create update recipes')) abort(403);
+
         return view('web.sections.recipes.create.create');
     }
 
     public function index()
     {
+        if(auth()->user()->cannot('view recipes')) abort(403);
+
         return view('web.sections.recipes.index');
     }
 
     public function show($id)
     {
+        if(auth()->user()->cannot('view recipes')) abort(403);
+        
         $recipe = Recipe::find($id);
         return view('web.sections.recipes.show', compact('recipe'));
     }
 
     public function edit($id)
     {
+        if(auth()->user()->cannot('create update recipes')) abort(403);
+        
         $recipe = Recipe::find($id);
         return view('web.sections.recipes.edit', compact('recipe'));
     }

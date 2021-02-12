@@ -6,6 +6,7 @@ use App\Models\Traits\HasQueries;
 use App\Models\Traits\HasSettings;
 use App\Models\Traits\ModelHelpers;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -70,8 +71,50 @@ class User extends Authenticatable
 
     public function delete()
     {
+        if($this->isSystemAdmin() || $this->isLastAdmin()) return;
+
         $this->roles()->detach();
         parent::delete();
+    }
+
+
+    public function isAdmin()
+    {
+        return $this->hasRole(['admin', 'super user']);
+    }
+
+    public function isSuperUser()
+    {
+        return $this->hasRole('super user');
+    }
+
+
+    public function isLastAdmin()
+    {
+        return $this->isAdmin() && self::adminCount() === 1;
+    }
+
+    public function isSystemAdmin()
+    {
+        return $this->email === 'admin@admin.com';
+    }
+    
+
+    public static function adminCount()
+    {
+        return self::whereHas('roles', function(Builder $query) {
+            return $query->where('name', 'admin');
+        })->count();
+    }
+
+    /**
+     * Exclude the user with 'super user' role
+     */
+    public static function allExceptSU()
+    {
+        return self::whereDoesntHave('roles', function(Builder $query) {
+            return $query->where('name', 'super user');
+        })->get();
     }
 
 }

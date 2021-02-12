@@ -31,22 +31,30 @@ class StockMoveController extends Controller
 
     public function index()
     {
+        if(auth()->user()->cannot('view stockmoves')) abort(403);
+
         return view('web.sections.stockmoves.index');
     }
 
     public function show($id)
     {
+        if(auth()->user()->cannot('view stockmoves')) abort(403);
+
         $stockMove = StockMove::find($id);
         return view('web.sections.stockmoves.show', compact('stockMove'));
     }
 
     public function create()
     {
+        if(auth()->user()->cannot('create update stockmoves')) abort(403);
+
         return view('web.sections.stockmoves.create');
     }
 
     public function edit(StockMove $stockMove)
     {
+        if(auth()->user()->cannot('create update stockmoves')) abort(403);
+
         return view('web.sections.stockmoves.edit', compact('stockMove'));
     }
 

@@ -31,23 +31,31 @@ class ProductController extends Controller
 
     public function index()
     {
+        if(auth()->user()->cannot('view products')) abort(403);
+
         $products = $this->repository->all();
         return view('web.sections.products.index', compact('products'));
     }
 
     public function show($id)
     {
+        if(auth()->user()->cannot('view products')) abort(403);
+
         $product = $this->repository->fetch($id);
         return view('web.sections.products.show', compact('product'));
     }
 
     public function create()
     {
+        if(auth()->user()->cannot('create update products')) abort(403);
+        
         return view('web.sections.products.create');
     }
 
     public function edit($id)
     {
+        if(auth()->user()->cannot('create update products')) abort(403);
+        
         $product = Product::find($id);
         return view('web.sections.products.edit', compact('product'));
     }

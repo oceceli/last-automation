@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class UserRoles extends Component
@@ -19,12 +20,12 @@ class UserRoles extends Component
 
     public function getUsersProperty()
     {
-        return User::all();
+        return User::allExceptSU();
     }
 
     public function getRolesProperty()
     {
-        return Role::all();
+        return Role::allExceptSU();
     }
 
 
@@ -48,6 +49,14 @@ class UserRoles extends Component
     public function updatedRolesModal($bool)
     {
         if($bool == false) $this->closeRolesModal();
+    }
+
+    public function updatedRoleIds()
+    {
+        if($this->selectedUser->isLastAdmin()) {
+            $this->roleIds = $this->selectedUser->roles->pluck('id')->toArray();
+            $this->emit('toast', '', __('roles.there_must_be_at_least_one_admin_in_the_system'), 'warning');
+        }
     }
 
     public function submitRoles()

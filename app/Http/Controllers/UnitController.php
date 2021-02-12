@@ -28,13 +28,15 @@ class UnitController extends Controller
         $this->validateData(['store', 'update']);
     }
 
-    public function index()
-    {
-        return view('web.sections.units.index');
-    }
+    // public function index()
+    // {
+    //     return view('web.sections.units.index');
+    // }
 
     public function create()
     {
+        if(auth()->user()->cannot('create update products')) abort(403);
+        
         return view('web.sections.units.create');
     }
 

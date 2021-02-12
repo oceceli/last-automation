@@ -22,16 +22,31 @@
                             <span class="font-bold text-red-800">{{ $user->name }}</span>
                         </x-tbody-item>
                         <x-tbody-item>
-                            <span class="text-xs text-ease">
-                                {{ __('roles.has_count_roles', ['count' => $user->roles->count()]) }}
-                            </span>
+                            @if ($user->isAdmin())
+                                <span class="text-xs text-ease-green">
+                                    <i class="lock icon"></i>
+                                    {{ __('roles.this_user_has_all_system_privileges') }}
+                                </span>
+                            @else
+                                @if ($user->roles->count() <= 0)
+                                    <span class="text-xs text-ease-red">
+                                        {{ __('roles.there_is_no_any_role_for_this_user') }}
+                                    </span>
+                                @else
+                                    <span class="text-xs text-ease">
+                                        {{ __('roles.has_count_roles', ['count' => $user->roles->count()]) }}
+                                    </span>
+                                @endif
+                            @endif
                         </x-tbody-item>
                         <x-tbody-item class="collapsing">
-                            <x-crud-actions delete modelName="user" :modelId="$user->id">
-                                <div wire:click.prevent="openRolesModal({{ $user->id }})" data-tooltip="{{ __('permissions.permissions') }}" data-variation="mini">
-                                    <i class="settings icon"></i>
-                                </div>
-                            </x-crud-actions>
+                            @if (!$user->isSystemAdmin())
+                                <x-crud-actions delete modelName="user" :modelId="$user->id">
+                                    <div wire:click.prevent="openRolesModal({{ $user->id }})" data-tooltip="{{ __('permissions.permissions') }}" data-variation="mini">
+                                        <i class="settings icon"></i>
+                                    </div>
+                                </x-crud-actions>
+                            @endif
                         </x-tbody-item>
                     </x-table-row>
                 @endforeach

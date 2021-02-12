@@ -16,4 +16,7 @@ return [
     'the_user_with_model_role' => ':model rolüne sahip bir kullanıcı;',
 
     'roles_for_user' => ':user kullanıcısına tanımlı roller',
+    'there_must_be_at_least_one_admin_in_the_system' => 'Sistemde en az bir adet yönetici bulunmalıdır!',
+    'this_user_has_all_system_privileges' => 'Bu kullanıcının tüm sisteme erişimi var',
+    'there_is_no_any_role_for_this_user' => 'Bu kullanıcıya hiçbir rol atanmamış',
 ];

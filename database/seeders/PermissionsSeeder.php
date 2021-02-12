@@ -14,30 +14,33 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'view_products']);
-        Permission::create(['name' => 'create_update_products']);
-        Permission::create(['name' => 'delete_products']);
+        Permission::create(['name' => 'view products']);
+        Permission::create(['name' => 'create update products']);
+        Permission::create(['name' => 'delete products']);
         
-        Permission::create(['name' => 'view_recipes']);
-        Permission::create(['name' => 'create_update_recipes']);
-        Permission::create(['name' => 'delete_recipes']);
+        Permission::create(['name' => 'view recipes']);
+        Permission::create(['name' => 'create update recipes']);
+        Permission::create(['name' => 'delete recipes']);
         
-        Permission::create(['name' => 'view_workorders']);
-        Permission::create(['name' => 'create_update_workorders']);
-        Permission::create(['name' => 'delete_workorders']);
-        Permission::create(['name' => 'process_workorders']);
+        Permission::create(['name' => 'view workorders']);
+        Permission::create(['name' => 'create update workorders']);
+        Permission::create(['name' => 'delete workorders']);
+        Permission::create(['name' => 'process workorders']);
         
-        Permission::create(['name' => 'view_stockmoves']);
-        Permission::create(['name' => 'create_update_stockmoves']);
-        Permission::create(['name' => 'delete_stockmoves']);
+        Permission::create(['name' => 'view stockmoves']);
+        Permission::create(['name' => 'create update stockmoves']);
+        Permission::create(['name' => 'delete stockmoves']);
 
-        Permission::create(['name' => 'view_companies']);
-        Permission::create(['name' => 'create_update_companies']);
-        Permission::create(['name' => 'delete_companies']);
+        Permission::create(['name' => 'view companies']);
+        Permission::create(['name' => 'create update companies']);
+        Permission::create(['name' => 'delete companies']);
 
-        Permission::create(['name' => 'view_dispatchorders']);
-        Permission::create(['name' => 'create_update_dispatchorders']);
-        Permission::create(['name' => 'delete_dispatchorders']);
-        Permission::create(['name' => 'process_dispatchorders']);
+        Permission::create(['name' => 'view dispatchorders']);
+        Permission::create(['name' => 'create update dispatchorders']);
+        Permission::create(['name' => 'delete dispatchorders']);
+        Permission::create(['name' => 'process dispatchorders']);
+        
+        Permission::create(['name' => 'manage users']);
+        
     }
 }

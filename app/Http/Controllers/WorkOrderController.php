@@ -31,28 +31,39 @@ class WorkOrderController extends Controller
 
     public function index()
     {
+        if(auth()->user()->cannot('view workorders')) abort(403);
+
         return view('web.sections.workorders.index');
     }
 
     public function show($id)
     {
+        if(auth()->user()->cannot('view workorders')) abort(403);
+
         $workOrder = $this->repository->fetch($id);
         return view('web.sections.workorders.show.index', compact('workOrder'));
     }
 
     public function edit($id)
     {
+        if(auth()->user()->cannot('create update workorders')) abort(403);
+
         $workOrder = WorkOrder::find($id);
         return view('web.sections.workorders.edit', compact('workOrder'));
     }
 
     public function create()
     {
+        if(auth()->user()->cannot('create update workorders')) abort(403);
+
+        if(auth()->user()->cannot('create update workorders')) abort(403);
         return view('web.sections.workorders.create.index');
     }
 
     public function daily()
     {
+        if(auth()->user()->cannot('process workorders')) abort(403);
+
         return view('web.sections.workorders.daily.index');
     }
 

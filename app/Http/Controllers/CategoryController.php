@@ -31,6 +31,8 @@ class CategoryController extends Controller
 
     public function create()
     {
+        if(auth()->user()->cannot('create update products')) abort(403);
+        
         return view('web.sections.categories.create');
     }
 

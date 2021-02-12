@@ -20,7 +20,17 @@
                             {{ $loop->index + 1}}
                         </x-tbody-item>
                         <x-tbody-item class="center aligned">
-                            <span class="font-bold text-red-800">{{ $role->name }}</span>
+                            @if($role->isAdmin())
+                                <span class="font-bold text-red-600">
+                                    <i class="lock icon"></i> 
+                                    {{ $role->name }}
+                                </span>
+                            @else
+                                <span class="font-bold text-green-600">
+                                    <i class="unlock icon"></i> 
+                                    {{ $role->name }}
+                                </span>
+                            @endif
                         </x-tbody-item>
                         <x-tbody-item>
                             <span class="text-xs text-ease">
@@ -28,11 +38,13 @@
                             </span>
                         </x-tbody-item>
                         <x-tbody-item class="collapsing">
-                            <x-crud-actions delete modelName="role" :modelId="$role->id">
-                                <div wire:click.prevent="openPermissionsModal({{ $role->id }})" data-tooltip="{{ __('permissions.permissions') }}" data-variation="mini">
-                                    <i class="settings icon"></i>
-                                </div>
-                            </x-crud-actions>
+                            @if (!$role->isAdmin())
+                                <x-crud-actions delete modelName="role" :modelId="$role->id">
+                                    <div wire:click.prevent="openPermissionsModal({{ $role->id }})" data-tooltip="{{ __('permissions.permissions') }}" data-variation="mini">
+                                        <i class="settings icon"></i>
+                                    </div>
+                                </x-crud-actions>
+                            @endif
                         </x-tbody-item>
                     </x-table-row>
                 @empty

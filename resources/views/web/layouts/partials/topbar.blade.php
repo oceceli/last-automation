@@ -26,14 +26,16 @@
                         <span>{{ auth()->user()->name}}</span>
                     </div>
                     
-                    <a href="{{ route('user-roles') }}" class="border-b border-dashed px-3 py-2 text-ease cursor-pointer hover:bg-gray-100">
-                        <i class="users icon"></i>
-                        <span>{{ __('roles.manage_users')}}</span>
-                    </a>
-                    <a href="{{ route('roles.index') }}"  class="border-b border-dashed px-3 py-2 text-ease cursor-pointer hover:bg-gray-100">
-                        <i class="dna icon"></i>
-                        <span>{{ __('roles.define_roles')}}</span>
-                    </a>
+                    @can('manage users')
+                        <a href="{{ route('user-roles') }}" class="border-b border-dashed px-3 py-2 bg-red-800 text-white hover:bg-red-500 hover:text-white cursor-pointer">
+                            <i class="users icon"></i>
+                            <span>{{ __('roles.manage_users')}}</span>
+                        </a>
+                        <a href="{{ route('roles.index') }}"  class="border-b border-dashed px-3 py-2 bg-red-800 text-white hover:bg-red-500 hover:text-white cursor-pointer">
+                            <i class="dna icon"></i>
+                            <span>{{ __('roles.define_roles')}}</span>
+                        </a>
+                    @endcan
 
                     <div class="p-2 text-center">
                         <span>{{ __('auth.logout')}}</span>

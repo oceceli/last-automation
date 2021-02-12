@@ -25,7 +25,7 @@ class Roles extends Component
 
     public function getRolesProperty()
     {
-        return Role::all();
+        return Role::allExceptSU();
     }
 
     public function getPermissionsProperty()
@@ -48,6 +48,12 @@ class Roles extends Component
     public function updatedPermissionsModal($bool)
     {
         if($bool == false) $this->closePermissionsModal();
+    }
+
+    public function updatedPermissionIds()
+    {
+        if($this->selectedRole->name === 'admin')
+            $this->permissionIds = $this->selectedRole->permissions->pluck('id')->toArray();
     }
 
     public function delete($id)
