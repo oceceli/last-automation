@@ -2,20 +2,18 @@
 
 namespace App\Http\Livewire\Categories;
 
-use App\Http\Livewire\Form as Baseform;
-use App\Models\Category;
+use App\Http\Livewire\Traits\Categories\CategoriesFormTrait;
+use Livewire\Component;
 
-class Form extends BaseForm
+
+class Form extends Component
 {
-    public $model = Category::class;
-    public $view = 'livewire.categories.form';
+    use CategoriesFormTrait;
 
-    public $name;
 
-    public function submit()
+    public function render()
     {
-        $this->create();
-        $this->emit('categoryUpdated', $this->created->id);
+        return view('livewire.categories.form');
     }
 
 }

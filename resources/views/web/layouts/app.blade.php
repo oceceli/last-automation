@@ -48,7 +48,7 @@
     </head>
 
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-indigo-100 overflow-y-hidden">
+        <div class="min-h-screen bg-cool-gray-700 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 

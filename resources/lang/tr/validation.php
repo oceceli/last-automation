@@ -162,6 +162,18 @@ return [
         'code' => 'kod',
 
 
+        // products
+        'category_id' => 'Kategori', 
+        'prd_code' => 'Ürün kodu', 
+        'prd_name' => 'Ürün adı', 
+        'prd_barcode' => 'Barkod', 
+        'prd_min_threshold' => 'Min Stok', 
+        'prd_shelf_life' => 'Raf ömrü', 
+        'prd_cost' => 'Fiyat', 
+        'prd_note' => 'Açıklama', 
+        'prd_is_active' => 'Aktif',
+        'prd_producible' => 'Üretilebilir',
+
         // companies
         'cmp_name' => 'Firma adı',
         'cmp_current_code' => 'Cari kod',
@@ -202,6 +214,9 @@ return [
         'de_driver_phone' => 'Sürücü telefon',
         'de_dispatch_expense' => 'Sevk bedeli',
         'de_handling_expense' => 'İndirme bedeli',
+
+        // categories
+        'ctg_name' => 'Kategori adı',
 
         
         // reservedstocks

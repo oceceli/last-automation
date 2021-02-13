@@ -4,7 +4,7 @@ return [
 
     'categories' => 'Kategoriler',
 
-    'category_name' => 'Kategori adı',
+    // 'category_name' => 'Kategori adı',
 
     'select_a_category' => 'Kategori seçiniz...',
     'create_category' => 'Kategori oluştur',

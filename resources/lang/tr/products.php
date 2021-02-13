@@ -33,4 +33,8 @@ return [
     'products_with_no_recipes_cannot_be_manufactured' => 'Reçete tanımlanmamış ürünler üretilemezler',
 
     'measure_units_that_belongs_to_product' => 'Ürüne ait ölçü birimleri',
+
+    'expresses_the_product_will_be_produced' => 'Üretilecek olan ürünü belirtir.',
+    'product_created' => 'Ürün oluşturuldu',
+    'code_product_updated' => ':code kodlu ürün güncellendi',
 ];

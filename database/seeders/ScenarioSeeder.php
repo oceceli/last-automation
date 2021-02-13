@@ -139,12 +139,6 @@ class ScenarioSeeder extends Seeder
             'adr_body' => 'Cebeci Mah. Keskin cad 234/2',
             'adr_phone' => '03124758374',
         ]);
-
-        // User::create([
-        //     'name' => 'Ömer',
-        //     'email' => 'trjl6trf@hotmail.com',
-        //     'password' => hash('sha256', 'qwerty123456'),
-        // ]);
         
     }
 
@@ -153,12 +147,12 @@ class ScenarioSeeder extends Seeder
     {
         $product = Product::create([
             'category_id' => $categoryId,
-            'code' => $code, 
-            'barcode' => $barcode, 
-            'name' => $name, 
-            'shelf_life' => 2,
-            'producible' => $producible, 
-            'min_threshold' => 50,
+            'prd_code' => $code, 
+            'prd_barcode' => $barcode, 
+            'prd_name' => $name, 
+            'prd_shelf_life' => 2,
+            'prd_producible' => $producible, 
+            'prd_min_threshold' => 50,
         ]);
         $product->units()->create([
             'name' => $unitName, 

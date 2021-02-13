@@ -16,14 +16,15 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
-            $table->string('code')->unique();
-            $table->integer('barcode')->unique()->nullable();
-            $table->string('name'); 
-            $table->integer('shelf_life');
-            $table->boolean('producible');
-            $table->boolean('is_active')->default(true);
-            $table->integer('min_threshold')->nullable();
-            $table->string('note')->nullable();
+            $table->string('prd_code')->unique();
+            $table->integer('prd_barcode')->unique()->nullable();
+            $table->decimal('prd_cost')->nullable();
+            $table->string('prd_name'); 
+            $table->integer('prd_shelf_life');
+            $table->boolean('prd_producible');
+            $table->boolean('prd_is_active')->default(true);
+            $table->integer('prd_min_threshold')->nullable();
+            $table->string('prd_note')->nullable();
             // $table->softDeletes();
 
             $table->timestamps();

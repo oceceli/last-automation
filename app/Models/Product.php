@@ -48,26 +48,26 @@ class Product extends Model
     /**
      * Validate rules for current model
      */
-    public static function rules()
-    {
-        $id = self::getRequestID(); // use for unique keys on update event
-        return [
-            'data' => [
-                'category_id' => 'required|integer',
-                'code' => 'required|min:1|unique:products,code',
-                'barcode' => 'nullable|numeric|unique:products,barcode',
-                'name' => 'required|min:1',
-                'shelf_life' => 'required|numeric',
-                'producible' => 'required|boolean',
-                'is_active' => 'sometimes|nullable|boolean',
-                'min_threshold' => 'nullable|numeric',
-                'note' => 'nullable',
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
-    }
+    // public static function rules()
+    // {
+    //     $id = self::getRequestID(); // use for unique keys on update event
+    //     return [
+    //         'data' => [
+    //             'category_id' => 'required|integer',
+    //             'code' => 'required|min:1|unique:products,code',
+    //             'barcode' => 'nullable|numeric|unique:products,barcode',
+    //             'name' => 'required|min:1',
+    //             'shelf_life' => 'required|numeric',
+    //             'producible' => 'required|boolean',
+    //             'is_active' => 'sometimes|nullable|boolean',
+    //             'min_threshold' => 'nullable|numeric',
+    //             'note' => 'nullable',
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
 
     /**
      * Mutator and accessors **************************************

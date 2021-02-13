@@ -48,17 +48,17 @@ class Category extends Model
     /**
      * Validate rules for current model
      */
-    public static function rules()
-    {
-        return [
-            'data' => [
-                'name' => 'required|unique:categories',
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
-    }
+    // public static function rules()
+    // {
+    //     return [
+    //         'data' => [
+    //             'name' => 'required|unique:categories',
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
 
     public function setNameAttribute($value) 
     {

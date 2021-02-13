@@ -8,10 +8,10 @@
     
         @if ($iModel)
         <div class="ui right labeled input" wire:loading.class="disabler">
-            <input type="{{ $iType }}" placeholder="{{ __($iPlaceholder) }}" wire:model.debounce.500ms="{{ $iModel }}">
+            <input type="{{ $iType }}" placeholder="{{ $iPlaceholder }}" wire:model.debounce.500ms="{{ $iModel }}">
             <div wire:ignore class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
                 <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
-                <div class="text default">{{ __($placeholder) }}</div>
+                <div class="text default">{{ $placeholder }}</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     {{-- options handling by javascript --}}
@@ -21,7 +21,7 @@
         @else
         <div class="{{ $sClass }} ui @if( ! $basic) selection scrolling @endif dropdown" id="{{ $sId }}" wire:ignore wire:loading.class="double loading disabled" wire:target="{{ $triggerOn }}, {{ $triggerOnEvent }}"> 
             <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
-            <div class="text default">{{ __($placeholder) }}</div>
+            <div class="text default">{{ $placeholder }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
                 {{-- options handling by javascript --}}

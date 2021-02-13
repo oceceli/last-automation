@@ -43,7 +43,6 @@
                                     @endif
                                     <span wire:key="stAdd" @click="salesTypeModal = true" class=" cursor-pointer text-blue-400 ease-in-out duration-200 hover:text-blue-600" data-tooltip="{{ __('common.add') }}" data-variation="mini">
                                         <i class="plus icon"></i>
-                                        {{-- <span>{{ __('common.add_new') }}</span> --}}
                                     </span>
                                 </div>
                             </x-slot>
