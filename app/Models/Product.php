@@ -148,23 +148,23 @@ class Product extends Model
     }
 
 
-    public function setCodeAttribute($code)
+    public function setPrdCodeAttribute($prd_code)
     {
-        $this->attributes['code'] = strtoupper($code);
+        $this->attributes['prd_code'] = strtoupper($prd_code);
     }
-    public function getCodeAttribute($code)
+    public function getPrdCodeAttribute($prd_code)
     {
-        return strtoupper($code);
+        return strtoupper($prd_code);
     }
     
 
-    public function setNameAttribute($name)
+    public function setPrdNameAttribute($prd_name)
     {
-        $this->attributes['name'] = ucwords($name);
+        $this->attributes['prd_name'] = ucwords($prd_name);
     }
-    public function getNameAttribute($name)
+    public function getPrdNameAttribute($prd_name)
     {
-        return ucwords($name);
+        return ucwords($prd_name);
     }
 
     

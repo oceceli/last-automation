@@ -1,6 +1,6 @@
 <div>
     <x-error-area></x-error-area>
-    <form class="ui tiny form" wire:submit.prevent="submit">
+    <form class="ui mini form" wire:submit.prevent="submit">
         <x-form-divider>
             
             <x-slot name="left">
@@ -42,38 +42,34 @@
 
 
             <x-slot name="right">
-                <x-dropdown model="unit_id" dataSourceFunction="getUnitsProperty" value="id" text="name" sId="units"
+                <x-dropdown model="unit_id" :collection="$this->units" value="id" text="name" sId="units"
                     label="units.unit" placeholder="units.unit" transition="slide down" class="required field"
                 />
                 <x-input noErrors model="prd_shelf_life" label="{{ __('validation.attributes.prd_shelf_life') }}" placeholder="{{ __('validation.attributes.prd_shelf_life') }}" class="required field" />
                 <x-input noErrors model="prd_min_threshold" label="{{ __('validation.attributes.prd_min_threshold') }}" placeholder="{{ __('validation.attributes.prd_min_threshold') }}"  class="field" />
                 <x-input noErrors model="prd_cost" label="{{ __('validation.attributes.prd_cost') }}" placeholder="{{ __('validation.attributes.prd_cost') }}"  class="field" />
 
-            </x-slot>
-
-            <x-slot name="bottom">
-                <div class="grid md:grid-cols-2 items-center gap-10">
-                    <div x-data="{addNote: false}">
-                        <div x-show="!addNote">
-                            <i class="write icon"></i>
-                            <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
-                        </div>
-                        <div x-show="addNote" class="field">
-                            <label><i class="write icon"></i>{{ __('common.note' )}}</label>
-                            <textarea wire:model.lazy="note" rows="3"></textarea>
+                <div class="pt-4">
+                    <div class="px-2 py-1 border border-dashed">
+                        {{-- <span class="text-ease text-xs">{{ __('companies.a_company_can_be_either_a_supplier_and_a_customer') }}.</span> --}}
+                        <div class="py-1 flex gap-10">
+                            <x-checkbox model="prd_producible" label="{{ __('validation.attributes.prd_producible') }}" data-tooltip="{{ __('products.expresses_the_product_will_be_produced') }}" data-position="top left" data-variation="mini" />
+                            <x-checkbox model="prd_is_active" label="{{ __('validation.attributes.prd_is_active') }}" data-tooltip="{{ __('products.will_be_invisible_in_some_modules_such_as_workorder') }}" data-position="top left" data-variation="mini" />
                         </div>
                     </div>
-                    <div class="flex gap-10 md:justify-end">
-                        <div class="ui toggle checkbox" data-tooltip="{{ __('products.expresses_the_product_will_be_produced') }}" data-position="top right" data-variation="mini">
-                            <input wire:model.lazy="prd_producible" type="checkbox">
-                            <label>{{ __('validation.attributes.prd_producible') }}</label>
-                        </div>
-                        @if ($editMode)
-                            <div class="ui toggle checkbox">
-                                <input wire:model.lazy="prd_is_active" type="checkbox">
-                                <label>{{ __('validation.attributes.prd_is_active') }}</label>
-                            </div>
-                        @endif
+                </div>
+            </x-slot>
+
+            
+            <x-slot name="bottom">
+                <div x-data="{addNote: false}">
+                    <div x-show="!addNote">
+                        <i class="write icon"></i>
+                        <span class="cursor-pointer pt-1 text-gray-400 text-sm font-bold ease-in-out duration-200 hover:text-gray-600" @click="addNote = true">{{ __('common.add_note') }}</span>
+                    </div>
+                    <div x-show="addNote" class="field">
+                        <label><i class="write icon"></i>{{ __('common.note' )}}</label>
+                        <textarea wire:model.lazy="note" rows="3"></textarea>
                     </div>
                 </div>
             </x-slot>

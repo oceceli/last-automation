@@ -37,4 +37,5 @@ return [
     'expresses_the_product_will_be_produced' => 'Üretilecek olan ürünü belirtir.',
     'product_created' => 'Ürün oluşturuldu',
     'code_product_updated' => ':code kodlu ürün güncellendi',
+    'will_be_invisible_in_some_modules_such_as_workorder' => 'Tüm modüllerde görünür yap',
 ];

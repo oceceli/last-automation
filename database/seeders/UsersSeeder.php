@@ -31,7 +31,7 @@ class UsersSeeder extends Seeder
 
         
         $admin = User::create([
-            'name' => 'yönetici',
+            'name' => 'Admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'password' => Hash::make(env('ADMIN_PASS', 'secureadmin2021')),
@@ -42,6 +42,15 @@ class UsersSeeder extends Seeder
         
         $adminRole = Role::findByName('admin');
         $adminRole->givePermissionTo(Permission::all());
+
+
+        $unauthorizedUser = User::create([
+            'name' => 'unauthorized user',
+            'email' => 'aaa@aaa.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('qwerty123456'),
+            'remember_token' => Str::random(10),
+        ]);
 
 
         User::factory()->count(20)->create();

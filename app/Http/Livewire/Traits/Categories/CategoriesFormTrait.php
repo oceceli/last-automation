@@ -90,8 +90,10 @@ trait CategoriesFormTrait
 
     private function setCtgEditMode($category)
     {
-        $this->ctgEditMode = true;
-        $this->selectedCategory = $category;
-        $this->ctg_name = $category->ctg_name;
+        if($category) {
+            $this->ctgEditMode = true;
+            $this->selectedCategory = $category;
+            $this->ctg_name = $category->ctg_name;
+        }
     }
 }
