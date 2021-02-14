@@ -107,4 +107,6 @@
 
     {{ $data->links('components.tailwind-pagination') }}
     
+    @include('web.helpers.deletable')
+
 </div>

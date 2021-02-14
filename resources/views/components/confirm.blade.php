@@ -1,7 +1,7 @@
 <x-custom-modal position="center" active="{{ $active }}" atClose="{{ $atClose }}">
     <div class="flex flex-col bg-cool-gray-50">
         <div>
-            <div class="p-3 rounded shadow-md bg-white text-xl text-ease text-center">
+            <div class="p-4 shadow-md text-xl text-center">
                 {{ $slot }}
             </div>
         </div>

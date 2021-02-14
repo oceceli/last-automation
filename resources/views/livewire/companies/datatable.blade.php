@@ -69,6 +69,9 @@
         
         @include('web.sections.companies.index.show-modal')
 
+        @include('web.helpers.deletable')
+
+
     </x-container>
 
 </div>

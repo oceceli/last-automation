@@ -208,5 +208,7 @@
         </div>
     @endif
 
+    @include('web.helpers.deletable')
+
 </div>
 

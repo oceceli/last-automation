@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Common\Helpers\Generic;
 use Livewire\WithPagination;
-use Illuminate\Support\Str;
 
 trait SmartTable
 {
     use WithPagination;
+    use Deletable;
 
 
     /** 
@@ -99,9 +98,4 @@ trait SmartTable
         }
     }
 
-
-    public function delete($id)
-    {
-        $this->model::findAndDelete($id);
-    }
 }

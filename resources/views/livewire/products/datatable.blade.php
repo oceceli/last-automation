@@ -50,13 +50,13 @@
 
                             <div class="crud-buttons">
                                 @can('view products')
-                                    <x-show-button action="openDetailsModal({{ $product->id }})"></x-show-button>
+                                    <x-show-button wire:key="showbutton_{{$loop->index}}" action="openDetailsModal({{ $product->id }})" />
                                 @endcan
                                 @can('create edit products')
-                                    <x-edit-button route="{{ route('products.edit', ['product' => $product]) }}"></x-edit-button>
+                                    <x-edit-button wire:key="editbutton_{{$loop->index}}" route="{{ route('products.edit', ['product' => $product]) }}" />
                                 @endcan
                                 @can('delete products')
-                                    <x-delete-button action="delete({{ $product->id }})" ></x-delete-button>
+                                    <x-delete-button wire:key="deletebutton_{{$loop->index}}" action="delete({{ $product->id }})"  />
                                 @endcan
                             </div>
 
@@ -87,6 +87,8 @@
         </div>
     @endif
 
+
+    @include('web.helpers.deletable')
 
 </div>
 
