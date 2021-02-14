@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
-class UserRoles extends Component
+class Index extends Component
 {
 
     public $rolesModal = false;
@@ -69,6 +69,6 @@ class UserRoles extends Component
 
     public function render()
     {
-        return view('livewire.users.user-roles');
+        return view('livewire.users.index');
     }
 }

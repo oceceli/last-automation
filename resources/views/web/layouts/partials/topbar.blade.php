@@ -27,7 +27,7 @@
                     </div>
                     
                     @can('manage users')
-                        <a href="{{ route('user-roles') }}" class="border-b border-dashed px-3 py-2 bg-red-800 text-white hover:bg-red-500 hover:text-white cursor-pointer">
+                        <a href="{{ route('users.index') }}" class="border-b border-dashed px-3 py-2 bg-red-800 text-white hover:bg-red-500 hover:text-white cursor-pointer">
                             <i class="users icon"></i>
                             <span>{{ __('roles.manage_users')}}</span>
                         </a>

@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/roles', 'RoleController');
 
-    Route::get('/user-roles', 'UserController@userRoles')->name('user-roles');
+    Route::get('/users', 'UserController@index')->name('users.index');
     
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 

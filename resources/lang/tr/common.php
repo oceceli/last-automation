@@ -134,6 +134,7 @@ return [
     'status' => 'Durum',
     'suspended' => 'Askıya alındı',
     'active' => 'Aktif',
+    'inactive' => 'İnaktif',
     'today' => 'Bugün',
     'lock' => 'Kilitle',
     'unlock' => 'Kilidi kaldır',

@@ -42,7 +42,7 @@ class ProductController extends Controller
         if(auth()->user()->cannot('view products')) abort(403);
 
         $product = $this->repository->fetch($id);
-        return view('web.sections.products.show', compact('product'));
+        return view('web.sections.products.show.show', compact('product'));
     }
 
     public function create()

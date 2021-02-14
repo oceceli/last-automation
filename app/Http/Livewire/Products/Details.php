@@ -10,26 +10,18 @@ class Details extends Component
 {
     public $product; 
 
-    public $recipe;
-
-    public $baseUnit;
-
     
     public function mount(Product $product)
     {
-        if($product->recipe()->exists()) {
-            $this->recipe = $product->recipe;
-        }
-        $this->baseUnit = Unit::getBaseUnit($product->id);
+        $this->product = $product;
     }
 
     public function delete()
     {
-        if($this->product->delete()) {
-            $this->emit('toast', 'crud.deleted', 'crud.content_deleted_smoothly', 'info');
-        } else {
-            $this->emit('toast', 'crud.unable_to_delete', 'crud.something_happened_while_deleting_the_content', 'error');
-        }
+        $this->product->delete();
+        session()->flash('success', __('common.context_deleted'));
+
+        return redirect()->route('products.index');
     }
 
 

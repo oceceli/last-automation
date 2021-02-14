@@ -12,10 +12,10 @@ class UserController extends Controller
     //     return view('web.users.index');
     // }
 
-    public function userRoles()
+    public function index()
     {
         if(auth()->user()->cannot('manage users')) abort(403);
 
-        return view('web.users.user-roles');
+        return view('web.users.index');
     }
 }

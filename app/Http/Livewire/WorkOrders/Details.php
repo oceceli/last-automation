@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
-use App\Models\Unit;
 use App\Models\WorkOrder;
 use Livewire\Component;
 

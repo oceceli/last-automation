@@ -13,6 +13,7 @@ class Form extends Component
 {
     use CategoriesFormTrait;
     
+    public $previous;
 
     /**
      * Edit mode
@@ -59,6 +60,7 @@ class Form extends Component
 
     public function mount($product = null)
     {
+        $this->previous = url()->previous();
         // fill the form fields if edit mode on 
         if($product) {
             $this->setEditMode($product);
@@ -114,7 +116,7 @@ class Form extends Component
             session()->flash('success', __('products.product_created'));
         }
 
-        return redirect()->route('products.index');
+        return redirect()->to($this->previous);
     }
 
     public function createUnit($product_id, $unit_id)
