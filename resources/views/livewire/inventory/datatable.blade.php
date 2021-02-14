@@ -77,7 +77,7 @@
             <x-custom-modal active="lotModal" header="{{ $selectedProduct->name }}">
 
                 <div class="p-2 bg-smoke-lightest">
-                    <div class="bg-white rounded-t p-2 shadow-md relative">
+                    {{-- <div class="bg-white rounded-t p-2 shadow-md relative">
                         <x-table class="center aligned">
                             <thead>
                                 <x-table-row>
@@ -113,7 +113,9 @@
                             </tbody>
                         </x-table>
                             
-                    </div>
+                    </div> --}}
+                    <x-product-lots :product="$selectedProduct" />
+
                     <div class="p-4 bg-gray-700 text-white rounded-b flex justify-between font-bold shadow-md">
                         <div>
                             {{ __('common.total') }}

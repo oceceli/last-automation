@@ -38,6 +38,10 @@
     @apply bg-white p-4 shadow-md border rounded;
   }
 
+  .responsive-grid-2 {
+    @apply grid md:grid-cols-2 gap-2;
+  }
+
 }
 
 @layer utilities {

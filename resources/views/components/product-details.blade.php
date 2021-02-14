@@ -99,21 +99,12 @@
 
             {{-- <hr> --}}
 
-            {{-- Ölçü birimleri alanı --}}
-            <div class="mb-6 p-4 border-dashed rounded-sm border text-white">
-                <label class="font-bold text-gray-700">{{ __('products.measure_units_that_belongs_to_product') }}</label>
-                <div class="flex flex-col gap-4 pt-4">
-                    @foreach ($product->units as $unit)
-                        <div class="text-sm font-semibold bg-teal-600 p-2 shadow-md rounded-md">
-                            <i class="balance scale icon"></i>
-                            1 {{ $unit->name }} =
-                            <span class="px-1 bg-white text-black rounded-sm shadow">1 {{ $unit->operator ? '*' : '/' }} {{ (float)$unit->factor }} {{ optional($unit->parent)->name }}</span>
-                            @if ($unit->id == $product->baseUnit->id)
-                                <span class="text-xs"> ({{ __('common.base') }})</span>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
+            <div class="responsive-grid-2">
+
+                <x-product-lots :product="$product" />
+
+                <x-product-units :product="$product" />
+                
             </div>
 
         </div>

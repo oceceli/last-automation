@@ -30,7 +30,7 @@
                                 <i class="{{ $this->statusIcon($product)['class'] }}"></i>
                             </x-span>
                         </x-tbody-item>
-                        <x-tbody-item class="center aligned font-bold selectable">{{ $product->prd_code }}</x-tbody-item>
+                        <x-tbody-item class="center aligned font-bold">{{ $product->prd_code }}</x-tbody-item>
                         <x-tbody-item>{{ $product->prd_name }}</x-tbody-item>
                         <x-tbody-item>{{ optional($product->category)->ctg_name }}</x-tbody-item>
                         <x-tbody-item>{{ $product->prd_barcode }}</x-tbody-item>
