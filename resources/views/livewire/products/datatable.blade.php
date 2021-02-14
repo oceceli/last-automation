@@ -47,15 +47,20 @@
                         
 
                         <x-tbody-item class="collapsing">
-                            @can(['create edit products', 'delete products'])
-                                <x-crud-actions edit delete modelName="product" :modelId="$product->id">
-                                    <x-slot name="left">
-                                        <span wire:click="openDetailsModal({{ $product->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                            <i class="link blue eye icon"></i>
-                                        </span>
-                                    </x-slot>
-                                </x-crud-actions>
-                            @endcan
+
+                            <div class="crud-buttons">
+                                @can('view products')
+                                    <x-show-button action="openDetailsModal({{ $product->id }})"></x-show-button>
+                                @endcan
+                                @can('create edit products')
+                                    <x-edit-button route="{{ route('products.edit', ['product' => $product]) }}"></x-edit-button>
+                                @endcan
+                                @can('delete products')
+                                    <x-delete-button action="delete({{ $product->id }})" ></x-delete-button>
+                                @endcan
+                            </div>
+
+
                         </x-tbody-item>
 
                     </x-table-row>
