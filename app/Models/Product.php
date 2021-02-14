@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
-use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -21,7 +20,7 @@ class Product extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    // protected $with = ['units', 'recipe'];  // !! kapattım hata olabilir
+    // protected $with = ['units', 'recipe'];
 
         
     public function category()
@@ -34,40 +33,6 @@ class Product extends Model
         return $this->belongsToMany(DispatchOrder::class);
     }
 
-    
-    // public static function orderByRelationColumn($relation, $direction = 'asc') // !! kullanılmıyor
-    // {
-    //     $subQuery = 
-    //         self::join('categories', 'categories.id', '=', 'products.category_id')
-    //         ->orderBy('categories.name', $direction)
-    //         ->select('products.*');
-    //     return $subQuery;
-    // }
-
-    
-    /**
-     * Validate rules for current model
-     */
-    // public static function rules()
-    // {
-    //     $id = self::getRequestID(); // use for unique keys on update event
-    //     return [
-    //         'data' => [
-    //             'category_id' => 'required|integer',
-    //             'code' => 'required|min:1|unique:products,code',
-    //             'barcode' => 'nullable|numeric|unique:products,barcode',
-    //             'name' => 'required|min:1',
-    //             'shelf_life' => 'required|numeric',
-    //             'producible' => 'required|boolean',
-    //             'is_active' => 'sometimes|nullable|boolean',
-    //             'min_threshold' => 'nullable|numeric',
-    //             'note' => 'nullable',
-    //         ],
-    //         'relation' => [ // use for many to many relationships
-    //             //
-    //         ],
-    //     ];
-    // }
 
     /**
      * Mutator and accessors **************************************
@@ -98,22 +63,13 @@ class Product extends Model
     }
 
 
-
-    /**
-     * A bridge for the recipe ingredients 
-     */
-    // public function getIngredientsAttribute()
+    // public function getBaseUnit() // !! kullanılıyor olabilir
     // {
-    //     return $this->recipe->ingredients;
+    //     return $this->units->where('parent_id', 0)->first();
     // }
-
-    public function getBaseUnit()
-    {
-        return $this->units->where('parent_id', 0)->first();
-    }
     public function getBaseUnitAttribute()
     {
-        return $this->getBaseUnit();
+        return $this->units->where('parent_id', 0)->first();
     }
 
 

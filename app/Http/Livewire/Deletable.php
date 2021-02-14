@@ -20,10 +20,13 @@ trait Deletable
     {
         if(!$this->subjectId) return;
 
-        $this->model::findAndDelete($this->subjectId);
+        if($this->model::findAndDelete($this->subjectId)) {
+            $this->emit('toast', '', __('common.context_deleted'), 'info');
+        } else {
+            $this->emit('toast', '', __('common.error.body'), 'error');
+        }
+        
         $this->reset('subjectId', 'deleteModal');
-
-        $this->emit('toast', '', __('common.context_deleted'), 'info');
     }
 
 }
