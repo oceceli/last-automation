@@ -25,7 +25,7 @@ class Form extends Component
      * Recipe model attributes *******************************
      */
     public $product_id;
-    public $code;
+    public $rcp_code;
     public $backupCode; 
 
     public $oldProductId;
@@ -98,7 +98,7 @@ class Form extends Component
         $this->lock();
 
         // equalize code field with recipe code which comes from database 
-        $this->code = $recipe->code;
+        $this->rcp_code = $recipe->rcp_code;
         
         // if recipe not have any ingredients, return 
         if($recipe->ingredients->isEmpty()) return;
@@ -120,7 +120,7 @@ class Form extends Component
      */
     private function isChangesFoundOnForm()
     {
-        return $this->isBackupExists() && ($this->backupCode != $this->code || $this->backupCards != $this->cards);
+        return $this->isBackupExists() && ($this->backupCode != $this->rcp_code || $this->backupCards != $this->cards);
     }
 
     
@@ -236,7 +236,7 @@ class Form extends Component
      */
     public function restoreForm()
     {
-        $this->code = $this->backupCode;
+        $this->rcp_code = $this->backupCode;
         $this->cards = $this->backupCards;
     }
 
@@ -304,7 +304,7 @@ class Form extends Component
     private function backupForm()
     {
         $this->backupCards = $this->cards;
-        $this->backupCode = $this->code;
+        $this->backupCode = $this->rcp_code;
     }
 
 
@@ -497,20 +497,20 @@ class Form extends Component
      */
     public function suggestCode()
     {
-        $string = $this->code;
+        $string = $this->rcp_code;
         $randomString = strtolower(Str::random(8));
 
         if($this->selectedProduct) {
             if($string) {
                 $pos = strpos($string, '_');
                 if(! $pos) {
-                    $this->code = $string . '_' . $this->selectedProduct->prd_code;
+                    $this->rcp_code = $string . '_' . $this->selectedProduct->prd_code;
                 } else {
                     $string = substr($string, 0, $pos);
-                    $this->code = $string . '_' . $randomString;
+                    $this->rcp_code = $string . '_' . $randomString;
                 }
             } else {
-                $this->code = 'RCT_' . $this->selectedProduct->prd_code;
+                $this->rcp_code = 'RCT_' . $this->selectedProduct->prd_code;
             }
         }
     }

@@ -16,8 +16,8 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->string('code')->unique();
-            // $table->softDeletes();
+            $table->string('rcp_code')->unique();
+
             $table->timestamps();
         });
     }

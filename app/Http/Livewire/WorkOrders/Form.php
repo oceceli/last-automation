@@ -67,6 +67,8 @@ class Form extends Component
 
         $this->reset();
         $this->selectedProduct = Product::find($id); // !!! get it from getProductsProperty
+
+        $this->unit_id = $this->selectedProduct->baseUnit->id;
         $this->emit('woProductChanged'); // fill the units
 
         $this->guessFields($this->selectedProduct);

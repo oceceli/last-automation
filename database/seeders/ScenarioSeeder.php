@@ -143,15 +143,15 @@ class ScenarioSeeder extends Seeder
     }
 
 
-    private function cProduct($categoryId, $unitName, $name, $code, $barcode = null, $producible = false)
+    private function cProduct($categoryId, $unitName, $prd_name, $prd_code, $prd_barcode = null, $prd_producible = false)
     {
         $product = Product::create([
             'category_id' => $categoryId,
-            'prd_code' => $code, 
-            'prd_barcode' => $barcode, 
-            'prd_name' => $name, 
+            'prd_code' => $prd_code, 
+            'prd_barcode' => $prd_barcode, 
+            'prd_name' => $prd_name, 
             'prd_shelf_life' => 2,
-            'prd_producible' => $producible, 
+            'prd_producible' => $prd_producible, 
             'prd_min_threshold' => 50,
         ]);
         $product->units()->create([
@@ -164,11 +164,11 @@ class ScenarioSeeder extends Seeder
         return $product;
     }
 
-    private function cRecipe($productId, $code, array $ingredients = [])
+    private function cRecipe($productId, $rcp_code, array $ingredients = [])
     {
         $recipe = Recipe::create([
             'product_id' => $productId,
-            'code' => $code,
+            'rcp_code' => $rcp_code,
         ]);
         $recipe->ingredients()->sync($ingredients);
     }

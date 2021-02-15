@@ -11,8 +11,8 @@
                 @foreach ($listings as $item)
                     <x-custom-list wire:key="{{ $loop->index }}">
                         <div class="flex items-center gap-1">
-                            <div>{{ $item['ingredient']->name }}</div>
-                            <span class="text-xs hidden md:block"> ({{ $item['ingredient']->code }})</span> 
+                            <div>{{ $item['ingredient']->prd_name }}</div>
+                            <span class="text-xs hidden md:block"> ({{ $item['ingredient']->prd_code }})</span> 
                         </div>
                         <div>
                             @if ($item['ingredient']->pivot->literal) <span class="text-xs text-ease-green">{{ __('common.net') }}</span>

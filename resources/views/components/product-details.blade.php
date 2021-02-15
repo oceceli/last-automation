@@ -30,7 +30,7 @@
                     @if ($product->prd_producible)
                         @if ($product->recipe)
                         <div data-tooltip="{{ __('recipes.see_recipe') }}" data-variation="mini">
-                            <a href="{{ route('recipes.show', ['recipe' => $product->recipe->id]) }}" class="pt-2 font-semibold text-sm text-green-600" >{{ $product->recipe->code }}</a>
+                            <a href="{{ route('recipes.show', ['recipe' => $product->recipe->id]) }}" class="pt-2 font-semibold text-sm text-green-600" >{{ $product->recipe->rcp_code }}</a>
                             <i class="mortar pestle icon"></i>
                         </div>
                         @else
