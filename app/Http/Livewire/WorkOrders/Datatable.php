@@ -10,6 +10,9 @@ class Datatable extends Component
 {
     use SmartTable;
 
+    public $detailsModal = false;
+    public $selectedWorkOrder;
+
     protected $alsoSearch = [
         'product.name',
     ];
@@ -18,5 +21,11 @@ class Datatable extends Component
     protected $view = 'livewire.work-orders.datatable';
 
 
+
+    public function openDetailsModal($workOrderId)
+    {
+        $this->detailsModal = true;
+        $this->selectedWorkOrder = WorkOrder::find($workOrderId);
+    }
 
 }

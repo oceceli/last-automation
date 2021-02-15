@@ -52,11 +52,11 @@ class ProductController extends Controller
         return view('web.sections.products.create');
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
         if(auth()->user()->cannot('create update products')) abort(403);
         
-        $product = Product::find($id);
+        // $product = Product::find(Product $product);
         return view('web.sections.products.edit', compact('product'));
     }
 

@@ -17,18 +17,18 @@ class CreateWorkOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('unit_id');
-            $table->string('lot_no');
-            $table->integer('amount');
-            $table->dateTime('datetime');
-            $table->string('code');
-            $table->integer('queue');
+            $table->string('wo_lot_no');
+            $table->integer('wo_amount');
+            $table->dateTime('wo_datetime');
+            $table->string('wo_code');
+            $table->integer('wo_queue');
             
-            $table->string('status')->default('active');
-            $table->dateTime('started_at')->nullable();
-            $table->dateTime('finalized_at')->nullable();
+            $table->string('wo_status')->default('active');
+            $table->dateTime('wo_started_at')->nullable();
+            $table->dateTime('wo_finalized_at')->nullable();
 
-            $table->string('note')->nullable();
-            // $table->softDeletes();
+            $table->string('wo_note')->nullable();
+
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class Details extends Component
     public $productionResults;
 
     // attribute
-    public $status;
+    public $wo_status;
 
     public $statusColor;
 
@@ -24,7 +24,7 @@ class Details extends Component
         $this->workOrder = $workOrder;
         $this->productionResults = $this->workOrder->getProductionResults();
 
-        $this->status = $workOrder->isActive();
+        $this->wo_status = $workOrder->isActive();
         $this->statusColor = $workOrder->statusColor;
         // $this->product = $workOrder->product;
         // $this->unit = Unit::find($workOrder->unit_id);

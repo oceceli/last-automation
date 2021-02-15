@@ -21,7 +21,7 @@
 
     <br>
     @if($oldProductId)
-    önceki {{ \App\Models\Product::find($oldProductId)->code }}
+    önceki {{ \App\Models\Product::find($oldProductId)->prd_code }}
     @endif --}}
 
     

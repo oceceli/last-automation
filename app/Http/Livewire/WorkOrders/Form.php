@@ -19,14 +19,14 @@ class Form extends Component
 
     // workorder attributes
     public $product_id;
-    public $lot_no;
-    public $amount;
     public $unit_id;
-    public $datetime;
-    public $code;
-    public $queue;
-    public $status = 'active';
-    public $note;
+    public $wo_code;
+    public $wo_lot_no;
+    public $wo_amount;
+    public $wo_datetime;
+    public $wo_queue;
+    public $wo_status = 'active';
+    public $wo_note;
 
     
     // comes from dropdown
@@ -43,13 +43,13 @@ class Form extends Component
     protected $rules = [
         'product_id' => 'required|min:1',
         'unit_id' => 'required|min:1',
-        'code' => 'required|integer|min:0', // iş emri no
-        'lot_no' => 'required',
-        'amount' => 'required|numeric|min:0.1',
-        'datetime' => 'required|date',
-        'queue' => 'required|int|min:0',
-        'status' => 'required|max:15',
-        'note' => 'nullable',
+        'wo_code' => 'required|integer|min:0', // iş emri no
+        'wo_lot_no' => 'required',
+        'wo_amount' => 'required|numeric|min:0.1',
+        'wo_datetime' => 'required|date',
+        'wo_queue' => 'required|int|min:0',
+        'wo_status' => 'required|max:15',
+        'wo_note' => 'nullable',
     ];
 
     public function mount($workOrder = null) 
@@ -57,7 +57,7 @@ class Form extends Component
         if($workOrder) {
             $this->setEditMode($workOrder);
         } else {
-            $this->datetime = Carbon::tomorrow()->format('d.m.Y');
+            $this->wo_datetime = Carbon::tomorrow()->format('d.m.Y');
         }
     }
 
@@ -142,14 +142,14 @@ class Form extends Component
         $this->selectedProduct = $workOrder->product;
 
         $this->product_id = $workOrder->product_id;
-        $this->lot_no = $workOrder->lot_no;
-        $this->amount = $workOrder->amount;
-        $this->datetime = $workOrder->datetime;
-        $this->code = $workOrder->code;
-        $this->queue = $workOrder->queue;
+        $this->wo_lot_no = $workOrder->wo_lot_no;
+        $this->wo_amount = $workOrder->wo_amount;
+        $this->wo_datetime = $workOrder->wo_datetime;
+        $this->wo_code = $workOrder->wo_code;
+        $this->wo_queue = $workOrder->wo_queue;
         $this->unit_id = $workOrder->unit_id;
-        $this->status = $workOrder->status;
-        $this->note = $workOrder->note;
+        $this->wo_status = $workOrder->wo_status;
+        $this->wo_note = $workOrder->wo_note;
     }
 
     public function suspend()
@@ -190,20 +190,20 @@ class Form extends Component
         $globalWO = WorkOrder::latest()->first();
 
         if($latestWO) {
-            if(is_numeric($latestWO->lot_no)) {
-                $this->lot_no = $latestWO->lot_no + 1;
+            if(is_numeric($latestWO->wo_lot_no)) {
+                $this->wo_lot_no = $latestWO->wo_lot_no + 1;
             } else {
-                $this->lot_no = substr($latestWO->lot_no, 0, (strlen($latestWO->lot_no) - 2));
+                $this->wo_lot_no = substr($latestWO->wo_lot_no, 0, (strlen($latestWO->wo_lot_no) - 2));
             }
     
-            $this->amount = $latestWO->amount;
+            $this->wo_amount = $latestWO->wo_amount;
             $this->unit_id = $latestWO->unit_id;
         }
         
-        $this->datetime = now();
+        $this->wo_datetime = now();
         if($globalWO) {
-            $this->queue = $globalWO->queue + 1;
-            $this->code = $globalWO->code;
+            $this->wo_queue = $globalWO->wo_queue + 1;
+            $this->wo_code = $globalWO->wo_code;
         }
     }
 

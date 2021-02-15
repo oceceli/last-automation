@@ -20,11 +20,11 @@ class DispatchOrderController extends Controller
         return view('web.sections.dispatchorders.create.create');
     }
 
-    public function edit($dispatchOrder)
+    public function edit(DispatchOrder $dispatchOrder)
     {
         if(auth()->user()->cannot('create update dispatchorders')) abort(403);
 
-        $dispatchOrder = DispatchOrder::findOrFail($dispatchOrder);
+        // $dispatchOrder = DispatchOrder::findOrFail($dispatchOrder);
         return view('web.sections.dispatchorders.edit', compact('dispatchOrder'));
     }
 

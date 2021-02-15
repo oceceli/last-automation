@@ -42,7 +42,7 @@ trait ReserveSourcesModal
     public function startProcess($id)
     {
         $this->woStartData = $this->workOrders->find($id);
-        $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->amount, $this->woStartData->unit_id);
+        $this->lotCards = $this->woStartData->product->recipe->calculateNecessaryIngredients($this->woStartData->wo_amount, $this->woStartData->unit_id);
         
         $this->reserveSourcesModal = true;
     }

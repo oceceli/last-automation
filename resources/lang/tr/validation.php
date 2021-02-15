@@ -218,6 +218,16 @@ return [
         // categories
         'ctg_name' => 'Kategori adı',
 
+
+        // workorders
+        'wo_code' => 'İş emri no',
+        'wo_lot_no' => 'Lot no',
+        'wo_amount' => 'Miktar',
+        'wo_datetime' => 'Planlanan tarih',
+        'wo_queue' => 'Şarj no',
+        'wo_status' => 'Durum',
+        'wo_note' => 'Not',
+
         
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',

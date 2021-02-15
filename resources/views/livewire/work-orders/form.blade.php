@@ -45,21 +45,21 @@
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
                             value="id" text="prd_code,prd_name" label="products.product" placeholder="{{ __('units.unit') }}" />
                     @endif
-                    <x-input model="lot_no" label="workorders.lot_no" placeholder="workorders.lot_no" class="required field" />
+                    <x-input model="wo_lot_no" label="validation.attributes.wo_lot_no" placeholder="validation.attributes.wo_lot_no" class="required field" />
                     @if ($editMode)
-                    <x-dropdown iModel="amount" iPlaceholder="recipes.amount" label="workorders.amount" class="required"
+                    <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="validation.attributes.wo_amount" class="required"
                         model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
                         value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
                     @else 
-                    <x-dropdown iModel="amount" iPlaceholder="recipes.amount" label="workorders.amount" class="required"
+                    <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="validation.attributes.wo_amount" class="required"
                         initnone model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
                         value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
                     @endif
-                    <x-datepicker model="datetime" initialDate="{{ $datetime }}" label="workorders.datetime"   class="required field" />
-                    <x-input model="code" label="workorders.code" placeholder="workorders.code" class="required field" />                
-                    <x-input model="queue" label="workorders.queue" placeholder="workorders.queue" class="required field" /> 
+                    <x-datepicker model="wo_datetime" initialDate="{{ $wo_datetime }}" label="validation.attributes.wo_datetime"   class="required field" />
+                    <x-input model="wo_code" label="{{ __('validation.attributes.wo_code') }}" placeholder="{{ __('validation.attributes.wo_code') }}" class="required field" />                
+                    <x-input model="wo_queue" label="{{ __('validation.attributes.wo_queue') }}" placeholder="{{ __('validation.attributes.wo_queue') }}" class="required field" /> 
                 </x-slot>
         
         
@@ -83,7 +83,7 @@
                                     </div>
                                 </x-placeholder>
                             @else
-                                <x-necessary-ingredients :product="$selectedProduct" :amount="$amount" :unitId="$unit_id" noHeader>
+                                <x-necessary-ingredients :product="$selectedProduct" :amount="$wo_amount" :unitId="$unit_id" noHeader>
                                     {{-- <x-slot name="actions">
                                         <button wire:click.prevent="activatePreferStockForm()" class="ui primary tiny button">
                                             {{ __('workorders.specify_sources') }}
@@ -111,8 +111,8 @@
                             <span class="cursor-pointer pt-1 text-sm font-bold" @click="addNote = true">{{ __('common.add_note') }}</span>
                         </div>
                         <div x-show="addNote" class="field">
-                            <label><i class="write icon"></i>{{ __('common.note' )}}</label>
-                            <textarea wire:model.lazy="note" rows="6"></textarea>
+                            <label><i class="write icon"></i>{{ __('validation.attributes.wo_note' )}}</label>
+                            <textarea wire:model.lazy="wo_note" rows="6"></textarea>
                         </div>
                     </div>
                 </x-slot>

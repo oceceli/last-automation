@@ -51,11 +51,11 @@ class RecipeController extends Controller
         return view('web.sections.recipes.show', compact('recipe'));
     }
 
-    public function edit($id)
+    public function edit(Recipe $recipe)
     {
         if(auth()->user()->cannot('create update recipes')) abort(403);
         
-        $recipe = Recipe::find($id);
+        // $recipe = Recipe::find(Recipe $recipe);
         return view('web.sections.recipes.edit', compact('recipe'));
     }
 }

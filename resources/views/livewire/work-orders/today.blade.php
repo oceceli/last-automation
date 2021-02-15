@@ -33,12 +33,12 @@
 
                 <thead>
                     <tr>
-                        <th>{{ __('workorders.wo_status') }}</th>
-                        <th>{{ __('products.name') }}</th>
-                        <th>{{ __('workorders.amount') }}</th>
-                        <th>{{ __('workorders.lot_no') }}</th>
-                        <th>{{ __('workorders.queue') }}</th>
-                        <th>{{ __('workorders.code') }}</th>
+                        <th>{{ __('validation.attributes.wo_status') }}</th>
+                        <th>{{ __('validation.attributes.prd_name') }}</th>
+                        <th>{{ __('validation.attributes.wo_amount') }}</th>
+                        <th>{{ __('validation.attributes.wo_lot_no') }}</th>
+                        <th>{{ __('validation.attributes.wo_queue') }}</th>
+                        <th>{{ __('validation.attributes.wo_code') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -54,14 +54,14 @@
                                     </td>
                                     <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
-                                        <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
+                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
                                             <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
                                         @endif
                                     </td>
-                                    <td class="">{{ $workOrder->lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->code }}</td>
+                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
                                     <td class="collapsing selectable">
                                         <span class="px-2 shadow rounded bg-white" data-tooltip="{{ __('common.see_details') }}" data-variation="mini" data-position="top right">
                                             <a class="text-teal-600 text-lg" href="{{ route('work-orders.show', ['work_order' => $workOrder]) }}">
@@ -86,14 +86,14 @@
                                     </td>
                                     <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
-                                        <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
+                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
                                             <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
                                         @endif
                                     </td>
-                                    <td class="">{{ $workOrder->lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->code }}</td>
+                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
                                     <td class="collapsing">
                                         <x-crud-actions show edit gray modelName="work-order" :modelId="$workOrder->id">
                                             <div wire:key="showReserved{{ $workOrder->id }}" wire:click.prevent="showReservedSources({{ $workOrder->id }})" data-tooltip="{{ __('workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
@@ -115,14 +115,14 @@
                                     </td>
                                     <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
-                                        <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
+                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
                                             <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
                                         @endif
                                     </td>
-                                    <td class="">{{ $workOrder->lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->code }}</td>
+                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
                                     <td class="collapsing">
                                         <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
                                             <div data-tooltip="{{ __('workorders.wo_start') }}" data-variation="mini">
@@ -141,14 +141,14 @@
                                     </td>
                                     <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
-                                        <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
+                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
                                             <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
                                         @endif
                                     </td>
-                                    <td class="">{{ $workOrder->lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->code }}</td>
+                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
+                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
                                     <td class="collapsing">
                                         <x-crud-actions show edit delete modelName="work-order" gray :modelId="$workOrder->id" />
                                     </td>

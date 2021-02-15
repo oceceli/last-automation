@@ -106,7 +106,7 @@ trait FinalizeProduction
     
     public function getPlannedBaseAmountAttribute()
     {        
-        return (float)Conversions::toBase($this->unit, $this->amount)['amount'];
+        return (float)Conversions::toBase($this->unit, $this->wo_amount)['amount'];
     }
 
 }

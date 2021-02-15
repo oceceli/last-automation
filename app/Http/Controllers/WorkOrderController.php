@@ -44,11 +44,10 @@ class WorkOrderController extends Controller
         return view('web.sections.workorders.show.index', compact('workOrder'));
     }
 
-    public function edit($id)
+    public function edit(WorkOrder $workOrder)
     {
         if(auth()->user()->cannot('create update workorders')) abort(403);
-
-        $workOrder = WorkOrder::find($id);
+        // $workOrder = WorkOrder::findOrFail($workOrder);
         return view('web.sections.workorders.edit', compact('workOrder'));
     }
 

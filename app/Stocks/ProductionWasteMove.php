@@ -15,7 +15,7 @@ class ProductionWasteMove extends Moves
         $this->productId = $workOrder->product_id;
         $this->type = 'production_waste';
         $this->direction = false;
-        $this->lotNumber = $workOrder->lot_no;
+        $this->lotNumber = $workOrder->wo_lot_no;
 
         $this->amount = $amount;
         $this->datetime = now();

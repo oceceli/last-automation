@@ -16,7 +16,7 @@ class ProductionTotalMove extends Moves
         $this->productId = $workOrder->product_id;
         $this->type = 'production_total';
         $this->direction = true;
-        $this->lotNumber = $workOrder->lot_no;
+        $this->lotNumber = $workOrder->wo_lot_no;
 
         $this->amount = $amount;
         $this->datetime = now();

@@ -6,11 +6,11 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2">
         <div class="border-b md:border-b-0 md:border-r p-3 flex flex-col gap-3">
-            <x-label-value label="{{ __('workorders.lot_no') }}" value="{{ $workOrder->lot_no }}"                              hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.lot_no') }}" value="{{ $workOrder->wo_lot_no }}"                              hover="{{ $statusColor }}" />
             <x-label-value label="{{ __('modelnames.product') }}" value="{{ $workOrder->product->prd_name }}"                               hover="{{ $statusColor }}" />
             <x-label-value label="{{ __('products.code') }}" value="{{ $workOrder->product->prd_code }}"                           hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('workorders.amount') }}" value="{{ $workOrder->amount }} {{ $workOrder->unit->name }}" hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('workorders.queue') }}" value="{{ $workOrder->queue }}"                                hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.amount') }}" value="{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}" hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('workorders.queue') }}" value="{{ $workOrder->wo_queue }}"                                hover="{{ $statusColor }}" />
         </div>
 
         <div class="p-3 m-4 rounded shadow-md border leading-8 cursor-default">
@@ -73,10 +73,10 @@
     </div>
 
     
-    @if ($workOrder->note)
+    @if ($workOrder->wo_note)
         <div class="p-3 border-t shadow rounded-b-md">
             <i class="{{ $statusColor }} comment outline alternate icon"></i>
-            <i class="text-{{ $statusColor }}-700">{{ $workOrder->note }}</i>
+            <i class="text-{{ $statusColor }}-700">{{ $workOrder->wo_note }}</i>
         </div>
     @endif
 
