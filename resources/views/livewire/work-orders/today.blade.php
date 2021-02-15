@@ -46,9 +46,9 @@
                 <tbody>
                     @forelse ($workOrders as $key => $workOrder)
 
-                            @if ($workOrder->isFinalized())
+                            @if ($workOrder->isCompleted())
                                 <tr class="left green marked text-green-600 bg-teal-50 ">
-                                    <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->finalizedAt() }}" 
+                                    <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
                                             data-variation="mini" data-position="top left">
                                         <i class="large green checkmark icon"></i>
                                     </td>

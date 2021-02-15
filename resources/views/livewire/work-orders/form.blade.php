@@ -9,7 +9,7 @@
                                 <button wire:key="unsuspend" wire:click.prevent="unsuspend()" class="ui mini basic button" data-tooltip="{{ __('common.suspended') }}" data-variation="mini" data-position="bottom right">
                                     <i class="gray circle icon"></i>
                                 </button>
-                            @elseif($workOrder->isFinalized())
+                            @elseif($workOrder->isCompleted())
                                 <button class="ui mini basic button" data-tooltip="{{ __('workorders.production_is_completed') }}" data-variation="mini" data-position="bottom right">
                                     <i class="green checkmark icon"></i>
                                 </button>
@@ -126,7 +126,7 @@
     @if ($editMode && $workOrder)
         <div x-data="{deleteModal: @entangle('deleteModal')}" x-cloak>
             <x-confirm atConfirm="confirmDelete()" active="deleteModal" color="red" confirm="{{ __('common.delete') }}" deny="{{ __('common.cancel') }}">
-                @if ($workOrder->isFinalized())
+                @if ($workOrder->isCompleted())
                     <div class="pb-3"><i class="large red exclamation icon"></i></div>
                     <div>{{ __('common.are_you_sure_you_want_to_delete') }}</div>
                     <div class="text-xs text-ease-red pt-5">{{ __('workorders.all_stock_moves_will_be_deleted_which_is_added_by_this_wo') }}</div>

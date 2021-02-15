@@ -9,6 +9,14 @@ return [
     'wo_inactive_icon' => 'grey ban icon',
     // icons ******************* 
 
+    // states
+    'approved' => 'Onaylandı',
+    'completed' => 'Tamamlandı',
+    'in_progress' => 'Üretim sürüyor',
+    'active' => 'Aktif',
+    'suspended' => 'Askıya alındı',
+
+
     // details
     'production_completed' => 'Üretim tamamlandı',
     'belonged_workorder' => 'Ait olduğu iş emri',

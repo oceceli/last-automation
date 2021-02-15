@@ -33,7 +33,7 @@ trait FinalizedProduction
      */
     public function getProductionResults()
     {
-        if($this->isFinalized()) {
+        if($this->isCompleted()) { // !! completed mi approved mi olacak?
             return [
                 'gross' => $this->getProductionGross(),
                 'waste' => $this->getProductionWaste(),

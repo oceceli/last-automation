@@ -227,6 +227,8 @@ return [
         'wo_queue' => 'Şarj no',
         'wo_status' => 'Durum',
         'wo_note' => 'Not',
+        'wo_started_at' => 'Başlama zamanı',
+        'wo_completed_at' => 'Bitiş zamanı',
 
         
         // reservedstocks

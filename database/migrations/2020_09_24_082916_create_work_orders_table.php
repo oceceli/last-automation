@@ -25,7 +25,7 @@ class CreateWorkOrdersTable extends Migration
             
             $table->string('wo_status')->default('active');
             $table->dateTime('wo_started_at')->nullable();
-            $table->dateTime('wo_finalized_at')->nullable();
+            $table->dateTime('wo_completed_at')->nullable();
 
             $table->string('wo_note')->nullable();
 

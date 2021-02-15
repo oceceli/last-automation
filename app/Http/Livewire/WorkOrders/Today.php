@@ -6,6 +6,7 @@ use App\Http\Livewire\Traits\WorkOrders\FinalizeModal;
 use App\Http\Livewire\Traits\WorkOrders\ReservedSourcesModal;
 use App\Http\Livewire\Traits\WorkOrders\ReserveSourcesModal;
 use App\Models\WorkOrder;
+use App\Services\WorkOrder\WorkOrderService;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -26,7 +27,7 @@ class Today extends Component
     public function mount()
     {
         $this->todayDate = Carbon::now()->format('d.m.Y - D');
-        $this->workOrders = WorkOrder::getTodaysList();
+        $this->workOrders = WorkOrderService::getTodaysList();
     }
 
     
@@ -36,14 +37,14 @@ class Today extends Component
      */
     public function listenWorkOrderCreated()
     {
-        $this->workOrders = WorkOrder::getTodaysList();
+        $this->workOrders = WorkOrderService::getTodaysList();
     }
 
 
     
     public function getInProgressProperty()
     {
-        return WorkOrder::inProgressCurrently();
+        return WorkOrderService::inProgressCurrently();
     }
 
 
@@ -51,7 +52,7 @@ class Today extends Component
     private function reFetchTable() // ?? yerini refreshtable'a bırakabilir mi?
     {
         $this->reset('production_total', 'production_waste', 'unit_id', 'selectedUnit', 'finalizeModal');
-        $this->workOrders = WorkOrder::getTodaysList();
+        $this->workOrders = WorkOrderService::getTodaysList();
     }
 
 

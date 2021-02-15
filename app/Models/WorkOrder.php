@@ -10,6 +10,7 @@ use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Searchable;
 use App\Models\Traits\WorkOrder\FinalizedProduction;
 use App\Models\Traits\WorkOrder\FinalizeProduction;
+use App\Models\Traits\WorkOrder\WorkOrderStates;
 use Carbon\Carbon;
 
 class WorkOrder extends Model implements CanReserveStocks
@@ -17,31 +18,18 @@ class WorkOrder extends Model implements CanReserveStocks
     use HasFactory;
     use ModelHelpers;
     use Searchable;
+
+    use WorkOrderStates;
     use FinalizeProduction;
     use FinalizedProduction;
 
     protected $guarded = [];
 
-    /**
-     * Eagerload relationships when retrieving the model
-     */
     protected $with = ['product'];
 
-    protected $casts = ['wo_datetime' => 'datetime', 'wo_started_at' => 'datetime', 'wo_finalized_at' => 'datetime'];
+    protected $casts = ['wo_datetime' => 'datetime', 'wo_started_at' => 'datetime', 'wo_completed_at' => 'datetime'];
 
 
-    // @override
-    // public function delete()
-    // {
-    //     if($this->isInProgress()) return;
-
-    //     $this->reservedStocks()->delete(); // !!! silme kuralları observe'e eklenecek
-        
-    //     if($this->isFinalized()) {
-    //         $this->stockMoves()->delete();
-    //     }
-    //     parent::delete();
-    // }
 
 
     public function stockMoves()
@@ -78,59 +66,19 @@ class WorkOrder extends Model implements CanReserveStocks
     }
 
 
-    public function setWoDatetimeAttribute($value) 
-    {
-        $this->attributes['wo_datetime'] = Carbon::parse($value)->format('d.m.Y');
-    }
+    // public function setWoDatetimeAttribute($value) 
+    // {
+    //     $this->attributes['wo_datetime'] = Carbon::parse($value)->format('d.m.Y');
+    // }
+
+    // public function getWoDatetimeAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('d.m.Y');
+    // }
 
 
+    
 
-    public function getWoDatetimeAttribute($value)
-    {
-        return Carbon::parse($value)->format('d.m.Y');
-    }
-
-
-
-    /**
-     * $workOrder->statusColor
-     */
-    public function getStatusColorAttribute()
-    {
-        return [
-            'active' => 'blue',
-            'suspended' => 'gray',
-            'in_progress' => 'yellow',
-            'completed' => 'green',
-        ][$this->wo_status] ?? null;
-    }
-
-
-    /**
-     * Return work order finalized status
-     */
-    public function isFinalized()
-    {
-        return $this->wo_status === 'completed' && $this->wo_finalized_at;
-    }
-
-
-    /**
-     * Return is work order active
-     */
-    public function isActive()
-    {
-        return $this->wo_status === 'active';
-    }
-
-
-    /**
-     * Return is work order suspended
-     */
-    public function isSuspended()
-    {
-        return $this->wo_status === 'suspended';
-    }
 
 
     /**
@@ -138,7 +86,7 @@ class WorkOrder extends Model implements CanReserveStocks
      */
     public function suspend()
     {
-        if( ! $this->isFinalized() && ! $this->isInProgress() && $this->update(['wo_status' => 'suspended'])) 
+        if( ! $this->isCompleted() && ! $this->isInProgress() && $this->update(['wo_status' => 'suspended'])) 
             return true;
     }
 
@@ -152,16 +100,6 @@ class WorkOrder extends Model implements CanReserveStocks
             return true;
     }
     
-
-
-    /**
-     * Return is progress started
-     */
-    public function isInProgress() : bool
-    {
-        return $this->wo_status === 'in_progress' && isset($this->wo_started_at);
-    }
-
 
 
     /**
@@ -194,7 +132,7 @@ class WorkOrder extends Model implements CanReserveStocks
     public function markAsFinalized()
     {
         if($this->isInProgress())
-            $this->update(['wo_finalized_at' => now(), 'wo_status' => 'completed']);
+            $this->update(['wo_completed_at' => now(), 'wo_status' => 'completed']);
             // $this->update(['status' => 'completed']);
     }
 
@@ -212,13 +150,12 @@ class WorkOrder extends Model implements CanReserveStocks
     /**
      * Return finalized_at column for humans
      */
-    public function finalizedAt()
+    public function completedAt()
     {
-        return $this->isFinalized()
-            ? $this->wo_finalized_at->diffForHumans() // ???
+        return $this->isCompleted()
+            ? $this->wo_completed_at->diffForHumans() // ???
             : false;
     }
-
 
 
     public function isToday() // ??? patlamış olabilir
@@ -226,31 +163,6 @@ class WorkOrder extends Model implements CanReserveStocks
         return $this->wo_datetime == Carbon::today()->format('d.m.Y');
     }
 
-
-
-    /**
-     * Get work-orders of today
-     */
-    public static function getTodaysList()
-    {
-        return self::where('wo_datetime', Carbon::today()->format('d.m.Y'))
-            ->orWhere('wo_status', 'in_progress')
-            ->orderBy('wo_queue', 'asc')
-            ->get();
-    }
-
-    // public static function reservedLots()
-    // {
-    //     // todo: işi başlatmadan önce ayırtılmış lotları çek 
-    //     StockMove::where()
-    // }
-
-
-
-    public static function inProgressCurrently()
-    {
-        return self::where('wo_status', 'in_progress')->first();
-    }
 
     
     public function unitIsAlreadyBase()
