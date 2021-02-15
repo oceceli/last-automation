@@ -504,13 +504,13 @@ class Form extends Component
             if($string) {
                 $pos = strpos($string, '_');
                 if(! $pos) {
-                    $this->code = $string . '_' . $this->selectedProduct->code;
+                    $this->code = $string . '_' . $this->selectedProduct->prd_code;
                 } else {
                     $string = substr($string, 0, $pos);
                     $this->code = $string . '_' . $randomString;
                 }
             } else {
-                $this->code = 'RCT_' . $this->selectedProduct->code;
+                $this->code = 'RCT_' . $this->selectedProduct->prd_code;
             }
         }
     }

@@ -1,6 +1,6 @@
 @if ($reserveSourcesModal)
         <div x-data="{reserveSourcesModal: @entangle('reserveSourcesModal')}">
-            <x-custom-modal active="reserveSourcesModal" header="{{ __('workorders.reserve_sources_for_product', ['product' => $woStartData->product->name]) }}">
+            <x-custom-modal active="reserveSourcesModal" header="{{ __('workorders.reserve_sources_for_product', ['product' => $woStartData->product->prd_name]) }}">
 
                 <div class="w-full">
 

@@ -64,9 +64,9 @@ class Unit extends Model
         } elseif($this->hasChildren()) {
             return ['message' => '!!! (model) Bu birime bağlı birimler olduğu için silinemez!', 'type' => 'error'];
         } elseif($this->isUsedInRecipe()) {
-            return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
+            return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
         } elseif($this->isUsedInWorkOrder()) {
-            return ['message' => '!!! (model) '. $this->product->name .' ürününe ait bu birim bir/birkaç iş emrinde kullanıldığı için silinemez!', 'type' => 'error'];
+            return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç iş emrinde kullanıldığı için silinemez!', 'type' => 'error'];
         }
         else {
             parent::delete();

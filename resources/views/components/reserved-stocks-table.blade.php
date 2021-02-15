@@ -16,8 +16,8 @@
                 <x-table-row class="text-ease hover:bg-cool-gray-100">
                     @if (!$noProduct)
                         <x-tbody-item>
-                            {{ $reservation->product->code }}
-                            <span class="text-xs">({{ $reservation->product->name }})</span>
+                            {{ $reservation->product->prd_code }}
+                            <span class="text-xs">({{ $reservation->product->prd_name }})</span>
                         </x-tbody-item>
                     @endif
                     <x-tbody-item>{{ $reservation->reserved_lot }}</x-tbody-item>

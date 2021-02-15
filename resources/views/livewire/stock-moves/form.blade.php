@@ -29,7 +29,7 @@
                             <div class="flex-1 pt-3 px-5">
                                 <div class="four fields">
                                     <x-dropdown placeholder="{{ __('modelnames.product') }}" sClass="search" noErrors
-                                                model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="name" :key="'selectProduct'.$key">
+                                                model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="prd_code,prd_name" :key="'selectProduct'.$key">
                                     </x-dropdown>
                                     <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('stockmoves.amount') }}" iType="number" sClass="basic" 
                                                 initnone triggerOnEvent="sm_product_selected{{$key}}" model="cards.{{ $key }}.unit_id" dataSource="units.{{ $key }}"

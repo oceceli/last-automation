@@ -14,7 +14,7 @@
                     <x-dropdown label="{{ __('modelnames.product') }}" noErrors
                         placeholder="{{ __('common.dropdown_placeholder') }}" model="product_id"
                         dataSourceFunction="getProductsProperty" sId="selectProduct" sClass="search" value="id"
-                        text="name">
+                        text="prd_code,prd_name">
                     </x-dropdown>
                 </div>
             </div>

@@ -7,8 +7,8 @@
                     icon
                 </x-tbody-item>
                 <x-tbody-item class="collapsing">
-                    <span class="font-bold">{{ $dp->product->code }}</span>
-                    <span class="text-xs text-ease">{{ $dp->product->name }}</span>
+                    <span class="font-bold">{{ $dp->product->prd_code }}</span>
+                    <span class="text-xs text-ease">{{ $dp->product->prd_name }}</span>
                 </x-tbody-item>
                 <x-tbody-item class="">
                     <span class="font-bold">{{ (float)$dp->dp_amount }} </span>

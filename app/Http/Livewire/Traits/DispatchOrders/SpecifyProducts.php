@@ -42,7 +42,7 @@ trait SpecifyProducts
 
     public function getProductsProperty()
     {
-        return Product::select('id', 'name', 'code')->get();
+        return Product::select('id', 'prd_name', 'prd_code')->get();
     }
 
 

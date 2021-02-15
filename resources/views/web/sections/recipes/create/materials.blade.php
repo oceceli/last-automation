@@ -25,8 +25,8 @@
                                         <div><i class="box icon"></i></div>
                                         <div class="flex flex-1 justify-between items-center">
                                             <div>
-                                                <div class="header">{{ $product->name }}</div>
-                                                <div class="description">{{ $product->code }}</div>
+                                                <div class="header">{{ $product->prd_name }}</div>
+                                                <div class="description">{{ $product->prd_code }}</div>
                                             </div>
 
                                             @if ($this->isInCard($product->id))

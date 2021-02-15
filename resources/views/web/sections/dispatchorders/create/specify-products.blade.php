@@ -13,7 +13,7 @@
                                 </x-slot>
                                 <div class="px-4 flex-1 ui form mini">
                                     <div class="pt-2 equal width fields">
-                                        <x-dropdown model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="code,name" sClass="search" noErrors
+                                        <x-dropdown model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="prd_code,prd_name" sClass="search" noErrors
                                             placeholder="{{ __('products.product') }}" sId="dp_product_{{$key}}" />
                                                
                                         {{-- <x-input defer model="cards.{{ $key }}.reserved_amount" placeholder="{{ __('common.amount') }}" /> --}}
@@ -77,7 +77,7 @@
             </x-slot>
             <div class="px-4 flex-1 ui form mini">
                 <div class="pt-2 equal width fields">
-                    <x-dropdown model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="code,name" sClass="search" noErrors
+                    <x-dropdown model="cards.{{ $key }}.product_id" :collection="$this->products" value="id" text="prd_code,prd_name" sClass="search" noErrors
                         placeholder="{{ __('products.product') }}" sId="dp_product_{{$key}}" /> --}}
                             
                     {{-- <x-input defer model="cards.{{ $key }}.reserved_amount" placeholder="{{ __('common.amount') }}" /> --}}

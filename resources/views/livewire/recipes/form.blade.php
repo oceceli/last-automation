@@ -4,7 +4,7 @@
     <br>
 
     @if ($selectedProduct)
-        şu anki {{ $selectedProduct->code }}
+        şu anki {{ $selectedProduct->prd_code }}
     @endif
 
     <br>
@@ -60,7 +60,7 @@
                         :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" /> --}}
 
                         <x-dropdown model="product_id" label="recipes.recipe_product" sId="selectProduct" sClass="search" class="required"
-                        :collection="$this->producibles" value="id" text="name,code" />
+                        :collection="$this->producibles" value="id" text="prd_code,prd_name" />
                         
                         <div class="@if($this->isLocked()) disabled @endif field">
                             <x-input action model="code" label="recipes.code" placeholder="recipes.code" class="required">

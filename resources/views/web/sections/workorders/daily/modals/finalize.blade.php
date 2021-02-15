@@ -1,6 +1,6 @@
 @if ($finalizeModal)
     <div x-data="{finalizeModal: @entangle('finalizeModal')}">
-        <x-custom-modal active="finalizeModal" header="{{ $finalizeData->product->name }}">
+        <x-custom-modal active="finalizeModal" header="{{ $finalizeData->product->prd_name }}">
 
             <form class="ui tiny form shadow-md" wire:submit.prevent="ConfirmFinalize()">
                 <x-form-divider noButtons>

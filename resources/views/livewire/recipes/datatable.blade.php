@@ -20,10 +20,10 @@
                         <tr>
                             <td class="right marked collapsing font-bold ">{{ $key+1 }}</td>
                             <td class="collapsing">{{ $recipe->code }}</td>
-                            <td class="">{{ $recipe->product->name }}</td>
+                            <td class="">{{ $recipe->product->prd_name }}</td>
                             <td>
                                 @if (count($recipe->ingredients) > 0)
-                                    <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) {{ $ingredient->name }} @endforeach">
+                                    <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) {{ $ingredient->prd_name }} @endforeach">
                                         {{ __('recipes.different_products', ['number' => $recipe->ingredients->count() ]) }}
                                     </span>
                                 @else 

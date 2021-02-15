@@ -48,7 +48,7 @@
                                     {{-- <div class="ui animated selection list">
                                         @foreach ($this->unproducibleProducts as $product)
                                             <li class="item" wire:click.prevent="addIngredient({{ $product }})">
-                                                {{ $product->name }} - {{ $product->code }}
+                                                {{ $product->prd_name }} - {{ $product->prd_code }}
                                             </li>
                                         @endforeach
                                     </div> --}}
@@ -73,8 +73,8 @@
                                                             <div class="item" wire:click.prevent="addIngredient({{ $product }})">
                                                                 <i class="box icon"></i>
                                                                 <div class="content">
-                                                                    <div class="header">{{ $product->name }}</div>
-                                                                    <div class="description">{{ $product->code }}</div>
+                                                                    <div class="header">{{ $product->prd_name }}</div>
+                                                                    <div class="description">{{ $product->prd_code }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -94,7 +94,7 @@
                                     <h6 class="ui horizontal header">
                                         <p>
                                             <i class="flask big icon"></i>
-                                            1 {birim} <span class="text-red-500">{{ ucfirst($currentProduct->name) }}({{$currentProduct->code}})</span> </small> şunları içerir
+                                            1 {birim} <span class="text-red-500">{{ ucfirst($currentProduct->prd_name) }}({{$currentProduct->prd_code}})</span> </small> şunları içerir
                                         </p>
                                     </h6>
                                 
@@ -129,7 +129,7 @@
                                             <i class="flask icon"></i>
                                             Soldan reçete içeriği oluşturun
                                         </div>
-                                        <div class="text-sm">{{ ucfirst($currentProduct->name) }} içeriği burada görüntülenecek</div>
+                                        <div class="text-sm">{{ ucfirst($currentProduct->prd_name) }} içeriği burada görüntülenecek</div>
                                     </div>
                                 @endif
                             </div>

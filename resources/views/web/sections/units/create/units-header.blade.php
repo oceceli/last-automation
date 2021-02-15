@@ -4,7 +4,7 @@
         <x-slot name="customHeader">
             <div class="flex">
                 <div>
-                    <span class="text-red-600">{{ $selectedProduct->name }}</span>
+                    <span class="text-red-600">{{ $selectedProduct->prd_name }}</span>
                     <span class="text-sm">{{ __('units.units') }}</span>
                 </div>
                 <span></span>

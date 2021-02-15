@@ -24,8 +24,8 @@
                             </span>
                         </x-tbody-item>
                         <x-tbody-item class="font-bold">
-                            {{ $product->code }}
-                            <span class="text-xs text-ease">{{ $product->name }}</span>
+                            {{ $product->prd_code }}
+                            <span class="text-xs text-ease">{{ $product->prd_name }}</span>
                         </x-tbody-item>
                         <x-tbody-item class="font-semibold">
                             @if ($product->totalStock['reserved_amount'])
@@ -74,7 +74,7 @@
         {{-- Product lots MODAL --------------------------------------------------}}
         @if ($selectedProduct)
         <div x-data="{lotModal: @entangle('lotModal')}">
-            <x-custom-modal active="lotModal" header="{{ $selectedProduct->name }}">
+            <x-custom-modal active="lotModal" header="{{ $selectedProduct->prd_name }}">
 
                 <div class="p-2 bg-smoke-lightest">
                     {{-- <div class="bg-white rounded-t p-2 shadow-md relative">

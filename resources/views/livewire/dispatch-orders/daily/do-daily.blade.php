@@ -75,7 +75,7 @@
                         @foreach ($tobeApprovedDispatchOrder->dispatchProducts as $dp)
                             <div x-data="{reservedLots: false}" class="border p-4 border-red-400 rounded cursor-pointer hover:bg-cool-gray-50 border-dashed" @click="reservedLots = ! reservedLots">
                                 <div class="flex justify-between text-ease cursor-pointer"  >
-                                    <span>{{ $dp->product->name }}</span>
+                                    <span>{{ $dp->product->prd_name }}</span>
                                     <div>
                                         <span>{{ $dp->dp_amount }} {{ $dp->unit->name }}</span>
                                         <span x-show="!reservedLots" class="pl-6"><i class="caret right icon"></i></span>

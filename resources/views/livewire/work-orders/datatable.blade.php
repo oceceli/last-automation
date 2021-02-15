@@ -26,7 +26,7 @@
                             </td>
                             <td class="left marked green center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
                             <td class="center aligned collapsing">{{ $workOrder->code }}</td>
-                            <td>{{ $workOrder->product->name }}</td>
+                            <td>{{ $workOrder->product->prd_name }}</td>
                             <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</td>
                             <td class="">{{ $workOrder->lot_no }}</td>
                             <td>
@@ -64,7 +64,7 @@
                             </td>
                             <td class="center aligned collapsing font-bold">{{ $workOrder->queue }}</td>
                             <td class="center aligned collapsing">{{ $workOrder->code }}</td>
-                            <td>{{ $workOrder->product->name }}</td>
+                            <td>{{ $workOrder->product->prd_name }}</td>
                             <td>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</td>
                             <td class="">{{ $workOrder->lot_no }}</td>
                             <td>

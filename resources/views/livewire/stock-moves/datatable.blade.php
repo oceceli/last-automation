@@ -33,8 +33,8 @@
                             @endif --}}
                         </td>
                         <td class="font-bold">
-                            <span>{{ $stockMove->product->code }}</span>
-                            <span class="text-sm text-ease">{{ $stockMove->product->name }}</span>
+                            <span>{{ $stockMove->product->prd_code }}</span>
+                            <span class="text-sm text-ease">{{ $stockMove->product->prd_name }}</span>
                         </td>
                         <td class="cursor-default">
                             @if ($stockMove->direction) 

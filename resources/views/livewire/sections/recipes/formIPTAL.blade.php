@@ -111,8 +111,8 @@
                                                                 <div class="item" wire:click.prevent="addIngredient({{ $product }})">
                                                                     <i class="box icon"></i>
                                                                     <div class="content">
-                                                                        <div class="header">{{ $product->name }}</div>
-                                                                        <div class="description">{{ $product->code }}</div>
+                                                                        <div class="header">{{ $product->prd_name }}</div>
+                                                                        <div class="description">{{ $product->prd_code }}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>

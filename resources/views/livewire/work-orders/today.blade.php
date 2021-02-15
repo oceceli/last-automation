@@ -13,7 +13,7 @@
                             <span data-tooltip="{{ __('workorders.production_continues') }}" data-variation="mini">
                                 <i class="{{ $this->inProgress->statusColor }} link circle icon animate-pulse"></i>
                             </span>
-                            <span>{{ $this->inProgress->product->name }} - </span>
+                            <span>{{ $this->inProgress->product->prd_name }} - </span>
                             <span class="text-ease">{{ __('workorders.started_at_time', ['time' => $this->inProgress->startedAt()->diffForHumans()]) }}</span>
                         @else
                             <i class="red  circle icon"></i>
@@ -52,7 +52,7 @@
                                             data-variation="mini" data-position="top left">
                                         <i class="large green checkmark icon"></i>
                                     </td>
-                                    <td>{{ $workOrder->product->name }}</td>
+                                    <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
@@ -84,7 +84,7 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td>{{ $workOrder->product->name }}</td>
+                                    <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
@@ -113,7 +113,7 @@
                                             <i class="large primary clock outline icon"></i>
                                         </span>
                                     </td>
-                                    <td>{{ $workOrder->product->name }}</td>
+                                    <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())
@@ -139,7 +139,7 @@
                                             <i class="large grey ban icon"></i>
                                         </span>
                                     </td>
-                                    <td>{{ $workOrder->product->name }}</td>
+                                    <td>{{ $workOrder->product->prd_name }}</td>
                                     <td>
                                         <span>{{ $workOrder->amount }} {{ $workOrder->unit->name }}</span>
                                         @if ( ! $workOrder->unitIsAlreadyBase())

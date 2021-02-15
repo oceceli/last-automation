@@ -4,8 +4,8 @@
 
             <x-slot name="header">
                 <div>
-                    {{ $selectedDispatchProduct->product->code}}
-                    <span class="text-sm">({{ $selectedDispatchProduct->product->name}})</span>
+                    {{ $selectedDispatchProduct->product->prd_code}}
+                    <span class="text-sm">({{ $selectedDispatchProduct->product->prd_name}})</span>
                 </div>
             </x-slot>
 

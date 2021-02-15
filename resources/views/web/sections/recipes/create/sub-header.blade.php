@@ -2,11 +2,11 @@
     <x-slot name="customHeader">
         <div class="flex gap-2 text-xs md:text-base">
             <span class="font-bold">1</span>
-            <span class="border-b-2 border-black pb-1" data-tooltip="{{ __('products.defined_base_unit_for_the_product', ['product' => $selectedProduct->name]) }}" 
+            <span class="border-b-2 border-black pb-1" data-tooltip="{{ __('products.defined_base_unit_for_the_product', ['product' => $selectedProduct->prd_name]) }}" 
                 data-variation="mini" data-position="top left">
                 {{ $selectedProduct->baseUnit->name }}
             </span>
-            <span class="font-bold text-red-700">{{ $selectedProduct->name }}</span>
+            <span class="font-bold text-red-700">{{ $selectedProduct->prd_name }}</span>
             <span class="text-gray-600">{{ __('recipes.includes') }}</span>
         </div>
     </x-slot>

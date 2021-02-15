@@ -1,9 +1,9 @@
 <div>
     @if (isset($recipe))
         @if ($locked)
-            <x-page-header icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->name }} ürününe ait reçete" />
+            <x-page-header icon="mortar pestle" header="common.detail" subheader="{{ $recipe->product->prd_name }} ürününe ait reçete" />
         @else
-            <x-page-header icon="mortar pestle" header="common.edit" subheader="{{ __('recipes.edit_recipe_of', ['product' => $recipe->product->name]) }}" />
+            <x-page-header icon="mortar pestle" header="common.edit" subheader="{{ __('recipes.edit_recipe_of', ['product' => $recipe->product->prd_name]) }}" />
         @endif
     @else
         <x-page-header icon="mortar pestle" header="recipes.header" subheader="recipes.subheader" />
@@ -82,7 +82,7 @@
                             
                             {{-- <div class="h-3"></div> --}}
                             {{-- BAŞLIK VE BUTONLAR --}}
-                            <x-page-header header="1 '{{ $baseUnit->name }}' {{ $selectedProduct->name }} {{ __('recipes.includes') }}" icon="flask" class="pt-4 px-4 bg-cool-gray-50" >
+                            <x-page-header header="1 '{{ $baseUnit->name }}' {{ $selectedProduct->prd_name }} {{ __('recipes.includes') }}" icon="flask" class="pt-4 px-4 bg-cool-gray-50" >
                                 @if ( ! $locked)
                                     <x-slot name="buttons">
                                         <div class="ui small icon buttons">
@@ -108,7 +108,7 @@
                                                 <i class="flask icon"></i>
                                                 <button @click="materials = true" wire:click.prevent class="text-blue-600 font-bold focus:outline-none">Buradan</button> reçete içeriği oluşturun
                                             </div>
-                                            <div class="text-sm text-center"><span class="font-bold">{{ $selectedProduct->name }}</span> içeriği burada görüntülenecek</div>
+                                            <div class="text-sm text-center"><span class="font-bold">{{ $selectedProduct->prd_name }}</span> içeriği burada görüntülenecek</div>
                                         </div>
                                         @else
                                             @foreach ($ingredients as $key => $ingredient)
@@ -218,8 +218,8 @@
                                         <div><i class="box icon"></i></div>
                                         <div class="flex flex-1 justify-between items-center">
                                             <div>
-                                                <div class="header">{{ $product->name }}</div>
-                                                <div class="description">{{ $product->code }}</div>
+                                                <div class="header">{{ $product->prd_name }}</div>
+                                                <div class="description">{{ $product->prd_code }}</div>
                                             </div>
 
                                             @if (in_array($product['id'], array_column($ingredients, 'id')))

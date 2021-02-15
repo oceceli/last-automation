@@ -162,7 +162,7 @@
                             @foreach ($selectedDo->dispatchProducts as $dp)
                                 <div x-data="{reservedLots: false}"  class="border p-4 {{ $this->tableClass($selectedDo)['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed">
                                     <div class="flex justify-between text-ease cursor-pointer" @click="reservedLots = ! reservedLots" >
-                                        <span class="font-bold">{{ $dp->product->name }}</span>
+                                        <span class="font-bold">{{ $dp->product->prd_name }}</span>
                                         <div>
                                             <span>{{ $dp->dp_amount }} {{ $dp->unit->name }}</span>
                                             <span x-show="!reservedLots" class="pl-6"><i class="caret right icon"></i></span>

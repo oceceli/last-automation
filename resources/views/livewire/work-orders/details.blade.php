@@ -7,8 +7,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2">
         <div class="border-b md:border-b-0 md:border-r p-3 flex flex-col gap-3">
             <x-label-value label="{{ __('workorders.lot_no') }}" value="{{ $workOrder->lot_no }}"                              hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('modelnames.product') }}" value="{{ $workOrder->product->name }}"                               hover="{{ $statusColor }}" />
-            <x-label-value label="{{ __('products.code') }}" value="{{ $workOrder->product->code }}"                           hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('modelnames.product') }}" value="{{ $workOrder->product->prd_name }}"                               hover="{{ $statusColor }}" />
+            <x-label-value label="{{ __('products.code') }}" value="{{ $workOrder->product->prd_code }}"                           hover="{{ $statusColor }}" />
             <x-label-value label="{{ __('workorders.amount') }}" value="{{ $workOrder->amount }} {{ $workOrder->unit->name }}" hover="{{ $statusColor }}" />
             <x-label-value label="{{ __('workorders.queue') }}" value="{{ $workOrder->queue }}"                                hover="{{ $statusColor }}" />
         </div>

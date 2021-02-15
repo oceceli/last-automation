@@ -40,10 +40,10 @@
                 <x-slot name="left">
                     @if ($editMode)
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
-                            value="id" text="name,code" label="products.product" placeholder="{{ __('units.unit') }}" />
+                            value="id" text="prd_code,prd_name" label="products.product" placeholder="{{ __('units.unit') }}" />
                     @else
                         <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
-                            value="id" text="name,code" label="products.product" placeholder="{{ __('units.unit') }}" />
+                            value="id" text="prd_code,prd_name" label="products.product" placeholder="{{ __('units.unit') }}" />
                     @endif
                     <x-input model="lot_no" label="workorders.lot_no" placeholder="workorders.lot_no" class="required field" />
                     @if ($editMode)
