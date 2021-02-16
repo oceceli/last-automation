@@ -37,7 +37,7 @@ trait ReserveSourcesModal
 
 
     /**
-     * When pressed the start button for a work order, open lotSourceModal to ask which sources to be used
+     * When pressed the start button for a work order, open reserveSourceModal to ask which sources to be used
      */
     public function startProcess($id)
     {

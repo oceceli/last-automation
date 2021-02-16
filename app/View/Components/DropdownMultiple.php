@@ -24,7 +24,7 @@ class DropdownMultiple extends Component
      * @return void
      */
     // public function __construct($collection, $value, $text, $sId)
-    public function __construct($model, $label, $sId, $maxSelections = null)
+    public function __construct($model, $label = null, $sId, $maxSelections = null)
     {
         // $this->collection = $collection;
         // $this->value = $value;

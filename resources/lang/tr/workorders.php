@@ -95,7 +95,7 @@ return [
     'wo_suspended' => 'İş emri askıya alındı',
     'wo_unsuspended' => 'İş emri üretimi bekliyor',
     'wo_complete' => 'Bitir',
-    'wo_start' => 'İşi başlat',
+    // 'wo_start' => 'İşi başlat',
     'wo_delete' => 'İş emrini sil',
     'abort_this_work_order' => 'Bu üretimi iptal et',
     'production_aborted' => 'Üretim iptal edildi',

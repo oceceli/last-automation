@@ -10,8 +10,8 @@
                                 <div class="flex justify-between gap-3">
 
                                     <div class="field flex gap-1 items-center text-ease">
-                                        <span class="">{{ $lotCard['ingredient']['name'] }}</span>
-                                        <span class="text-xs hidden md:block"> ({{ $lotCard['ingredient']['code'] }})</span> 
+                                        <span class="">{{ $lotCard['ingredient']['prd_name'] }}</span>
+                                        <span class="text-xs hidden md:block"> ({{ $lotCard['ingredient']['prd_code'] }})</span> 
                                     </div>
 
                                     <div class="text-ease">

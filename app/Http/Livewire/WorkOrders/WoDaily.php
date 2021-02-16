@@ -5,12 +5,11 @@ namespace App\Http\Livewire\WorkOrders;
 use App\Http\Livewire\Traits\WorkOrders\FinalizeModal;
 use App\Http\Livewire\Traits\WorkOrders\ReservedSourcesModal;
 use App\Http\Livewire\Traits\WorkOrders\ReserveSourcesModal;
-use App\Models\WorkOrder;
 use App\Services\WorkOrder\WorkOrderService;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class Today extends Component
+class WoDaily extends Component
 {
 
     use ReserveSourcesModal;
@@ -19,6 +18,8 @@ class Today extends Component
 
     public $todayDate; // just date of today
     public $workOrders;
+
+    
 
 
     protected $listeners = ['new_work_order_created' => 'listenWorkOrderCreated', 'refreshTable' => '$refresh'];
@@ -66,7 +67,7 @@ class Today extends Component
 
     public function render()
     {
-        return view('livewire.work-orders.today');
+        return view('livewire.work-orders.wo-daily');
     }
 
 

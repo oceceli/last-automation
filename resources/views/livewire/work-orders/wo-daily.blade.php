@@ -45,8 +45,24 @@
                 
                 <tbody>
                     @forelse ($workOrders as $key => $workOrder)
-
-                            @if ($workOrder->isCompleted())
+                        @switch($workOrder)
+                            @case($workOrder->isApproved())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-approved')
+                                @break
+                            @case($workOrder->isCompleted())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-completed')
+                                @break
+                            @case($workOrder->isInProgress())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-inprogress')
+                                @break
+                            @case($workOrder->isActive())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-active')
+                                @break
+                            @case($workOrder->isSuspended())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-suspended')
+                                @break
+                        @endswitch
+                            {{-- @if ($workOrder->isCompleted())
                                 <tr class="left green marked text-green-600 bg-teal-50 ">
                                     <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
                                             data-variation="mini" data-position="top left">
@@ -153,7 +169,7 @@
                                         <x-crud-actions show edit delete modelName="work-order" gray :modelId="$workOrder->id" />
                                     </td>
                                 </tr>
-                            @endif
+                            @endif --}}
 
                     @empty
                         <tr>
@@ -178,7 +194,13 @@
     @include('web.sections.workorders.daily.modals.finalize')
 
 
-
+    {{-- @if ($detailsModal)
+        <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
+            <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
+                <x-workorder-details :workOrder="$selectedWorkOrder" />
+            </x-custom-modal>
+        </div>
+    @endif --}}
 
     
 

@@ -25,6 +25,7 @@ return [
     'delete' => 'Sil',
     'available' => 'Kullanılabilir',
     'deny' => 'Reddet',
+    'start' => 'Başlat',
     'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',
