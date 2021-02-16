@@ -66,4 +66,11 @@ class WorkOrderController extends Controller
         return view('web.sections.workorders.daily.index');
     }
 
+    public function prepare(WorkOrder $workOrder)
+    {
+        if(auth()->user()->cannot('process workorders')) abort(403);
+        
+        return view('web.sections.workorders.daily.prepare.prepare', compact('workOrder'));
+    }
+
 }
