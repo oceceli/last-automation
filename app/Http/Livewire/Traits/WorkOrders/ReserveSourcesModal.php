@@ -56,7 +56,7 @@ trait ReserveSourcesModal
     {
         if(! $resolvedInputModels = $this->validateInputs()) return; 
 
-        if(! $this->woStartData->start())
+        if(! $this->woStartData->setInProgress())
             return $this->emit('toast', '', __('workorders.a_work_order_already_in_progress'), 'error');
 
 

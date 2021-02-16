@@ -19,5 +19,3 @@ class DispatchTotalMove extends Moves
     }
 
 }
-
-// !! Reserve edilen stoktan çok soru sormadan düşüren bi service yap

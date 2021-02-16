@@ -9,7 +9,8 @@ class WorkOrderService
 {
     public static function getTodaysList()
     {
-        return WorkOrder::where('wo_datetime', Carbon::today()->format('d.m.Y'))
+        return WorkOrder
+            ::where('wo_datetime', Carbon::today())
             ->orWhere('wo_status', 'in_progress')
             ->orderBy('wo_queue', 'asc')
             ->get();

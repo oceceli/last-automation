@@ -108,11 +108,11 @@
                     @endif
                 @empty
                     <tr>
-                        <x-tbody-item colspan="10">
+                        <td colspan="10">
                             <x-placeholder icon="project diagram">
                                 {{ __('workorders.no_workorder_found') }}
                             </x-placeholder>
-                        </x-tbody-item>
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

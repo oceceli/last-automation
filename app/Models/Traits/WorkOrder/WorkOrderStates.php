@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits\WorkOrder;
 
+use Carbon\Carbon;
 
 trait WorkOrderStates
 {
@@ -12,6 +13,9 @@ trait WorkOrderStates
         'active',
         'suspended',
     ];
+
+    private $permission = 'process workorders'; // !! kullanılmıyor
+
 
 
     public function isApproved()
@@ -41,44 +45,106 @@ trait WorkOrderStates
 
 
 
+
     public function approve()
     {
-        $this->setStatus('approved');
+        if($this->isCompleted()) {
+            return $this->setStatus('approved');
+            // todo: stoktan düşme işlemleri
+            // !! finalize traite bak
+        }
     }
 
     public function complete()
     {
-        $this->setStatus('completed');
+        if($this->isInProgress()) {
+            $this->update(['wo_completed_at' => now()]);
+            return $this->setStatus('completed');
+        }
     }
 
     public function setInProgress()
     {
-        $this->setStatus('in_progress');
+
+        if($this->isActive() && ! $this->isInProgress()) {
+            $this->setStatus('in_progress');
+            $this->update(['wo_started_at' => now()]);
+            return true;
+        }
     }
 
     public function activate()
     {
-        $this->setStatus('active');
+        return $this->setStatus('active');
     }
 
     public function suspend()
     {
-        $this->setStatus('suspended');
+        if($this->isActive()) {
+            return $this->setStatus('suspended');
+        }
+    }
+
+    public function unsuspend()
+    {
+        if($this->isSuspended()) {
+            return $this->setStatus('active');
+        }
+    }
+
+
+    public function abort()
+    {
+        if($this->isInProgress()) {
+            $this->setStatus('active');
+            $this->update(['wo_started_at' => null]);
+            $this->reservedStocks()->delete();
+            return true;
+        }
     }
 
 
 
 
-    public function checkStatus($state)
+
+
+    public function startedAt()
+    {
+        return $this->isInProgress() ? $this->wo_started_at : null;
+    }
+
+
+    public function completedAt()
+    {
+        return $this->isCompleted() ? $this->wo_completed_at : null;
+    }
+
+    public function isToday()
+    {
+        return $this->wo_datetime == Carbon::today()->format('d.m.Y');
+    }
+
+
+
+
+
+
+    private function checkStatus($state)
     {
         return $this->wo_status === $state;
     }
 
-    public function setStatus($state)
+    private function setStatus($state)
     {
-        if(in_array($state, $this->states))
+        if(auth()->user()->cannot($this->permission)) abort(403);
+
+        if(in_array($state, $this->states)) {
             $this->update(['wo_status' => $state]);
+            return true;
+        }
+        return false;
     }
+
 
 
 

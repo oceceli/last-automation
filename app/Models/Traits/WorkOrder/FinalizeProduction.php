@@ -16,9 +16,8 @@ trait FinalizeProduction
     private $inputTotal;
 
 
-    public function saveProductionResults($inputTotal, $inputWaste, $unitId)
+    public function saveProductionResults($inputTotal, $inputWaste, $unitId) // todo: bu aslında approve()
     {
-        if( ! $this->isInProgress()) return;
         if($inputWaste > $inputTotal) return;
 
         // take production results to their base unit
@@ -32,7 +31,6 @@ trait FinalizeProduction
 
         $this->deductFromReservedSources();
         
-        $this->markAsFinalized();
         $this->reservedStocks()->delete();
 
         return true;

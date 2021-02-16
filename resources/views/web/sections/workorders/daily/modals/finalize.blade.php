@@ -2,7 +2,7 @@
     <div x-data="{finalizeModal: @entangle('finalizeModal')}">
         <x-custom-modal active="finalizeModal" header="{{ $finalizeData->product->prd_name }}">
 
-            <form class="ui tiny form shadow-md" wire:submit.prevent="ConfirmFinalize()">
+            <form class="ui tiny form shadow-md" wire:submit.prevent="woComplete()">
                 <x-form-divider noButtons>
 
                     <x-slot name="left">
@@ -52,16 +52,16 @@
                 </x-form-divider>
             </form>
 
-            <div class="p-4 text-sm text-ease-red" x-data="{confirmation: false}">
-                <div x-show="!confirmation">
-                    <span @click="confirmation = true" class="cursor-pointer">
+            <div class="p-4 text-sm text-ease-red" x-data="{woAbortConfirmation: false}">
+                <div x-show="!woAbortConfirmation">
+                    <span @click="woAbortConfirmation = true" class="cursor-pointer">
                         {{ __('workorders.abort_this_work_order') }}
                     </span>
                     <span data-tooltip="{{ __('workorders.production_results_will_not_be_processed')}}" data-variation="mini" data-position="bottom center">
                         <i class="small circular question mark icon"></i>
                     </span>
                 </div>
-                <div x-show="confirmation" wire:click="abort({{ $finalizeData->id }})" 
+                <div x-show="woAbortConfirmation" wire:click="abortWo({{ $finalizeData->id }})" 
                         class="font-extrabold bg-red-200 text-center border-red-300 text-red-600 cursor-pointer p-2 rounded hover:bg-red-500 ease-in-out hover:text-white duration-200">
                     {{ __('common.abort') }}?
                 </div>
