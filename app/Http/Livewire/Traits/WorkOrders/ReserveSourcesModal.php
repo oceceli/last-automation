@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Traits\WorkOrders;
 
 
+// used at App\Http\Livewire\WorkOrders\WoDaily
 trait ReserveSourcesModal
 {
     /**

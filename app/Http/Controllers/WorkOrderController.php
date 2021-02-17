@@ -66,10 +66,11 @@ class WorkOrderController extends Controller
         return view('web.sections.workorders.daily.index');
     }
 
-    public function prepare(WorkOrder $workOrder)
+    public function prepare($workOrder) // ?? inject yapınca bozuluyor livewire'da ne alakaysa
     {
         if(auth()->user()->cannot('process workorders')) abort(403);
         
+        $workOrder = WorkOrder::findOrFail($workOrder);
         return view('web.sections.workorders.daily.prepare.prepare', compact('workOrder'));
     }
 
