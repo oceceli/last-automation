@@ -170,7 +170,7 @@
                                         </div>
                                     </div>
                                     <div x-show="reservedLots" class="pt-2">
-                                        <x-reserved-stocks-table :model="$dp" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
+                                        <x-reserved-stocks-table :reservations="$dp->reservedStocks" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
                                     </div>
                                 </div>
                             @endforeach

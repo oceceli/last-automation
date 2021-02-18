@@ -17,7 +17,7 @@ class CreateReservedStocksTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('reserved_lot');
-            $table->integer('reserved_amount');
+            $table->float('reserved_amount');
             
             $table->boolean('reserved_is_archived')->default(false);
             

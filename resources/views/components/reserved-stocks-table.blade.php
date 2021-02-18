@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => ''])}}>
+<div {{ $attributes }}>
     <x-table class="small">
         @if (!$noHead)
         <x-thead>
@@ -12,7 +12,7 @@
         </x-thead>
         @endif
         <x-tbody>
-            @forelse($model->reservedStocks as $reservation)
+            @forelse($reservations as $reservation)
                 <x-table-row class="text-ease hover:bg-cool-gray-100">
                     @if (!$noProduct)
                         <x-tbody-item>

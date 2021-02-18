@@ -10,6 +10,8 @@ trait WorkOrderStates
         'approved',
         'completed',
         'in_progress',
+        'prepared',
+        'preparing',
         'active',
         'suspended',
     ];
@@ -31,6 +33,16 @@ trait WorkOrderStates
     public function isInProgress()
     {
         return $this->checkStatus('in_progress') && isset($this->wo_started_at);
+    }
+
+    public function isPrepared()
+    {
+        return $this->checkStatus('prepared');
+    }
+
+    public function isPreparing()
+    {
+        return $this->checkStatus('preparing');
     }
 
     public function isActive()
@@ -73,9 +85,24 @@ trait WorkOrderStates
         }
     }
 
+    public function setPrepared()
+    {
+        if($this->isPreparing() && $this->areAllReady()) {
+            return $this->setStatus('prepared');
+        }
+    }
+
+    public function setPreparing()
+    {
+        if(($this->isActive() || $this->isPrepared()) && $this->reservedStocks->isNotEmpty()) {
+            return $this->setStatus('preparing');
+        }
+    }
+
     public function activate()
     {
-        return $this->setStatus('active');
+        if($this->isPreparing() || $this->isSuspended())
+            return $this->setStatus('active');
     }
 
     public function suspend()
@@ -136,7 +163,7 @@ trait WorkOrderStates
 
     private function setStatus($state)
     {
-        if(auth()->user()->cannot($this->permission)) abort(403);
+        if(auth()->user()->cannot($this->permission)) abort(403); // ?? devam
 
         if(in_array($state, $this->states)) {
             $this->update(['wo_status' => $state]);

@@ -65,8 +65,28 @@ class WorkOrder extends Model implements CanReserveStocks
     }
 
 
+
+    public function areAllReady()
+    {
+        $ingredients = $this->product->recipe->ingredients;
+        foreach ($ingredients as $ingredient) {
+            if(! $this->areSourcesReadyFor($ingredient->id))
+                return false;
+        }
+        return true;
+    }
     
 
+    public function reservationsFor($productId)
+    {
+        return $this->reservedStocks()->where('product_id', $productId);
+    }
+
+    
+    public function areSourcesReadyFor($productId)
+    {
+        return $this->reservationsFor($productId)->exists();
+    }
 
     
     public function unitIsAlreadyBase()

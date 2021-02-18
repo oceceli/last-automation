@@ -5,7 +5,7 @@
                     <x-table>
                         <x-thead>
                             <x-table-row>
-                                <x-thead-item>{{ __('products.name') }}</x-thead-item>
+                                <x-thead-item>{{ __('products.prd_name') }}</x-thead-item>
                                 <x-thead-item>{{ __('workorders.reserve_lot') }}</x-thead-item>
                                 <x-thead-item class="right aligned">{{ __('workorders.reserved_amount') }}<span class="text-red-800">*</span></x-thead-item>
                             </x-table-row>

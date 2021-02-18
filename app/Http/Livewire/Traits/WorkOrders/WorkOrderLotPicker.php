@@ -11,24 +11,71 @@ trait WorkOrderLotPicker
     public $woLotPickerModal = false;
     public $rows = [];
     
-    public $selectedProduct;
+    public $selectedIngredient;
     public $selectedIndex;
+
+    public $reservationViewModal = false;
+
+
+    protected function rules()
+    {
+        return [
+            'rows.*.lot_number' => 'required',
+            'rows.*.reserved_amount' => 'required|numeric',
+        ];
+    }
+
+    protected function validationAttributes()
+    {
+        return [
+            'rows.*.lot_number' => __('workorders.lot_number'),
+            'rows.*.reserved_amount' => __('common.amount'),
+        ];
+    }
+
+
 
     /**
      * Open modal for specifying lot sources to dispatch
      */
-    public function openWoLotPickerModal($index)
+    public function openWoLotPickerModal($index) // ?? dp farklı
     {
-        if($this->ingredientCards[$index]['is_ready']) return;
+        // if($this->ingredientCards[$index]['is_ready']) return; // !! bunu neden yaptım?
 
         $this->reset('rows');
 
-        $this->selectedProduct = Product::find($this->ingredientCards[$index]['ingredient']['id']);
-        
+        $this->selectedIngredient = Product::find($this->ingredientCards[$index]['ingredient']['id']);
         $this->selectedIndex = $index;
+        
+        if($this->isInEditMode()) {
+            return $this->setEditMode();
+        }
 
         $this->woLotPickerModal = true;
         $this->addRow();
+    }
+
+
+    public function closeWoLotPickerModal()
+    {
+        $this->reset('rows', 'woLotPickerModal', 'selectedIngredient');
+    }
+
+    public function updatedWoLotPickerModal($bool)
+    {
+        if(!$bool) $this->closeWoLotPickerModal();
+    }
+
+
+    public function openReservationViewModal($index)
+    {
+        $this->selectedIngredient = Product::find($this->ingredientCards[$index]['ingredient']['id']);
+        $this->reservationViewModal = true;
+    }
+
+    public function updatedReservationViewModal($bool)
+    {
+        if(!$bool) $this->reset('selectedIngredient');
     }
 
 
@@ -81,13 +128,13 @@ trait WorkOrderLotPicker
     public function updatedReservedAmount($index, $value = null)
     {
         $row = $this->rows[$index];
-        $inputAmount = $row['reserved_amount'];
+        $inputAmount = $this->rows[$index]['reserved_amount'] = abs($row['reserved_amount']); // ?? dp farklı önemli
         $lotMax = $this->lotMax($row['lot_number']);
-        
+
         if(! $row['lot_number'] || ! $row['reserved_amount'])
             return $this->rows[$index]['reserved_amount'] = null;
         
-        $need = $this->getToBase()['amount'] - $this->siblingsCovered($index);
+        $need = $this->getToBase() - $this->siblingsCovered($index);
 
         if($inputAmount <= $lotMax) {
             if($inputAmount >= $need) {
@@ -130,27 +177,64 @@ trait WorkOrderLotPicker
      */
     public function submitLots()
     {
-        if(! $this->selectedProduct) return;
+        if(! $this->selectedIngredient) return;
         if($this->cannotSubmit()) return;
 
         $this->validate();
 
-        // if($this->isInEditMode()) 
-        //     $this->selectedProduct->reservedStocks()->delete();
+        if($this->isInEditMode()) 
+            $this->reservationsOfIngredient()->delete();
         
         foreach($this->rows as $row) {
-            $this->dispatchOrder->reservedStocks()->create([
-                'product_id' => $this->selectedProduct->product_id,
+            $this->workOrder->reservedStocks()->create([
+                'product_id' => $this->selectedIngredient->id,
                 'reserved_lot' => $row['lot_number'],
                 'reserved_amount' => $row['reserved_amount'],
             ]);
         }
 
-        $this->selectedProduct->setReady();
+        $this->workOrder->setPreparing();
 
-        $this->closeDoLotModal();
-        $this->refresh();
+        $this->closeWoLotPickerModal();
     }
+
+
+
+
+
+    /************ Edit Mode ********************************************** */
+    /********************************************************************* */
+
+    private function setEditMode() // ?? dp farklı
+    {
+        // fill in the rows with incoming data
+        foreach($this->reservationsOfIngredient()->get() as $reservation) {
+            $this->rows[] = [
+                'lot_number' => $reservation->reserved_lot,
+                'reserved_amount' => $reservation->reserved_amount + 0,
+            ];
+        }
+        $this->woLotPickerModal = true;
+    }
+
+
+    public function isInEditMode()
+    {
+        return $this->workOrder->areSourcesReadyFor($this->selectedIngredient->id);
+    }
+
+
+
+
+    private function reservationsOfIngredient()
+    {
+        return $this->workOrder->reservationsFor($this->selectedIngredient->id);
+    }
+
+
+    /************ Logical Helpers ********************************************** */
+    /*************************************************************************** */
+
 
 
 
@@ -171,9 +255,12 @@ trait WorkOrderLotPicker
     /**
      * Sum of rows' reserved_amount columns except row itself(index)
      */
-    private function siblingsCovered($index)
+    private function siblingsCovered($index) // ?? dp farklı
     {
-        return $this->coveredAmount() - $this->rows[$index]['reserved_amount'];
+        $array = $this->rows;
+        unset($array[$index]);
+
+        return array_sum(array_column($array, 'reserved_amount'));
     }
 
 
@@ -183,7 +270,7 @@ trait WorkOrderLotPicker
      */
     private function lotMax($lotNumber)
     {
-        return $this->selectedProduct->onlyLot($lotNumber);
+        return $this->selectedIngredient->onlyLot($lotNumber);
     }
 
 
@@ -201,14 +288,14 @@ trait WorkOrderLotPicker
      */
     public function necessaryAmount()
     {
-        $amount = $this->getToBase()['amount'];
-        return $amount - $this->coveredAmount();
+        $amount = $this->getToBase();
+        return number_format($amount - $this->coveredAmount(), 6) + 0;
     }
 
 
     public function getToBase()
     {
-        return Conversions::toBase($this->selectedProduct->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount']); // ?? dp farklı
+        return number_format(Conversions::toBase($this->selectedIngredient->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount'])['amount'], 6) + 0; // ?? dp farklı
     }
 
 
@@ -220,7 +307,7 @@ trait WorkOrderLotPicker
      */
     public function cannotAddRow() : bool
     {
-        return $this->rows && $this->selectedProduct->lotCount() <= count($this->rows);
+        return $this->rows && $this->selectedIngredient->lotCount() <= count($this->rows);
     }
 
 
@@ -245,9 +332,9 @@ trait WorkOrderLotPicker
     public function cannotSubmit() : bool
     {
         // Needs for order must be covered and lots must be different from one another
-        return $this->getToBase()['amount'] != $this->coveredAmount()
+        return number_format($this->getToBase(), 6) !== number_format($this->coveredAmount(), 6)
                || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows);
-            //    || ! $this->selectedProduct->dispatchOrder->isNotFinalized();
+            //    || ! $this->selectedIngredient->dispatchOrder->isNotFinalized();
     }
 
 }

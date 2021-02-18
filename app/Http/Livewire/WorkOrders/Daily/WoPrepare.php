@@ -28,6 +28,24 @@ class WoPrepare extends Component
     }
 
 
+    public function emptyIngredientReserveds($index)
+    {
+        if($this->workOrder->reservationsFor($this->ingredientCards[$index]['ingredient']['id'])->delete()) {
+            $this->emit('toast', '', __('common.context_deleted'), 'info');
+            $this->workOrder->activate();
+        }
+    }
+
+
+    public function markAsCompleted()
+    {
+        $this->workOrder->setPrepared();
+    }
+
+    public function downgradeToPreparing()
+    {
+        $this->workOrder->setPreparing();
+    }
 
 
 

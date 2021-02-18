@@ -5,21 +5,21 @@
             
             <x-slot name="header">
                 <div>
-                    {{ $selectedProduct->prd_code}}
-                    <span class="text-sm">({{ $selectedProduct->prd_name}})</span>
+                    {{ $selectedIngredient->prd_code}}
+                    <span class="text-sm">({{ $selectedIngredient->prd_name}})</span>
                 </div>
             </x-slot>
 
-            @if ($selectedProduct->isInStock)
-                <div class="bg-white" wire:key="do_{{ $selectedProduct }}">
+            @if ($selectedIngredient->isInStock)
+                <div class="bg-white" wire:key="do_{{ $selectedIngredient }}">
                     <div class="py-3 px-4 shadow font-bold text-sm flex justify-between">
                         <div>
                             <span>{{ __('dispatchorders.total_covered') }}:</span>
                             <span class="text-green-600">
                                 {{ $this->coveredAmount() }} /
                                 <span class="text-ease">
-                                    {{ $this->getToBase()['amount'] }}
-                                    {{ $selectedProduct->baseUnit->name }}
+                                    {{ $this->getToBase() }}
+                                    {{ $selectedIngredient->baseUnit->name }}
                                 </span>
                             </span>
                         </div>
@@ -33,7 +33,7 @@
                                 <span>{{ __('dispatchorders.needed_amount' )}}:</span>
                                 <span class="text-red-600">
                                     {{ $this->necessaryAmount() }}
-                                    {{ $selectedProduct->baseUnit->name }}
+                                    {{ $selectedIngredient->baseUnit->name }}
                                 </span>
                             @endif
                         </div>
@@ -42,11 +42,11 @@
                         <div class="p-6 shadow-md flex flex-col gap-8 md:gap-4">
                             @foreach ($rows as $key => $row)
                                 <div wire:key="row_{{ $key }}" class="flex flex-col md:flex-row gap-3 border border-dashed p-3 rounded-lg hover:border-orange-400 ease-in-out duration-200">
-                                    {{-- <x-dropdown model="rows.{{$key}}.lot_number" :collection="$selectedProduct->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
+                                    {{-- <x-dropdown model="rows.{{$key}}.lot_number" :collection="$selectedIngredient->lots" value="lot_number" text="lot_number,available_amount_string" sClass="search" 
                                         placeholder="{{ __('dispatchorders.lot_number') }}" sId="do_lot{{ $key }}" noErrors  /> --}}
                                     <select class="form-select text-sm flex-1" wire:model.prevent="rows.{{$key}}.lot_number">
                                         <option value="" selected>{{ __('dispatchorders.select_lot_number') }}</option>
-                                        @foreach ($selectedProduct->lots as $index => $lot)
+                                        @foreach ($selectedIngredient->lots as $index => $lot)
                                             <option value="{{ $lot['lot_number'] }}" class="text-red-700 font-bold">
                                                 <span>{{ $lot['lot_number'] }}</span> | 
                                                 <span class="text-xs">{{ __('common.available' )}}: {{ $lot['available_amount_string'] }}</span>
@@ -59,9 +59,9 @@
                                         
                                     <div class="flex gap-4">
                                         @if ($this->inputDisabled($key))
-                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedProduct->baseUnit->name }}" iClass="disabled" noErrors class="ui tiny input flex-1" />
+                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedIngredient->baseUnit->name }}" iClass="disabled" noErrors class="ui tiny input flex-1" />
                                         @else
-                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedProduct->baseUnit->name }}" noErrors class="ui tiny input flex-1" />
+                                            <x-input wire:key="reservedamountinput_{{$key}}" type="number" model="rows.{{$key}}.reserved_amount" placeholder="{{ __('common.amount') }}" innerLabel="{{ $selectedIngredient->baseUnit->name }}" noErrors class="ui tiny input flex-1" />
                                         @endif
                                         <div  class="flex items-center w-1/12 justify-center">
                                             <i wire:click="removeRow({{ $key }})" class=" cancel red icon @if($this->cannotRemoveRow()) disabled @else cursor-pointer link @endif"></i>

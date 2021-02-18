@@ -22,4 +22,11 @@ class WorkOrderService
         return WorkOrder::where('wo_status', 'in_progress')->first();
     }
 
+
+    // public static function productSpecific()
+    // {
+
+    // }
+
+
 }

@@ -2,12 +2,11 @@
 
 namespace App\View\Components;
 
-use App\Models\Interfaces\CanReserveStocks;
 use Illuminate\View\Component;
 
 class ReservedStocksTable extends Component
 {
-    public $model;
+    public $reservations;
     public $noHead;
     public $noProduct;
     public $emptyMessage;
@@ -17,9 +16,9 @@ class ReservedStocksTable extends Component
      *
      * @return void
      */
-    public function __construct(CanReserveStocks $model, $noHead = false, $noProduct = false, $emptyMessage = 'common.empty')
+    public function __construct($reservations, $noHead = false, $noProduct = false, $emptyMessage = 'common.empty')
     {
-        $this->model = $model;
+        $this->reservations = $reservations;
         $this->noHead = $noHead;
         $this->noProduct = $noProduct;
         $this->emptyMessage = $emptyMessage;

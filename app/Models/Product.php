@@ -83,8 +83,9 @@ class Product extends Model
         return $this->workorders()->latest()->first();
     }
 
-    public function getRecipeIngredients()
+    public function getRecipeIngredients() // !! hiç kullanılmamış
     {
+        $array = [];
         if($this->recipe()->exists() && $this->recipe->ingredients()->exists()) {
             foreach($this->recipe->ingredients as $ingredient) {
                 $ingredients[] = $ingredient;
@@ -94,8 +95,8 @@ class Product extends Model
             $array['ingredients'] = $ingredients;
             $array['amounts'] = $amounts;
             $array['units'] = $units;
-            return $array;
         }
+        return $array;
     }
 
     public static function getProducibleProducts()

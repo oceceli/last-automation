@@ -33,7 +33,7 @@ class Recipe extends Model
 
     public function ingredients()
     {
-        return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal', 'is_ready');
+        return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal');
     }
 
 
@@ -62,7 +62,7 @@ class Recipe extends Model
                 'ingredient' => $ingredient,
                 'amount' => $mainProduct['amount'] * $convertedIngredient['amount'],
                 'unit' => $convertedIngredient['unit'],
-                'is_ready' => $ingredient->pivot->is_ready ? true : false,
+                // 'is_ready' => $ingredient->pivot->is_ready ? true : false,
             ];
         }
 

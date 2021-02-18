@@ -26,6 +26,7 @@ return [
     'available' => 'Kullanılabilir',
     'deny' => 'Reddet',
     'start' => 'Başlat',
+    'look_over' => 'Gözden geçir',
     'cancel' => 'Vazgeç',
     'remove_all' => 'Hepsini kaldır',
     'save' => 'Kaydet',

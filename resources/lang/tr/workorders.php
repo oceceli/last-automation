@@ -95,7 +95,7 @@ return [
     'wo_suspended' => 'İş emri askıya alındı',
     'wo_unsuspended' => 'İş emri üretimi bekliyor',
     'wo_complete' => 'Bitir',
-    // 'wo_start' => 'İşi başlat',
+    'wo_start' => 'İşi başlat',
     'wo_delete' => 'İş emrini sil',
     'abort_this_work_order' => 'Bu üretimi iptal et',
     'production_aborted' => 'Üretim iptal edildi',
@@ -113,4 +113,7 @@ return [
     // 'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
 
     'there_is_no_any_schuled_work_today' => 'Bugün için bir iş programı oluşturulmadı',
+    'mark_as_ready_when_all_sources_picked' => 'Kaynaklar seçildikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
+    'all_sources_are_prepared_and_wo_can_get_start' => 'Tüm kaynaklar belirtildi, iş başlamaya hazır!',
+    'edit_sources_before_start' => 'Kaynakları düzenle',
 ];
