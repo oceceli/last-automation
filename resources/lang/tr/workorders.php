@@ -99,9 +99,9 @@ return [
     'wo_complete' => 'Bitir',
     'wo_start' => 'İşi başlat',
     'wo_delete' => 'İş emrini sil',
-    'abort_this_work_order' => 'Bu üretimi iptal et',
+    'abort_this_work_order' => 'Üretimi durdur',
     'production_aborted' => 'Üretim iptal edildi',
-    'reserved_sources_released' => 'Rezerve edilen kaynaklar serbest bırakıldı',
+    // 'reserved_sources_released' => 'Rezerve edilen kaynaklar serbest bırakıldı',
     'reserved_sources_deducted_from_stocks_and_product_added_to_stock' => 'Rezerve edilen kaynaklar stoktan çıkarıldı, :product stoğa eklendi.',
     'production_results_will_not_be_processed' => 'Üretim sonucu stoğa işlenmeyecek.',
 

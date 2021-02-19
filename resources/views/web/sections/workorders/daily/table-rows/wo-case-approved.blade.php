@@ -24,14 +24,14 @@
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
             </div>
-            <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
+            {{-- <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
                 <i class="edit icon"></i>
                 {{ __('common.edit')}}
             </a>
             <div wire:click.prevent="delete({{ $workOrder->id }})" class="item text-red-600">
                 <i class="trash icon"></i>
                 {{ __('common.delete')}}
-            </div>
+            </div> --}}
         </x-menu-dropdown>
     </td>
 </tr>

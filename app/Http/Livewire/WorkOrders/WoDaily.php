@@ -21,8 +21,12 @@ class WoDaily extends Component
     use DetailsModal;
     use Deletable;
 
+    protected $model = WorkOrder::class;
+
+
     public $todayDate; // just date of today
     public $workOrders;
+
 
     
 
@@ -35,7 +39,7 @@ class WoDaily extends Component
         $this->todayDate = Carbon::now()->format('d.m.Y - D');
         $this->workOrders = WorkOrderService::getTodaysList(); // todo: bu liste kullanıcının rolüne göre bazı kısımları gizli olarak gelmeli(suspended)
 
-        $this->workOrders = WorkOrder::all();
+        $this->workOrders = WorkOrder::all(); // !! sil burayı
     }
 
     
@@ -77,6 +81,11 @@ class WoDaily extends Component
     public function woApprove($workOrderId)
     {
         $this->findWo($workOrderId)->approve();
+    }
+
+    public function woAbort($workOrderId)
+    {
+        $this->findWo($workOrderId)->abort();
     }
 
 

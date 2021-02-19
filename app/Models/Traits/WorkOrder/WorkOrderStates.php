@@ -75,7 +75,8 @@ trait WorkOrderStates
     public function complete()
     {
         if($this->isInProgress()) {
-            $this->update(['wo_completed_at' => now()]);
+            // $this->update(['wo_completed_at' => now()]);
+            $this->updateQuietly('wo_completed_at', now());
             return $this->setStatus('completed');
         }
     }
@@ -85,7 +86,7 @@ trait WorkOrderStates
 
         if($this->isPrepared() && ! $this->isInProgress()) {
             $this->setStatus('in_progress');
-            $this->update(['wo_started_at' => now()]);
+            $this->updateQuietly('wo_started_at', now());
             return true;
         }
     }
@@ -128,9 +129,8 @@ trait WorkOrderStates
     public function abort()
     {
         if($this->isInProgress()) {
-            $this->setStatus('active');
-            $this->update(['wo_started_at' => null]);
-            $this->reservedStocks()->delete();
+            $this->setStatus('prepared');
+            $this->updateQuietly('wo_started_at', null);
             return true;
         }
     }
@@ -176,10 +176,16 @@ trait WorkOrderStates
         // if(auth()->user()->cannot($this->permission)) abort(403); // ?? devam
 
         if(in_array($state, $this->states)) {
-            $this->update(['wo_status' => $state]);
+            $this->updateQuietly('wo_status', $state);
             return true;
         }
         return false;
+    }
+
+    private function updateQuietly($column, $value)
+    {
+        $this->$column = $value;
+        $this->saveQuietly();
     }
 
 

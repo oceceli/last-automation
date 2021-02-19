@@ -75,15 +75,15 @@ trait FinalizeModal
 
 
     
-    public function abortWo($id)
-    {
-        $workOrder = $this->workOrders->find($id);
+    // public function abortWo($id)
+    // {
+    //     $workOrder = $this->workOrders->find($id);
 
-        if($workOrder->abort())
-            $this->emit('toast', __('workorders.production_aborted'), __('workorders.reserved_sources_released'), 'info');
+    //     if($workOrder->abort())
+    //         $this->emit('toast', __('workorders.production_aborted'), __('workorders.reserved_sources_released'), 'info');
 
-        $this->closeFinalizeModal();
-    }
+    //     $this->closeFinalizeModal();
+    // }
 
 
 
