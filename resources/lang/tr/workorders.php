@@ -2,17 +2,19 @@
 
 return [
     // icons ******************* 
-    'wo_complete_icon' => 'power',
-    'wo_completed_icon' => 'checkmark',
-    'wo_in_progress_icon' => 'loading cog',
-    'wo_active_icon' => 'clock outline',
-    'wo_inactive_icon' => 'grey ban icon',
+    // 'wo_complete_icon' => 'power',
+    // 'wo_completed_icon' => 'checkmark',
+    // 'wo_in_progress_icon' => 'loading cog',
+    // 'wo_active_icon' => 'clock outline',
+    // 'wo_inactive_icon' => 'grey ban icon',
     // icons ******************* 
 
     // states
     'approved' => 'Onaylandı',
     'completed' => 'Tamamlandı',
     'in_progress' => 'Üretim sürüyor',
+    'prepared' => 'Hazırlandı',
+    'preparing' => 'Hazırlanıyor',
     'active' => 'Aktif',
     'suspended' => 'Askıya alındı',
 
@@ -109,7 +111,7 @@ return [
     'production_started_at_time' => 'Üretim :time başladı',
     // 'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
     'all_stock_moves_will_be_deleted_which_is_added_by_this_wo' => 'Üretim sonucu stoğa eklenen/çıkarılan bütün ürünler iptal edilecek!',
-    'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
+    // 'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
     // 'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
 
     'there_is_no_any_schuled_work_today' => 'Bugün için bir iş programı oluşturulmadı',

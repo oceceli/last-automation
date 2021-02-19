@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
+use App\Http\Livewire\Deletable;
+use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
 use App\Http\Livewire\Traits\WorkOrders\FinalizeModal;
 use App\Http\Livewire\Traits\WorkOrders\ReservedSourcesModal;
 use App\Http\Livewire\Traits\WorkOrders\ReserveSourcesModal;
+use App\Models\WorkOrder;
 use App\Services\WorkOrder\WorkOrderService;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -15,6 +18,8 @@ class WoDaily extends Component
     use ReserveSourcesModal;
     use ReservedSourcesModal;
     use FinalizeModal;
+    use DetailsModal;
+    use Deletable;
 
     public $todayDate; // just date of today
     public $workOrders;
@@ -28,7 +33,9 @@ class WoDaily extends Component
     public function mount()
     {
         $this->todayDate = Carbon::now()->format('d.m.Y - D');
-        $this->workOrders = WorkOrderService::getTodaysList();
+        $this->workOrders = WorkOrderService::getTodaysList(); // todo: bu liste kullanıcının rolüne göre bazı kısımları gizli olarak gelmeli(suspended)
+
+        $this->workOrders = WorkOrder::all();
     }
 
     
@@ -41,11 +48,41 @@ class WoDaily extends Component
         $this->workOrders = WorkOrderService::getTodaysList();
     }
 
-
+    private function findWo($workOrderId)
+    {
+        return $this->workOrders->find($workOrderId);
+    }
     
     public function getInProgressProperty()
     {
         return WorkOrderService::inProgressCurrently();
+    }
+
+
+    public function woActivate($workOrderId)
+    {
+        $this->findWo($workOrderId)->activate();
+    }
+
+    public function woSuspend($workOrderId)
+    {
+        $this->findWo($workOrderId)->suspend();
+    }
+
+    public function woStart($workOrderId)
+    {
+        $this->findWo($workOrderId)->setInProgress();
+    }
+
+    public function woApprove($workOrderId)
+    {
+        $this->findWo($workOrderId)->approve();
+    }
+
+
+    public function routePreparePage($workOrderId)
+    {
+        return redirect()->route('work-orders.prepare', ['workOrder' => $workOrderId]);
     }
 
 
@@ -72,10 +109,10 @@ class WoDaily extends Component
 
 
     
-    public function delete($id)
-    {
-        $workOrder = $this->workOrders->find($id);
-        $workOrder->delete();
-        $this->refreshTable();
-    }
+    // public function delete($id)
+    // {
+    //     $workOrder = $this->workOrders->find($id);
+    //     $workOrder->delete();
+    //     $this->refreshTable();
+    // }
 }

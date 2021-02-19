@@ -65,6 +65,7 @@ class WorkOrder extends Model implements CanReserveStocks
     }
 
 
+    
 
     public function areAllReady()
     {

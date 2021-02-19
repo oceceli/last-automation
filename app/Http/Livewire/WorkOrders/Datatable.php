@@ -3,15 +3,15 @@
 namespace App\Http\Livewire\WorkOrders;
 
 use App\Http\Livewire\SmartTable;
+use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
 use App\Models\WorkOrder;
 use Livewire\Component;
 
 class Datatable extends Component
 {
     use SmartTable;
+    use DetailsModal;
 
-    public $detailsModal = false;
-    public $selectedWorkOrder;
 
     protected $alsoSearch = [
         'product.name',
@@ -19,13 +19,5 @@ class Datatable extends Component
 
     public $model = WorkOrder::class;
     protected $view = 'livewire.work-orders.datatable';
-
-
-
-    public function openDetailsModal($workOrderId)
-    {
-        $this->detailsModal = true;
-        $this->selectedWorkOrder = WorkOrder::find($workOrderId);
-    }
 
 }

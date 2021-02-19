@@ -1,5 +1,8 @@
 <div class="ui mini {{ $color }} buttons">
-    <div wire:click.prevent="{{ $action }}" class="ui button">{{ $main }}</div>
+    <div wire:click.prevent="{{ $action }}" class="ui button">
+        <i class="{{ $icon }}"></i>
+        {{ $main }}
+    </div>
     <div class="ui floating dropdown icon button">
         <i class="dropdown icon"></i>
         <div class="menu">

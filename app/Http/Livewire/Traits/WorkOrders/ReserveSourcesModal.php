@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Traits\WorkOrders;
 
 
 // used at App\Http\Livewire\WorkOrders\WoDaily
-trait ReserveSourcesModal
+trait ReserveSourcesModal // !! bu trait diğeri tamamlanınca silinecek
 {
     /**
      * Modal status

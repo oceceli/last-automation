@@ -46,7 +46,7 @@ trait FinalizeModal
     /**
      * Start workorder finalize process, open modal
      */
-    public function FinalizeProcess($id)
+    public function finalizeProcess($id)
     {
         $this->finalizeModal = true;
         $this->finalizeData = $this->workOrders->find($id);

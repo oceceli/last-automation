@@ -55,6 +55,12 @@
                             @case($workOrder->isInProgress())
                                 @include('web.sections.workorders.daily.table-rows.wo-case-inprogress')
                                 @break
+                            @case($workOrder->isPrepared())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-prepared')
+                                @break
+                            @case($workOrder->isPreparing())
+                                @include('web.sections.workorders.daily.table-rows.wo-case-preparing')
+                                @break
                             @case($workOrder->isActive())
                                 @include('web.sections.workorders.daily.table-rows.wo-case-active')
                                 @break
@@ -62,6 +68,17 @@
                                 @include('web.sections.workorders.daily.table-rows.wo-case-suspended')
                                 @break
                         @endswitch
+
+
+
+
+
+
+
+
+
+
+                        
                             {{-- @if ($workOrder->isCompleted())
                                 <tr class="left green marked text-green-600 bg-teal-50 ">
                                     <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
@@ -115,7 +132,7 @@
                                             <div wire:key="showReserved{{ $workOrder->id }}" wire:click.prevent="showReservedSources({{ $workOrder->id }})" data-tooltip="{{ __('workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
                                                 <i class="search link icon"></i>
                                             </div>
-                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="FinalizeProcess({{ $workOrder->id }})" data-tooltip="{{ __('workorders.wo_complete') }}" data-variation="mini">
+                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="finalizeProcess({{ $workOrder->id }})" data-tooltip="{{ __('workorders.wo_complete') }}" data-variation="mini">
                                                 <i class="{{ __('workorders.wo_complete_icon') }} red link icon"></i>
                                             </div>
                                         </x-crud-actions>
@@ -171,6 +188,16 @@
                                 </tr>
                             @endif --}}
 
+
+
+
+
+
+
+
+
+
+
                     @empty
                         <tr>
                             <td colspan="10">
@@ -194,13 +221,15 @@
     @include('web.sections.workorders.daily.modals.finalize')
 
 
-    {{-- @if ($detailsModal)
+    @if ($detailsModal)
         <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
-                <x-workorder-details :workOrder="$selectedWorkOrder" />
+                <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
             </x-custom-modal>
         </div>
-    @endif --}}
+    @endif
+
+    @include('web.helpers.deletable')
 
     
 

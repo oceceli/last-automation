@@ -33,14 +33,15 @@ trait WorkOrderLotPicker
         ];
     }
 
-
+   
 
     /**
-     * Open modal for specifying lot sources to dispatch
+     * Open modal for specifying lot sources for workorder
      */
     public function openWoLotPickerModal($index) // ?? dp farklı
     {
-        // if($this->ingredientCards[$index]['is_ready']) return; // !! bunu neden yaptım?
+
+        if( ! $this->rowsCanBeProcessed()) return;
 
         $this->reset('rows');
 
@@ -211,7 +212,7 @@ trait WorkOrderLotPicker
         foreach($this->reservationsOfIngredient()->get() as $reservation) {
             $this->rows[] = [
                 'lot_number' => $reservation->reserved_lot,
-                'reserved_amount' => $reservation->reserved_amount + 0,
+                'reserved_amount' => round($reservation->reserved_amount, 6) + 0,
             ];
         }
         $this->woLotPickerModal = true;
@@ -289,13 +290,13 @@ trait WorkOrderLotPicker
     public function necessaryAmount()
     {
         $amount = $this->getToBase();
-        return number_format($amount - $this->coveredAmount(), 6) + 0;
+        return round($amount - $this->coveredAmount(), 6) + 0;
     }
 
 
     public function getToBase()
     {
-        return number_format(Conversions::toBase($this->selectedIngredient->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount'])['amount'], 6) + 0; // ?? dp farklı
+        return round(Conversions::toBase($this->selectedIngredient->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount'])['amount'], 6); // ?? dp farklı
     }
 
 
@@ -326,14 +327,21 @@ trait WorkOrderLotPicker
     }
 
 
+    private function rowsCanBeProcessed()
+    {
+        return ($this->workOrder->isPreparing() || $this->workOrder->isActive());
+    }
+
+
     /**
      * Custom validations just before the submit
      */
     public function cannotSubmit() : bool
     {
         // Needs for order must be covered and lots must be different from one another
-        return number_format($this->getToBase(), 6) !== number_format($this->coveredAmount(), 6)
-               || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows);
+        return round($this->getToBase(), 6) !== round($this->coveredAmount(), 6)
+               || count(array_unique(array_column($this->rows, 'lot_number'))) !== count($this->rows)
+               || ! $this->rowsCanBeProcessed();
             //    || ! $this->selectedIngredient->dispatchOrder->isNotFinalized();
     }
 

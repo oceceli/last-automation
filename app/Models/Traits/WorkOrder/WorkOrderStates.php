@@ -55,6 +55,11 @@ trait WorkOrderStates
         return $this->checkStatus('suspended');
     }
 
+    public function getStatus()
+    {
+        return $this->wo_status;
+    }
+
 
 
 
@@ -78,7 +83,7 @@ trait WorkOrderStates
     public function setInProgress()
     {
 
-        if($this->isActive() && ! $this->isInProgress()) {
+        if($this->isPrepared() && ! $this->isInProgress()) {
             $this->setStatus('in_progress');
             $this->update(['wo_started_at' => now()]);
             return true;
@@ -94,14 +99,14 @@ trait WorkOrderStates
 
     public function setPreparing()
     {
-        if(($this->isActive() || $this->isPrepared()) && $this->reservedStocks->isNotEmpty()) {
+        if(($this->isActive() || $this->isPrepared()) && $this->anyPreparing()) {
             return $this->setStatus('preparing');
-        }
+        } 
     }
 
     public function activate()
     {
-        if($this->isPreparing() || $this->isSuspended())
+        if(($this->isPreparing() && ! $this->anyPreparing()) || $this->isSuspended())
             return $this->setStatus('active');
     }
 
@@ -143,12 +148,17 @@ trait WorkOrderStates
 
     public function completedAt()
     {
-        return $this->isCompleted() ? $this->wo_completed_at : null;
+        return $this->isCompleted() || $this->isApproved() ? $this->wo_completed_at : null;
     }
 
     public function isToday()
     {
         return $this->wo_datetime == Carbon::today()->format('d.m.Y');
+    }
+
+    private function anyPreparing()
+    {
+        return $this->reservedStocks()->exists();
     }
 
 
@@ -163,7 +173,7 @@ trait WorkOrderStates
 
     private function setStatus($state)
     {
-        if(auth()->user()->cannot($this->permission)) abort(403); // ?? devam
+        // if(auth()->user()->cannot($this->permission)) abort(403); // ?? devam
 
         if(in_array($state, $this->states)) {
             $this->update(['wo_status' => $state]);
@@ -175,16 +185,16 @@ trait WorkOrderStates
 
 
 
-    public function getStatusColorAttribute()
-    {
-        return [
-            'approved' => 'green',
-            'completed' => 'green',
-            'in_progress' => 'yellow',
-            'active' => 'blue',
-            'suspended' => 'gray',
-        ][$this->wo_status] ?? null;
-    }
+    // public function getStatusColorAttribute()
+    // {
+    //     return [
+    //         'approved' => 'green',
+    //         'completed' => 'green',
+    //         'in_progress' => 'yellow',
+    //         'active' => 'blue',
+    //         'suspended' => 'gray',
+    //     ][$this->wo_status] ?? null;
+    // }
 
 
 }

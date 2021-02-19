@@ -10,17 +10,19 @@ class MenuDropdown extends Component
     public $main;
     public $color;
     public $action;
+    public $icon;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($main, $action, $color = 'teal')
+    public function __construct($main, $action, $color = 'teal', $icon = '')
     {
         $this->main = $main;
         $this->color = $color;
         $this->action = $action;
+        $this->icon = $icon;
     }
 
     /**

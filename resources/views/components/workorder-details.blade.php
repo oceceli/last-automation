@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div x-show="lotNumbers" class="pt-2">
-                            <x-reserved-stocks-table :model="$workOrder" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
+                            <x-reserved-stocks-table :reservations="$workOrder->reservationsFor($item['ingredient']['id'])->get()" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
                         </div>
                     </div>
                 @endforeach

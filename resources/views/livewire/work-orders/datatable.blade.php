@@ -131,7 +131,7 @@
     @if ($detailsModal)
         <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
-                <x-workorder-details :workOrder="$selectedWorkOrder" />
+                <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
             </x-custom-modal>
         </div>
     @endif

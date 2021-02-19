@@ -1,9 +1,11 @@
-<tr class="negative">
+<tr class="font-semibold blue">
     <td class="center aligned collapsing">
-        <span data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" data-variation="mini" data-position="top left">
-            <i class="large checkmark icon"></i>
+        <span data-tooltip="{{ __('workorders.preparing') }}" data-variation="mini" data-position="top left">
+            <i class="large primary loading clock outline icon"></i>
         </span>
     </td>
+
+
     <td>{{ $workOrder->product->prd_name }}</td>
     <td>
         <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
@@ -14,12 +16,10 @@
     <td class="">{{ $workOrder->wo_lot_no }}</td>
     <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
     <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
+
+
     <td class="collapsing right aligned">
-        <x-menu-dropdown main="{{ __('common.approve')}}" action="woApprove({{ $workOrder->id }})" color="red" icon="checkmark icon">
-            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
-                <i class="link box icon"></i>
-                {{ __('workorders.reserved_sources' ) }}
-            </div>
+        <x-menu-dropdown main="{{ __('common.prepare')}}" action="routePreparePage({{ $workOrder->id }})" color="blue" icon="open box icon">
             <div wire:click.prevent="openDetailsModal({{ $workOrder->id }})" class="item text-red-600"> 
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
@@ -32,6 +32,7 @@
                 <i class="trash icon"></i>
                 {{ __('common.delete')}}
             </div>
-        </x-menu-dropdown>
+        </x-menu-dropdown> 
     </td>
 </tr>
+

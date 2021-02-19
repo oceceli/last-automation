@@ -23,6 +23,14 @@ class WorkorderDetails extends Component
 
     public function templateClasses()
     {
+        $arr = [
+            'icon' => '',
+            // 'tableRow' => '',
+            'statusColor' => '',
+            'borderColor' => '',
+            'bottomClass' => '',
+            'explanation' => '',
+        ];
         if($this->workOrder->isApproved()) {
             $arr = [
                 'icon' => 'double check icon',
@@ -48,6 +56,24 @@ class WorkorderDetails extends Component
                 'statusColor' => 'text-yellow-500',
                 'borderColor' => 'border-yellow-400',
                 'bottomClass' => 'bg-yellow-400',
+                'explanation' => __('workorders.production_continues'),
+            ];
+        } elseif($this->workOrder->isPrepared()) {
+            $arr = [
+                'icon' => 'loading cog icon',
+                // 'tableRow' => 'purple font-bold',
+                'statusColor' => 'text-purple-500',
+                'borderColor' => 'border-purple-400',
+                'bottomClass' => 'bg-purple-400',
+                'explanation' => __('workorders.production_continues'),
+            ];
+        } elseif($this->workOrder->isPreparing()) {
+            $arr = [
+                'icon' => 'loading cog icon',
+                // 'tableRow' => 'purple font-bold',
+                'statusColor' => 'text-purple-500',
+                'borderColor' => 'border-purple-400',
+                'bottomClass' => 'bg-purple-400',
                 'explanation' => __('workorders.production_continues'),
             ];
         } elseif($this->workOrder->isActive()) {
