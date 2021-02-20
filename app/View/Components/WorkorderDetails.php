@@ -26,7 +26,7 @@ class WorkorderDetails extends Component
         $arr = [
             'icon' => '',
             // 'tableRow' => '',
-            'statusColor' => '',
+            // 'statusColor' => '',
             'borderColor' => '',
             'bottomClass' => '',
             'explanation' => '',
@@ -35,64 +35,64 @@ class WorkorderDetails extends Component
             $arr = [
                 'icon' => 'double check icon',
                 // 'tableRow' => 'positive',
-                'statusColor' => 'text-green-500',
-                'borderColor' => 'border-green-500',
-                'bottomClass' => 'bg-green-500',
-                'explanation' => $this->workOrder->wo_completed_at,
+                // 'statusColor' => 'text-green-700',
+                'borderColor' => 'border-green-700',
+                'bottomClass' => 'bg-green-700',
+                'explanation' => '',
             ];
         } elseif($this->workOrder->isCompleted()) {
             $arr = [
                 'icon' => 'checkmark icon',
                 // 'tableRow' => 'red font-bold',
-                'statusColor' => 'text-red-500',
-                'borderColor' => 'border-red-500',
-                'bottomClass' => 'bg-red-500',
-                'explanation' => __('workorders.production_is_completed'),
+                // 'statusColor' => 'text-red-700',
+                'borderColor' => 'border-red-700',
+                'bottomClass' => 'bg-red-700',
+                'explanation' => __('workorders.waiting_for_approval'),
             ];
         } elseif($this->workOrder->isInProgress()) {
             $arr = [
                 'icon' => 'loading cog icon',
                 // 'tableRow' => 'yellow font-bold',
-                'statusColor' => 'text-yellow-500',
-                'borderColor' => 'border-yellow-400',
-                'bottomClass' => 'bg-yellow-400',
-                'explanation' => __('workorders.production_continues'),
+                // 'statusColor' => 'text-yellow-700',
+                'borderColor' => 'border-yellow-700',
+                'bottomClass' => 'bg-yellow-700',
+                'explanation' => __('workorders.production_started_at_time', ['time' => $this->workOrder->startedAt()->diffForHumans()]),
             ];
         } elseif($this->workOrder->isPrepared()) {
             $arr = [
-                'icon' => 'loading cog icon',
-                // 'tableRow' => 'purple font-bold',
-                'statusColor' => 'text-purple-500',
-                'borderColor' => 'border-purple-400',
-                'bottomClass' => 'bg-purple-400',
-                'explanation' => __('workorders.production_continues'),
+                'icon' => 'pause icon',
+                // 'tableRow' => 'blue font-bold',
+                // 'statusColor' => 'text-blue-700',
+                'borderColor' => 'border-purple-700',
+                'bottomClass' => 'bg-purple-700',
+                'explanation' => __('workorders.sources_are_prepared_waiting_for_start_signal'),
             ];
         } elseif($this->workOrder->isPreparing()) {
             $arr = [
-                'icon' => 'loading cog icon',
-                // 'tableRow' => 'purple font-bold',
-                'statusColor' => 'text-purple-500',
-                'borderColor' => 'border-purple-400',
-                'bottomClass' => 'bg-purple-400',
-                'explanation' => __('workorders.production_continues'),
+                'icon' => 'loading clock icon',
+                // 'tableRow' => 'blue font-bold',
+                // 'statusColor' => 'text-blue-700',
+                'borderColor' => 'border-teal-700',
+                'bottomClass' => 'bg-teal-700',
+                'explanation' => __('workorders.sources_are_preparing'),
             ];
         } elseif($this->workOrder->isActive()) {
             $arr = [
                 'icon' => 'clock icon',
                 // 'tableRow' => '',
-                'statusColor' => 'text-teal-500',
+                // 'statusColor' => 'text-teal-500',
                 'borderColor' => 'border-teal-900',
                 'bottomClass' => 'bg-teal-900',
-                'explanation' => __('workorders.waiting_for_production'),
+                'explanation' => __('workorders.get_sources_ready_to_be_prepared'),
             ];
         } elseif($this->workOrder->isSuspended()) {
             $arr = [
                 'icon' => 'ban icon',
                 // 'tableRow' => 'grey',
-                'statusColor' => 'text-gray-500',
-                'borderColor' => 'border-gray-500',
-                'bottomClass' => 'bg-gray-500',
-                'explanation' => __('workorders.suspended'),
+                // 'statusColor' => 'text-gray-700',
+                'borderColor' => 'border-gray-700',
+                'bottomClass' => 'bg-gray-700',
+                'explanation' => __('workorders.activate_first_to_get_in_progress'),
             ];
         }
         return $arr;

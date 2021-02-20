@@ -1,4 +1,4 @@
-<tr class="font-semibold blue">
+<tr class="font-semibold teal">
     <td class="center aligned collapsing">
         <span data-tooltip="{{ __('workorders.preparing') }}" data-variation="mini" data-position="top left">
             <i class="large primary loading clock outline icon"></i>

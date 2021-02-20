@@ -16,13 +16,13 @@
     <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
     <td class="collapsing right aligned">
         <x-menu-dropdown main="{{ __('common.approve')}}" action="woApprove({{ $workOrder->id }})" color="red" icon="checkmark icon">
-            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
-                <i class="link box icon"></i>
-                {{ __('workorders.reserved_sources' ) }}
-            </div>
             <div wire:click.prevent="openDetailsModal({{ $workOrder->id }})" class="item text-red-600"> 
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
+            </div>
+            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
+                <i class="link box icon"></i>
+                {{ __('workorders.reserved_sources' ) }}
             </div>
             {{-- <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
                 <i class="edit icon"></i>

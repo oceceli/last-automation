@@ -24,6 +24,10 @@
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
             </div>
+            <div wire:click.prevent="routePreparePage({{ $workOrder->id }})" class="item text-red-600">
+                <i class="redo icon"></i>
+                {{ __('workorders.examine_sources_and_edit')}}
+            </div>
             {{-- <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
                 <i class="edit icon"></i>
                 {{ __('common.edit')}}

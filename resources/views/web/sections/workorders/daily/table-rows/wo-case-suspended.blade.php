@@ -30,6 +30,10 @@
                 <i class="edit icon"></i>
                 {{ __('common.edit')}}
             </a>
+            {{-- <div wire:click.prevent="routePreparePage({{ $workOrder->id }})" class="item text-red-600">
+                <i class="play icon"></i>
+                {{ __('common.detail')}}
+            </div> --}}
             <div wire:click.prevent="delete({{ $workOrder->id }})" class="item text-red-600">
                 <i class="trash icon"></i>
                 {{ __('common.delete')}}

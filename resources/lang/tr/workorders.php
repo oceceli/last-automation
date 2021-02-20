@@ -118,4 +118,11 @@ return [
     'mark_as_ready_when_all_sources_picked' => 'Kaynaklar seçildikten sonra \'hazırlandı\' olarak işaretlenmelidir.',
     'all_sources_are_prepared_and_wo_can_get_start' => 'Tüm kaynaklar belirtildi, iş başlamaya hazır!',
     'edit_sources_before_start' => 'Kaynakları düzenle',
+    'examine_sources_and_edit' => 'Kaynakları gözden geçir veya düzenle',
+    'activate_first_to_get_in_progress' => 'Üretim yapabilmek için aktif hale getirin',
+    'get_sources_ready_to_be_prepared' => 'Üretime başlamak için kullanılacak kaynakları ve miktarları seçin',
+    'sources_are_preparing' => 'Üretimde kullanılacak kaynaklar hazırlanıyor',
+    'sources_are_prepared_waiting_for_start_signal' => 'Kaynaklar hazırlandı, üretim başlamaya hazır!',
+    'waiting_for_approval' => 'Yönetici onayı bekliyor',
+    'used_sources' => 'Kullanılan kaynaklar',
 ];

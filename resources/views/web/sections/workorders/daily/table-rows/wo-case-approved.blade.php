@@ -15,14 +15,14 @@
     <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
     <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
     <td class="collapsing right aligned">
-        <x-menu-dropdown main="{{ __('common.detail')}}" action="openDetailsModal({{ $workOrder->id }})" color="green" icon="search icon">
-            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
-                <i class="link box icon"></i>
-                {{ __('workorders.reserved_sources' ) }}
-            </div>
-            <div wire:click.prevent="openDetailsModal({{ $workOrder->id }})" class="item text-red-600"> 
+        <x-menu-dropdown main="{{ __('common.see_details')}}" action="openDetailsModal({{ $workOrder->id }})" color="green" icon="search icon">
+            {{-- <div wire:click.prevent="openDetailsModal({{ $workOrder->id }})" class="item text-red-600"> 
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
+            </div> --}}
+            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
+                <i class="link box icon"></i>
+                {{ __('workorders.used_sources' ) }}
             </div>
             {{-- <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
                 <i class="edit icon"></i>

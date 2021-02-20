@@ -72,6 +72,10 @@ class WorkOrderController extends Controller
         if(auth()->user()->cannot('process workorders')) abort(403);
         
         $workOrder = WorkOrder::findOrFail($workOrder);
+
+        // if($workOrder->isSuspended() || $workOrder->isInProgress() || $workOrder->isCompleted() || $workOrder->isApproved()) abort(404);
+        if( ! ($workOrder->isActive() || $workOrder->isPreparing() || $workOrder->isPrepared())) abort(404);
+
         return view('web.sections.workorders.daily.prepare.prepare', compact('workOrder'));
     }
 
