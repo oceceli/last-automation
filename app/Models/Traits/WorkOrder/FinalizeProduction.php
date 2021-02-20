@@ -13,98 +13,98 @@ use App\Stocks\ProductionWasteMove;
 trait FinalizeProduction
 {
 
-    private $inputTotal;
+    // private $inputTotal;
 
 
-    public function saveProductionResults($inputTotal, $inputWaste, $unitId) // todo: bu aslında approve()
-    {
-        if($inputWaste > $inputTotal) return;
+    // public function saveProductionResults($inputTotal, $inputWaste, $unitId)
+    // {
+    //     if($inputWaste > $inputTotal) return;
 
-        // take production results to their base unit
-        $this->inputTotal = $inputTotal = Conversions::toBase($unitId, $inputTotal)['amount'];
-        $inputWaste =                     Conversions::toBase($unitId, $inputWaste)['amount'];
+    //     // take production results to their base unit
+    //     $this->inputTotal = $inputTotal = Conversions::toBase($unitId, $inputTotal)['amount'];
+    //     $inputWaste =                     Conversions::toBase($unitId, $inputWaste)['amount'];
         
-        if(!$this->isEfficiencyAcceptable($inputTotal)) dd("verimlilik düşük/fazla"); //return; // todo: today livewire'da sorgula 
+    //     if(!$this->isEfficiencyAcceptable($inputTotal)) dd("verimlilik düşük/fazla"); //return; // todo: today livewire'da sorgula 
 
-        (new ProductionTotalMove($this, (float)$inputTotal))->save();  // ?? kullanıcı girişi olduğu gibi stoğa yansıtılıyor. Yansımamalı. ** verimlilik yaptım eksikler var
-        (new ProductionWasteMove($this, (float)$inputWaste))->save();
+    //     (new ProductionTotalMove($this, (float)$inputTotal))->save();  // ?? kullanıcı girişi olduğu gibi stoğa yansıtılıyor. Yansımamalı. ** verimlilik yaptım eksikler var
+    //     (new ProductionWasteMove($this, (float)$inputWaste))->save();
 
-        $this->deductFromReservedSources();
+    //     $this->deductFromReservedSources();
         
-        $this->reservedStocks()->delete();
+    //     $this->reservedStocks()->delete();
 
-        return true;
-    }
+    //     return true;
+    // }
     
 
 
-    /**
-     * Subtracts reserved sources(based on lot number)
-     */
-    private function deductFromReservedSources()
-    {
-        $necessaryIngredients = $this->necessaryIngredients();
+    // /**
+    //  * Subtracts reserved sources(based on lot number)
+    //  */
+    // private function deductFromReservedSources()
+    // {
+    //     $necessaryIngredients = $this->necessaryIngredients();
 
-        foreach($necessaryIngredients as $necessary) {
-            $reservedSources = $this->reservedStocks()->where('product_id', $necessary['ingredient']['id'])->get();
-            foreach($reservedSources as $reservation) {
-                // if($necessary['amount'] === 0) continue;
-                if($necessary['amount'] >= $reservation->reserved_amount) {
-                    (float)$toBeDeducted = $reservation->reserved_amount;
-                    $necessary['amount'] -= $reservation->reserved_amount;
-                } else {
-                    (float)$toBeDeducted = $necessary['amount'];
-                    $necessary['amount'] = 0;
-                }
+    //     foreach($necessaryIngredients as $necessary) {
+    //         $reservedSources = $this->reservedStocks()->where('product_id', $necessary['ingredient']['id'])->get();
+    //         foreach($reservedSources as $reservation) {
+    //             // if($necessary['amount'] === 0) continue;
+    //             if($necessary['amount'] >= $reservation->reserved_amount) {
+    //                 (float)$toBeDeducted = $reservation->reserved_amount;
+    //                 $necessary['amount'] -= $reservation->reserved_amount;
+    //             } else {
+    //                 (float)$toBeDeducted = $necessary['amount'];
+    //                 $necessary['amount'] = 0;
+    //             }
 
-                (new ProductionIngredientMove($this, $necessary['ingredient']['id'], $reservation->reserved_lot, $toBeDeducted))
-                    ->save();
-            }
-        }
-    }
-
-
-
-    /**
-     * Return total amount of needed ingredients for current workorder's product 
-     */
-    private function necessaryIngredients() : array
-    {
-        foreach($this->product->recipe->ingredients as $key => $ingredient) {
-            $ingredientBaseAmount = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount)['amount'];
-            $totalDecrase[$key] = [
-                'ingredient' => $ingredient,
-                'amount' => $ingredient->pivot->literal 
-                    ? $this->plannedBaseAmount * $ingredientBaseAmount
-                    : $this->inputTotal * $ingredientBaseAmount // ?? is flooring needed?
-            ];
-        }
-
-        return $totalDecrase;
-    }
+    //             (new ProductionIngredientMove($this, $necessary['ingredient']['id'], $reservation->reserved_lot, $toBeDeducted))
+    //                 ->save();
+    //         }
+    //     }
+    // }
 
 
 
+    // /**
+    //  * Return total amount of needed ingredients for current workorder's product 
+    //  */
+    // private function necessaryIngredients() : array
+    // {
+    //     foreach($this->product->recipe->ingredients as $key => $ingredient) {
+    //         $ingredientBaseAmount = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount)['amount'];
+    //         $totalDecrase[$key] = [
+    //             'ingredient' => $ingredient,
+    //             'amount' => $ingredient->pivot->literal 
+    //                 ? $this->plannedBaseAmount * $ingredientBaseAmount
+    //                 : $this->inputTotal * $ingredientBaseAmount // ?? is flooring needed?
+    //         ];
+    //     }
 
-    private function isEfficiencyAcceptable(float $inputTotal)
-    {
-        $toleranceFactor = $this->product->recipe->tolerance_factor; // !! reçete tablosuna ekle 
+    //     return $totalDecrase;
+    // }
 
-        $tolerance = ($this->plannedBaseAmount * $toleranceFactor) / 100;
 
-        $positiveTolerance = ($inputTotal + $tolerance);
-        $negativeTolerance = ($inputTotal - $tolerance);
 
-        return ! ($this->plannedBaseAmount < $negativeTolerance || $this->plannedBaseAmount > $positiveTolerance);
-    }
+
+    // private function isEfficiencyAcceptable(float $inputTotal)
+    // {
+    //     $toleranceFactor = $this->product->recipe->tolerance_factor; // !! reçete tablosuna ekle 
+
+    //     $tolerance = ($this->plannedBaseAmount * $toleranceFactor) / 100;
+
+    //     $positiveTolerance = ($inputTotal + $tolerance);
+    //     $negativeTolerance = ($inputTotal - $tolerance);
+
+    //     return ! ($this->plannedBaseAmount < $negativeTolerance || $this->plannedBaseAmount > $positiveTolerance);
+    // }
 
     
     
     
     
-    public function getPlannedBaseAmountAttribute()
-    {        
-        return (float)Conversions::toBase($this->unit, $this->wo_amount)['amount'];
-    }
+    // public function getPlannedBaseAmountAttribute()
+    // {        
+    //     return (float)Conversions::toBase($this->unit, $this->wo_amount)['amount'];
+    // }
 
 }

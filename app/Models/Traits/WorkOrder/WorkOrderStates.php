@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits\WorkOrder;
 
+use App\Services\WorkOrder\WorkOrderCompleteService;
 use Carbon\Carbon;
 
 trait WorkOrderStates
@@ -67,15 +68,14 @@ trait WorkOrderStates
     {
         if($this->isCompleted()) {
             return $this->setStatus('approved');
-            // todo: stoktan düşme işlemleri
-            // !! finalize traite bak
+            // !! tüm stockmovelar approved true olarak işaretle
         }
     }
 
-    public function complete()
+    public function complete(WorkOrderCompleteService $service)
     {
         if($this->isInProgress()) {
-            // $this->update(['wo_completed_at' => now()]);
+            $service->saveProductionResults();
             $this->updateQuietly('wo_completed_at', now());
             return $this->setStatus('completed');
         }

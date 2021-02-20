@@ -22,4 +22,5 @@ class ProductionIngredientMove extends Moves
         $this->datetime = now();
     }
 
+
 }

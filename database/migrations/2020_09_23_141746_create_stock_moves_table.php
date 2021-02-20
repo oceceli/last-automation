@@ -23,6 +23,8 @@ class CreateStockMovesTable extends Migration
             $table->integer('base_amount');
             $table->date('datetime');
 
+            $table->boolean('approved')->default(false); // !! envanter hesaplarken sadece true olanları baz al
+
             $table->string('stockable_type')->nullable();
             $table->bigInteger('stockable_id')->nullable();
     

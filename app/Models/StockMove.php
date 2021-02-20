@@ -68,7 +68,7 @@ class StockMove extends Model
 
     public function getUnitNameAttribute()
     {
-        return $this->product->getBaseUnit()->name;
+        return $this->product->baseUnit->name;
     }
 
     public function setLotNumberAttribute($lotNumber)

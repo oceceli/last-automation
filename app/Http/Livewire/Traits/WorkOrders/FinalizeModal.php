@@ -3,11 +3,12 @@
 namespace App\Http\Livewire\Traits\WorkOrders;
 
 use App\Models\Unit;
+use App\Services\WorkOrder\WorkOrderCompleteService;
 
 trait FinalizeModal
 {
     public $finalizeModal;
-    public $finalizeData;
+    public $finalizeWorkOrder;
 
     public $unit_id;
     public $selectedUnit;
@@ -49,10 +50,10 @@ trait FinalizeModal
     public function finalizeProcess($id)
     {
         $this->finalizeModal = true;
-        $this->finalizeData = $this->workOrders->find($id);
+        $this->finalizeWorkOrder = $this->workOrders->find($id);
 
         // set base unit initially so user will probably select base unit
-        $this->unit_id = $this->finalizeData->product->baseUnit->id;
+        $this->unit_id = $this->finalizeWorkOrder->product->baseUnit->id;
         $this->updatedUnitId($this->unit_id);
     }
 
@@ -65,39 +66,29 @@ trait FinalizeModal
     {
         $this->validate();
 
-        // if($this->finalizeData->saveProductionResults($this->production_total, $this->production_waste, $this->unit_id))
-        if($this->finalizeData->complete())
-            $this->emit('toast', __('workorders.production_is_completed'), __('workorders.reserved_sources_deducted_from_stocks_and_product_added_to_stock', ['product' => $this->finalizeData->product->prd_name]), 'success');
+        $completeService = new WorkOrderCompleteService($this->finalizeWorkOrder, $this->unit_id, $this->production_total, $this->production_waste);
+        if( $completeService->efficiencyIsNotAcceptable()) 
+            return $this->emit('toast', 'workorders.efficiency_limits_exceeded', __('workorders.efficiency_limits_exceeded_for_this_production', ['efficiency' => $this->finalizeWorkOrder->product->recipe->tolerance_factor]), 'error');
+
+        if($this->finalizeWorkOrder->complete($completeService))
+            $this->emit('toast', __('workorders.production_is_completed'), __('workorders.reserved_sources_deducted_from_stocks_and_product_added_to_stock', ['product' => $this->finalizeWorkOrder->product->prd_name]), 'success');
 
         $this->reFetchTable();
     }
 
 
 
-    
-    // public function abortWo($id)
-    // {
-    //     $workOrder = $this->workOrders->find($id);
-
-    //     if($workOrder->abort())
-    //         $this->emit('toast', __('workorders.production_aborted'), __('workorders.reserved_sources_released'), 'info');
-
-    //     $this->closeFinalizeModal();
-    // }
-
-
-
     public function closeFinalizeModal()
     {
         $this->finalizeModal = false;
-        $this->reset('finalizeData', 'unit_id', 'selectedUnit', 'production_total', 'production_waste');
+        $this->reset('finalizeWorkOrder', 'unit_id', 'selectedUnit', 'production_total', 'production_waste');
     }
 
 
 
-    public function updatedFinalizeModal($value)
+    public function updatedFinalizeModal($bool)
     {
-        if(!$value) $this->closeFinalizeModal();
+        if(!$bool) $this->closeFinalizeModal();
     }
 
 

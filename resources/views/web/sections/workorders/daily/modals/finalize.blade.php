@@ -1,13 +1,13 @@
 @if ($finalizeModal)
     <div x-data="{finalizeModal: @entangle('finalizeModal')}">
-        <x-custom-modal active="finalizeModal" header="{{ $finalizeData->product->prd_name }}">
+        <x-custom-modal active="finalizeModal" header="{{ $finalizeWorkOrder->product->prd_name }}">
 
             <form class="ui tiny form shadow-md" wire:submit.prevent="woComplete()">
                 <x-form-divider noButtons>
 
                     <x-slot name="left">
                         <x-dropdown label="{{ __('common.total') }}" iModel="production_total" iPlaceholder="{{ __('stockmoves.total_produced_amount') }}" sClass="basic"
-                            model="unit_id" value="id" text="name" :collection="$finalizeData->product->units" placeholder="{{__('modelnames.unit')}}"
+                            model="unit_id" value="id" text="name" :collection="$finalizeWorkOrder->product->units" placeholder="{{__('modelnames.unit')}}"
                         />
                         <x-input label="{{ __('stockmoves.waste') }}" model="production_waste" placeholder="{{ __('stockmoves.waste_amount')}}">
                             <x-slot name="innerLabel">
@@ -61,7 +61,7 @@
                         <i class="small circular question mark icon"></i>
                     </span>
                 </div>
-                <div x-show="woAbortConfirmation" wire:click="abortWo({{ $finalizeData->id }})" 
+                <div x-show="woAbortConfirmation" wire:click="abortWo({{ $finalizeWorkOrder->id }})" 
                         class="font-extrabold bg-red-200 text-center border-red-300 text-red-600 cursor-pointer p-2 rounded hover:bg-red-500 ease-in-out hover:text-white duration-200">
                     {{ __('common.abort') }}?
                 </div>
