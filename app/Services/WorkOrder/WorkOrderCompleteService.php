@@ -34,8 +34,6 @@ class WorkOrderCompleteService
 
         $this->deductFromReservedSources();
         
-        $this->workOrder->reservedStocks()->delete();
-
         return true;
     }
     

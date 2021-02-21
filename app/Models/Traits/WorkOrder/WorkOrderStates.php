@@ -68,6 +68,7 @@ trait WorkOrderStates
     {
         if($this->isCompleted()) {
             $this->stockMoves()->update(['approved' => true]);
+            $this->reservedStocks()->delete();
             return $this->setStatus('approved');
         }
     }
@@ -202,5 +203,18 @@ trait WorkOrderStates
     //     ][$this->wo_status] ?? null;
     // }
 
+
+    public function getStatusLookupAttribute()
+    {
+        return [
+            'approved' => ['icon' => 'green double check icon', 'explanation' => __('common.approved')],
+            'completed' => ['icon' => 'green checkmark icon', 'explanation' => __('workorders.production_is_completed')],
+            'in_progress' => ['icon' => 'yellow loading cog icon', 'explanation' => __('workorders.production_continues')],
+            'prepared' => ['icon' => 'purple pause icon', 'explanation' => __('workorders.prepared')],
+            'preparing' => ['icon' => 'blue loading clock icon', 'explanation' => __('workorders.preparing')],
+            'active' => ['icon' => 'blue clock icon', 'explanation' => __('workorders.waiting_for_production')],
+            'suspended' => ['icon' => 'grey ban icon', 'explanation' => __('common.suspended')],
+        ][$this->wo_status] ?? ['icon' => '', 'explanation' => ''];
+    }
 
 }

@@ -36,26 +36,54 @@
         </x-slot>
 
         <x-slot name="right">
-            <div class="flex flex-col gap-3">
-                @foreach ($workOrder->product->recipe->calculateNecessaryIngredients($workOrder->wo_amount, $workOrder->unit_id) as $item)
-                    <div x-data="{lotNumbers: false}" class="border p-4 {{ $classes['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed">
-                        <div class="flex justify-between text-ease cursor-pointer" @click="lotNumbers = ! lotNumbers" >
-                            <span class="font-bold">{{ $item['ingredient']->prd_name }}</span>
-                            <div>
-                                <span>{{ $item['amount'] }} {{ $item['unit']->name }}</span>
-                                <span x-show="!lotNumbers" class="pl-6"><i class="caret right icon"></i></span>
-                                <span x-show="lotNumbers" class="pl-6"><i class="caret down icon"></i></span>
-                            </div>
-                        </div>
-                        <div x-show="lotNumbers" class="pt-2">
-                            <x-reserved-stocks-table :reservations="$workOrder->reservationsFor($item['ingredient']['id'])->get()" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
+            @if ($workOrder->isCompleted() || $workOrder->isApproved())
+                <div class="border rounded text-center">
+
+                    <div class="shadow p-2">
+                        <span class="text-green-700">{{ $workOrder->productionResults['total'] }}</span> -
+                        <span class="text-red-700">{{ $workOrder->productionResults['waste'] }}</span> =
+                        <span class="text-green-700 font-bold">{{ $workOrder->productionResults['net'] }}</span>
+                        <span> 
+                            {{ strtolower($workOrder->product->baseUnit->name) }} 
+                            <span class="font-bold">{{ $workOrder->product->prd_name }}</span> stoğa eklendi.
+                        </span>
+                    </div>
+
+                    <div class="p-2 pt-4">
+                        <div class="font-bold">Üretimde kullanılan malzemeler:</div>
+                        <div class="pt-2">
+                            @foreach ($workOrder->ingredientMoves as $stockMove)
+                                <x-list-item>
+                                    <div>
+                                        <span>{{ $stockMove->product->prd_code }}</span>
+                                        <span class="text-xs">({{ $stockMove->lot_number }})</span>
+                                    </div>
+                                    <span>{{ $stockMove->base_amount }} {{ $stockMove->product->baseUnit->name }}</span>
+                                </x-list-item>
+                            @endforeach
                         </div>
                     </div>
-                @endforeach
-            </div>
-            {{-- <div class="p-2 border border-dashed">
-                <x-necessary-ingredients :unitId="$workOrder->unit_id" :amount="$workOrder->wo_amount" :product="$workOrder->product" />
-            </div> --}}
+
+                </div>
+            @else
+                <div class="flex flex-col gap-3">
+                    @foreach ($workOrder->product->recipe->calculateNecessaryIngredients($workOrder->wo_amount, $workOrder->unit_id) as $item)
+                        <div x-data="{lotNumbers: false}" @click="lotNumbers = ! lotNumbers" class="border p-4 {{ $classes['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed cursor-pointer text-ease">
+                            <div class="flex justify-between">
+                                <span class="font-bold">{{ $item['ingredient']->prd_name }}</span>
+                                <div>
+                                    <span>{{ $item['amount'] }} {{ $item['unit']->name }}</span>
+                                    <span x-show="!lotNumbers" class="pl-6"><i class="caret right icon"></i></span>
+                                    <span x-show="lotNumbers" class="pl-6"><i class="caret down icon"></i></span>
+                                </div>
+                            </div>
+                            <div x-show="lotNumbers" class="pt-2">
+                                <x-reserved-stocks-table :reservations="$workOrder->reservationsFor($item['ingredient']['id'])->get()" noHead noProduct emptyMessage="dispatchorders.not_ready_yet" />
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </x-slot>
 
         <x-slot name="bottom">

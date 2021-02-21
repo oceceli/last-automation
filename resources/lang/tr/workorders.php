@@ -125,6 +125,7 @@ return [
     'sources_are_prepared_waiting_for_start_signal' => 'Kaynaklar hazırlandı, üretim başlamaya hazır!',
     'waiting_for_approval' => 'Yönetici onayı bekliyor',
     'used_sources' => 'Kullanılan kaynaklar',
+    'completed_at_time' => 'İş bitiş: :time',
 
     'efficiency_limits_exceeded' => 'Verimlilik fazla/eksik!',
     // 'efficiency_limits_exceeded_for_this_production' => 'Bu ürün reçetesi için belirtilen %:efficiency verimlilik toleransı aşıldı. Lütfen değerleri doğru girdiğinizden emin olun. İsterseniz ilgili reçeteden verilimlik değerini güncelleyebilirsiniz',

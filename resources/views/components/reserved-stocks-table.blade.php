@@ -25,11 +25,11 @@
                     <x-tbody-item class="font-bold right aligned">{{ (float)$reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }}</x-tbody-item>
                 </x-table-row>
             @empty
-                <x-table-row class="p-5">
+                <tr class="p-5 bg-red-900 shadow-inner text-white">
                     <x-tbody-item>
                         {{ __($emptyMessage) }}...
                     </x-tbody-item>   
-                </x-table-row>                
+                </tr>                
             @endforelse
         </x-tbody>
     </x-table>

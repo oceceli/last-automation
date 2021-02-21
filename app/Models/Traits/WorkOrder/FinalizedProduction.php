@@ -7,39 +7,40 @@ trait FinalizedProduction
     /**
      * Get gross amount of finalized workorder
      */
-    public function getProductionGross()
+    public function getProductionTotal() : float
     {
-        $gross = $this->stockMoves()->where('type', 'production_total')->get();
-        if($gross->isEmpty())
-            return 0;
-        return $gross->first()->base_amount;
+        $total = $this->stockMoves()->where('type', 'production_total')->first();
+        return optional($total)->base_amount;
     }
 
 
     /**
      * Get waste amount of finalized workorder
      */
-    public function getProductionWaste()
+    public function getProductionWaste() : float 
     {
-        $waste = $this->stockmoves()->where('type', 'production_waste')->get();
-        if($waste->isEmpty())
-            return 0;
-        return $waste->first()->base_amount;
+        $waste = $this->stockmoves()->where('type', 'production_waste')->first();
+        return optional($waste)->base_amount;
     }
 
 
     /**
      * Get production results of finalized workorder as an array
      */
-    public function getProductionResults()
+    public function getProductionResultsAttribute()
     {
-        if($this->isCompleted()) { // !! completed mi approved mi olacak?
+        if($this->isCompleted() || $this->isApproved()) {
             return [
-                'gross' => $this->getProductionGross(),
+                'total' => $this->getProductionTotal(),
                 'waste' => $this->getProductionWaste(),
-                'net' => $this->getProductionGross() - $this->getProductionWaste(),
+                'net' => $this->getProductionTotal() - $this->getProductionWaste(),
             ];
         }
+    }
+
+    public function getIngredientMovesAttribute()
+    {
+        return $this->stockmoves()->where('type', 'production_ingredient')->get();
     }
     
 }

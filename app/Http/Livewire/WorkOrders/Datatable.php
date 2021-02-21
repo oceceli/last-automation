@@ -11,7 +11,7 @@ class Datatable extends Component
 {
     use SmartTable;
     use DetailsModal;
-
+     
 
     protected $alsoSearch = [
         'product.name',
@@ -19,5 +19,9 @@ class Datatable extends Component
 
     public $model = WorkOrder::class;
     protected $view = 'livewire.work-orders.datatable';
+
+
+
+
 
 }

@@ -19,7 +19,6 @@ class WorkOrder extends Model implements CanReserveStocks
     use Searchable;
 
     use WorkOrderStates;
-    use FinalizeProduction;
     use FinalizedProduction;
 
     protected $guarded = [];

@@ -68,136 +68,6 @@
                                 @include('web.sections.workorders.daily.table-rows.wo-case-suspended')
                                 @break
                         @endswitch
-
-
-
-
-
-
-
-
-
-
-                        
-                            {{-- @if ($workOrder->isCompleted())
-                                <tr class="left green marked text-green-600 bg-teal-50 ">
-                                    <td class="center aligned collapsing" data-tooltip="{{ __('workorders.production_is_completed') }} - {{ $workOrder->completedAt() }}" 
-                                            data-variation="mini" data-position="top left">
-                                        <i class="large green checkmark icon"></i>
-                                    </td>
-                                    <td>{{ $workOrder->product->prd_name }}</td>
-                                    <td>
-                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
-                                        @if ( ! $workOrder->unitIsAlreadyBase())
-                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
-                                        @endif
-                                    </td>
-                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
-                                    <td class="collapsing selectable">
-                                        <span class="px-2 shadow rounded bg-white" data-tooltip="{{ __('common.see_details') }}" data-variation="mini" data-position="top right">
-                                            <a class="text-teal-600 text-lg" href="{{ route('work-orders.show', ['work_order' => $workOrder]) }}">
-                                                {{ round($workOrder->getProductionResults()['net'],2) }} {{ $workOrder->product->baseUnit->name }}
-                                            </a>
-                                        </span>
-                                    </td>
-                                </tr>
-
-                            @elseif($workOrder->isInProgress())
-                                <tr class="{{ $workOrder->statusColor }} font-bold cursor-default">
-                                    <td class="center aligned collapsing">
-                                        @if ( ! $workOrder->isToday())
-                                            <span data-tooltip="{{ __('workorders.this_work_order_is_not_finished_in_time_should_end_now')}}" data-variation="mini" data-position="top left">
-                                                <i class="large red attention icon"></i>
-                                            </span>
-                                        @else
-                                            <span data-tooltip="{{ __('workorders.production_continues') }}" data-variation="mini">
-                                                <i class="large {{ __('workorders.wo_in_progress_icon')}} icon"></i>
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $workOrder->product->prd_name }}</td>
-                                    <td>
-                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
-                                        @if ( ! $workOrder->unitIsAlreadyBase())
-                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
-                                        @endif
-                                    </td>
-                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
-                                    <td class="collapsing">
-                                        <x-crud-actions show edit gray modelName="work-order" :modelId="$workOrder->id">
-                                            <div wire:key="showReserved{{ $workOrder->id }}" wire:click.prevent="showReservedSources({{ $workOrder->id }})" data-tooltip="{{ __('workorders.reserved_sources') }}" data-variation="mini" data-position="top right">
-                                                <i class="search link icon"></i>
-                                            </div>
-                                            <div wire:key="complete{{ $workOrder->id }}" wire:click.prevent="finalizeProcess({{ $workOrder->id }})" data-tooltip="{{ __('workorders.wo_complete') }}" data-variation="mini">
-                                                <i class="{{ __('workorders.wo_complete_icon') }} red link icon"></i>
-                                            </div>
-                                        </x-crud-actions>
-                                    </td>
-                                </tr>
-
-                            @elseif($workOrder->isActive())
-                                <tr class="font-semibold cursor-default hover:bg-cool-gray-50 ease-in duration-200">
-                                    <td class="center aligned collapsing">
-                                        <span data-tooltip="{{ __('workorders.waiting_for_production') }}" data-variation="mini">
-                                            <i class="large primary clock outline icon"></i>
-                                        </span>
-                                    </td>
-                                    <td>{{ $workOrder->product->prd_name }}</td>
-                                    <td>
-                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
-                                        @if ( ! $workOrder->unitIsAlreadyBase())
-                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
-                                        @endif
-                                    </td>
-                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
-                                    <td class="collapsing">
-                                        <x-crud-actions show edit delete modelName="work-order" :modelId="$workOrder->id" addClass="py-1">
-                                            <div data-tooltip="{{ __('workorders.wo_start') }}" data-variation="mini">
-                                                <i wire:click.prevent="startProcess({{ $workOrder->id }})" class="red play link icon"></i>
-                                            </div>
-                                        </x-crud-actions>
-                                    </td>
-                                </tr>
-                            
-                            @else
-                                <tr class="text-gray-400">
-                                    <td class="center aligned collapsing">
-                                        <span data-tooltip="{{ __('common.suspended') }}" data-variation="mini">
-                                            <i class="large grey ban icon"></i>
-                                        </span>
-                                    </td>
-                                    <td>{{ $workOrder->product->prd_name }}</td>
-                                    <td>
-                                        <span>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</span>
-                                        @if ( ! $workOrder->unitIsAlreadyBase())
-                                            <span class="text-xs text-ease">({{ round($workOrder->convertedBaseAmount(),3) }} {{ $workOrder->convertedBaseUnit()->name }})</span>
-                                        @endif
-                                    </td>
-                                    <td class="">{{ $workOrder->wo_lot_no }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
-                                    <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
-                                    <td class="collapsing">
-                                        <x-crud-actions show edit delete modelName="work-order" gray :modelId="$workOrder->id" />
-                                    </td>
-                                </tr>
-                            @endif --}}
-
-
-
-
-
-
-
-
-
-
-
                     @empty
                         <tr>
                             <td colspan="10">
@@ -224,7 +94,9 @@
     @if ($detailsModal)
         <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
+
                 <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
+                
             </x-custom-modal>
         </div>
     @endif

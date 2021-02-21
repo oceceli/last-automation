@@ -38,7 +38,7 @@ class WorkorderDetails extends Component
                 // 'statusColor' => 'text-green-700',
                 'borderColor' => 'border-green-700',
                 'bottomClass' => 'bg-green-700',
-                'explanation' => '',
+                'explanation' => __('workorders.completed_at_time', ['time' => $this->workOrder->completedAt()]),
             ];
         } elseif($this->workOrder->isCompleted()) {
             $arr = [

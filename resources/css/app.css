@@ -47,7 +47,7 @@
   }
 
   .crud-buttons {
-    @apply flex gap-2 px-1 rounded-sm border border-dashed hover:border-teal-500 ease;
+    @apply flex gap-2 justify-center px-1 rounded-sm border border-dashed hover:border-teal-500 ease;
   }
 
 }
