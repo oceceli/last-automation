@@ -67,8 +67,8 @@ trait WorkOrderStates
     public function approve()
     {
         if($this->isCompleted()) {
+            $this->stockMoves()->update(['approved' => true]);
             return $this->setStatus('approved');
-            // !! tüm stockmovelar approved true olarak işaretle
         }
     }
 

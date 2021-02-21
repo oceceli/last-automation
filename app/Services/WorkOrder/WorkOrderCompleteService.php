@@ -12,14 +12,12 @@ class WorkOrderCompleteService
 {
     private $workOrder;
 
-    // private $unit_id;
     private $total;
     private $waste; 
 
     public function __construct(WorkOrder $workOrder, $unit_id, $total, $waste)
     {
         $this->workOrder = $workOrder;
-        // $this->unit_id = $unit_id;
 
         // take production results to their base unit
         $this->total = Conversions::toBase($unit_id, $total)['amount'];
@@ -52,7 +50,7 @@ class WorkOrderCompleteService
             $reservedSources = $this->workOrder->reservedStocks()->where('product_id', $necessary['ingredient']['id'])->get();
             foreach($reservedSources as $reservation) {
                 // if($necessary['amount'] === 0) continue;
-                if($necessary['amount'] >= $reservation->reserved_amount) { // !! burada bazı sorunlar var
+                if($necessary['amount'] >= $reservation->reserved_amount) {
                     (float)$toBeDeducted = $reservation->reserved_amount;
                     $necessary['amount'] -= $reservation->reserved_amount;
                 } else {
