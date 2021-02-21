@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\UsersExport;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 trait SmartTable
 {
@@ -96,6 +98,12 @@ trait SmartTable
         } else {
             return 'small orange sort';
         }
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
 }
