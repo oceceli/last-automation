@@ -15,7 +15,8 @@
     <td class="center aligned collapsing">{{ $workOrder->wo_queue }}</td>
     <td class="center aligned collapsing">{{ $workOrder->wo_code }}</td>
     <td class="collapsing right aligned">
-        <x-menu-dropdown main="{{ __('common.approve')}}" action="woApprove({{ $workOrder->id }})" color="red" icon="checkmark icon">
+        {{-- <x-menu-dropdown main="{{ __('common.confirm_or_deny')}}" action="woApprove({{ $workOrder->id }})" color="red" icon="tools icon"> --}}
+        <x-menu-dropdown main="{{ __('common.confirm_or_deny')}}" action="openApprovalModal({{ $workOrder->id }})" color="red" icon="tools icon">
             <div wire:click.prevent="openDetailsModal({{ $workOrder->id }})" class="item text-red-600"> 
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}

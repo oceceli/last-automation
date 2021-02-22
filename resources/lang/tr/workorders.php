@@ -69,6 +69,7 @@ return [
     'reserved_amount' => 'Rezerve edilen miktar',
     'reserved_resources_for_manufacturing_product' => ':product üretimi için rezerve edilen kaynaklar',
     // 'reserved_sources_will_be_deducted_when_manufacturing_finalized' => 'Rezerve edilen kaynaklar üretim bittiğinde stoktan düşecek',
+    'wo_will_fallback_to_inprogress_state' => 'İş emri \'üretiliyor\' durumuna çekilecek',
     'specified_resources_reserved_to_use_in_production' => 'Belirtilen kaynaklar üretimde kullanılmak üzere rezerve edildi',
     'reserved_sources_will_be_used_as_needed_when_production_is_finalized' => 'Üretim tamamlandığında rezerve edilen kaynaklar ihtiyaç duyulduğu kadar kullanılır.',
     'insufficient_sources' => 'Yetersiz kaynaklar',
@@ -110,7 +111,8 @@ return [
     'started_at_time' => ':time başladı',
     'production_started_at_time' => 'Üretim :time başladı',
     // 'a_work_order_already_in_progress' => 'Bir iş bitmeden diğeri başlayamaz!',
-    'all_stock_moves_will_be_deleted_which_is_added_by_this_wo' => 'Üretim sonucu stoğa eklenen/çıkarılan bütün ürünler iptal edilecek!',
+    // 'all_stock_moves_will_be_deleted_which_is_added_by_this_wo' => 'Üretim sonucu stoğa eklenen/çıkarılan bütün ürünler iptal edilecek!',
+    'production_results_will_be_added_to_stock' => 'Üretim sonucu stoğa işlenecek',
     // 'this_work_order_is_not_finished_in_time_should_end_now' => 'Bu iş emri zamanında bitmemiş, sonlandırılması gerekiyor!',
     // 'wo_completed_with_zero_production' => 'İş bitti, stoğa ekleme yapılmadı...',
 

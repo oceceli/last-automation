@@ -86,7 +86,7 @@
     
 
 
-    @include('web.sections.workorders.daily.modals.reserve-sources')
+    {{-- @include('web.sections.workorders.daily.modals.reserve-sources') --}}
     @include('web.sections.workorders.daily.modals.reserved-sources')
     @include('web.sections.workorders.daily.modals.finalize')
 
@@ -96,6 +96,16 @@
             <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
 
                 <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
+                
+            </x-custom-modal>
+        </div>
+    @endif
+
+    @if ($approvalModal)
+        <div wire:key="approvalModal" x-data="{approvalModal: @entangle('approvalModal')}">
+            <x-custom-modal active="approvalModal" header="{{ __('workorders.details.header') }}">
+
+                <x-workorder-details :workOrder="$approvalWorkOrder" />
                 
             </x-custom-modal>
         </div>

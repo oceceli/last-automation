@@ -6,7 +6,6 @@ use App\Http\Livewire\Deletable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
 use App\Http\Livewire\Traits\WorkOrders\FinalizeModal;
 use App\Http\Livewire\Traits\WorkOrders\ReservedSourcesModal;
-use App\Http\Livewire\Traits\WorkOrders\ReserveSourcesModal;
 use App\Models\WorkOrder;
 use App\Services\WorkOrder\WorkOrderService;
 use Carbon\Carbon;
@@ -15,7 +14,6 @@ use Livewire\Component;
 class WoDaily extends Component
 {
 
-    use ReserveSourcesModal;
     use ReservedSourcesModal;
     use FinalizeModal;
     use DetailsModal;
@@ -27,7 +25,8 @@ class WoDaily extends Component
     public $todayDate; // just date of today
     public $workOrders;
 
-
+    public $approvalModal = false;
+    public $approvalWorkOrder;
     
 
 
@@ -42,6 +41,7 @@ class WoDaily extends Component
         $this->workOrders = WorkOrder::all(); // !! sil burayı
     }
 
+    
     
 
     /**
@@ -62,6 +62,23 @@ class WoDaily extends Component
         return WorkOrderService::inProgressCurrently();
     }
 
+    public function openApprovalModal($workOrderId)
+    {
+        $this->approvalWorkOrder = $this->findWo($workOrderId);
+        $this->approvalModal = true;
+    }
+
+    private function closeApprovalModal()
+    {
+        $this->reset('approvalModal', 'approvalWorkOrder');
+    }
+
+    public function updatedApprovalModal($bool)
+    {
+        if($bool == false) $this->closeApprovalModal();
+    }
+
+
 
     public function woActivate($workOrderId)
     {
@@ -81,6 +98,13 @@ class WoDaily extends Component
     public function woApprove($workOrderId)
     {
         $this->findWo($workOrderId)->approve();
+        $this->closeApprovalModal();
+    }
+
+    public function woDeny($workOrderId)
+    {
+        $this->findWo($workOrderId)->deny();
+        $this->closeApprovalModal();
     }
 
     public function woAbort($workOrderId)
@@ -94,18 +118,11 @@ class WoDaily extends Component
         return redirect()->route('work-orders.prepare', ['workOrder' => $workOrderId]);
     }
 
-
-
-    private function reFetchTable() // ?? yerini refreshtable'a bırakabilir mi?
-    {
-        $this->reset('production_total', 'production_waste', 'unit_id', 'selectedUnit', 'finalizeModal');
-        $this->workOrders = WorkOrderService::getTodaysList();
-    }
-
-
     
     private function refreshTable()
     {
+        $this->reset('production_total', 'production_waste', 'unit_id', 'selectedUnit', 'finalizeModal');
+        $this->closeApprovalModal();
         $this->emitSelf('refreshTable');
     }
 

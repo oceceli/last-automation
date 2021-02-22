@@ -63,6 +63,13 @@ trait WorkOrderStates
 
 
 
+    public function deny()
+    {
+        if($this->isCompleted()) {
+            $this->stockMoves()->delete();
+            return $this->setStatus('in_progress');
+        }
+    }
 
     public function approve()
     {
@@ -85,7 +92,7 @@ trait WorkOrderStates
     public function setInProgress()
     {
 
-        if($this->isPrepared() && ! $this->isInProgress()) {
+        if($this->isPrepared()) {
             $this->setStatus('in_progress');
             $this->updateQuietly('wo_started_at', now());
             return true;

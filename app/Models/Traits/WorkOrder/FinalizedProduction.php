@@ -10,7 +10,7 @@ trait FinalizedProduction
     public function getProductionTotal() : float
     {
         $total = $this->stockMoves()->where('type', 'production_total')->first();
-        return optional($total)->base_amount;
+        return $total->base_amount ?? 0;
     }
 
 
@@ -20,7 +20,7 @@ trait FinalizedProduction
     public function getProductionWaste() : float 
     {
         $waste = $this->stockmoves()->where('type', 'production_waste')->first();
-        return optional($waste)->base_amount;
+        return $waste->base_amount ?? 0;
     }
 
 

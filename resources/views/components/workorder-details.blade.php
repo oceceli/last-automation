@@ -88,7 +88,7 @@
 
         <x-slot name="bottom">
             <div class="text-white">
-                <div class="flex justify-between">
+                <div class="flex justify-between items-center">
                     <div>
                         <i class="{{ $classes['icon'] }}"></i>
                         <span class="font-bold">
@@ -96,6 +96,18 @@
                         </span>
                         <span class="text-xs">- {{ $classes['explanation'] }}</span>
                     </div>
+                    @if ($workOrder->isCompleted())
+                        <div>
+                            <button wire:click.prevent="woDeny({{ $workOrder->id }})" class="ui mini white button" data-tooltip="{{ __('workorders.wo_will_fallback_to_inprogress_state') }}" data-variation="mini" data-position="top right" >
+                                <i class="red ban icon"></i>
+                                {{ __('common.deny') }}
+                            </button>
+                            <button wire:click.prevent="woApprove({{ $workOrder->id }})" class="ui mini white button" data-tooltip="{{ __('workorders.production_results_will_be_added_to_stock') }}" data-variation="mini" data-position="top right">
+                                <i class="green checkmark icon"></i>
+                                {{ __('common.confirm') }}
+                            </button>
+                        </div>
+                    @endif
                 </div>
                 @if ($workOrder->wo_note)
                     <div class="mt-4 p-2 border rounded shadow">

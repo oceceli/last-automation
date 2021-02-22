@@ -61,6 +61,9 @@ return [
     'context_deleted' => 'İçerik silindi',
     'smoothly_updated' => ':model sorunsuz bir şekilde güncellendi...',
     
+    // 'operation' => 'İşlem',
+    'confirm_or_deny' => 'Onay/Ret',
+
     'unable_to_delete' => 'Silinmedi!',
     'phone' => 'Telefon',
     'number_abbreviation' => 'No',
