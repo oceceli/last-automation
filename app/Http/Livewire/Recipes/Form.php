@@ -54,6 +54,7 @@ class Form extends Component
     ];
 
 
+
     /**
      * Determine if it is create, show or edit page and make arrangements initially
      */
@@ -110,8 +111,11 @@ class Form extends Component
                 'unit_id' => $ingredient->pivot->unit_id,
                 'amount' => $ingredient->pivot->amount,
                 'literal' => $ingredient->pivot->literal,
+                
+                'units' => $ingredient->units,
             ];
         }
+        // dd($this->cards[0]);
     }
 
 
@@ -409,7 +413,7 @@ class Form extends Component
     {
         return $this->validate([
             'product_id' => 'required|min:1',
-            'code' => 'required|unique:recipes,' . $this->product_id,
+            'rcp_code' => 'required|unique:recipes,' . $this->product_id,
         ]);
     }
 

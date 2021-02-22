@@ -134,14 +134,14 @@
                                             
                                             
                                             @if ($this->isLocked())
-                                                <div class="text-xl text-green-500 hover:text-green-600 cursor-default ease-in-out duration-200 font-bold">
+                                                <div class="text-xl border p-2 border-dashed text-green-500 hover:text-green-600 cursor-default ease-in-out duration-200 font-bold">
                                                     <span class="">{{ $card['amount'] }}</span>
                                                     <span class="text-sm">{{ $this->getIngredientUnit($card)['name'] }}</span>
                                                 </div>
                                             @else
-                                                <div class="flex gap-2 items-center ui mini">
+                                                <div class="flex gap-2 items-center">
                                                     <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="recipes.amount" iType="number"
-                                                        model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.ingredient.units" :sId="'unit'.$key" sClass="basic"
+                                                        model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.units" :sId="'unit'.$key" sClass="basic"
                                                         value="id" text="name" placeholder="{{ __('units.unit') }}">
                                                     </x-dropdown>
                                                 </div>
