@@ -16,7 +16,7 @@ class WoPrepare extends Component
 
     public $ingredientCards = [
         // 'ingredient' => '$ingredient',
-        // 'amount' => '5500',
+        // 'amount' => '462',
         // 'unit' => $convertedIngredient['unit'],
     ];
 
@@ -25,6 +25,7 @@ class WoPrepare extends Component
     {
         $this->workOrder = $workOrder;
         $this->ingredientCards = $this->workOrder->product->recipe->calculateNecessaryIngredients($this->workOrder->wo_amount, $this->workOrder->unit_id);
+        // dd($this->ingredientCards[0]['ingredient']->pivot);
     }
 
 

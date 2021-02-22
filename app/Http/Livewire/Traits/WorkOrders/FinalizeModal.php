@@ -73,7 +73,6 @@ trait FinalizeModal
         if($this->finalizeWorkOrder->complete($completeService))
             $this->emit('toast', __('workorders.production_is_completed'), __('workorders.reserved_sources_deducted_from_stocks_and_product_added_to_stock', ['product' => $this->finalizeWorkOrder->product->prd_name]), 'success');
 
-        // $this->reFetchTable();
         $this->refreshTable();
     }
 

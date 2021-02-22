@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
 use App\Models\Traits\Recipe\HasDeletingRules;
 use App\Models\Traits\Searchable;
+use App\Services\Recipe\ToleranceService;
 
 class Recipe extends Model
 {
@@ -53,19 +54,20 @@ class Recipe extends Model
 
 
 
-    public function calculateNecessaryIngredients($amount, $unitId) : array
+    public function calculateNecessaryIngredients($amount, $unitId, $withTolerance = false) : array
     {
         $mainProduct = Conversions::toBase($unitId, $amount);
         foreach($this->ingredients as $key => $ingredient) {
             $convertedIngredient = Conversions::toBase($ingredient->pivot->unit_id, $ingredient->pivot->amount);
             $array[] = [
                 'ingredient' => $ingredient,
-                'amount' => $mainProduct['amount'] * $convertedIngredient['amount'],
+                'amount' => $withTolerance 
+                                    ? ToleranceService::withTolerance($this, ($mainProduct['amount'] * $convertedIngredient['amount']))
+                                    : $mainProduct['amount'] * $convertedIngredient['amount'],
                 'unit' => $convertedIngredient['unit'],
                 // 'is_ready' => $ingredient->pivot->is_ready ? true : false,
             ];
         }
-
         return $array;
     }
 

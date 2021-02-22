@@ -20,10 +20,10 @@
                 <i class="link eye icon"></i>
                 {{ __('common.see_details' ) }}
             </div> --}}
-            <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
+            {{-- <div wire:click.prevent="showReservedSources({{ $workOrder->id }})" class="item text-red-600"> 
                 <i class="link box icon"></i>
                 {{ __('workorders.used_sources' ) }}
-            </div>
+            </div> --}}
             {{-- <a href="{{ route('work-orders.edit', ['work_order' => $workOrder->id])}}" class="item text-red-600"> 
                 <i class="edit icon"></i>
                 {{ __('common.edit')}}

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Traits\WorkOrders;
 
 use App\Common\Facades\Conversions;
 use App\Models\Product;
+use App\Services\Recipe\ToleranceService;
 
 trait WorkOrderLotPicker
 {
@@ -12,6 +13,7 @@ trait WorkOrderLotPicker
     public $rows = [];
     
     public $selectedIngredient;
+    public $ingredientPivot;
     public $selectedIndex;
 
     public $reservationViewModal = false;
@@ -46,6 +48,8 @@ trait WorkOrderLotPicker
         $this->reset('rows');
 
         $this->selectedIngredient = Product::find($this->ingredientCards[$index]['ingredient']['id']);
+        $this->ingredientPivot = $this->ingredientCards[$index]['ingredient']['pivot'];
+        
         $this->selectedIndex = $index;
         
         if($this->isInEditMode()) {
@@ -294,9 +298,11 @@ trait WorkOrderLotPicker
     }
 
 
-    public function getToBase()
+
+    public function getToBase() // ?? dp farklı
     {
-        return round(Conversions::toBase($this->selectedIngredient->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount'])['amount'], 6); // ?? dp farklı
+        $baseAmount = round(Conversions::toBase($this->selectedIngredient->baseUnit, $this->ingredientCards[$this->selectedIndex]['amount'])['amount'], 6);
+        return ! $this->ingredientPivot['literal'] ? ToleranceService::withTolerance($this->workOrder->product->recipe, $baseAmount) :  $baseAmount ;
     }
 
 
