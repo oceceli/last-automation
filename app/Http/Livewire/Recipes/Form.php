@@ -92,7 +92,7 @@ class Form extends Component
         
         // if selected product has no recipe then exit
         if( ! $recipe = $this->selectedProduct->recipe)
-            return $this->reset('code', 'cards');
+            return $this->reset('rcp_code', 'cards');
 
         // if there is a recipe for selected product, lock the card so it will be non-editable
         $this->lock();

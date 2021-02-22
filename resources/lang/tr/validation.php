@@ -234,6 +234,11 @@ return [
         // reservedstocks
         // 'reserved_lot' => 'Rezerve edilen kaynak',
         // 'reserved_amount' => 'Rezerve edilen miktar',
+
+
+        // recipe
+        'rcp_code' => 'Reçete Kodu',
+
     ],
 
 ];

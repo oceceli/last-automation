@@ -11,7 +11,6 @@ return [
     'add_edit_or_delete_ingredients' => 'Reçeteye içerik ekle, çıkar ya da düzenle',
 
 
-    'code' => 'Reçete Kodu',
     'recipe_product' => 'Reçetesi yazılacak ürün',
     'belongs_to' => 'Ait olduğu ürün',
     'count_of_ingredients' => 'İçindekiler',

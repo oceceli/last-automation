@@ -101,7 +101,7 @@ class Product extends Model
 
     public static function getProducibleProducts()
     {
-        return self::where('producible', true)->get();
+        return self::where('prd_producible', true)->get();
     }
 
 

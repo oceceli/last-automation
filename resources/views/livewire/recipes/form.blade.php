@@ -54,7 +54,7 @@
 
             {{-- RECIPE FORM ---------------------------------------------------------------------------}}
             <div class="p-6 shadow-md">
-                <form class="ui small form">
+                <form class="ui mini form">
                     <div class="equal width fields">
                         {{-- <x-dropdown.search model="product_id" label="recipes.recipe_product"
                         :collection="$this->producibles" value="id" text="name,code" id="selectProduct" class="required" sClass="search" /> --}}
@@ -63,9 +63,9 @@
                         :collection="$this->producibles" value="id" text="prd_code,prd_name" />
                         
                         <div class="@if($this->isLocked()) disabled @endif field">
-                            <x-input action model="code" label="recipes.code" placeholder="recipes.code" class="required">
+                            <x-input action model="rcp_code" label="validation.attributes.rcp_code" placeholder="validation.attributes.rcp_code" class="required mini">
                                 <x-slot name="action">
-                                    <button wire:click.prevent="suggestCode" class="ui teal right labeled icon button @if( ! $selectedProduct) disabled @endif" >
+                                    <button wire:click.prevent="suggestCode" class="ui teal mini right labeled icon button @if( ! $selectedProduct) disabled @endif" >
                                         <i class="icon random"></i>
                                         {{ __('recipes.suggest_code') }}
                                     </button>
@@ -123,8 +123,8 @@
 
                                             <div class="flex flex-col">
                                                 <div class="flex gap-2 items-center">
-                                                    <div class="font-bold">{{ $card['ingredient']['name'] }}</div>
-                                                    <div class="text-sm text-ease">({{ $card['ingredient']['code'] }})</div>
+                                                    <div class="font-bold">{{ $card['ingredient']['prd_name'] }}</div>
+                                                    <div class="text-sm text-ease">({{ $card['ingredient']['prd_code'] }})</div>
                                                 </div>
                                                 <div class="text-sm font-semibold text-green-500 hover:text-green-700 ease-in-out duration-200 cursor-default">
                                                     <span>{{ $this->calculatedUnit($card) }}</span>
