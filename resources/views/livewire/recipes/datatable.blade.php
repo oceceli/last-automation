@@ -31,7 +31,17 @@
                                 @endif
                             </td>
                             <td class="collapsing">
-                                <x-crud-actions show delete edit modelName="recipe" :modelId="$recipe->id" />
+                                <div class="crud-buttons">
+                                    @can('view recipes')
+                                        <x-show-button wire:key="showbutton_{{$loop->index}}" route="{{ route('recipes.show', ['recipe' => $recipe])}}" />
+                                    @endcan
+                                    @can('create update recipes')
+                                        <x-edit-button wire:key="editbutton_{{$loop->index}}" route="{{ route('recipes.edit', ['recipe' => $recipe]) }}" />
+                                    @endcan
+                                    @can('delete recipes')
+                                        <x-delete-button wire:key="deletebutton_{{$loop->index}}" action="delete({{ $recipe->id }})"  />
+                                    @endcan
+                                </div>
                             </td>
                         </tr>
                     @empty
