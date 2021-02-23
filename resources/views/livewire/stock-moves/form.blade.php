@@ -15,6 +15,7 @@
                 @forelse ($cards as $key => $card)
                     <div wire:key="{{ $key }}" class="shadow-md rounded-md bg-white">
                         <div class="flex flex-col md:flex-row rounded-md relative">
+
                             <div wire:click.prevent="toggleDirection({{ $key }})" class="shadow md:rounded-l-md p-8 md:p-5 cursor-pointer @if($card['direction']) bg-teal-100 @else bg-red-100 @endif">
                                 @if ($card['direction'])
                                     <span class="" data-tooltip="{{ __('stockmoves.stock_in') }}" data-variation="mini">
@@ -48,6 +49,7 @@
                                     <x-datepicker model="cards.{{ $key }}.datetime" type="date" :uniqueKey="$key" />
                                     {{-- <input type="datetime-local" class="form-date" wire:model="cards.{{ $key }}.datetime"> --}}
                                 </div>
+                                
                             </div>
                             <button wire:click.prevent="removeCard({{ $key }})" class="focus:outline-none absolute top-0 right-0 -mt-2 -mr-3 hover:opacity-100 opacity-50">
                                 <i class="red shadow rounded-full cancel icon"></i>

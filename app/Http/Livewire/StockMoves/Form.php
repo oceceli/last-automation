@@ -22,6 +22,8 @@ class Form extends Component
 
     public $cards = [];
 
+    public $selectedProduct;
+
     public $units = []; // for dropdown 
     public $lotNumbers = []; // for dropdown 
 
@@ -35,14 +37,26 @@ class Form extends Component
         'cards.*.unit_id' => 'required|integer',
     ];
     
-    protected $validationAttributes = [
-        'cards.*.product_id' => 'Ürün',
-        'cards.*.direction' => 'Yön',
-        'cards.*.amount' => 'Miktar',
-        'cards.*.datetime' => 'Tarih',
-        'cards.*.unit_id' => 'Birim',
-        'cards.*.lot_number' => 'Lot numarası',
-    ];
+
+    protected function validationAttributes()
+    {
+        return [
+            'cards.*.product_id' => 'Ürün',
+            'cards.*.direction' => 'Yön',
+            'cards.*.amount' => 'Miktar',
+            'cards.*.datetime' => 'Tarih',
+            'cards.*.unit_id' => 'Birim',
+            'cards.*.lot_number' => 'Lot numarası',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cards.*.product_id' => 'Title is required.',
+            'cards.*.direction' => 'Status not selected', // ?? deney
+        ];
+    }
 
 
 
@@ -122,8 +136,11 @@ class Form extends Component
     {
         if(strpos($location, 'product_id')) {
             $index = strtok($location, '.');
-            $this->units[$index] = $this->getProductsProperty()->find($id)->units;
+            $this->selectedProduct = $this->getProductsProperty()->find($id);
+            $this->units[$index] = $this->selectedProduct->units;
             $this->lotNumbers[$index] = $this->lotNumbers($id);
+
+            $this->cards[$index]['unit_id'] = $this->selectedProduct->baseUnit->id;
             $this->emit('sm_product_selected'.$index);
         }
     }
