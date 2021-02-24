@@ -56,9 +56,9 @@ class Form extends Component
 
 
     /**
-     * Determine if it is create, show or edit page and make arrangements initially
+     * Determine if it's create, show or edit page and then make arrangements initially
      */
-    public function mount($recipe = null, $locked = false)
+    public function mount(Recipe $recipe = null, $locked = false)
     {
         if($recipe) {
             $this->updatingProductId($recipe->product->id);
@@ -88,9 +88,11 @@ class Form extends Component
      */
     private function setForm($productId)
     {
+        $this->product_id = $productId;
+        
         // set selectedProduct property
         $this->selectedProduct = $this->getProduciblesProperty()->find($productId);
-        
+
         // if selected product has no recipe then exit
         if( ! $recipe = $this->selectedProduct->recipe)
             return $this->reset('rcp_code', 'cards');

@@ -63,6 +63,7 @@ return [
     
     // 'operation' => 'İşlem',
     'confirm_or_deny' => 'Onay/Ret',
+    'inside' => 'İçinde',
 
     'unable_to_delete' => 'Silinmedi!',
     'phone' => 'Telefon',

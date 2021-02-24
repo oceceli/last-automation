@@ -5,25 +5,30 @@
 
         <div>
 
-            <table class="ui celled sortable table tablet stackable very compact">
-                <thead>
-                    <tr>
-                        <x-thead-item>Sıra</x-thead-item>
-                        <x-thead-item sortBy="code">{{ __('recipes.code') }}</x-thead-item>
+            <x-table class="sortable">
+                <x-thead>
+                    <x-table-row>
+                        <x-thead-item class="collapsing center aligned clickable" sortBy="rcp_code">{{ __('validation.attributes.rcp_code') }}</x-thead-item>
                         <x-thead-item>{{ __('recipes.belongs_to') }}</x-thead-item>
-                        <x-thead-item>{{ __('recipes.count_of_ingredients') }}</x-thead-item>
+                        <x-thead-item>{{ __('common.inside') }}</x-thead-item>
                         <x-thead-item></x-thead-item>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($data as $key => $recipe)
-                        <tr>
-                            <td class="right marked collapsing font-bold ">{{ $key+1 }}</td>
-                            <td class="collapsing">{{ $recipe->rcp_code }}</td>
-                            <td class="">{{ $recipe->product->prd_name }}</td>
+                    </x-table-row>
+                </x-thead>
+                <x-tbody>
+                    @forelse ($data as $recipe)
+                        <x-table-row>
+                            <td class="collapsing center aligned font-bold">{{ $recipe->rcp_code }}</td>
+                            <td class="">
+                                <span>
+                                    {{ $recipe->product->prd_code }}
+                                </span>
+                                <span class="text-xs text-ease">
+                                    {{ $recipe->product->prd_name }}
+                                </span>
+                            </td>
                             <td>
                                 @if (count($recipe->ingredients) > 0)
-                                    <span data-tooltip="@foreach ($recipe->ingredients as $ingredient) {{ $ingredient->prd_name }} @endforeach">
+                                    <span>
                                         {{ __('recipes.different_products', ['number' => $recipe->ingredients->count() ]) }}
                                     </span>
                                 @else 
@@ -43,7 +48,7 @@
                                     @endcan
                                 </div>
                             </td>
-                        </tr>
+                        </x-table-row>
                     @empty
                         <tr>
                             <td colspan="10">
@@ -53,8 +58,8 @@
                             </td>
                         </tr>
                     @endforelse
-                </tbody>
-            </table>
+                </x-tbody>
+            </x-table>
             
         </div>
 
