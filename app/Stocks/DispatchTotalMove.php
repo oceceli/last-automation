@@ -13,6 +13,7 @@ class DispatchTotalMove extends Moves
 
         $this->type = 'dispatch_total';
         $this->direction = false;
+        $this->approved = true;
 
         if($datetime) $this->datetime = $datetime;
         else $this->datetime = now();

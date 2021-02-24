@@ -158,6 +158,7 @@ class Form extends Component
                          ->setDirection($card['direction'])
                          ->setDatetime($card['datetime'])
                          ->setLotNumber($card['lot_number'])
+                         ->setApproved(true)
                          ->save();
         }
         $this->emit('toast', __('common.saved.title'), __('common.saved.standard'), 'success');

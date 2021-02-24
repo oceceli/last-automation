@@ -18,8 +18,6 @@ class LotNumberService
 
 
 
-
-
     public function total()
     {
         $amount = array_sum(array_column($this->allWithAmounts(), 'amount'));
@@ -47,6 +45,7 @@ class LotNumberService
         return StockMove::where([
             'product_id' => $this->product->id, 
             'lot_number' => $lot,
+            'approved' => true,
             'direction' => true,
         ])->sum('base_amount');
     }
@@ -62,6 +61,7 @@ class LotNumberService
         return StockMove::where([
             'product_id' => $this->product->id, 
             'lot_number' => $lot,
+            'approved' => true,
             'direction' => false,
         ])->sum('base_amount');
     }

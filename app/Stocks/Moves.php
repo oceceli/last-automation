@@ -14,6 +14,7 @@ class Moves
     protected $amount;
     protected $lotNumber;
     protected $datetime;
+    protected $approved = false;
 
     protected $types = [
         'manual',
@@ -83,6 +84,7 @@ class Moves
             'base_amount' => $this->amount,
             'lot_number' => $this->lotNumber,
             'datetime' => $this->datetime,
+            'approved' => $this->approved,
         ];
     }
 
@@ -205,6 +207,26 @@ class Moves
     public function setDatetime($datetime)
     {
         $this->datetime = $datetime;
+
+        return $this;
+    }
+    
+    /**
+     * Get the value of approved
+     */ 
+    public function getApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * Set the value of approved
+     *
+     * @return  self
+     */ 
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
 
         return $this;
     }
