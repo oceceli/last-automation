@@ -1,4 +1,21 @@
 <div class="bg-white p-4 rounded-lg shadow">
+
+    <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">First</a>
+        <a class="item" data-tab="second">Second</a>
+        <a class="item" data-tab="third">Third</a>
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="first">
+        ürün adı: {{ $product->prd_name }}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="second">
+        Second
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="third">
+        Third
+    </div>
+
+
     <div class="border border-green-200 rounded-md">
 
         <div class="flex shadow">
@@ -6,7 +23,7 @@
                 <i class="big box icon"></i>
             </div>
             <div class="p-4 flex flex-1 justify-between">
-
+                
                 <div class="flex flex-col justify-between">
                     <div>
                         <div class="text-xl font-bold text-green-700">{{ $product->prd_name }}</div>
@@ -48,6 +65,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="px-6">
             <div class="py-14 grid md:grid-cols-2 items-center gap-8">
@@ -111,3 +129,7 @@
 
     </div>
 </div>
+
+<script>
+    $('.menu .item') .tab();
+</script>
