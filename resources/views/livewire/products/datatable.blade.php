@@ -82,7 +82,7 @@
     @if ($detailsModal)
         <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('products.details.header') }}">
-                <x-product-details :product="$selectedProduct" />
+                <livewire:products.details-component wire:key="productDetailsComponent" :product="$selectedProduct" />
             </x-custom-modal>
         </div>
     @endif

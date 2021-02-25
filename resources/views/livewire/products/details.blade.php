@@ -14,6 +14,6 @@
                 </x-slot>
             </x-page-header>
         </x-slot>
-            <x-product-details :product="$product" />
+            <livewire:products.details-component wire:key="productDetails" :product="$product" />
     </x-content>
 </div>
