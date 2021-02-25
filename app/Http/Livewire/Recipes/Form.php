@@ -58,7 +58,7 @@ class Form extends Component
     /**
      * Determine if it's create, show or edit page and then make arrangements initially
      */
-    public function mount(Recipe $recipe = null, $locked = false)
+    public function mount($recipe = null, $locked = false)
     {
         if($recipe) {
             $this->updatingProductId($recipe->product->id);
