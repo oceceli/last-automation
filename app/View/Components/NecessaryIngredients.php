@@ -20,7 +20,12 @@ class NecessaryIngredients extends Component
     public $noHeader;
     public $headerText;
 
-    public $listings = [];
+    public $listings = [
+        // 'ingredient' => null,
+        // 'amount' => null,
+        // 'unit' => null,
+        // 'cost' => null,
+    ];
 
 
 
@@ -45,6 +50,11 @@ class NecessaryIngredients extends Component
             $this->listings = $this->product->recipe->calculateNecessaryIngredients($this->amount, $this->unitId);
     }
 
+
+    public function totalCostFunction()
+    {  
+        return array_sum(array_column($this->listings, 'cost'));
+    }
 
 
     public function setIngredientListings()
@@ -81,6 +91,6 @@ class NecessaryIngredients extends Component
      */
     public function render()
     {
-        return view('components.necessary-ingredients');
+        return view('components.necessary-ingredients', ['totalCost' => $this->totalCostFunction()]);
     }
 }

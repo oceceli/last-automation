@@ -24,10 +24,19 @@
                             <span>
                                 {{ $item['unit']->name }}
                             </span>
+                            <span class="ml-1 bg-black text-white p-1 rounded-sm">
+                                {{ number_format($item['cost'], 2) }}₺
+                            </span>
                         </div>
                     </x-custom-list>
                 @endforeach
-        
+                
+                <div class="bg-black text-white p-2 rounded mt-10 font-bold text-right hover:bg-gray-700 ease">
+                    Öngörülen maliyet:
+                    <span class="text-lg">{{ number_format($totalCost, 2) }}₺</span>
+                </div>
+
+
             </div>
             @if ($actions)
                 <div class="p-4 sticky bottom-0 right-0 left-0 hover:bg-smoke-lighter bg-smoke-lightest ease-in-out duration-500">

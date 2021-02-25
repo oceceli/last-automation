@@ -65,6 +65,7 @@ class Recipe extends Model
                                     ? ToleranceService::withTolerance($this, ($mainProduct['amount'] * $convertedIngredient['amount']))
                                     : $mainProduct['amount'] * $convertedIngredient['amount'],
                 'unit' => $convertedIngredient['unit'],
+                'cost' => $mainProduct['amount'] * $ingredient->prd_cost,
                 // 'is_ready' => $ingredient->pivot->is_ready ? true : false,
             ];
         }
