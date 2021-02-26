@@ -109,6 +109,14 @@ class Product extends Model
         return $this->prd_producible;
     }
 
+    public static function getProducibleOnes()
+    {
+        return self::where('prd_producible', true)
+            ->select(['id', 'prd_code', 'prd_name'])
+            ->orderBy('prd_name', 'asc')
+            ->get();
+    }
+
 
     public function setPrdCodeAttribute($prd_code)
     {

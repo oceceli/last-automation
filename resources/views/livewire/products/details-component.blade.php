@@ -118,9 +118,9 @@
             @elseif($currentTab == 'stocks')
                 <x-product-lots :product="$product" />
             @elseif($currentTab == 'production' && $product->isProducible())
-                3
+                <livewire:work-orders.datatable wire:key="production-details" :product="$product" />
             @elseif($currentTab == 'dispatch')
-                4
+                <livewire:dispatch-orders.datatable :product="$product" />
             @endif
 
         </div>

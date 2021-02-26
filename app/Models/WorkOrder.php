@@ -88,6 +88,15 @@ class WorkOrder extends Model implements CanReserveStocks
         return $this->reservationsFor($productId)->exists();
     }
 
+
+
+    // public static function filterByProduct($productId) // sil
+    // {
+    //     return self::where('product_id', $productId);
+    // }
+
+
+
     
     public function unitIsAlreadyBase()
     {

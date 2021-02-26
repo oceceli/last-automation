@@ -1,9 +1,21 @@
 <div>
 
-    <x-table-toolbar :perPage="$perPage" /> 
+    <x-table-toolbar :perPage="$perPage">
+        <x-slot name="filters">
+            <label for="wofilterselect">Ürün: </label>
+            <select wire:model="productId" id="wofilterselect" class="focus:outline-none border p-1 rounded text-xs">
+                <option selected>{{ __('common.dropdown_placeholder') }}</option>
+                @foreach ($this->products as $product)
+                    <option value="{{ $product->id }}">
+                        {{ $product->prd_code}} - {{ $product->prd_name }} 
+                    </option>
+                @endforeach
+            </select>
+        </x-slot>    
+    </x-table-toolbar> 
 
     <div>
-        <table class="ui celled sortable very compact unstackable table">
+        <table class="ui celled sortable very compact table">
             <thead>
                 <tr>
                     <x-thead-item sortBy="wo_queue">{{ __('validation.attributes.wo_queue') }}</x-thead-item>

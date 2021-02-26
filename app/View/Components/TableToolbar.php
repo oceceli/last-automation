@@ -7,7 +7,11 @@ use Illuminate\View\Component;
 class TableToolbar extends Component
 {
 
+    public $filters = null; // slot
+
+
     public $perPage;
+    
 
 
     /**

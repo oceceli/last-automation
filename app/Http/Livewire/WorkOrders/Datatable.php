@@ -4,6 +4,7 @@ namespace App\Http\Livewire\WorkOrders;
 
 use App\Http\Livewire\SmartTable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
+use App\Models\Product;
 use App\Models\WorkOrder;
 use Livewire\Component;
 
@@ -12,14 +13,31 @@ class Datatable extends Component
     use SmartTable;
     use DetailsModal;
      
+    public $model = WorkOrder::class;
+    protected $view = 'livewire.work-orders.datatable';
 
     protected $alsoSearch = [
         'product.name',
     ];
 
-    public $model = WorkOrder::class;
-    protected $view = 'livewire.work-orders.datatable';
+    // public $product;
+    public $productId;
 
+
+
+    public function getProductsProperty()
+    {
+        return Product::getProducibleOnes();
+    }
+
+
+    public function mount($product = null)
+    {
+        if($product) {
+            // $this->product = $product;
+            $this->productId = $product->id;
+        }
+    }
 
 
 
