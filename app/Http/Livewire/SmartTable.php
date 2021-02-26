@@ -41,6 +41,7 @@ trait SmartTable
             ? $this->model::search($this->searchQuery, isset($this->alsoSearch) ? $this->alsoSearch : [])
             : $this->model::query();
         
+
         $data = $query->orderBy($this->orderByColumn, $this->direction)
                       ->paginate($this->perPage);
 

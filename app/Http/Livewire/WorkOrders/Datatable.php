@@ -30,6 +30,12 @@ class Datatable extends Component
         return Product::getProducibleOnes();
     }
 
+    private function advancedFilter()
+    {
+        return $this->model::where('product_id', 1);
+    }
+
+
 
     public function mount($product = null)
     {
