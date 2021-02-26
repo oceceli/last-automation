@@ -76,64 +76,9 @@
         <div x-data="{lotModal: @entangle('lotModal')}">
             <x-custom-modal active="lotModal" header="{{ $selectedProduct->prd_name }}">
 
-                <div class="p-2 bg-smoke-lightest">
-                    {{-- <div class="bg-white rounded-t p-2 shadow-md relative">
-                        <x-table class="center aligned">
-                            <thead>
-                                <x-table-row>
-                                    <x-thead-item>{{ __('stockmoves.lot_number') }}</x-thead-item>
-                                    <x-thead-item>{{ __('inventory.total') }}</x-thead-item>
-                                    <x-thead-item>{{ __('inventory.available') }}</x-thead-item>
-                                </x-table-row>
-                            </thead>
-                            <tbody>
-                                @forelse ($selectedProduct->lots as $lot)
-                                <x-table-row wire:key="lots_rows_{{ $loop->index }}">
-                                    <x-tbody-item class="text-ease">{{ $lot['lot_number'] }}</x-tbody-item>
-                                    <x-tbody-item class="font-semibold">
-                                        @if ($lot['reserved_amount'])
-                                            {{ $lot['amount'] }} 
-                                            <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
-                                                - {{ $lot['reserved_amount_string'] }}
-                                            </x-span>
-                                        @else
-                                            {{ $lot['amount_string'] }}
-                                        @endif
-                                    </x-tbody-item>
-                                    <x-tbody-item class="font-bold">
-                                        {{ $lot['available_amount_string'] }}
-                                    </x-tbody-item>
-                                    
-                                </x-table-row>
-                                @empty
-                                <x-table-row class="p-2 bg-red-50 text-center text ease text-red-600">
-                                    <x-tbody-item colspan="10">{{ __('common.empty') }}</x-tbody-item>
-                                </x-table-row>
-                                @endforelse
-                            </tbody>
-                        </x-table>
-                            
-                    </div> --}}
+               
                     <x-product-lots :product="$selectedProduct" />
 
-                    <div class="p-4 bg-gray-700 text-white rounded-b flex justify-between font-bold shadow-md">
-                        <div>
-                            {{ __('common.total') }}
-                            @if ($selectedProduct->totalStock['reserved_amount'])
-                                {{ $selectedProduct->totalStock['amount'] }} 
-                                <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
-                                    - {{ $selectedProduct->totalStock['reserved_amount_string'] }}
-                                </x-span>
-                            @else
-                                {{ $selectedProduct->totalStock['amount_string'] }}
-                            @endif
-                        </div>
-                        <div>
-                            <span>{{ $selectedProduct->totalStock['available_amount_string'] }} </span>
-                            <span class="text-xs">{{ __('inventory.available') }}</span>
-                        </div>
-                    </div>
-                </div>
 
             </x-custom-modal>      
         </div> 

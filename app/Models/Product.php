@@ -104,6 +104,11 @@ class Product extends Model
         return self::where('prd_producible', true)->get();
     }
 
+    public function isProducible()
+    {
+        return $this->prd_producible;
+    }
+
 
     public function setPrdCodeAttribute($prd_code)
     {

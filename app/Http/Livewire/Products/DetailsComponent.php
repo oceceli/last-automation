@@ -8,33 +8,45 @@ class DetailsComponent extends Component
 {
     public $product;
 
-    public function __construct($product)
+    public $currentTab = 'definition';
+
+    protected $queryString = ['currentTab'];
+
+
+    public function __construct($product, $tab = null)
     {
         $this->product = $product;
+        if($tab) $this->currentTab = $tab;
     }
+
+    private function setTab($tab)
+    {
+        $this->currentTab = $tab;
+    }
+
 
 
     public function tabDefinition()
     {
-        // dd("tabDetails");
+        $this->setTab('definition');
     }
     
     public function tabStocks()
     {
-        // dd("stok");
+        $this->setTab('stocks');
     }
     
     public function tabProduction()
     {
-        // dd("production");
+        $this->setTab('production');
     }
 
     public function tabDispatch()
     {
-        // dd("dispatch");
+        $this->setTab('dispatch');
     }
-    
 
+    
     public function render()
     {
         return view('livewire.products.details-component');

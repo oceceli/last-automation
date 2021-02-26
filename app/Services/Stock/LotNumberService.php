@@ -28,13 +28,18 @@ class LotNumberService
             'amount' => $amount,
             'available_amount' => $availableAmount,
             'reserved_amount' => $reservedAmount,
-            'amount_string' => "$amount {$unit->name}",
-            'available_amount_string' => "$availableAmount {$unit->name}",
-            'reserved_amount_string' => "$reservedAmount {$unit->name}",
+            'amount_string' => $this->nFormat($amount) . ' ' . $unit->name,
+            'available_amount_string' => $this->nFormat($availableAmount) . ' ' . $unit->name,
+            'reserved_amount_string' => $this->nFormat($reservedAmount) . ' ' . $unit->name,
             'unit' => $unit,
         ];
     }
 
+
+    private function nFormat($number)
+    {
+        return number_format($number, 2, ',', '.');
+    }
     
 
     /**
@@ -124,9 +129,9 @@ class LotNumberService
                 'amount' => $amount,
                 'available_amount' => $availableAmount,
                 'reserved_amount' => (float)$reservedAmount,
-                'amount_string' => "$amount {$unit->name}", // presentation is much easy now (:
-                'available_amount_string' => "$availableAmount {$unit->name}",
-                'reserved_amount_string' => "$reservedAmount {$unit->name}",
+                'amount_string' => $this->nFormat($amount) . ' ' . $unit->name, // presentation is much easy now (:
+                'available_amount_string' => $this->nFormat($availableAmount) . ' ' . $unit->name,
+                'reserved_amount_string' => $this->nFormat($reservedAmount) . ' ' . $unit->name,
                 'unit' => $unit,
             ];
         }

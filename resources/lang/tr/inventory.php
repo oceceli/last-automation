@@ -13,5 +13,5 @@ return [
     'total' => 'Mevcut',
     'lot_number' => 'Lot',
 
-    'lot_numbers_of_product' => ':product ürününe ait lotlar',
+    'lot_numbers_of_product' => ':product ürününe ait stok bilgisi',
 ];
