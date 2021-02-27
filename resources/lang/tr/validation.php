@@ -161,6 +161,9 @@ return [
         'lot_no' => 'lot no',
         'code' => 'kod',
 
+        'created_at' => 'Oluşturma Tarihi',
+        'updated_at' => 'Güncelleme tarihi',
+
 
         // products
         'category_id' => 'Kategori', 

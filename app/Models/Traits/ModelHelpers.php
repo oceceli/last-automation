@@ -72,7 +72,7 @@ trait ModelHelpers
     }
 
 
-
+    
     /**
      * Get current table's column names except _id's and timestamps
      */

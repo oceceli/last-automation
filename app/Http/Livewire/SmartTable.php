@@ -2,16 +2,22 @@
 
 namespace App\Http\Livewire;
 
-use App\Exports\UsersExport;
+use App\Services\DatetimeService;
 use App\Services\SearchService;
 use Livewire\WithPagination;
-use Maatwebsite\Excel\Facades\Excel;
 
 trait SmartTable
 {
     use WithPagination;
     use Deletable;
 
+
+    public $showFilters = true;
+
+    // date filters
+    public $showDateFilters = false;
+    public $filterFromDate;
+    public $filterToDate;
 
     /** 
      * Paginate per page 
@@ -27,6 +33,7 @@ trait SmartTable
     public $orderByColumn = '';
     public $direction = 'asc';
 
+    private $finalQuery;
     
     public function mount()
     {
@@ -39,17 +46,37 @@ trait SmartTable
         $this->perPage = auth()->user()->getDatatablePerpage();
     }
 
+
+    public function updatedShowFilters($value)
+    {
+        if($value == false && method_exists($this, 'resetFilters')) {
+            $this->resetFilters();
+            $this->reset('orderByColumn', 'direction');
+        }
+    }
+
+
+    public function updatedShowDateFilters($value)
+    {
+        if($value == false) $this->reset('filterFromDate', 'filterToDate');
+    }
     
+
+
 
     public function render()
     {
-
         $query = $this->model::query();
 
-        if(method_exists($this, 'advancedFilters')) {
+        if($this->filterFromDate) {
+            DatetimeService::createdBetween($query, $this->filterFromDate, $this->filterToDate);
+        }
+
+        if($this->showFilters && method_exists($this, 'advancedFilters')) {
             foreach($this->advancedFilters() as $pairs) {
                 foreach($pairs as $pair) {
-                    $query->orWhere($pair);
+                    if(reset($pair)) // if first of array is not null
+                        $query->where($pair);
                 }
             }
         }
@@ -59,11 +86,16 @@ trait SmartTable
             SearchService::search($query, $this->searchQuery, $searchFields);
         }
 
-        $data = $query->orderBy($this->orderByColumn, $this->direction)
-                      ->paginate($this->perPage);
+        $this->finalQuery = $query->orderBy($this->orderByColumn, $this->direction);
+
+        $data = $query->paginate($this->perPage);
+
+        // $data = $query->orderBy($this->orderByColumn, $this->direction)
+        //               ->paginate($this->perPage);
 
         return view($this->view, ['data' => $data]);
     }
+
 
 
 
@@ -95,7 +127,6 @@ trait SmartTable
 
     public function sortBy($column)
     {
-        // todo: column model columnları içerisinde var mı
         if($this->orderByColumn == $column) {
             $this->direction = $this->direction === 'asc' ? 'desc' : 'asc';
         } else {
@@ -117,11 +148,6 @@ trait SmartTable
             return 'small orange sort';
         }
     }
-
-
-    public function export()
-    {
-        return Excel::download(new UsersExport, 'users.xlsx');
-    }
+    
 
 }

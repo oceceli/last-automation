@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
+use App\Exports\UsersExport;
+use App\Exports\WorkOrdersExport;
 use App\Http\Livewire\SmartTable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
 use App\Models\Product;
 use App\Models\WorkOrder;
+use App\Services\WorkOrder\WorkOrderService;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Datatable extends Component
 {
@@ -16,13 +20,26 @@ class Datatable extends Component
     public $model = WorkOrder::class;
     protected $view = 'livewire.work-orders.datatable';
 
+    protected $queryString = ['filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue', 'filterFromDate', 'filterToDate'];
+
     protected $alsoSearch = [
         'product.prd_name',
     ];
 
     // public $product;
-    public $productId;
 
+    // filters
+    public $filterProduct;
+    public $filterStatus;
+    public $filterWoCode;
+    public $filterWoQueue;
+    
+    
+
+    public function resetFilters()
+    {
+        $this->reset('filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue');
+    }
 
 
     public function getProductsProperty()
@@ -30,16 +47,37 @@ class Datatable extends Component
         return Product::getProducibleOnes();
     }
 
+    public function getStatesProperty()
+    {
+        return $this->model::states();
+    }
+
+    public function getWoCodesProperty()
+    {
+        return WorkOrderService::getUniqueWoCodes();
+    }
+
+
+    public function exportExcel()
+    {
+        return (new WorkOrdersExport($this->finalQuery))->download('İş emirleri.xlsx');
+    }
+
+    
+
     
     private function advancedFilters()
     {
         return [ // and
             [
-                ['product_id' => $this->productId], // or
+                ['product_id' => $this->filterProduct], // or
             ],
-            // [
-            //     ['']
-            // ]
+            [
+                ['wo_status' => $this->filterStatus],
+            ],
+            [
+                ['wo_code' => $this->filterWoCode],
+            ],
         ];
     }
 
@@ -49,8 +87,8 @@ class Datatable extends Component
     {
         $this->stInit();
         if($product) {
-            // $this->product = $product;
-            $this->productId = $product->id;
+            $this->showFilters = true;
+            $this->filterProduct = $product->id;
         }
     }
 

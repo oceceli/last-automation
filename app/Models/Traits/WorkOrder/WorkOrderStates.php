@@ -7,18 +7,31 @@ use Carbon\Carbon;
 
 trait WorkOrderStates
 {
-    private $states = [
-        'approved',
-        'completed',
-        'in_progress',
-        'prepared',
-        'preparing',
-        'active',
-        'suspended',
-    ];
+    // private $states = [
+    //     'approved',
+    //     'completed',
+    //     'in_progress',
+    //     'prepared',
+    //     'preparing',
+    //     'active',
+    //     'suspended',
+    // ];
 
-    private $permission = 'process workorders'; // !! kullanılmıyor
+    // private $permission = 'process workorders'; // !! kullanılmıyor
 
+
+    public static function states()
+    {
+        return [
+            'approved',
+            'completed',
+            'in_progress',
+            'prepared',
+            'preparing',
+            'active',
+            'suspended',
+        ];
+    }
 
 
     public function isApproved()
@@ -183,7 +196,7 @@ trait WorkOrderStates
     {
         // if(auth()->user()->cannot($this->permission)) abort(403); // ?? devam
 
-        if(in_array($state, $this->states)) {
+        if(in_array($state, self::states())) {
             $this->updateQuietly('wo_status', $state);
             return true;
         }

@@ -2,15 +2,55 @@
 
     <x-table-toolbar :perPage="$perPage">
         <x-slot name="filters">
-            <label for="wofilterselect">Ürün: </label>
-            <select wire:model="productId" id="wofilterselect" class="focus:outline-none border p-1 rounded text-xs">
-                <option selected>{{ __('common.dropdown_placeholder') }}</option>
-                @foreach ($this->products as $product)
-                    <option value="{{ $product->id }}">
-                        {{ $product->prd_code}} - {{ $product->prd_name }} 
-                    </option>
-                @endforeach
-            </select>
+            
+            <div class="responsive-grid-3-4">
+                <div>
+                    <label for="wofilterselect-wo-code">{{ __('validation.attributes.wo_code') }}: </label>
+                    <select wire:model="filterWoCode" id="wofilterselect-wo-code" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->woCodes as $wo_code)
+                            <option value="{{ $wo_code }}">
+                                {{ $wo_code }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="wofilterselect-wo-queue">{{ __('validation.attributes.wo_queue') }}: </label>
+                    <select wire:model="filterWoQueue" id="wofilterselect-wo-queue" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->woCodes as $wo_queue)
+                            <option value="{{ $wo_queue }}">
+                                {{ $wo_queue }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="wofilterselect-product">Ürün: </label>
+                    <select wire:model="filterProduct" id="wofilterselect-product" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->products as $product)
+                            <option value="{{ $product->id }}">
+                                {{ $product->prd_code}} - {{ $product->prd_name }} 
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="wofilterselect-status">{{ __('common.status') }}: </label>
+                    <select wire:model="filterStatus" id="wofilterselect-status" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->states as $status)
+                            <option value="{{ $status }}">
+                                {{ __('workorders.' . $status) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+            </div>
+
         </x-slot>    
     </x-table-toolbar> 
 
