@@ -17,7 +17,7 @@ class Datatable extends Component
     protected $view = 'livewire.work-orders.datatable';
 
     protected $alsoSearch = [
-        'product.name',
+        'product.prd_name',
     ];
 
     // public $product;
@@ -30,15 +30,24 @@ class Datatable extends Component
         return Product::getProducibleOnes();
     }
 
-    private function advancedFilter()
+    
+    private function advancedFilters()
     {
-        return $this->model::where('product_id', 1);
+        return [ // and
+            [
+                ['product_id' => $this->productId], // or
+            ],
+            // [
+            //     ['']
+            // ]
+        ];
     }
 
 
 
     public function mount($product = null)
     {
+        $this->stInit();
         if($product) {
             // $this->product = $product;
             $this->productId = $product->id;

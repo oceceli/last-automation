@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Exports\UsersExport;
+use App\Services\SearchService;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,18 +30,34 @@ trait SmartTable
     
     public function mount()
     {
-        $this->perPage = auth()->user()->getDatatablePerpage();
+        $this->stInit();
     }
 
 
+    public function stInit()
+    {
+        $this->perPage = auth()->user()->getDatatablePerpage();
+    }
+
+    
 
     public function render()
     {
-        // Searched or unsearched Illuminate\Database\Eloquent\Builder
-        $query = $this->searchQuery
-            ? $this->model::search($this->searchQuery, isset($this->alsoSearch) ? $this->alsoSearch : [])
-            : $this->model::query();
+
+        $query = $this->model::query();
+
+        if(method_exists($this, 'advancedFilters')) {
+            foreach($this->advancedFilters() as $pairs) {
+                foreach($pairs as $pair) {
+                    $query->orWhere($pair);
+                }
+            }
+        }
         
+        if($this->searchQuery) {
+            $searchFields = array_merge($this->model::columnsToBeSearched(), isset($this->alsoSearch) ? $this->alsoSearch : []);
+            SearchService::search($query, $this->searchQuery, $searchFields);
+        }
 
         $data = $query->orderBy($this->orderByColumn, $this->direction)
                       ->paginate($this->perPage);

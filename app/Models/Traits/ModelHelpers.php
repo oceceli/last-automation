@@ -2,6 +2,10 @@
 
 namespace App\Models\Traits;
 
+use App\Common\Helpers\Generic;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
+
 trait ModelHelpers
 {
     // use GlobalHelpers;
@@ -65,6 +69,28 @@ trait ModelHelpers
     {
         $model = self::find($id);
         return $model->delete();
+    }
+
+
+
+    /**
+     * Get current table's column names except _id's and timestamps
+     */
+    public static function columnsToBeSearched()
+    {
+        if(method_exists(self::class, 'searchStrings')) return self::searchStrings();
+
+        $array = Schema::getColumnListing(Str::plural(Generic::toSnakeCase(self::class)));
+        $idsAppended = [];
+
+        // find '_id' appended attributes. Will be extracted from search index
+        foreach($array as $item) {
+            if(Generic::detectIdAppending($item)) $idsAppended[] = $item;
+        }
+
+        // extract unnecessary attributes from index
+        return array_values(array_diff($array, array_merge(['id', 'created_at', 'updated_at'], $idsAppended)));
+
     }
 
     
