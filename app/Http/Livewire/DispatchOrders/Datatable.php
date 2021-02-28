@@ -17,6 +17,7 @@ class Datatable extends Component implements ExportsContract
     use Exportable;
 
     // !! refresh table olayı filtreleri kapatıyor 
+    // todo: adres tablosuna bölge ekle
 
     public $detailsModal = false;
     public $selectedDo;
