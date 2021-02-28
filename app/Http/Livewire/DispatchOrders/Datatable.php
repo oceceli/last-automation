@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire\DispatchOrders;
 
+use App\Contracts\ExportsContract;
 use App\Http\Livewire\SmartTable;
+use App\Http\Livewire\Traits\Exportable;
 use App\Models\Address;
 use App\Models\DispatchOrder;
 use App\Models\SalesType;
 use App\Services\Company\CompanyService;
 use Livewire\Component;
 
-class Datatable extends Component
+class Datatable extends Component implements ExportsContract
 {
     use SmartTable;
+    use Exportable;
 
     public $detailsModal = false;
     public $selectedDo;
