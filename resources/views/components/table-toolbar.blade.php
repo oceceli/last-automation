@@ -37,7 +37,7 @@
         <div class="flex gap-5 items-center">
             <div>
                 <x-span tooltip="PDF olarak indir">
-                    <i class="large pdf file  icon text-ease-red cursor-pointer"></i>
+                    <i wire:click="exportPDF" class="large pdf file  icon text-ease-red cursor-pointer"></i>
                 </x-span>
                 <x-span tooltip="Excel olarak indir">
                     <i wire:click="exportExcel" class="large excel file icon text-ease-green cursor-pointer"></i>

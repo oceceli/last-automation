@@ -61,6 +61,11 @@ class Datatable extends Component
         return (new WorkOrdersExport($this->filteredQuery()))->download("İş emirleri(" . date('d.m.Y') . ').xlsx');
     }
 
+    public function exportPDF()
+    {
+        return (new WorkOrdersExport($this->filteredQuery()))->download("İş emirleri(" . date('d.m.Y') . ').pdf', \Maatwebsite\Excel\Excel::MPDF);
+    }
+
     
 
     

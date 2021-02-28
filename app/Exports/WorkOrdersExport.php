@@ -70,7 +70,7 @@ class WorkOrdersExport implements FromQuery, WithMapping, WithHeadings, ShouldAu
         return [
             'creator'        => auth()->user()->name,
             'lastModifiedBy' => auth()->user()->name,
-            'title' => 'İş emirleri - Çıktı alındı: ' . now()->format('d.m.Y H:i:s'),
+            'title' => 'İş emirleri - Çıktı tarihi: ' . now()->format('d.m.Y H:i:s'),
         ];
     }
 
