@@ -37,10 +37,10 @@
         <div class="flex gap-5 items-center">
             <div>
                 <x-span tooltip="PDF olarak indir">
-                    <i wire:click="exportPDF" class="large pdf file  icon text-ease-red cursor-pointer"></i>
+                    <i wire:click="exportToPDF" class="large pdf file  icon text-ease-red cursor-pointer"></i>
                 </x-span>
                 <x-span tooltip="Excel olarak indir">
-                    <i wire:click="exportExcel" class="large excel file icon text-ease-green cursor-pointer"></i>
+                    <i wire:click="exportToExcel" class="large excel file icon text-ease-green cursor-pointer"></i>
                 </x-span>
             </div>
             <div class="ui tiny icon input w-28 border-green-500" data-tooltip="{{ __('datatable.perpage_explain') }}" data-position="left center" data-variation="tiny wide fixed">

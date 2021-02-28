@@ -83,11 +83,9 @@ trait SmartTable
         }
 
         if($this->showFilters && method_exists($this, 'advancedFilters')) {
-            foreach($this->advancedFilters() as $pairs) {
-                foreach($pairs as $pair) {
-                    if(reset($pair)) // if first of array is not null
-                        $query->where($pair);
-                }
+            foreach($this->advancedFilters() as $pair) {
+                if(reset($pair)) // if first of array is not null
+                    $query->where($pair);
             }
         }
         

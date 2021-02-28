@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
+use App\Contracts\Exports;
 use App\Exports\WorkOrdersExport;
 use App\Http\Livewire\SmartTable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
@@ -10,7 +11,7 @@ use App\Models\WorkOrder;
 use App\Services\WorkOrder\WorkOrderService;
 use Livewire\Component;
 
-class Datatable extends Component
+class Datatable extends Component implements Exports
 {
     use SmartTable;
     use DetailsModal;
@@ -32,11 +33,29 @@ class Datatable extends Component
     public $filterWoCode;
     public $filterWoQueue;
     
+
+    public function mount($product = null)
+    {
+        $this->stInit();
+        if($product) {
+            $this->showFilters = true;
+            $this->filterProduct = $product->id;
+        }
+    }
     
 
     public function resetFilters()
     {
         $this->reset('filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue');
+    }
+
+    private function advancedFilters()
+    {
+        return [ // and
+            ['product_id' => $this->filterProduct], // or
+            ['wo_status' => $this->filterStatus],
+            ['wo_code' => $this->filterWoCode],
+        ];
     }
 
 
@@ -56,46 +75,15 @@ class Datatable extends Component
     }
 
 
-    public function exportExcel()
+    
+    public function exportToExcel()
     {
         return (new WorkOrdersExport($this->filteredQuery()))->download("İş emirleri(" . date('d.m.Y') . ').xlsx');
     }
 
-    public function exportPDF()
+    public function exportToPDF()
     {
         return (new WorkOrdersExport($this->filteredQuery()))->download("İş emirleri(" . date('d.m.Y') . ').pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
-
-    
-
-    
-    private function advancedFilters()
-    {
-        return [ // and
-            [
-                ['product_id' => $this->filterProduct], // or
-            ],
-            [
-                ['wo_status' => $this->filterStatus],
-            ],
-            [
-                ['wo_code' => $this->filterWoCode],
-            ],
-        ];
-    }
-
-
-
-    public function mount($product = null)
-    {
-        $this->stInit();
-        if($product) {
-            $this->showFilters = true;
-            $this->filterProduct = $product->id;
-        }
-    }
-
-
-
 
 }
