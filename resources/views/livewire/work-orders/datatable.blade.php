@@ -15,17 +15,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label for="wofilterselect-wo-queue">{{ __('validation.attributes.wo_queue') }}: </label>
-                    <select wire:model="filterWoQueue" id="wofilterselect-wo-queue" class="basic-select text-xs">
-                        <option value="" selected>{{ __('common.all') }}</option>
-                        @foreach ($this->woCodes as $wo_queue)
-                            <option value="{{ $wo_queue }}">
-                                {{ $wo_queue }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                
                 <div>
                     <label for="wofilterselect-product">Ürün: </label>
                     <select wire:model="filterProduct" id="wofilterselect-product" class="basic-select text-xs">
@@ -48,6 +38,12 @@
                         @endforeach
                     </select>
                 </div>
+                
+                <div>
+                    <label for="wofilterselect-wo-queue">{{ __('validation.attributes.wo_queue') }}: </label>
+                    <input wire:model="filterWoQueue" placeholder="{{ __('validation.attributes.wo_queue') }}" id="wofilterselect-wo-queue" class="basic-select text-sm" />
+                </div>
+                
                 
             </div>
 

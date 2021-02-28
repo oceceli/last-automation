@@ -2,7 +2,9 @@
 
 namespace App\Common\Helpers;
 
-class Generic
+use Illuminate\Support\Str;
+
+class Generic extends Str
 {
     // public static function in_array_recursive($needle, $haystack, $strict = false)
     // {

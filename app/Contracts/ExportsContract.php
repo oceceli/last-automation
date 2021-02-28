@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface Exports
+interface ExportsContract
 {
     public function exportToExcel();
 

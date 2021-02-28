@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Contracts\ExportsContract;
 use App\Http\Livewire\SmartTable;
+use App\Http\Livewire\Traits\Exportable;
 use App\Models\Product;
 use Livewire\Component;
 
-class Datatable extends Component
+class Datatable extends Component implements ExportsContract
 {
     use SmartTable;
+    use Exportable;
 
     public $detailsModal = false;
     public $selectedProduct;

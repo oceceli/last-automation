@@ -28,6 +28,12 @@ class WorkOrderService
         return WorkOrder::select('wo_code')->distinct()->pluck('wo_code');
     }
 
+    public static function getUniqueWoQueues()
+    {
+        return WorkOrder::select('wo_queue')->distinct()->pluck('wo_queue');
+    }
+
+
 
     // public static function productSpecific()
     // {
