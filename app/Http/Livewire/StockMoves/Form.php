@@ -5,14 +5,12 @@ namespace App\Http\Livewire\StockMoves;
 use App\Models\Product;
 use App\Models\StockMove;
 use App\Common\Facades\Conversions;
-use App\Http\Livewire\FormHelpers;
 use App\Stocks\Moves;
 use Livewire\Component;
 
 class Form extends Component
 {
     
-    // use FormHelpers; 
 
     public $model = StockMove::class;
     public $view = 'livewire.stock-moves.form';

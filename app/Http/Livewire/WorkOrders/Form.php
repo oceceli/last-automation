@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\WorkOrders;
 
 use App\Common\Facades\Conversions;
-use App\Http\Livewire\FormHelpers;
 // use App\Models\ReservedStock;
 use App\Models\Product;
 use App\Models\Unit;
@@ -13,9 +12,6 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    // use FormHelpers;
-
-    // public $view = 'livewire.work-orders.form';
 
     // workorder attributes
     public $product_id;
