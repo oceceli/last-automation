@@ -9,14 +9,25 @@ use App\Stocks\DispatchTotalMove;
  */
 trait DispatchStates
 {
-    private $states = [
-        'approved',
-        'completed',
-        'in_progress',
-        'active',
-        'suspended',
-    ];
+    // private $states = [
+    //     'approved',
+    //     'completed',
+    //     'in_progress',
+    //     'active',
+    //     'suspended',
+    // ];
 
+
+    public static function states()
+    {
+        return [
+            'approved',
+            'completed',
+            'in_progress',
+            'active',
+            'suspended',
+        ];
+    }
 
 
     public function isApproved()
@@ -157,7 +168,7 @@ trait DispatchStates
 
     private function setStatus($state)
     {
-        if(in_array($state, $this->states))
+        if(in_array($state, self::states()))
             $this->update(['do_status' => $state]);
     }
 

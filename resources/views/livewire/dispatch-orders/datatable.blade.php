@@ -40,6 +40,17 @@
                         @endforeach
                     </select>
                 </div>
+                <div>
+                    <label for="wofilterselect-states">{{ __('validation.attributes.do_status') }}: </label>
+                    <select wire:model="filterDoStatus" id="wofilterselect-states" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->doStates as $status)
+                            <option value="{{ $status }}">
+                                {{ __('dispatchorders.' . $status) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 
             </div>
 

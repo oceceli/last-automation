@@ -16,6 +16,8 @@ class Datatable extends Component implements ExportsContract
     use SmartTable;
     use Exportable;
 
+    // !! refresh table olayı filtreleri kapatıyor 
+
     public $detailsModal = false;
     public $selectedDo;
 
@@ -34,8 +36,9 @@ class Datatable extends Component implements ExportsContract
     public $filterAddress;
     public $filterSalesType;
     public $filterDoNumber;
+    public $filterDoStatus;
 
-    protected $queryString = ['filterFromDate', 'filterToDate', 'showFilters', 'filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber'];
+    protected $queryString = ['filterFromDate', 'filterToDate', 'showFilters', 'filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber', 'filterDoStatus'];
 
 
     public function mount($product = null)
@@ -50,7 +53,7 @@ class Datatable extends Component implements ExportsContract
 
     private function resetFilters()
     {
-        $this->reset('filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber');
+        $this->reset('filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber', 'filterDoStatus');
     }
 
     private function advancedFilters()
@@ -60,6 +63,7 @@ class Datatable extends Component implements ExportsContract
             ['company_id' => $this->filterCompany],
             ['address_id' => $this->filterAddress],
             ['sales_type_id' => $this->filterSalesType],
+            ['do_status' => $this->filterDoStatus],
         ];
     }
 
@@ -76,6 +80,11 @@ class Datatable extends Component implements ExportsContract
     public function getSalesTypesProperty()
     {
         return SalesType::all();
+    }
+
+    public function getDoStatesProperty()
+    {
+        return DispatchOrder::states();
     }
     
 
