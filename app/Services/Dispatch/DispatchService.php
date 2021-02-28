@@ -17,6 +17,12 @@ class DispatchService
             ->orWhere('do_status', 'suspended')
             ->get();
     }
+
+
+    // public static function getUnique
+
+
+
 }
 
 // 'approved',

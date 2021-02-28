@@ -63,7 +63,7 @@
     @if ($reservationViewModal)
         <div x-data="{reservationViewModal: @entangle('reservationViewModal')}">
             <x-custom-modal active="reservationViewModal" header="test">
-                <x-reserved-stocks-table :model="$selectedDispatchProduct" class="p-2" />
+                <x-reserved-stocks-table :reservations="$selectedDispatchProduct->reservedStocks" class="p-2" />
             </x-custom-modal>
         </div>
     @endif

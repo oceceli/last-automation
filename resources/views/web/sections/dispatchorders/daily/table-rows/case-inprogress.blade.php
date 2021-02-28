@@ -13,7 +13,7 @@
                 {{ __('dispatchorders.prepared_products') }} S
             </button>
             <x-custom-modal active="preparedCurrent" header="{{ __('validation.attributes.do_number') }}: {{ $dispatchOrder->do_number}} - {{ $dispatchOrder->address->adr_name }}">
-                <x-reserved-stocks-table :model="$dispatchOrder" class="p-3" />
+                <x-reserved-stocks-table :reservations="$dispatchOrder->reservedStocks" class="p-3" />
                 <div class="p-3 text-left text-orange-600">
                     <i class="small info icon"></i>
                     <span class="font-bold text-sm">{{ __('dispatchorders.preparing_or_loading_on_vehicle_in_progress') }}</span>

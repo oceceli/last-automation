@@ -1,92 +1,136 @@
 <div>
-    <x-container>
-        <x-table-toolbar :perPage="$perPage" /> 
-        <div>
+    <x-table-toolbar :perPage="$perPage">
+        <x-slot name="filters">
             
-            <x-table class="ui celled sortable table tablet stackable very compact">
-                <x-thead>
-                    <x-table-row>
-                        <x-thead-item sortBy="do_number" class="center aligned">{{ __('common.number_abbreviation') }}</x-thead-item>
-                        <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
-                        <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
-                        <x-thead-item>{{ __('validation.attributes.sales_type_id') }}</x-thead-item>
-                        <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
-                        <x-thead-item sortBy="do_actual_datetime">{{ __('validation.attributes.do_actual_datetime') }}</x-thead-item>
-                        <x-thead-item>{{ __('validation.attributes.do_status') }}</x-thead-item>
-            
-                        <x-thead-item></x-thead-item>
+            <div class="responsive-grid-3-4">
+                <div>
+                    <label for="wofilterselect-do_number">{{ __('validation.attributes.do_number') }}: </label>
+                    <input wire:model="filterDoNumber" placeholder="{{ __('validation.attributes.do_number') }}" id="wofilterselect-do_number" class="basic-select text-sm" />
+                </div>
+                <div>
+                    <label for="wofilterselect-company">{{ __('common.customer') }}: </label>
+                    <select wire:model="filterCompany" id="wofilterselect-company" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->companies as $company)
+                            <option value="{{ $company->id }}">
+                                {{ $company->cmp_commercial_title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="wofilterselect-address">{{ __('validation.attributes.address_id') }}: </label>
+                    <select wire:model="filterAddress" id="wofilterselect-address" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->addresses as $address)
+                            <option value="{{ $address->id }}">
+                                {{ $address->adr_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="wofilterselect-salestype">{{ __('validation.attributes.sales_type_id') }}: </label>
+                    <select wire:model="filterSalesType" id="wofilterselect-salestype" class="basic-select text-xs">
+                        <option value="" selected>{{ __('common.all') }}</option>
+                        @foreach ($this->salesTypes as $salesType)
+                            <option value="{{ $salesType->id }}">
+                                {{ $salesType->st_name }} - {{ $salesType->st_abbr }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+            </div>
+
+        </x-slot>    
+    </x-table-toolbar> 
+
+    <div>
+        
+        <x-table class="ui celled sortable table tablet stackable very compact">
+            <x-thead>
+                <x-table-row>
+                    <x-thead-item sortBy="do_number" class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
+                    <x-thead-item>{{ __('validation.attributes.company_id') }}</x-thead-item>
+                    <x-thead-item>{{ __('dispatchorders.dispatch_address') }}</x-thead-item>
+                    <x-thead-item>{{ __('validation.attributes.sales_type_id') }}</x-thead-item>
+                    <x-thead-item sortBy="do_planned_datetime">{{ __('validation.attributes.do_planned_datetime') }}</x-thead-item>
+                    <x-thead-item sortBy="do_actual_datetime">{{ __('validation.attributes.do_actual_datetime') }}</x-thead-item>
+                    <x-thead-item>{{ __('validation.attributes.do_status') }}</x-thead-item>
+        
+                    <x-thead-item></x-thead-item>
+                </x-table-row>
+            </x-thead>
+            <x-tbody>
+                @forelse ($data as $dispatchOrder)
+                    <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['tableRow'] }} font-semibold">
+                        <x-tbody-item class=" center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
+
+                        <x-tbody-item class="collapsing">
+                            {{ $dispatchOrder->company->cmp_commercial_title }}
+                            <span class="text-xs text-ease">
+                                ({{ __('validation.attributes.cmp_current_code')}}: {{ $dispatchOrder->company->cmp_current_code }})
+                            </span>
+                        </x-tbody-item>
+
+                        <x-tbody-item class="collapsing">
+                            {{ $dispatchOrder->address->adr_name }}
+                            <span class="text-xs text-ease">
+                                ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
+                            </span>
+                        </x-tbody-item>
+                        <x-tbody-item class="center aligned">
+                            <x-span tooltip="{{ $dispatchOrder->salesType->st_name }}">
+                                {{ $dispatchOrder->salesType->st_abbr }}
+                            </x-span>
+                        </x-tbody-item>
+                        <x-tbody-item class="text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
+                        <x-tbody-item class="text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
+                        <x-tbody-item class="text-sm center aligned">
+                            <span data-tooltip="{{ __("dispatchorders.{$dispatchOrder->do_status}") }}" data-variation="mini">
+                                <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
+                            </span>
+                        </x-tbody-item>
+                        <x-tbody-item class="">
+                            @if ($dispatchOrder->isEditable())
+                                <x-crud-actions edit delete modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                    <x-slot name="left">
+                                        <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                            <i class="link eye icon"></i>
+                                        </span>
+                                    </x-slot>
+                                </x-crud-actions>
+                            @else
+                                <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
+                                    <x-slot name="left">
+                                        <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
+                                            <i class="link eye icon"></i>
+                                        </div>
+                                    </x-slot>
+                                    @if ($dispatchOrder->isCompleted() || $dispatchOrder->isInProgress())
+                                        <a href="{{ route('dispatchorders.daily') }}" data-tooltip="{{ __('common.examine') }}" data-variation="mini">
+                                            <i class="right arrow link icon"></i>
+                                        </a>
+                                    @endif
+                                </x-crud-actions>
+                            @endif
+                        </x-tbody-item>
                     </x-table-row>
-                </x-thead>
-                <x-tbody>
-                    @forelse ($data as $dispatchOrder)
-                        <x-table-row wire:key="{{ $loop->index }}" class="{{ $this->tableClass($dispatchOrder)['tableRow'] }} font-semibold">
-                            <x-tbody-item class=" center aligned font-bold">{{ $dispatchOrder->do_number }}</x-tbody-item>
+                @empty
+                <tr>
+                    <td colspan="10">
+                        <x-placeholder icon="truck">
+                            {{ __('common.no_results') }}
+                        </x-placeholder>
+                    </td>
+                </tr>
+                @endforelse
+            </x-tbody>
+        </x-table>
+    </div>
+    {{ $data->links('components.tailwind-pagination') }}
 
-                            <x-tbody-item class="collapsing">
-                                {{ $dispatchOrder->company->cmp_commercial_title }}
-                                <span class="text-xs text-ease">
-                                    ({{ __('validation.attributes.cmp_current_code')}}: {{ $dispatchOrder->company->cmp_current_code }})
-                                </span>
-                            </x-tbody-item>
-
-                            <x-tbody-item class="collapsing">
-                                {{ $dispatchOrder->address->adr_name }}
-                                <span class="text-xs text-ease">
-                                    ({{ __('common.phone') }}: {{ $dispatchOrder->address->adr_phone }})
-                                </span>
-                            </x-tbody-item>
-                            <x-tbody-item class="center aligned">
-                                <x-span tooltip="{{ $dispatchOrder->salesType->st_name }}">
-                                    {{ $dispatchOrder->salesType->st_abbr }}
-                                </x-span>
-                            </x-tbody-item>
-                            <x-tbody-item class="text-xs">{{ $dispatchOrder->do_planned_datetime }}</x-tbody-item>
-                            <x-tbody-item class="text-xs">{{ $dispatchOrder->do_actual_datetime }}</x-tbody-item>
-                            <x-tbody-item class="text-sm center aligned">
-                                <span data-tooltip="{{ __("dispatchorders.{$dispatchOrder->do_status}") }}" data-variation="mini">
-                                    <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
-                                </span>
-                            </x-tbody-item>
-                            <x-tbody-item class="">
-                                @if ($dispatchOrder->isEditable())
-                                    <x-crud-actions edit delete modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                        <x-slot name="left">
-                                            <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                                <i class="link eye icon"></i>
-                                            </span>
-                                        </x-slot>
-                                    </x-crud-actions>
-                                @else
-                                    <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                        <x-slot name="left">
-                                            <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                                <i class="link eye icon"></i>
-                                            </div>
-                                        </x-slot>
-                                        @if ($dispatchOrder->isCompleted() || $dispatchOrder->isInProgress())
-                                            <a href="{{ route('dispatchorders.daily') }}" data-tooltip="{{ __('common.examine') }}" data-variation="mini">
-                                                <i class="right arrow link icon"></i>
-                                            </a>
-                                        @endif
-                                    </x-crud-actions>
-                                @endif
-                            </x-tbody-item>
-                        </x-table-row>
-                    @empty
-                    <tr>
-                        <td colspan="10">
-                            <x-placeholder icon="truck">
-                                {{ __('common.no_results') }}
-                            </x-placeholder>
-                        </td>
-                    </tr>
-                    @endforelse
-                </x-tbody>
-            </x-table>
-        </div>
-        {{ $data->links('components.tailwind-pagination') }}
-
-    </x-container>
 
 
 

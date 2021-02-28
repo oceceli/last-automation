@@ -1,4 +1,4 @@
-<div class="fixed top-0 right-0 left-0 bottom-0 bg-white overflow-hidden md:bg-smoke-light z-50 flex md:overflow-auto" x-show="{{ $active }}" x-cloak>
+<div class="fixed top-0 right-0 left-0 bottom-0 bg-white overflow-hidden md:bg-smoke-light z-50 flex md:overflow-auto" x-show.transition="{{ $active }}" x-cloak>
     <div class="{{ $position }} h-full md:h-auto w-full max-w-5xl"> {{-- bu ölçülerin yeniden tanımlanması lazım adamakıllı otursun ekrana --}}
         
         {{-- <div class="{{ $padding }} md:rounded-md md:py-6"> --}}

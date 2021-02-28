@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                                 <div x-show="reservedLots" class="pt-2">
-                                    <x-reserved-stocks-table :model="$dp" noHead noProduct />
+                                    <x-reserved-stocks-table :reservations="$dp->reservedStocks" noHead noProduct />
                                 </div>
                             </div>
                         @endforeach

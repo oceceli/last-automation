@@ -3,7 +3,10 @@
 namespace App\Http\Livewire\DispatchOrders;
 
 use App\Http\Livewire\SmartTable;
+use App\Models\Address;
 use App\Models\DispatchOrder;
+use App\Models\SalesType;
+use App\Services\Company\CompanyService;
 use Livewire\Component;
 
 class Datatable extends Component
@@ -24,6 +27,57 @@ class Datatable extends Component
         'salesType.st_abbr',
     ];
 
+    public $filterCompany;
+    public $filterAddress;
+    public $filterSalesType;
+    public $filterDoNumber;
+
+    protected $queryString = ['filterFromDate', 'filterToDate', 'showFilters', 'filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber'];
+
+
+    public function mount($product = null)
+    {
+        $this->stInit();
+        if($product) { // ! seçilen ürüne göre filtrele
+            $this->showFilters = true;
+            // $this->filterProduct = $product->id;
+        }
+    }
+
+
+    private function resetFilters()
+    {
+        $this->reset('filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber');
+    }
+
+    private function advancedFilters()
+    {
+        return [
+            ['do_number' => $this->filterDoNumber],
+            ['company_id' => $this->filterCompany],
+            ['address_id' => $this->filterAddress],
+            ['sales_type_id' => $this->filterSalesType],
+        ];
+    }
+
+    public function getCompaniesProperty()
+    {
+        return CompanyService::getCustomers(['id', 'cmp_commercial_title']);
+    }
+
+    public function getAddressesProperty()
+    {
+        return Address::select(['id', 'adr_name'])->get();
+    }
+
+    public function getSalesTypesProperty()
+    {
+        return SalesType::all();
+    }
+    
+
+
+
     public function openDetailsModal($dispatchOrderId)
     {
         $this->selectedDo = DispatchOrder::find($dispatchOrderId);
@@ -34,6 +88,21 @@ class Datatable extends Component
     {
         if($bool == false) $this->reset();
     }
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
     

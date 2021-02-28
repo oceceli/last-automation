@@ -44,7 +44,7 @@ class Datatable extends Component implements ExportsContract
     }
     
 
-    public function resetFilters()
+    private function resetFilters()
     {
         $this->reset('filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue');
     }
