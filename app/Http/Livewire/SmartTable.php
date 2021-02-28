@@ -12,7 +12,7 @@ trait SmartTable
     use Deletable;
 
 
-    public $showFilters = true;
+    public $showFilters;
 
     // date filters
     public $showDateFilters = false;
@@ -33,7 +33,6 @@ trait SmartTable
     public $orderByColumn = '';
     public $direction = 'asc';
 
-    private $finalQuery;
     
     public function mount()
     {
@@ -49,11 +48,14 @@ trait SmartTable
 
     public function updatedShowFilters($value)
     {
+        // when show filters closed
         if($value == false && method_exists($this, 'resetFilters')) {
             $this->resetFilters();
-            $this->reset('orderByColumn', 'direction');
+            $this->reset('orderByColumn', 'direction', 'showFilters');
         }
     }
+
+
 
 
     public function updatedShowDateFilters($value)
@@ -65,6 +67,14 @@ trait SmartTable
 
 
     public function render()
+    {
+        $data = $this->filteredQuery()->paginate($this->perPage);
+        return view($this->view, ['data' => $data]);
+    }
+
+
+
+    private function filteredQuery()
     {
         $query = $this->model::query();
 
@@ -86,18 +96,12 @@ trait SmartTable
             SearchService::search($query, $this->searchQuery, $searchFields);
         }
 
-        $this->finalQuery = $query->orderBy($this->orderByColumn, $this->direction);
+        return $query->orderBy($this->orderByColumn, $this->direction);
 
-        $data = $query->paginate($this->perPage);
-
-        // $data = $query->orderBy($this->orderByColumn, $this->direction)
-        //               ->paginate($this->perPage);
-
-        return view($this->view, ['data' => $data]);
     }
 
 
-
+    
 
     public function updatedSearchQuery()
     {

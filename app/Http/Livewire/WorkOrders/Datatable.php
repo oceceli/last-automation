@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\WorkOrders;
 
-use App\Exports\UsersExport;
 use App\Exports\WorkOrdersExport;
 use App\Http\Livewire\SmartTable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
@@ -10,7 +9,6 @@ use App\Models\Product;
 use App\Models\WorkOrder;
 use App\Services\WorkOrder\WorkOrderService;
 use Livewire\Component;
-use Maatwebsite\Excel\Facades\Excel;
 
 class Datatable extends Component
 {
@@ -20,7 +18,7 @@ class Datatable extends Component
     public $model = WorkOrder::class;
     protected $view = 'livewire.work-orders.datatable';
 
-    protected $queryString = ['filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue', 'filterFromDate', 'filterToDate'];
+    protected $queryString = ['showFilters', 'filterProduct', 'filterStatus', 'filterWoCode', 'filterWoQueue', 'filterFromDate', 'filterToDate'];
 
     protected $alsoSearch = [
         'product.prd_name',
@@ -60,7 +58,7 @@ class Datatable extends Component
 
     public function exportExcel()
     {
-        return (new WorkOrdersExport($this->finalQuery))->download('İş emirleri.xlsx');
+        return (new WorkOrdersExport($this->filteredQuery()))->download("İş emirleri(" . date('d.m.Y') . ').xlsx');
     }
 
     

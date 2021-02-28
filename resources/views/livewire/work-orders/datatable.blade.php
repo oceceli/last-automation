@@ -58,8 +58,8 @@
         <table class="ui celled sortable very compact table">
             <thead>
                 <tr>
-                    <x-thead-item sortBy="wo_queue">{{ __('validation.attributes.wo_queue') }}</x-thead-item>
                     <x-thead-item sortBy="wo_code">{{ __('validation.attributes.wo_code') }}</x-thead-item>
+                    <x-thead-item sortBy="wo_queue">{{ __('validation.attributes.wo_queue') }}</x-thead-item>
                     <x-thead-item>{{ __('products.name') }}</x-thead-item>
                     <x-thead-item sortBy="wo_amount">{{ __('validation.attributes.wo_amount') }}</x-thead-item>
                     <x-thead-item sortBy="wo_lot_no">{{ __('validation.attributes.wo_lot_no') }}</x-thead-item>
@@ -71,13 +71,15 @@
             <tbody>
                 @forelse ($data as $key => $workOrder)
                     <x-table-row>
-                        <x-tbody-item class="center aligned collapsing font-bold">{{ $workOrder->wo_queue }}</x-tbody-item>
                         <x-tbody-item class="center aligned collapsing">{{ $workOrder->wo_code }}</x-tbody-item>
+                        <x-tbody-item class="center aligned collapsing font-bold">{{ $workOrder->wo_queue }}</x-tbody-item>
                         <x-tbody-item>{{ $workOrder->product->prd_name }}</x-tbody-item>
-                        <x-tbody-item>{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</x-tbody-item>
+                        <x-tbody-item class="collapsing">{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</x-tbody-item>
                         <x-tbody-item class="">{{ $workOrder->wo_lot_no }}</x-tbody-item>
                         <x-tbody-item>
-                            <span>{{ $workOrder->wo_datetime }}</span>
+                            <span @if($workOrder->wo_datetime->format('d.m.Y') == date('d.m.Y')) class="text-red-800 font-bold" @endif>
+                                {{ $workOrder->formattedDatetime() }}
+                            </span>
                         </x-tbody-item>
                         <x-tbody-item class="center aligned collapsing">
                             <span data-tooltip="{{ $workOrder->statusLookup['explanation'] }}" data-variation="mini" data-position="left center">

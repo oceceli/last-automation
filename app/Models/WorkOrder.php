@@ -52,6 +52,10 @@ class WorkOrder extends Model implements CanReserveStocks
     }
 
 
+    public function formattedDatetime()
+    {
+        return $this->wo_datetime->format('d.m.Y');
+    }
 
 
     public function setWoLotNoAttribute($value)
