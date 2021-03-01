@@ -41,10 +41,14 @@ trait DispatchExtrasForm
     private function deUpdate($dispatchExtra)
     {
         if($dispatchExtra) {
-            $data = $this->validate($this->deRules());
-            $dispatchExtra->update($data);
+            if($this->deShouldBeCreated()) {
+                $data = $this->validate($this->deRules());
+                $dispatchExtra->update($data);
+            } else { // if all empty, remove one to one related dispatchextra
+                $dispatchExtra->delete();
+            }
         } else {
-            $this->deSubmit($dispatchExtra->dispatchOrder);
+            $this->deSubmit($this->dispatchOrder);
         }
     }
 

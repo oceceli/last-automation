@@ -21,12 +21,14 @@
                 <div>
                     <label for="wofilterselect-address">{{ __('validation.attributes.address_id') }}: </label>
                     <select wire:model="filterAddress" id="wofilterselect-address" class="basic-select text-xs">
-                        <option value="" selected>{{ __('common.all') }}</option>
-                        @foreach ($this->addresses as $address)
-                            <option value="{{ $address->id }}">
-                                {{ $address->adr_name }}
-                            </option>
-                        @endforeach
+                        <option wire:key="default" value="" selected>{{ __('common.all') }}</option>
+                        @if ($selectedCompany)
+                            @foreach ($selectedCompany->addresses as $address)
+                                <option value="{{ $address->id }}">
+                                    {{ $address->adr_name }}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
                 <div>
@@ -59,7 +61,7 @@
 
     <div>
         
-        <x-table class="ui celled sortable table tablet stackable very compact">
+        <x-table class="sortable very compact">
             <x-thead>
                 <x-table-row>
                     <x-thead-item sortBy="do_number" class="center aligned">{{ __('validation.attributes.do_number') }}</x-thead-item>
@@ -103,29 +105,22 @@
                                 <i class="{{ $this->tableClass($dispatchOrder)['icon']}}"></i>
                             </span>
                         </x-tbody-item>
-                        <x-tbody-item class="">
-                            @if ($dispatchOrder->isEditable())
-                                <x-crud-actions edit delete modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                    <x-slot name="left">
-                                        <span wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                            <i class="link eye icon"></i>
-                                        </span>
-                                    </x-slot>
-                                </x-crud-actions>
-                            @else
-                                <x-crud-actions modelName="dispatchorder" :modelId="$dispatchOrder->id">
-                                    <x-slot name="left">
-                                        <div wire:click="openDetailsModal({{ $dispatchOrder->id }})" data-tooltip="{{ __('common.detail') }}" data-variation="mini">
-                                            <i class="link eye icon"></i>
-                                        </div>
-                                    </x-slot>
-                                    @if ($dispatchOrder->isCompleted() || $dispatchOrder->isInProgress())
-                                        <a href="{{ route('dispatchorders.daily') }}" data-tooltip="{{ __('common.examine') }}" data-variation="mini">
-                                            <i class="right arrow link icon"></i>
-                                        </a>
+                        <x-tbody-item class="collapsing">
+                            <div class="crud-buttons">
+                                @can('view dispatchorders')
+                                    <x-show-button wire:key="do_showbutton_{{$loop->index}}" action="openDetailsModal({{ $dispatchOrder->id }})" />
+                                @endcan
+                                @can('create update dispatchorders')
+                                    @if ($dispatchOrder->isSuspended() || $dispatchOrder->isActive())
+                                        <x-edit-button wire:key="do_editbutton_{{$loop->index}}" route="{{ route('dispatchorders.edit', ['dispatchorder' => $dispatchOrder]) }}" />
                                     @endif
-                                </x-crud-actions>
-                            @endif
+                                @endcan
+                                @can('delete dispatchorders')
+                                    @if ($dispatchOrder->isSuspended() || $dispatchOrder->isActive())
+                                        <x-delete-button wire:key="do_deletebutton_{{$loop->index}}" action="delete({{ $dispatchOrder->id }})"  />
+                                    @endif
+                                @endcan
+                            </div>
                         </x-tbody-item>
                     </x-table-row>
                 @empty

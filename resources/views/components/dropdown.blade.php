@@ -8,7 +8,7 @@
     
         @if ($iModel)
         <div class="ui right labeled input" wire:loading.class="disabler">
-            <input type="{{ $iType }}" placeholder="{{ $iPlaceholder }}" wire:model.debounce.500ms="{{ $iModel }}">
+            <input type="{{ $iType }}" step="any" placeholder="{{ $iPlaceholder }}" wire:model.debounce.500ms="{{ $iModel }}">
             <div wire:ignore class="{{ $sClass }} ui @if( ! $basic) label scrolling @endif dropdown" id="{{ $sId }}"> 
                 <input type="hidden" name="{{ $model }}" wire:model.lazy="{{ $model }}">            
                 <div class="text default">{{ $placeholder }}</div>

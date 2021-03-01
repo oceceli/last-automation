@@ -3,14 +3,14 @@
 namespace App\Http\Livewire\Inventory;
 
 use App\Http\Livewire\SmartTable;
+use App\Http\Livewire\Traits\Exportable;
 use App\Models\Product;
-use App\Models\StockMove;
-use App\Services\Stock\LotNumberService;
 use Livewire\Component;
 
 class Datatable extends Component
 {
     use SmartTable;
+    use Exportable;
 
     public $model = Product::class;
     protected $view = 'livewire.inventory.datatable';

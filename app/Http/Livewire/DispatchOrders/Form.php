@@ -71,7 +71,6 @@ class Form extends Component
     public function mount($dispatchOrder = null)
     {
         if($dispatchOrder) {
-            if($dispatchOrder->isNotEditable()) abort(404);
             $this->setEditMode($dispatchOrder);
         } else {
             $this->do_planned_datetime = Carbon::today();
@@ -116,7 +115,7 @@ class Form extends Component
         $this->validate($this->spRules);
         
         if($this->editMode === true) {
-            if($this->dispatchOrder->isNotEditable()) abort(404);
+            if( ! ($this->dispatchOrder->isSuspended() || $this->dispatchOrder->isActive())) abort(404);
 
             $this->dispatchOrder->dispatchProducts()->delete();
             $this->dispatchOrder->update($validatedDoData);

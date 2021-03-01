@@ -9,7 +9,8 @@ class WorkOrderObserver
     public function deleting(WorkOrder $workOrder)
     {
         // delete only when workorder is active or suspended
-        if( ! ($workOrder->isSuspended() || $workOrder->isActive())) return false;
+        return $workOrder->isSuspended() || $workOrder->isActive();
+
     }
 
 
@@ -22,7 +23,7 @@ class WorkOrderObserver
     public function updating(WorkOrder $workOrder)
     {
         // update only when workorder is active or suspended
-        if( ! ($workOrder->isSuspended() || $workOrder->isActive())) return false;
+        return $workOrder->isSuspended() || $workOrder->isActive();
     }
 
 

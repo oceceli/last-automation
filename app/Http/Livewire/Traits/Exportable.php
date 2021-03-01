@@ -14,15 +14,22 @@ trait Exportable
 
     public function exportToExcel()
     {
+        if($this->filteredQuery()->get()->isEmpty()) return $this->informQueryEmpty();
         $export = $this->getExportablePath();
         return (new $export($this->filteredQuery()))->download();
     }
 
     public function exportToPDF()
     {
+        if($this->filteredQuery()->get()->isEmpty()) return $this->informQueryEmpty();
         $export = $this->getExportablePath();
         return (new $export($this->filteredQuery(), 'pdf'))->download(null, \Maatwebsite\Excel\Excel::MPDF);
     }
 
+
+    private function informQueryEmpty()
+    {
+        $this->emit('toast', '', __('common.no_results'), 'error');
+    }
     
 }

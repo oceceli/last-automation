@@ -33,11 +33,14 @@ class Datatable extends Component implements ExportsContract
         'salesType.st_abbr',
     ];
 
+    // models
     public $filterCompany;
     public $filterAddress;
     public $filterSalesType;
     public $filterDoNumber;
     public $filterDoStatus;
+
+    public $selectedCompany;
 
     protected $queryString = ['filterFromDate', 'filterToDate', 'showFilters', 'filterCompany', 'filterAddress', 'filterSalesType', 'filterDoNumber', 'filterDoStatus'];
 
@@ -73,10 +76,10 @@ class Datatable extends Component implements ExportsContract
         return CompanyService::getCustomers(['id', 'cmp_commercial_title']);
     }
 
-    public function getAddressesProperty()
-    {
-        return Address::select(['id', 'adr_name'])->get();
-    }
+    // public function getAddressesProperty()
+    // {
+    //     return Address::select(['id', 'adr_name'])->get();
+    // }
 
     public function getSalesTypesProperty()
     {
@@ -88,6 +91,12 @@ class Datatable extends Component implements ExportsContract
         return DispatchOrder::states();
     }
     
+
+    public function updatedFilterCompany($companyId)
+    {
+        $this->reset('filterAddress');
+        $this->selectedCompany = $this->companies->find($companyId);   
+    }
 
 
 

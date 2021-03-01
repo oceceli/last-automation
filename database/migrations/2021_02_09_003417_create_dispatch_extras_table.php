@@ -15,11 +15,11 @@ class CreateDispatchExtrasTable extends Migration
     {
         Schema::create('dispatch_extras', function (Blueprint $table) {
             $table->id();
-            $table->string('de_license_plate');
-            $table->string('de_driver_name');
-            $table->string('de_driver_phone');
-            $table->decimal('de_dispatch_expense');
-            $table->decimal('de_handling_expense');
+            $table->string('de_license_plate')->nullable();
+            $table->string('de_driver_name')->nullable();
+            $table->string('de_driver_phone')->nullable();
+            $table->decimal('de_dispatch_expense')->nullable();
+            $table->decimal('de_handling_expense')->nullable();
             
             $table->unsignedBigInteger('dispatch_order_id');
             $table->timestamps();
