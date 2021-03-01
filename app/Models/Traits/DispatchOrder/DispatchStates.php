@@ -9,15 +9,6 @@ use App\Stocks\DispatchTotalMove;
  */
 trait DispatchStates
 {
-    // private $states = [
-    //     'approved',
-    //     'completed',
-    //     'in_progress',
-    //     'active',
-    //     'suspended',
-    // ];
-
-
     public static function states()
     {
         return [
@@ -130,20 +121,21 @@ trait DispatchStates
 
     public function setInProgress()
     {
-        if($this->checkStatus('active'))
+        if($this->isActive())
             $this->setStatus('in_progress');
     }
 
 
     private function activate()
     {
-        $this->setStatus('active');
+        if($this->isSuspended() || $this->isInProgress())
+            $this->setStatus('active');
     }
 
 
     public function suspend()
     {
-        if($this->checkStatus('active'))
+        if($this->isActive())
             $this->setStatus('suspended');
     }
 
@@ -158,7 +150,7 @@ trait DispatchStates
 
     private function markActualDispatchDate()
     {
-        $this->update(['do_actual_datetime' => now()]);
+        $this->updateQuietly('do_actual_datetime', now());
     }
 
 
@@ -169,7 +161,7 @@ trait DispatchStates
     private function setStatus($state)
     {
         if(in_array($state, self::states()))
-            $this->update(['do_status' => $state]);
+            $this->updateQuietly('do_status', $state);
     }
 
 
@@ -184,6 +176,12 @@ trait DispatchStates
         foreach($this->reservedStocks as $reservation) {
             $reservation->update(['reserved_is_archived' => true]);
         }
+    }
+
+    private function updateQuietly($column, $value)
+    {
+        $this->$column = $value;
+        $this->saveQuietly();
     }
 
 }

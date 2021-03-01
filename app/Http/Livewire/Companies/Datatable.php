@@ -26,6 +26,26 @@ class Datatable extends Component
     public $editableAddress;
 
 
+    // filter models
+    public $cmp_supplier;
+    public $cmp_customer;
+
+
+    protected $queryString = ['cmp_customer', 'cmp_supplier'];
+
+    public function resetFilters()
+    {
+        $this->reset('cmp_customer', 'cmp_supplier');
+    }
+
+    private function advancedFilters()
+    {
+        return [
+            ['cmp_customer' => $this->cmp_customer],
+            ['cmp_supplier' => $this->cmp_supplier],
+        ];
+    }
+
 
     public function addAddress($companyId)
     {

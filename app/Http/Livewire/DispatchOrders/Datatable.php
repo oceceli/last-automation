@@ -16,7 +16,7 @@ class Datatable extends Component implements ExportsContract
     use SmartTable;
     use Exportable;
 
-    // !! refresh table olayı filtreleri kapatıyor 
+    // !! refresh table olayı filtreleri kapatıyor
     // todo: adres tablosuna bölge ekle
 
     public $detailsModal = false;
@@ -75,11 +75,6 @@ class Datatable extends Component implements ExportsContract
     {
         return CompanyService::getCustomers(['id', 'cmp_commercial_title']);
     }
-
-    // public function getAddressesProperty()
-    // {
-    //     return Address::select(['id', 'adr_name'])->get();
-    // }
 
     public function getSalesTypesProperty()
     {

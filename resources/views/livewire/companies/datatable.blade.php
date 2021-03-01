@@ -1,6 +1,18 @@
 <div>
     <x-container>
-        <x-table-toolbar :perPage="$perPage" /> 
+        <x-table-toolbar :perPage="$perPage">
+            <x-slot name="filters">
+                <div  class="responsive-grid-3-4">
+                    {{-- <x-checkbox wire:key="filters" label="test" model="cmp_supplier" /> --}}
+                    <div class="border border-dashed p-2 flex justify-center items-center gap-5">
+                        <x-checkbox model="cmp_supplier" label="{{ __('validation.attributes.cmp_supplier') }}" />
+                        ve
+                        <x-checkbox model="cmp_customer" label="{{ __('validation.attributes.cmp_customer') }}" />
+                    </div>
+
+                </div>
+            </x-slot>    
+        </x-table-toolbar> 
         <div>
             
             <x-table class="ui celled sortable table tablet stackable very compact">
