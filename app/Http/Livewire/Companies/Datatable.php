@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Companies;
 
 use App\Http\Livewire\Traits\Polymorphic\AddressForm;
 use App\Http\Livewire\SmartTable;
+use App\Http\Livewire\Traits\Exportable;
 use App\Models\Address;
 use App\Models\Company;
 use Livewire\Component;
@@ -12,6 +13,7 @@ class Datatable extends Component
 {
     use SmartTable;
     use AddressForm;
+    use Exportable;
 
     public $model = Company::class;
     public $view = 'livewire.companies.datatable';

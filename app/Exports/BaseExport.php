@@ -15,8 +15,16 @@ class BaseExport implements ShouldAutoSize, WithStyles, WithProperties, Responsa
 
     protected $injectedQuery;
 
-    protected $fileName;
 
+    public function toPdf($fileName = null)
+    {
+        return $this->download($fileName ?? $this->fileName . '.pdf', \Maatwebsite\Excel\Excel::MPDF);
+    }
+
+    public function toExcel($fileName = null)
+    {
+        return $this->download($fileName ?? $this->fileName . '.xlsx');
+    }
 
     public function properties(): array
     {

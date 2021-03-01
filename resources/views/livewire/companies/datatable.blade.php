@@ -4,7 +4,7 @@
             <x-slot name="filters">
                 <div  class="responsive-grid-3-4">
                     {{-- <x-checkbox wire:key="filters" label="test" model="cmp_supplier" /> --}}
-                    <div class="border border-dashed p-2 flex justify-center items-center gap-5">
+                    <div class="border border-dashed p-2 flex justify-around items-center gap-5">
                         <x-checkbox model="cmp_supplier" label="{{ __('validation.attributes.cmp_supplier') }}" />
                         ve
                         <x-checkbox model="cmp_customer" label="{{ __('validation.attributes.cmp_customer') }}" />
@@ -58,7 +58,7 @@
                     @empty
                     <tr>
                         <td colspan="10">
-                            <x-placeholder icon="briefcase">
+                            <x-placeholder icon="building">
                                 {{ __('common.no_results') }}
                             </x-placeholder>
                         </td>

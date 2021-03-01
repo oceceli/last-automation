@@ -15,15 +15,17 @@ trait Exportable
     public function exportToExcel()
     {
         if($this->filteredQuery()->get()->isEmpty()) return $this->informQueryEmpty();
+
         $export = $this->getExportablePath();
-        return (new $export($this->filteredQuery()))->download();
+        return (new $export($this->filteredQuery()))->toExcel();
     }
 
     public function exportToPDF()
     {
         if($this->filteredQuery()->get()->isEmpty()) return $this->informQueryEmpty();
+
         $export = $this->getExportablePath();
-        return (new $export($this->filteredQuery(), 'pdf'))->download(null, \Maatwebsite\Excel\Excel::MPDF);
+        return (new $export($this->filteredQuery()))->toPdf();
     }
 
 

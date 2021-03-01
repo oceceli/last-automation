@@ -10,11 +10,10 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 class ProductsExport extends BaseExport implements FromQuery, WithHeadings, WithMapping
 {
     
+    protected $fileName = 'Ürünler';
 
-
-    public function __construct(Builder $injectedQuery, $type = 'xlsx')
+    public function __construct(Builder $injectedQuery)
     {
-        $this->fileName = "Ürün listesi." . $type;
         $this->injectedQuery = $injectedQuery;
     }
 

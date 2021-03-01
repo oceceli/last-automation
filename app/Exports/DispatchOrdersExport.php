@@ -9,11 +9,11 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class DispatchOrdersExport extends BaseExport implements FromQuery, WithHeadings, WithMapping
 {
+    protected $fileName = 'Sevkiyat';
 
-
-    public function __construct(Builder $query, $type = 'xlsx')
+    
+    public function __construct(Builder $query)
     {
-        $this->fileName = "Sevkiyat." . $type;
         $this->injectedQuery = $query;
     }
 

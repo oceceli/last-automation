@@ -35,6 +35,19 @@ class Company extends Model
         parent::delete();
     }
     
+    public function companyType()
+    {
+        if($this->cmp_supplier && $this->cmp_customer)
+            $type = __('companies.either_supplier_and_customer');
+        elseif($this->cmp_supplier)
+            $type = __('validation.attributes.cmp_supplier');
+        elseif($this->cmp_customer)
+            $type = __('validation.attributes.cmp_customer');
+        else 
+            $type = __('companies.company_type_not_specified');
+        return $type;
+    }
+
     public function setCmpCommercialTitleAttribute($value)
     {
         $this->attributes['cmp_commercial_title'] = strtoupper($value);

@@ -4,20 +4,16 @@ namespace App\Exports;
 
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 class WorkOrdersExport extends BaseExport implements FromQuery, WithMapping, WithHeadings
 {
 
-    use RegistersEventListeners;
-
+    public $fileName = 'İş Emirleri';
     
-    public function __construct(Builder $injectedQuery, string $type = 'xlsx')
+    public function __construct(Builder $injectedQuery)
     {
-        $this->fileName = "İş emirleri." . $type;
         $this->injectedQuery = $injectedQuery;
     }
 
