@@ -54,6 +54,12 @@ class DoDaily extends Component
         if(!$bool) $this->closeApproveModal();
     }
 
+
+    public function redirectPrepare($dispatchOrderId)
+    {
+        return redirect()->route('dispatchorders.prepare', ['dispatchOrder' => $dispatchOrderId]);
+    }
+
     public function render()
     {
         return view('livewire.dispatch-orders.daily.do-daily');

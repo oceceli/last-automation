@@ -5,7 +5,7 @@
         </x-span>
     </x-tbody-item>
     
-    @include('web.sections.dispatchorders.daily.table-rows.row-common')
+    @include('web.sections.dispatchorders.daily.table-rows.do-row-common')
     
     <x-tbody-item class="right aligned">
         <a href="{{ route('dispatchorders.prepare', ['dispatchOrder' => $dispatchOrder]) }}" class="ui green label button">

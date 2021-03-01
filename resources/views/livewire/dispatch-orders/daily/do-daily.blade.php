@@ -30,19 +30,19 @@
                     @forelse($dispatchOrders as $dispatchOrder) 
                         @switch($dispatchOrder)
                             @case($dispatchOrder->isApproved())
-                                @include('web.sections.dispatchorders.daily.table-rows.case-approved')
+                                @include('web.sections.dispatchorders.daily.table-rows.do-case-approved')
                                 @break
                             @case($dispatchOrder->isCompleted())
-                                @include('web.sections.dispatchorders.daily.table-rows.case-completed')
+                                @include('web.sections.dispatchorders.daily.table-rows.do-case-completed')
                                 @break
                             @case($dispatchOrder->isInProgress())
-                                @include('web.sections.dispatchorders.daily.table-rows.case-inprogress')
+                                @include('web.sections.dispatchorders.daily.table-rows.do-case-inprogress')
                                 @break
                             @case($dispatchOrder->isActive())
-                                @include('web.sections.dispatchorders.daily.table-rows.case-active')
+                                @include('web.sections.dispatchorders.daily.table-rows.do-case-active')
                                 @break
                             @case($dispatchOrder->isSuspended())
-                                @include('web.sections.dispatchorders.daily.table-rows.case-suspended')
+                                @include('web.sections.dispatchorders.daily.table-rows.do-case-suspended')
                                 @break
                             @default
                         @endswitch
