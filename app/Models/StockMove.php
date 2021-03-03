@@ -61,6 +61,18 @@ class StockMove extends Model
     }
 
 
+
+    public function scopeManualPositive($query)
+    {
+        return $query->where(['type' => 'manual', 'direction' => true]);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('approved', true);
+    }
+
+
     // public function unitIsAlreadyBase()
     // {
     //     return Conversions::toBase($this->unit, $this->amount)['unit'] == $this->unit;

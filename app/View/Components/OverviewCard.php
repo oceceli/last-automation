@@ -7,18 +7,29 @@ use Illuminate\View\Component;
 class OverviewCard extends Component
 {
 
-    public $color;
+
+    public $bgColor;
+    public $textColor;
     public $icon;
     public $href;
+
+    public $model;
+    public $number;
+    public $text;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($icon = 'ship', $color = 'teal', $href = '#')
+    public function __construct($model, $number, $text, $icon = 'ship', $bgColor = 'bg-teal-500 hover:bg-teal-700', $textColor = "text-teal-500 hover:text-teal-700", $href = '#')
     {
-        $this->color = $color;
+        $this->model = $model;
+        $this->number = $number;
+        $this->text = $text;
+        
+        $this->bgColor = $bgColor;
+        $this->textColor = $textColor;
         $this->icon = $icon;
         $this->href = $href;
     }

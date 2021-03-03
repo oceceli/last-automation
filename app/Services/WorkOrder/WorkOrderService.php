@@ -34,6 +34,12 @@ class WorkOrderService
     }
 
 
+    public static function getApprovedCountBetween($from, $to)
+    {
+        return WorkOrder::whereBetween('created_at', [$from, $to])->approved()->count();
+    }
+
+
 
     // public static function productSpecific()
     // {

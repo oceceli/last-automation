@@ -64,6 +64,13 @@ class DispatchOrder extends Model implements CanReserveStocks
     }
 
 
+
+    public function scopeApproved($query)
+    {
+        return $query->where('do_status', 'approved');
+    }
+
+
     
     public function getDoPlannedDatetimeAttribute($value)
     {

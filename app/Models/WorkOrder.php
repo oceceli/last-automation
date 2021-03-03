@@ -57,6 +57,11 @@ class WorkOrder extends Model implements CanReserveStocks
         return $this->wo_datetime->format('d.m.Y');
     }
 
+    public function scopeApproved($query)
+    {
+        return $query->where('wo_status', 'approved');
+    }
+
 
     public function setWoLotNoAttribute($value)
     {

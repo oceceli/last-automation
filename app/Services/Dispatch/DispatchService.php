@@ -19,6 +19,10 @@ class DispatchService
     }
 
 
+    public static function getApprovedCountBetween($from, $to)
+    {
+        return DispatchOrder::whereBetween('created_at', [$from, $to])->approved()->count();
+    }
     // public static function getUnique
 
 

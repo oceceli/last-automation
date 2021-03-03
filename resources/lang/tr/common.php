@@ -121,6 +121,11 @@ return [
     'total' => 'Toplam',
     'waste' => 'Fire',
 
+    'this' => 'Bu',
+    'week' => 'hafta',
+    'month' => 'ay',
+    'year' => 'yıl',
+
     'create' => 'Oluştur',
     'confirm' => 'Onayla',
     'abort' => 'İptal et',
