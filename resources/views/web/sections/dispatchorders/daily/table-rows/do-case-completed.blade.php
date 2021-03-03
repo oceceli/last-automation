@@ -15,10 +15,10 @@
                 <i class="right arrow icon"></i>
                 {{ __('dispatchorders.dispatch_details') }} U
             </div>
-            <div wire:click.prevent="redirectPrepare({{ $dispatchOrder->id }})" class="item text-red-600"> 
+            {{-- <div wire:click.prevent="redirectPrepare({{ $dispatchOrder->id }})" class="item text-red-600"> 
                 <i class="right arrow icon"></i>
                 {{ __('dispatchorders.dispatch_details') }} U
-            </div>
+            </div> --}}
         </x-menu-dropdown>
 
     </x-tbody-item>

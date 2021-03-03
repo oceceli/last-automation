@@ -1,7 +1,14 @@
 <div>
     <x-content theme="green">
         <x-slot name="header">
-            @include('web.sections.workorders.daily.header')
+            <x-page-header icon="settings" header="workorders.daily_work_orders">
+                <x-slot name="buttons">
+                    <button wire:click="openWoFormModal" class="ui icon mini teal button"
+                        data-tooltip="{{ __('common.add_new') }}" data-variation="mini">
+                        <i class="white plus icon"></i>
+                    </button>
+                </x-slot>
+            </x-page-header>
         </x-slot>
         <div class="p-4">
             
@@ -112,6 +119,8 @@
     @endif
 
     @include('web.helpers.deletable')
+
+    @include('web.sections.workorders.daily.form-modal')
 
     
 

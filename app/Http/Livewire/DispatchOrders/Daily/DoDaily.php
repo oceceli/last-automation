@@ -10,7 +10,11 @@ class DoDaily extends Component
 {
     use Refresh;
 
+    // todo: adres tablosuna bölge ekle
+
     public $dispatchOrders;
+
+    public $do_form_modal = false;
 
     public $approveModal = false;
     public $tobeApprovedDispatchOrder;
@@ -58,6 +62,11 @@ class DoDaily extends Component
     public function redirectPrepare($dispatchOrderId)
     {
         return redirect()->route('dispatchorders.prepare', ['dispatchOrder' => $dispatchOrderId]);
+    }
+
+    public function openDoFormModal()
+    {
+        $this->do_form_modal = true;
     }
 
     public function render()

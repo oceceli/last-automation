@@ -6,23 +6,29 @@ use Illuminate\View\Component;
 
 class CircleImage extends Component
 {
-    public $imageUrl;
+    public $image;
     public $height;
+
+    public $user;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($height)
+    public function __construct($height, $user = null)
     {
         $this->height = $height;
-        $user = auth()->user();
+        if($user)
+            $this->user = $user;
+        else
+            $this->user = auth()->user();
+        
 
 
-        $this->imageUrl = $user->profile_photo_path
-            ? asset('storage/' . $user->profile_photo_path)
-            : 'https://ui-avatars.com/api/?name=' . $user->name;
+        $this->image = $this->user->profile_photo_path
+            ? asset('storage/' . $this->user->profile_photo_path)
+            : 'https://ui-avatars.com/api/?name=' . $this->user->name;
     }
 
     /**

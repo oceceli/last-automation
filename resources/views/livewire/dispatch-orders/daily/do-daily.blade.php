@@ -1,7 +1,19 @@
 <div>
     <x-content theme="green">
         <x-slot name="header">
-            <x-page-header icon="shipping fast" header="{{ __('dispatchorders.do_daily') }}"></x-page-header>
+
+            <x-page-header icon="shipping fast" header="{{ __('dispatchorders.do_daily') }}">
+                
+                    <x-slot name="buttons">
+                        <button wire:click="openDoFormModal" class="ui icon mini teal button"
+                            data-tooltip="{{ __('common.add_new') }}" data-variation="mini">
+                            <i class="white plus icon"></i>
+                        </button>
+                    </x-slot>
+                        
+            </x-page-header>
+                
+
         </x-slot>
         <div class="p-4">
             
@@ -124,5 +136,9 @@
             </x-custom-modal>
         </div>
     @endif
+
+
+    @include('web.sections.dispatchorders.daily.form-modal')
+
 
 </div>

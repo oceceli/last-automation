@@ -21,6 +21,8 @@ class WoDaily extends Component
 
     protected $model = WorkOrder::class;
 
+    public $wo_form_modal = false;
+
 
     public $todayDate; // just date of today
     public $workOrders;
@@ -127,6 +129,10 @@ class WoDaily extends Component
     }
 
 
+    public function openWoFormModal()
+    {
+        $this->wo_form_modal = true;
+    }
 
     public function render()
     {

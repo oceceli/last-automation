@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
+use App\Http\Livewire\Deletable;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,6 +10,8 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    use Deletable;
+    public $model = User::class;
 
     public $rolesModal = false;
     public $selectedUser;
@@ -36,10 +39,10 @@ class Index extends Component
         $this->rolesModal = true;
     }
 
-    public function delete($id)
-    {
-        User::findAndDelete($id);
-    }
+    // public function delete($id)
+    // {
+    //     User::findAndDelete($id);
+    // }
 
     public function closeRolesModal()
     {

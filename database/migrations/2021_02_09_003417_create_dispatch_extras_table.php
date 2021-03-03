@@ -22,7 +22,7 @@ class CreateDispatchExtrasTable extends Migration
             $table->decimal('de_handling_expense')->nullable();
             
             $table->unsignedBigInteger('dispatch_order_id');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

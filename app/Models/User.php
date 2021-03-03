@@ -74,7 +74,7 @@ class User extends Authenticatable
         if($this->isSystemAdmin() || $this->isLastAdmin()) return;
 
         $this->roles()->detach();
-        parent::delete();
+        return parent::delete();
     }
 
 

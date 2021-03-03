@@ -16,9 +16,6 @@ class Datatable extends Component implements ExportsContract
     use SmartTable;
     use Exportable;
 
-    // !! refresh table olayı filtreleri kapatıyor
-    // todo: adres tablosuna bölge ekle
-
     public $detailsModal = false;
     public $selectedDo;
 
@@ -103,7 +100,7 @@ class Datatable extends Component implements ExportsContract
 
     public function updatedDetailsModal($bool)
     {
-        if($bool == false) $this->reset();
+        if($bool == false) $this->reset('selectedDo', 'detailsModal');
     }
 
 
