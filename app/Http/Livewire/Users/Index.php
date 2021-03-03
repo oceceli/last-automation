@@ -39,10 +39,6 @@ class Index extends Component
         $this->rolesModal = true;
     }
 
-    // public function delete($id)
-    // {
-    //     User::findAndDelete($id);
-    // }
 
     public function closeRolesModal()
     {
@@ -56,7 +52,7 @@ class Index extends Component
 
     public function updatedRoleIds()
     {
-        if($this->selectedUser->isLastAdmin()) {
+        if($this->selectedUser->isLastAdmin() || $this->selectedUser->isSystemAdmin()) {
             $this->roleIds = $this->selectedUser->roles->pluck('id')->toArray();
             $this->emit('toast', '', __('roles.there_must_be_at_least_one_admin_in_the_system'), 'warning');
         }
