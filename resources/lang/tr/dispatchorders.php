@@ -56,6 +56,7 @@ return [
     'plate_number_driver_expenses_etc' => 'Araç plakası, şoför, sevk ücretleri...',
 
     'do_daily' => 'Günlük Sevk',
+    'live_dispatch_reports' => 'Canlı sevkiyat raporları',
 
     // states
     'approved' => 'Onaylandı',

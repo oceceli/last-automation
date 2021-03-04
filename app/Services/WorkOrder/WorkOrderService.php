@@ -39,6 +39,8 @@ class WorkOrderService
         return WorkOrder::whereBetween('created_at', [$from, $to])->approved()->count();
     }
 
+    
+
 
 
     // public static function productSpecific()
