@@ -63,6 +63,12 @@ class Product extends Model
     }
 
 
+    public function scopeWithThreshold($query)
+    {
+        return $query->whereNotNull('prd_min_threshold');
+    }
+
+
     // public function getBaseUnit() // !! kullanılıyor olabilir
     // {
     //     return $this->units->where('parent_id', 0)->first();

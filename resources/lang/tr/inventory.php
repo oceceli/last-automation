@@ -13,5 +13,7 @@ return [
     'total' => 'Mevcut',
     'lot_number' => 'Lot',
 
+    'critical_stock_warning' => 'Kritik Stok Uyarısı',
+
     'lot_numbers_of_product' => ':product ürününe ait stok bilgisi',
 ];

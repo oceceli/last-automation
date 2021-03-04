@@ -77,16 +77,20 @@
                                     
                                 </div>
                                 <div>
-                                    <label class="text-gray-600 font-bold">{{ __('products.min_threshold') }}</label>
-                                    <div class="flex gap-1 items-center">
-                                        <i class="calculator teal icon"></i>
-                                        <p>{{ $product->prd_min_threshold }} @if($product->baseUnit) {{ $product->baseUnit->name }} @else <strong class="text-red-600">Birim tanımlanmamış</strong> @endif </p>
-                                    </div>
+                                    <label class="text-gray-600 font-bold">{{ __('validation.attributes.prd_min_threshold') }}</label>
+                                    @if ($product->prd_min_threshold)
+                                        <div class="flex gap-1 items-center font-bold text-red-800">
+                                            <i class="calculator icon"></i>
+                                            <p>{{ $product->prd_min_threshold }} @if($product->baseUnit) {{ $product->baseUnit->name }} @else <strong class="text-red-600">Birim tanımlanmamış</strong> @endif </p>
+                                        </div>
+                                    @else
+                                        <div class="text-red-800">{{ __('common.not_defined') }}</div>
+                                    @endif
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-bold">{{ __('inventory.in_stock') }}</label>
                                     <div class="flex gap-1 items-center">
-                                        <i class="red warehouse icon"></i>
+                                        <i class="warehouse icon"></i>
                                         <p>{{ $product->totalStock['amount_string'] }}</p>
                                     </div>
                                 </div>

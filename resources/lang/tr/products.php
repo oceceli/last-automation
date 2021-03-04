@@ -28,6 +28,7 @@ return [
 
     'edit_product' => 'Ürün düzenle',
 
+    // 'at_least_needed_amount' => 'En az :amount olması gerekiyor',
 
     'this_product_cannot_be_manufactured' => 'Bu ürün üretilemez',
     'products_with_no_recipes_cannot_be_manufactured' => 'Reçete tanımlanmamış ürünler üretilemezler',

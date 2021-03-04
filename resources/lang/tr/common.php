@@ -126,6 +126,8 @@ return [
     'month' => 'ay',
     'year' => 'yıl',
 
+    'not_defined' => 'Tanımlanmadı',
+
     'create' => 'Oluştur',
     'confirm' => 'Onayla',
     'abort' => 'İptal et',

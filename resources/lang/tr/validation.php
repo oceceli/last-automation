@@ -170,7 +170,7 @@ return [
         'prd_code' => 'Ürün kodu', 
         'prd_name' => 'Ürün adı', 
         'prd_barcode' => 'Barkod', 
-        'prd_min_threshold' => 'Min Stok', 
+        'prd_min_threshold' => 'Kritik stok', 
         'prd_shelf_life' => 'Raf ömrü', 
         'prd_cost' => 'Fiyat', 
         'prd_note' => 'Açıklama', 
