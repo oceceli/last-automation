@@ -13,7 +13,7 @@ return [
     'approved' => 'Onaylandı',
     'completed' => 'Tamamlandı',
     'in_progress' => 'Üretimde',
-    'prepared' => 'Hazırlandı',
+    'prepared' => 'Üretime hazır',
     'preparing' => 'Hazırlanıyor',
     'active' => 'Aktif',
     'suspended' => 'Askıya alındı',

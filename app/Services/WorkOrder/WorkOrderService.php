@@ -10,11 +10,24 @@ class WorkOrderService
     public static function getTodaysList()
     {
         return WorkOrder
-            ::where('wo_datetime', Carbon::today())
+            ::whereDate('wo_datetime', Carbon::today())
+            ->orWhere('wo_status', 'completed')
             ->orWhere('wo_status', 'in_progress')
+            ->orWhere('wo_status', 'prepared')
+            ->orWhere('wo_status', 'preparing')
             ->orderBy('wo_queue', 'asc')
             ->get();
     }
+
+    // return [
+    //     'approved',
+    //     'completed',
+    //     'in_progress',
+    //     'prepared',
+    //     'preparing',
+    //     'active',
+    //     'suspended',
+    // ];
 
 
     public static function inProgressCurrently()

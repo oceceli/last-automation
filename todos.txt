@@ -15,9 +15,17 @@ CATEGORIES -------
 
 PRODUCTS -------
     delete:
-        1) Ürüne bağlı reçeteyi de sil ✓
-        2) Ürüne bağlı birimleri de sil ✓
-        3) 
+        1) Ürüne bağlı reçeteyi sil ✓
+        2) Ürüne bağlı birimleri sil ✓
+        3) Ürüne bağlı iş emirleri(workorders) varsa ürün silinemez ✓
+        4) Ürüne bağlı sevk emirleri(dispatchProduct) varsa ürün silinemez ✓
+        5) Ürüne bağlı stok hareketleri(stockmoves) varsa ürün silinemez. Aynı zamanda stokta varsa da geçerli ✓ 
+    update:
+        1) 
+
+    problemler:
+        Livewire component başka bir componentte çağrıldığında ilk seferde sorunsuz çalışıyor.
+        Modal kapatılıp açıldığında ve ürün seçildiğinde units dropdown'ını dolduramıyor. Wire of undefined hatası alıyorum ×
 
 
 

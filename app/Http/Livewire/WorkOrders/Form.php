@@ -67,10 +67,11 @@ class Form extends Component
         $this->selectedProduct = Product::find($id);
 
         $this->units = $this->selectedProduct->units->toArray();
+
+        $this->guessFields($this->selectedProduct); // !! kullanıcı ayarlarına kaydedilecek, tahmin istenmeyebilir
+
         $this->unit_id = $this->selectedProduct->baseUnit->id;
         $this->emit('woProductChanged'); // fill the units
-
-        $this->guessFields($this->selectedProduct);
     }
 
     
@@ -79,17 +80,8 @@ class Form extends Component
     {
         return Product::hasRecipe()->get()->toArray();
     }
-
-
-    // public function getUnitsProperty()
-    // {
-    //     if($this->productSelected()) {
-    //         return $this->selectedProduct->units->toArray();
-    //     }
-    // }
-
     
-    // @override
+
     public function submit()
     {
         $data = $this->validate();
@@ -186,13 +178,11 @@ class Form extends Component
     public function guessFields($product)
     {
         $latestWO = $product->getLastCreatedWorkOrder();
-        $globalWO = WorkOrder::latest()->first();
+        $usualWo = WorkOrder::latest()->first();
 
         if($latestWO) {
             if(is_numeric($latestWO->wo_lot_no)) {
                 $this->wo_lot_no = $latestWO->wo_lot_no + 1;
-            } else {
-                $this->wo_lot_no = substr($latestWO->wo_lot_no, 0, (strlen($latestWO->wo_lot_no) - 2));
             }
     
             $this->wo_amount = $latestWO->wo_amount;
@@ -200,9 +190,10 @@ class Form extends Component
         }
         
         $this->wo_datetime = now();
-        if($globalWO) {
-            $this->wo_queue = $globalWO->wo_queue + 1;
-            $this->wo_code = $globalWO->wo_code;
+
+        if($usualWo) {
+            $this->wo_queue = $usualWo->wo_queue + 1;
+            $this->wo_code = $usualWo->wo_code;
         }
     }
 

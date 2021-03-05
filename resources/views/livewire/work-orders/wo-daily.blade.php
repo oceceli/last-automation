@@ -101,9 +101,7 @@
     @if ($detailsModal)
         <div wire:key="detailsModal" x-data="{detailsModal: @entangle('detailsModal')}">
             <x-custom-modal active="detailsModal" header="{{ __('workorders.details.header') }}">
-
-                <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
-                
+                <x-workorder-details wire:key="workorderdetailsmodal" :workOrder="$modalSelectedWorkOrder" />
             </x-custom-modal>
         </div>
     @endif
@@ -111,9 +109,7 @@
     @if ($approvalModal)
         <div wire:key="approvalModal" x-data="{approvalModal: @entangle('approvalModal')}">
             <x-custom-modal active="approvalModal" header="{{ __('workorders.details.header') }}">
-
-                <x-workorder-details :workOrder="$approvalWorkOrder" />
-                
+                <x-workorder-details wire:key="workorderapprovalmodal" :workOrder="$approvalWorkOrder" />
             </x-custom-modal>
         </div>
     @endif

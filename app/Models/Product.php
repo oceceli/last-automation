@@ -36,9 +36,9 @@ class Product extends Model
         return $this->hasMany(WorkOrder::class);
     }
     
-    public function dispatchorders()
+    public function dispatchProducts()
     {
-        return $this->belongsToMany(DispatchOrder::class);
+        return $this->hasMany(DispatchProduct::class);
     }
 
     public function units() 

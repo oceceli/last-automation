@@ -60,7 +60,7 @@ return [
 
     // states
     'approved' => 'Onaylandı',
-    'completed' => 'Tamamlandı, onay bekleniyor',
+    'completed' => 'Hazırlandı/araca yüklendi, onay bekleniyor',
     'in_progress' => 'Hazırlanıyor/araca yükleniyor',
     'active' => 'Sevk bekleniyor',
     'suspended' => 'Askıya alındı',

@@ -49,10 +49,9 @@
                     <x-input model="wo_lot_no" noErrors label="{{ __('validation.attributes.wo_lot_no') }}" placeholder="{{ __('validation.attributes.wo_lot_no') }}" class="required field" />
                     
                     <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="{{ __('validation.attributes.wo_amount') }}" class="required"
-                        model="unit_id" triggerOnEvent="woProductChanged" dataSource="units" sId="units" sClass="basic"
+                        model="unit_id" triggerOnEvent="woProductChanged" dataSource="units" sId="workOrderUnits" sClass="basic"
                         value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
-                    {{-- {{ optional(optional(App\Models\Unit::find($unit_id))->product)->prd_name }} --}}
                     
                     <x-datepicker noErrors model="wo_datetime" initialDate="{{ $wo_datetime }}" label="{{ __('validation.attributes.wo_datetime') }}"   class="required field" />
                     <x-input noErrors model="wo_code" label="{{ __('validation.attributes.wo_code') }}" placeholder="{{ __('validation.attributes.wo_code') }}" class="required field" />                

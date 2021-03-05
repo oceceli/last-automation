@@ -40,7 +40,7 @@ class WoDaily extends Component
         $this->todayDate = Carbon::now()->format('d.m.Y - D');
         $this->workOrders = WorkOrderService::getTodaysList(); // todo: bu liste kullanıcının rolüne göre bazı kısımları gizli olarak gelmeli(suspended)
 
-        $this->workOrders = WorkOrder::all(); // !! sil burayı
+        // $this->workOrders = WorkOrder::all(); // !! sil burayı
     }
 
     

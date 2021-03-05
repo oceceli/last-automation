@@ -39,9 +39,17 @@ class ProductObserver
 
 
 
-    public function deleting()
+    public function deleting(Product $product)
     {
         if(auth()->user()->cannot('delete products')) return false;
+
+        // Geçmişte veya aktif bir iş emri varsa
+        if($product->workorders()->exists()) return false;
+
+        // herhangi bir sevk emri ile gittiyse
+        if($product->dispatchProducts()->exists()) return false;
+
+        if($product->stockmoves()->exists()) return false;
     }
 
 

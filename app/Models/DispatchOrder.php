@@ -23,10 +23,10 @@ class DispatchOrder extends Model implements CanReserveStocks
 
     protected $guarded = [];
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+    // public function products()
+    // {
+    //     return $this->belongsToMany(Product::class);
+    // }
 
     public function reservedStocks()
     {
