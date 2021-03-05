@@ -11,7 +11,7 @@
     </div>
     <div class="pt-2">
         <div class="flex flex-col gap-2">
-            @foreach ($this->liveReports as $report)
+            @forelse ($this->liveReports as $report)
                 <div class="p-2 flex justify-between hover:bg-gray-100 hover:shadow-md">
                     <div>
                         <i class="{{ $report['status']['icon'] }}"></i>
@@ -26,7 +26,12 @@
                         </span>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="text-sm text-ease font-bold">
+                    <i class="info icon"></i>
+                    Şu anda herhangi bir üretim yapılmıyor...
+                </div>
+            @endforelse
         </div>
     </div>
 

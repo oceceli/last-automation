@@ -3,7 +3,7 @@
     
     {{-- Kritik stok --}}
     @if ($this->criticalStockProducts->count() > 0)
-        <x-expandable-area>
+        <x-expandable-area class="-mb-4">
             <x-slot name="header">
                 <span class="font-bold text-lg text-red-600">
                     <i class="triangle exclamation icon"></i>
@@ -49,19 +49,12 @@
 
     <div class="rounded p-2 shadow bg-gray-200">
         <div class="responsive-grid-2 rounded">
-
-
             <div>
                 <livewire:work-orders.live-reports wire:key="work-orders-live-reports" />
             </div>
-
             <div>
-
                 <livewire:dispatch-orders.live-reports wire:key="dispatch-orders-live-reports" />
-                
             </div>
-
-
         </div>
     </div>
     
