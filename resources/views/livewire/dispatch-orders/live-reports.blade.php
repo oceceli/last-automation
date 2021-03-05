@@ -1,12 +1,13 @@
-<div class="shadow p-2 rounded-sm border bg-white">
+<div class="shadow p-2 rounded-sm border border-gray-400 bg-white">
     <div class="font-bold border-b pb-2 flex justify-between">
         <div>
             <i class="red circle icon animate-pulse"></i>
             <span class="text-lg text-ease">{{ __('dispatchorders.live_dispatch_reports') }}</span>
         </div>
-        <div class="">
+        <a href="{{ route('dispatchorders.daily') }}">
             <i class="fast shipping icon"></i>
-        </div>
+            <span class="text-xs">Tümünü gör</span>
+        </a>
     </div>
     <div class="pt-2">
         <div class="flex flex-col gap-2">

@@ -189,7 +189,7 @@ trait DispatchStates
     {
         return [
             'approved' => ['icon' => 'green double check icon', 'explanation' => __('dispatchorders.approved'), 'textColor' => 'text-green-600'],
-            'completed' => ['icon' => 'green checkmark icon', 'explanation' => __('dispatchorders.completed'), 'textColor' => 'text-green-600'],
+            'completed' => ['icon' => 'red checkmark icon', 'explanation' => __('dispatchorders.completed'), 'textColor' => 'text-red-600'],
             'in_progress' => ['icon' => 'yellow loading cog icon', 'explanation' => __('dispatchorders.in_progress'), 'textColor' => 'text-yellow-500'],
             'active' => ['icon' => 'blue clock icon', 'explanation' => __('dispatchorders.active'), 'textColor' => 'text-blue-600'],
             'suspended' => ['icon' => 'grey ban icon', 'explanation' => __('dispatchorders.suspended'), 'textColor' => 'text-gray-600'],

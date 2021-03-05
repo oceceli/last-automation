@@ -1,3 +1,5 @@
 <x-app-layout>
-  <livewire:work-orders.details :workOrder="$workOrder">
+  <div class="bg-white md:m-6">
+    <x-workorder-details viewOnly :workOrder="$workOrder" />
+  </div>
 </x-app-layout>

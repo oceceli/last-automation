@@ -68,7 +68,7 @@
             @else
                 <div class="flex flex-col gap-3">
                     @foreach ($workOrder->product->recipe->calculateNecessaryIngredients($workOrder->wo_amount, $workOrder->unit_id) as $item)
-                        <div x-data="{lotNumbers: false}" @click="lotNumbers = ! lotNumbers" class="border p-4 {{ $classes['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed cursor-pointer text-ease">
+                        <div x-data="{lotNumbers: false}" @click="lotNumbers = ! lotNumbers" class="border p-4 {{ $classes['borderColor'] }} rounded hover:bg-cool-gray-50 border-dashed cursor-pointer">
                             <div class="flex justify-between">
                                 <span class="font-bold">{{ $item['ingredient']->prd_name }}</span>
                                 <div>

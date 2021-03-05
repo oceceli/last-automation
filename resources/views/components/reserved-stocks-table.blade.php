@@ -20,9 +20,14 @@
                             <span class="text-xs">({{ $reservation->product->prd_name }})</span>
                         </x-tbody-item>
                     @endif
-                    <x-tbody-item>{{ $reservation->reserved_lot }}</x-tbody-item>
+                    <x-tbody-item>
+                        Lot:
+                        <span class="text-blue-700 font-bold">
+                            {{ $reservation->reserved_lot }}
+                        </span>
+                    </x-tbody-item>
                     {{-- <x-tbody-item class="font-bold right aligned">{{ number_format($reservation->reserved_amount, 3, ',', '') }} {{ $reservation->product->baseUnit->name }}</x-tbody-item> --}}
-                    <x-tbody-item class="font-bold right aligned">{{ (float)$reservation->reserved_amount }} {{ $reservation->product->baseUnit->name }}</x-tbody-item>
+                    <x-tbody-item class="font-bold right aligned">{{ number_format($reservation->reserved_amount, 2, ',', '.') }} {{ $reservation->product->baseUnit->name }}</x-tbody-item>
                 </x-table-row>
             @empty
                 <tr class="p-5 bg-red-900 shadow-inner text-white">

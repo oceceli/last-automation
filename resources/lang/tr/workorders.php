@@ -12,7 +12,7 @@ return [
     // states
     'approved' => 'Onaylandı',
     'completed' => 'Tamamlandı',
-    'in_progress' => 'Üretim sürüyor',
+    'in_progress' => 'Üretimde',
     'prepared' => 'Hazırlandı',
     'preparing' => 'Hazırlanıyor',
     'active' => 'Aktif',
@@ -29,7 +29,7 @@ return [
     'code' => 'İş Emri No',
     'queue' => 'Şarj no',
     'is_active' => 'Aktif',
-    'in_progress' => 'Üretiliyor',
+    // 'in_progress' => 'Üretiliyor',
     'is_completed' => 'Tamamlandı',
     'note' => 'Açıklama',
     

@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'shadow rounded bg-white p-2']) }} x-data="{expanded: false}">
+<div {{ $attributes->merge(['class' => 'shadow rounded bg-white p-1']) }} x-data="{expanded: false}">
     <div class="border border-dashed border-red-700 rounded">
 
         <div @click="expanded = ! expanded" class="cursor-pointer p-3 flex justify-between">

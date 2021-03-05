@@ -1,14 +1,6 @@
 <div class="p-4 flex flex-col gap-8">
-
-    {{-- özet kartlar --}}
-    <div class="grid md:grid-cols-3 gap-5">
-        <x-overview-card model="woFrq" number="{{ number_format($this->woCountOverview(), 0, ',', '.') }}" text="üretim yapıldı..." icon="industry" bgColor="bg-orange-500 hover:bg-orange-700" textColor="text-orange-500 hover:text-orange-700" />
-        <x-overview-card model="doFrq" number="{{ number_format($this->doCountOverview(), 0, ',', '.') }}" text="sevkiyat yapıldı..." icon="fast shipping" bgColor="bg-teal-500 hover:bg-teal-700" textColor="text-teal-500 hover:text-teal-700" />
-        <x-overview-card model="smFrq" number="{{ number_format($this->smCountOverview(), 0, ',', '.') }}" text="stok girişi yapıldı..." icon="warehouse" bgColor="bg-green-500 hover:bg-green-700" textColor="text-green-500 hover:text-green-700" />
-    </div>
-
-
-
+    
+    
     {{-- Kritik stok --}}
     @if ($this->criticalStockProducts->count() > 0)
         <x-expandable-area>
@@ -39,6 +31,18 @@
             </div>
         </x-expandable-area>
     @endif
+
+
+    
+    {{-- özet kartlar --}}
+    <div class="grid md:grid-cols-3 gap-5">
+        <x-overview-card model="woFrq" number="{{ number_format($this->woCountOverview(), 0, ',', '.') }}" text="üretim yapıldı..." icon="industry" bgColor="bg-orange-500 hover:bg-orange-700" textColor="text-orange-500 hover:text-orange-700" />
+        <x-overview-card model="doFrq" number="{{ number_format($this->doCountOverview(), 0, ',', '.') }}" text="sevkiyat yapıldı..." icon="fast shipping" bgColor="bg-teal-500 hover:bg-teal-700" textColor="text-teal-500 hover:text-teal-700" />
+        <x-overview-card model="smFrq" number="{{ number_format($this->smCountOverview(), 0, ',', '.') }}" text="stok girişi yapıldı..." icon="warehouse" bgColor="bg-green-500 hover:bg-green-700" textColor="text-green-500 hover:text-green-700" />
+    </div>
+
+
+
 
 
 
