@@ -96,7 +96,7 @@
                         </span>
                         <span class="text-xs">- {{ $classes['explanation'] }}</span>
                     </div>
-                    @if ($workOrder->isCompleted())
+                    @if ($viewOnly === false && $workOrder->isCompleted())
                         <div>
                             <button wire:click.prevent="woDeny({{ $workOrder->id }})" class="ui mini white button" data-tooltip="{{ __('workorders.wo_will_fallback_to_inprogress_state') }}" data-variation="mini" data-position="top right" >
                                 <i class="red ban icon"></i>

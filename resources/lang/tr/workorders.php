@@ -20,7 +20,6 @@ return [
 
 
     // details
-    'production_completed' => 'Üretim tamamlandı',
     'belonged_workorder' => 'Ait olduğu iş emri',
 
     'product_id' => 'Reçete no ???',
@@ -87,7 +86,7 @@ return [
     'workorder_saved_successfully' => 'İş emri kaydedildi',
     // 'todays_work_orders' => 'Bugüne ait iş emirleri',
     'daily_work_orders' => 'Günlük iş emri',
-    'production_is_completed' => 'Üretim tamamlandı',
+    'production_is_completed' => 'Üretim tamamlandı, onay bekleniyor',
     // 'see_production_results' => 'Üretim sonuçlarını gör',
     'production_continues' => 'Üretim sürüyor',
     'on_hold' => 'Beklemede',

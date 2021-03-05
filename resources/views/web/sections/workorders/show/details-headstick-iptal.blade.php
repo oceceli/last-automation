@@ -2,7 +2,7 @@
     @if ($workOrder->isCompleted())
         <div class="p-3 rounded-t-md">
             <i class="large text-{{ $statusColor }}-500 {{ __('workorders.wo_completed_icon') }} icon"></i>
-            <span class="font-bold text-{{ $statusColor }}-500">{{ __('workorders.production_completed') }} </span>
+            <span class="font-bold text-{{ $statusColor }}-500">{{ __('workorders.production_is_completed') }} </span>
         </div>
     @elseif($workOrder->isInProgress())
         <div class="p-3 rounded-t-md">

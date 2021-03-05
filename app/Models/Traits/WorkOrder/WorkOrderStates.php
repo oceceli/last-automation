@@ -227,14 +227,14 @@ trait WorkOrderStates
     public function getStatusLookupAttribute()
     {
         return [
-            'approved' => ['icon' => 'green double check icon', 'explanation' => __('common.approved')],
-            'completed' => ['icon' => 'green checkmark icon', 'explanation' => __('workorders.production_is_completed')],
-            'in_progress' => ['icon' => 'yellow loading cog icon', 'explanation' => __('workorders.production_continues')],
-            'prepared' => ['icon' => 'purple pause icon', 'explanation' => __('workorders.prepared')],
-            'preparing' => ['icon' => 'blue loading clock icon', 'explanation' => __('workorders.preparing')],
-            'active' => ['icon' => 'blue clock icon', 'explanation' => __('workorders.waiting_for_production')],
-            'suspended' => ['icon' => 'grey ban icon', 'explanation' => __('common.suspended')],
-        ][$this->wo_status] ?? ['icon' => '', 'explanation' => ''];
+            'approved' => ['icon' => 'green double check icon', 'explanation' => __('common.approved'), 'textColor' => 'text-green-600'],
+            'completed' => ['icon' => 'green checkmark icon', 'explanation' => __('workorders.production_is_completed'), 'textColor' => 'text-green-600'],
+            'in_progress' => ['icon' => 'yellow loading cog icon', 'explanation' => __('workorders.production_continues'), 'textColor' => 'text-yellow-500'],
+            'prepared' => ['icon' => 'purple pause icon', 'explanation' => __('workorders.prepared'), 'textColor' => 'text-purple-600'],
+            'preparing' => ['icon' => 'blue loading clock icon', 'explanation' => __('workorders.preparing'), 'textColor' => 'text-blue-600'],
+            'active' => ['icon' => 'blue clock icon', 'explanation' => __('workorders.waiting_for_production'), 'textColor' => 'text-blue-600'],
+            'suspended' => ['icon' => 'grey ban icon', 'explanation' => __('common.suspended'), 'textColor' => 'text-gray-600'],
+        ][$this->wo_status] ?? ['icon' => '', 'explanation' => '', 'textColor' => ''];
     }
 
 }

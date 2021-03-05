@@ -43,74 +43,23 @@
 
 
 
-    <div class="rounded bg-white p-2 shadow">
-        <div class="responsive-grid-2">
+    <div class="rounded p-2 shadow bg-gray-200">
+        <div class="responsive-grid-2 rounded">
 
 
-            <div class="shadow p-2 rounded-sm">
-                <div class="font-bold border-b pb-2 flex justify-between">
-                    <div>
-                        <i class="red circle icon animate-pulse"></i>
-                        <span class="text-lg text-ease">{{ __('workorders.live_production_reports') }}</span>
-                    </div>
-                    <div class="">
-                        <i class="industry icon"></i>
-                    </div>
-                </div>
-                <div class="pt-2">
-                    <div class="flex flex-col gap-2">
-                        @foreach ($this->workOrderLiveReports as $report)
-                            <div class="p-2 flex justify-between hover:bg-gray-100 hover:shadow-md">
-                                <div>
-                                    <i class="{{ $report['status']['icon'] }}"></i>
-                                    <span class="font-bold">{{ $report['workOrder']->wo_lot_no }}</span>
-                                    <span class="text-xs text-ease">({{ $report['workOrder']->product->prd_code }})</span>
-                                    <span>{{ $report['status']['explanation'] }}</span>
-                                    {{-- <span class="font-semibold">{{ $report['workOrder']->product->prd_name }}</span> --}}
-                                </div>
-                                <div>
-                                    <i wire:click="openWoDetailsModal({{ $report['workOrder']->id }})" class="blue search link icon"></i>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+            <div>
+                <livewire:work-orders.live-reports wire:key="work-orders-live-reports" />
             </div>
 
+            <div>
 
-            <div class="shadow p-2 rounded-sm">
-                <div class="font-bold border-b pb-2 flex justify-between">
-                    <div>
-                        <i class="red circle icon animate-pulse"></i>
-                        <span class="text-lg">{{ __('dispatchorders.live_dispatch_reports') }}</span>
-                    </div>
-                    <div class="">
-                        <i class="fast shipping icon"></i>
-                    </div>
-                </div>
-                <div class="pt-2">
-                    <div class="flex flex-col gap-2">
-                        {{-- @foreach ($collection as $item)
-                            <li>{{ $item }}</li>
-                        @endforeach --}}
-                    </div>
-                </div>
+                <livewire:dispatch-orders.live-reports wire:key="dispatch-orders-live-reports" />
+                
             </div>
 
 
         </div>
     </div>
-
-
-
-
-    @if ($woDetailsModal)
-        <div wire:key="woDetailsModal" x-data="{woDetailsModal: @entangle('woDetailsModal')}">
-            <x-custom-modal active="woDetailsModal" header="{{ __('workorders.details.header') }}">
-                <x-workorder-details :workOrder="$modalSelectedWorkOrder" />
-            </x-custom-modal>
-        </div>
-    @endif
     
 
 </div>

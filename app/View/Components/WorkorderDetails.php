@@ -10,14 +10,17 @@ class WorkorderDetails extends Component
 
     public $workOrder;
 
+    public $viewOnly;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(WorkOrder $workOrder)
+    public function __construct(WorkOrder $workOrder, $viewOnly = false)
     {
         $this->workOrder = $workOrder;
+        $this->viewOnly = $viewOnly;
     }
 
 
