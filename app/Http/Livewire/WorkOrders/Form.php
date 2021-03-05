@@ -23,10 +23,11 @@ class Form extends Component
     public $wo_queue;
     public $wo_status = 'active';
     public $wo_note;
-
     
     // comes from dropdown
     public $selectedProduct;
+
+    public $units = [];
 
     // public $stockCards = [];
 
@@ -48,6 +49,7 @@ class Form extends Component
         'wo_note' => 'nullable',
     ];
 
+
     public function mount($workOrder = null) 
     {
         if($workOrder) {
@@ -62,8 +64,9 @@ class Form extends Component
         if($this->editMode) return;
 
         $this->reset();
-        $this->selectedProduct = Product::find($id); // !!! get it from getProductsProperty
+        $this->selectedProduct = Product::find($id);
 
+        $this->units = $this->selectedProduct->units->toArray();
         $this->unit_id = $this->selectedProduct->baseUnit->id;
         $this->emit('woProductChanged'); // fill the units
 
@@ -74,16 +77,16 @@ class Form extends Component
 
     public function getProductsProperty()
     {
-        return Product::has('recipe')->get()->toArray();
+        return Product::hasRecipe()->get()->toArray();
     }
 
 
-    public function getUnitsProperty()
-    {
-        if($this->productSelected()) {
-            return $this->selectedProduct->units->toArray();
-        }
-    }
+    // public function getUnitsProperty()
+    // {
+    //     if($this->productSelected()) {
+    //         return $this->selectedProduct->units->toArray();
+    //     }
+    // }
 
     
     // @override

@@ -164,7 +164,7 @@ return [
         'created_at' => 'Oluşturma Tarihi',
         'updated_at' => 'Güncelleme tarihi',
 
-
+        
         // products
         'category_id' => 'Kategori', 
         'prd_code' => 'Ürün kodu', 
@@ -176,6 +176,7 @@ return [
         'prd_note' => 'Açıklama', 
         'prd_is_active' => 'Aktif',
         'prd_producible' => 'Üretilebilir',
+        'product_id' => 'Ürün',
 
         // companies
         'cmp_name' => 'Firma adı',
@@ -241,6 +242,9 @@ return [
 
         // recipe
         'rcp_code' => 'Reçete Kodu',
+
+        // units
+        'unit_id' => 'Birim',
 
     ],
 

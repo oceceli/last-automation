@@ -22,6 +22,7 @@ class LiveReports extends Component
     public function getLiveReportsProperty()
     {
         $dispatchOrder = DispatchOrderReportsService::getLiveReports();
+        $arr = [];
         foreach ($dispatchOrder as $dispatchOrder) {
             $arr[] = [
                 'dispatchOrder' => $dispatchOrder,

@@ -45,7 +45,7 @@ class Form extends Component
     protected function rules()
     {
         return [
-            'category_id' => 'required|integer',
+            'category_id' => 'nullable|integer',
             'prd_code' => 'required|min:1|unique:products,prd_code,' . optional($this->product)->id,
             'prd_barcode' => 'nullable|numeric|unique:products,prd_barcode,' . optional($this->product)->id,
             'prd_name' => 'required|min:1',

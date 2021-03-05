@@ -35,7 +35,7 @@
                             <div class="flex flex-col justify-between text-right">
                                 
                                 <div>
-                                    <span class="text-sm font-sans text-gray-500" data-tooltip="{{ __('modelnames.category') }}" data-variation="mini">{{ $product->category->ctg_name }}</span>
+                                    <span class="text-sm font-sans text-gray-500" data-tooltip="{{ __('modelnames.category') }}" data-variation="mini">{{ optional($product->category)->ctg_name ?? __('products.category_not_defined') }}</span>
                                     <i class="layer group  small icon grey"></i>
                                 </div>
             

@@ -54,7 +54,8 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-
+        $product->recipe()->delete();
+        $product->units()->delete();
     }
 
 

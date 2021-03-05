@@ -20,10 +20,10 @@
                             <td class="collapsing center aligned font-bold">{{ $recipe->rcp_code }}</td>
                             <td class="">
                                 <span>
-                                    {{ $recipe->product->prd_code }}
+                                    {{ optional($recipe->product)->prd_code }}
                                 </span>
                                 <span class="text-xs text-ease">
-                                    {{ $recipe->product->prd_name }}
+                                    {{ optional($recipe->product)->prd_name }}
                                 </span>
                             </td>
                             <td>

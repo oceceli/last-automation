@@ -8,6 +8,7 @@ use App\Http\Livewire\Traits\Exportable;
 use App\Http\Livewire\Traits\WorkOrders\DetailsModal;
 use App\Models\Product;
 use App\Models\WorkOrder;
+use App\Services\Product\ProductService;
 use App\Services\WorkOrder\WorkOrderService;
 use Livewire\Component;
 
@@ -62,7 +63,7 @@ class Datatable extends Component implements ExportsContract
 
     public function getProductsProperty()
     {
-        return Product::getProducibleOnes();
+        return ProductService::getProducibleOnes();
     }
 
     public function getStatesProperty()

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\Unit;
+use App\Services\Product\ProductService;
 use Livewire\Component;
 
 
@@ -358,7 +359,7 @@ class Form extends Component
      */
     public function getProduciblesProperty() 
     {
-        return Product::getProducibleProducts();
+        return ProductService::getProducibleProducts();
     }
 
 

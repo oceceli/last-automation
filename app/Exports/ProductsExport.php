@@ -42,7 +42,7 @@ class ProductsExport extends BaseExport implements FromQuery, WithHeadings, With
         return [
             $product->prd_code, '',
             $product->prd_name, '',
-            $product->category->ctg_name, '',
+            optional($product->category)->ctg_name ?? __('products.category_not_defined'), '',
             $product->prd_barcode, '',
             $product->prd_shelf_life, '',
             $product->prd_cost, '',

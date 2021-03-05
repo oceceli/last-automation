@@ -23,6 +23,7 @@ class LiveReports extends Component
     public function getLiveReportsProperty()
     {
         $workOrders = WorkOrderReportsService::getLiveReports();
+        $arr = [];
         foreach ($workOrders as $workOrder) {
             $arr[] = [
                 'workOrder' => $workOrder,

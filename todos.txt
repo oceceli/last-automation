@@ -1,0 +1,72 @@
+
+SİLME VE UPDATE KURALLARI ************************************************
+
+CATEGORIES -------
+    delete: 
+        1) kategoriye bağlı ürün var mı? 
+            + evet: Silinebilir ✓
+            - hayır: Silinebilir ✓
+            not: bağlı ürünler kategoriye OPTIONAL olarak ulaşacak ✓
+            sorun: kategori unique olmasına rağmen, veritabanı hatası veriyor ×
+    update:
+        Her şekilde update edilebilir. ✓
+
+
+
+PRODUCTS -------
+    delete:
+        1) Ürüne bağlı reçeteyi de sil ✓
+        2) Ürüne bağlı birimleri de sil ✓
+        3) 
+
+
+
+
+RECIPES -------
+    delete: 
+
+
+UNITS -------
+
+
+
+WORKORDERS -------
+
+
+
+STOCKMOVES -------
+
+
+
+RESERVEDSTOCKS -------
+
+
+
+COMPANIES -------
+
+
+
+ADDRESSES -------
+
+
+
+DISPATCHORDERS -------
+
+
+
+DISPATCHEXTRAS -------
+
+
+
+DISPATCHPRODUCTS -------
+
+
+
+SALESTYPES -------
+
+
+
+SETTINGS -------
+
+
+

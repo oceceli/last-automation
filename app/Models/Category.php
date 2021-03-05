@@ -18,7 +18,7 @@ class Category extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['products']; 
+    // protected $with = ['products']; 
 
 
     public function products() 
@@ -45,26 +45,12 @@ class Category extends Model
     //     // })
     // }
 
-    /**
-     * Validate rules for current model
-     */
-    // public static function rules()
-    // {
-    //     return [
-    //         'data' => [
-    //             'name' => 'required|unique:categories',
-    //         ],
-    //         'relation' => [ // use for many to many relationships
-    //             //
-    //         ],
-    //     ];
-    // }
 
-    public function setNameAttribute($value) 
+    public function setCtgNameAttribute($value) 
     {
-        $this->attributes['name'] = ucwords($value);
+        $this->attributes['ctg_name'] = ucwords($value);
     }
-    public function getNameAttribute($value)
+    public function getCtgNameAttribute($value)
     {
         return ucwords($value);
     }

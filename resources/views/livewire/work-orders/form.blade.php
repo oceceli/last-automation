@@ -1,4 +1,5 @@
 <div>
+    <x-error-area></x-error-area>
     <x-content theme="purple">
         <x-slot name="header">
             @if ($editMode)
@@ -39,27 +40,23 @@
 
                 <x-slot name="left">
                     @if ($editMode)
-                        <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
-                            value="id" text="prd_code,prd_name" label="products.product" placeholder="{{ __('units.unit') }}" />
+                        <x-dropdown model="product_id" triggerOnEvent="new_work_order_created" dataSourceFunction="getProductsProperty" class="required" sClass="disabled search" sId="selectProduct"
+                            value="id" text="prd_code,prd_name" label="{{ __('validation.attributes.product_id') }}" placeholder="{{ __('units.unit') }}" />
                     @else
-                        <x-dropdown model="product_id" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
-                            value="id" text="prd_code,prd_name" label="products.product" placeholder="{{ __('units.unit') }}" />
+                        <x-dropdown model="product_id" triggerOnEvent="new_work_order_created" dataSourceFunction="getProductsProperty" class="required" sClass="search" sId="selectProduct"
+                            value="id" text="prd_code,prd_name" label="{{ __('validation.attributes.product_id') }}" placeholder="{{ __('units.unit') }}" />
                     @endif
-                    <x-input model="wo_lot_no" label="validation.attributes.wo_lot_no" placeholder="validation.attributes.wo_lot_no" class="required field" />
-                    @if ($editMode)
-                    <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="validation.attributes.wo_amount" class="required"
-                        model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
+                    <x-input model="wo_lot_no" noErrors label="{{ __('validation.attributes.wo_lot_no') }}" placeholder="{{ __('validation.attributes.wo_lot_no') }}" class="required field" />
+                    
+                    <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="{{ __('validation.attributes.wo_amount') }}" class="required"
+                        model="unit_id" triggerOnEvent="woProductChanged" dataSource="units" sId="units" sClass="basic"
                         value="id" text="name" placeholder="{{ __('units.unit') }}" 
                     />
-                    @else 
-                    <x-dropdown iModel="wo_amount" iPlaceholder="{{ __('validation.attributes.wo_amount') }}" label="validation.attributes.wo_amount" class="required"
-                        initnone model="unit_id" triggerOnEvent="woProductChanged" dataSourceFunction="getUnitsProperty" sId="units" sClass="basic"
-                        value="id" text="name" placeholder="{{ __('units.unit') }}" 
-                    />
-                    @endif
-                    <x-datepicker model="wo_datetime" initialDate="{{ $wo_datetime }}" label="validation.attributes.wo_datetime"   class="required field" />
-                    <x-input model="wo_code" label="{{ __('validation.attributes.wo_code') }}" placeholder="{{ __('validation.attributes.wo_code') }}" class="required field" />                
-                    <x-input model="wo_queue" label="{{ __('validation.attributes.wo_queue') }}" placeholder="{{ __('validation.attributes.wo_queue') }}" class="required field" /> 
+                    {{-- {{ optional(optional(App\Models\Unit::find($unit_id))->product)->prd_name }} --}}
+                    
+                    <x-datepicker noErrors model="wo_datetime" initialDate="{{ $wo_datetime }}" label="{{ __('validation.attributes.wo_datetime') }}"   class="required field" />
+                    <x-input noErrors model="wo_code" label="{{ __('validation.attributes.wo_code') }}" placeholder="{{ __('validation.attributes.wo_code') }}" class="required field" />                
+                    <x-input noErrors model="wo_queue" label="{{ __('validation.attributes.wo_queue') }}" placeholder="{{ __('validation.attributes.wo_queue') }}" class="required field" /> 
                 </x-slot>
         
         

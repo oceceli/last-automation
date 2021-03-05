@@ -28,6 +28,8 @@ return [
 
     'edit_product' => 'Ürün düzenle',
 
+    'category_not_defined' => 'Kategori tanımlanmamış',
+
     // 'at_least_needed_amount' => 'En az :amount olması gerekiyor',
 
     'this_product_cannot_be_manufactured' => 'Bu ürün üretilemez',
