@@ -66,7 +66,7 @@ class Recipe extends Model
                 // 'is_ready' => $ingredient->pivot->is_ready ? true : false,
             ];
         }
-        return $array;
+        return $array ?? [];
     }
 
 }

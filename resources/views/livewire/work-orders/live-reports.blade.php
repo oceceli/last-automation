@@ -1,16 +1,16 @@
-<div class="shadow p-2 rounded-sm border border-gray-400 bg-white">
-    <div class="font-bold border-b pb-2 flex justify-between">
+<div class="shadow p-2 rounded border border-gray-400 bg-white">
+    <div class="font-bold flex justify-between">
         <div>
             <i class="red circle icon animate-pulse"></i>
-            <span class="text-lg text-ease">{{ __('workorders.live_production_reports') }}</span>
+            <span class="text-ease">{{ __('workorders.live_production_reports') }}</span>
         </div>
         <a href="{{ route('work-orders.daily') }}">
             <i class="industry icon"></i>
             <span class="text-xs">Tümünü gör</span>
         </a>
     </div>
-    <div class="pt-2">
-        <div class="flex flex-col gap-2">
+    <div class="pt-1">
+        <div class="flex flex-col gap-2 p-2 border rounded shadow-inner">
             @forelse ($this->liveReports as $report)
                 <div class="p-2 flex justify-between hover:bg-gray-100 hover:shadow-md">
                     <div>
@@ -19,10 +19,10 @@
                         <span class="text-xs text-ease">({{ $report['workOrder']->product->prd_code }})</span>
                         <span class="text-sm font-semibold {{ $report['status']['textColor'] }}">{{ $report['status']['explanation'] }}</span>
                     </div>
-                    <div>
+                    <div wire:click="openWoDetailsModal({{ $report['workOrder']->id }})" class="cursor-pointer hover:text-blue-600">
                         <span class="font-bold text-sm">{{ $report['workOrder']->wo_lot_no }}</span>
                         <span class="pl-2">
-                            <i wire:click="openWoDetailsModal({{ $report['workOrder']->id }})" class="blue search link icon"></i>
+                            <i class="blue search link icon"></i>
                         </span>
                     </div>
                 </div>

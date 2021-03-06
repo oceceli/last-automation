@@ -47,16 +47,16 @@
 
 
 
-    <div class="rounded p-2 shadow bg-gray-200">
+    {{-- <div class="rounded p-2"> --}}
         <div class="responsive-grid-2 rounded">
-            <div>
+            <div class="bg-gray-100 rounded p-2">
                 <livewire:work-orders.live-reports wire:key="work-orders-live-reports" />
             </div>
-            <div>
+            <div class="bg-gray-100 rounded p-2">
                 <livewire:dispatch-orders.live-reports wire:key="dispatch-orders-live-reports" />
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
     
 
 </div>

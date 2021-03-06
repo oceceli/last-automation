@@ -33,7 +33,7 @@ class Unit extends Model
 
 
     // @override
-    // public function delete() // ?? observerda da yaptım, bildirimler için bu kısmı silmedim. Yol bulursan sil
+    // public function delete()
     // {
     //     // if($this->isBase()) {
     //     //     return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
@@ -58,14 +58,12 @@ class Unit extends Model
 
     public function isUsedInRecipe()
     {
-        return DB::table('product_recipe')->where('unit_id', $this->id)->exists(); // !! test et
-            // ? true : false;  
+        return DB::table('product_recipe')->where('unit_id', $this->id)->exists();
     }
 
     public function isUsedInWorkOrder() 
     {
-        return DB::table('work_orders')->where('unit_id', $this->id)->exists(); // !! test et
-            // ? true : false;
+        return DB::table('work_orders')->where('unit_id', $this->id)->exists();
     }
 
 
