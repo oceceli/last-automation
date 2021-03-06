@@ -157,9 +157,9 @@ return [
     */
 
     'attributes' => [
-        'amount' => 'miktar',
-        'lot_no' => 'lot no',
-        'code' => 'kod',
+        'amount' => 'Miktar',
+        'lot_no' => 'Lot no',
+        'code' => 'Kod',
 
         'created_at' => 'Oluşturma Tarihi',
         'updated_at' => 'Güncelleme tarihi',

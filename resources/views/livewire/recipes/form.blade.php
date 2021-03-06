@@ -140,7 +140,7 @@
                                                 </div>
                                             @else
                                                 <div class="flex gap-2 items-center">
-                                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="recipes.amount" iType="number"
+                                                    <x-dropdown iModel="cards.{{ $key }}.amount" iPlaceholder="{{ __('validation.attributes.amount') }}" iType="number"
                                                         model="cards.{{ $key }}.unit_id" dataSource="cards.{{ $key }}.units" :sId="'unit'.$key" sClass="basic"
                                                         value="id" text="name" placeholder="{{ __('units.unit') }}">
                                                     </x-dropdown>

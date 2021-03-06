@@ -8,7 +8,7 @@ return [
     'see_recipe_details' => 'Reçete içeriğini incele',
 
     'edit_recipe' => 'Reçeteyi düzenle',
-    'add_edit_or_delete_ingredients' => 'Reçeteye içerik ekle, çıkar ya da düzenle',
+    'add_edit_or_delete_ingredients' => 'Reçeteyi düzenle, içerik ekle veya çıkar',
 
 
     'recipe_product' => 'Reçetesi yazılacak ürün',
@@ -16,8 +16,8 @@ return [
     // 'count_of_ingredients' => 'İçindekiler',
     'ingredients' => 'İçindekiler',
 
-    'literal' => 'Kesin',
-    'non_literal' => 'Değişken',
+    'literal' => 'İçerik',
+    'non_literal' => 'Paket',
 
     // 'random_code' => 'Rastgele',
     'suggest_code' => 'Öner',

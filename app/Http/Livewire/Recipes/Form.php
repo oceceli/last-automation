@@ -6,6 +6,7 @@ use App\Common\Units\Conversions;
 use App\Http\Livewire\FormHelpers;
 use \Illuminate\Support\Str;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\Unit;
 use App\Services\Product\ProductService;
@@ -159,7 +160,8 @@ class Form extends Component
             return $this->emit('toast', __('common.somethings_wrong'), __('recipes.a_product_cannot_have_itself_as_a_ingredient'), 'warning');
         }
 
-        $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient]);
+        $ingredient = Product::find($ingredient['id']);
+        $this->cards[] = array_merge($this->cardForming(), ['ingredient' => $ingredient], ['units' => $ingredient->units]);
     }
 
 
@@ -432,9 +434,9 @@ class Form extends Component
         
         $IDs = [];
         $pivot = [];
-        for($i = 0; $i < sizeof($cards); $i++) {
-            $IDs[] = $cards[$i]['ingredient']['id'];
-            $pivot[] = ['amount' => $cards[$i]['amount'], 'unit_id' => $cards[$i]['unit_id'], 'literal' => $cards[$i]['literal']];
+        foreach($cards as $card) {
+            $IDs[] = $card['ingredient']['id'];
+            $pivot[] = ['amount' => $card['amount'], 'unit_id' => $card['unit_id'], 'literal' => $card['literal']];
         }
         try {
             $recipe->ingredients()->sync(array_combine($IDs, $pivot));
@@ -464,8 +466,8 @@ class Form extends Component
     public function literalClass($key)
     {   
         return [
-            true => 'large red chevron left icon',
-            false => 'large green chevron right icon',
+            true => 'large red flask icon',
+            false => 'large green open box icon',
         ][$this->cards[$key]['literal']];
     }
 
