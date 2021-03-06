@@ -40,7 +40,9 @@ UNITS -------
         1) Ürüne ait temel birim ise silinemez ✓
         2) Çocuğu varsa silinemez ✓
         3) Bir reçetede kullanıldıysa silinemez ✓
-        4) Bir iş emrinde kullanıldıysa sininemez ✓
+        4) Bir iş emrinde kullanıldıysa silinemez ✓
+    update:
+        1) Kendi çocuğunun çocuğu olamaz, torununun torunu olamaz ?????
 
 
 WORKORDERS -------

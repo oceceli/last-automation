@@ -56,6 +56,12 @@ class Unit extends Model
         return $this->is_base;
     }
 
+    public function hasChildren()
+    {
+        return $this->children()->exists();
+    }
+
+    
     public function isUsedInRecipe()
     {
         return DB::table('product_recipe')->where('unit_id', $this->id)->exists();
@@ -67,19 +73,12 @@ class Unit extends Model
     }
 
 
-    public function hasChildren()
+    public function hasDescendant($unit) // ? parent_id backend koruması ekle, çocuğunun çocuğu olamasın kendinin. update'e eklenecek
     {
-        return $this->children()->exists();
-    }
+        if( ! $unit) return false;
 
-    public function hasDescendant($unit) // ? parent_id backend koruması ekle, çocuğunun çocuğu olamasın kendinin
-    {
-        if( ! $unit instanceof self) {
-            if( ! $unit) return false;
-            $unit = self::find($unit);
-        }
-        if($unit) {
-            if($unit->parent_id == $this->id) return true;
+        if($unit instanceof self) {
+            if($this->id == $unit->parent_id) return true;
             return $this->hasDescendant($unit->parent);
         } 
     }
@@ -98,31 +97,31 @@ class Unit extends Model
     
     
 
-    /**
-     * Validate rules for current model
-     */
-    public static function rules()
-    {
-        $id = self::getRequestID(); // use for unique keys on update event
-        return [
-            'data' => [
-                'parent_id' => 'required|int|min:0',
-                'product_id' => 'required|int|min:1',
-                'name' => 'required|max:30',
-                'abbreviation' => 'required|max:10',
-                'operator' => 'required|boolean',
-                'factor' => 'required|numeric'
-            ],
-            'relation' => [ // use for many to many relationships
-                //
-            ],
-        ];
-    }
+    // /**
+    //  * Validate rules for current model
+    //  */
+    // public static function rules()
+    // {
+    //     $id = self::getRequestID(); // use for unique keys on update event
+    //     return [
+    //         'data' => [
+    //             'parent_id' => 'required|int|min:0',
+    //             'product_id' => 'required|int|min:1',
+    //             'name' => 'required|max:30',
+    //             'abbreviation' => 'required|max:10',
+    //             'operator' => 'required|boolean',
+    //             'factor' => 'required|numeric'
+    //         ],
+    //         'relation' => [ // use for many to many relationships
+    //             //
+    //         ],
+    //     ];
+    // }
 
 
-    public static function getBaseUnit($productId)
-    {
-        return self::where(['product_id' => $productId, 'parent_id' => 0])->first();
-    }
+    // public static function getBaseUnit($productId)
+    // {
+    //     return self::where(['product_id' => $productId, 'parent_id' => 0])->first();
+    // }
     
 }
