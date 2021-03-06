@@ -49,6 +49,7 @@ class ProductObserver
         // herhangi bir sevk emri ile gittiyse
         if($product->dispatchProducts()->exists()) return false;
 
+        // stok giriş çıkış hareketi olduysa
         if($product->stockmoves()->exists()) return false;
     }
 
@@ -62,8 +63,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        $product->recipe()->delete();
-        $product->units()->delete();
+        //
     }
 
 

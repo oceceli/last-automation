@@ -6,14 +6,14 @@ use App\Common\Facades\Conversions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\ModelHelpers;
-use App\Models\Traits\Recipe\HasDeletingRules;
+// use App\Models\Traits\Recipe\HasDeletingRules;
 use App\Models\Traits\Searchable;
 use App\Services\Recipe\ToleranceService;
 
 class Recipe extends Model
 {
     use HasFactory, ModelHelpers;
-    use HasDeletingRules;
+    // use HasDeletingRules;
     use Searchable;
 
     protected $guarded = [];
@@ -21,17 +21,14 @@ class Recipe extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = ['ingredients']; 
+    protected $with = ['ingredients'];
 
     
-
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
-
-
-
+    
     public function ingredients()
     {
         return $this->belongsToMany(Product::class)->withPivot('amount', 'unit_id', 'literal');
@@ -39,9 +36,9 @@ class Recipe extends Model
 
 
 
-    public function setCodeAttribute($code)
+    public function setRcpCodeAttribute($value)
     {
-        $this->attributes['code'] = strtoupper($code);
+        $this->attributes['rcp_code'] = strtoupper($value);
     }
 
 

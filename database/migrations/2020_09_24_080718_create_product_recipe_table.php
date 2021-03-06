@@ -15,16 +15,17 @@ class CreateProductRecipeTable extends Migration
     {
         Schema::create('product_recipe', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('product_id'); // product deletes recipe, and recipe deletes pivot. So no need to cascade
+
             $table->unsignedBigInteger('recipe_id');
+            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
 
             // attachments
             $table->integer('unit_id');
             $table->integer('amount');
             $table->boolean('literal');
-            // $table->boolean('is_ready')->default(false);
             
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

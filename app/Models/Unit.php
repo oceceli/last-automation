@@ -16,7 +16,7 @@ class Unit extends Model
     /**
      * Eagerload relationships when retrieving the model
      */
-    protected $with = []; 
+    // protected $with = [];
 
 
     public function product()

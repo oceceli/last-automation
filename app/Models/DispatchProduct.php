@@ -12,6 +12,8 @@ class DispatchProduct extends Model implements CanReserveStocks
 
     protected $guarded = [];
 
+    protected $touches = ['dispatchOrder']; // !  kontrol etmedim
+
     public function dispatchOrder()
     {
         return $this->belongsTo(DispatchOrder::class);

@@ -1,13 +1,13 @@
 
-SİLME VE UPDATE KURALLARI ************************************************
+SİLME VE UPDATE KURALLARI ************************************************ Test yazılabilir
 
 CATEGORIES -------
     delete: 
         1) kategoriye bağlı ürün var mı? 
-            + evet: Silinebilir ✓
+            + evet: Silinebilir, bağlı ürünlerin category_id alanları null'a çevrilir ✓
             - hayır: Silinebilir ✓
             not: bağlı ürünler kategoriye OPTIONAL olarak ulaşacak ✓
-            sorun: kategori unique olmasına rağmen, veritabanı hatası veriyor ×
+            sorun: formda kategori adı unique olmasına rağmen, veritabanı unique hatası veriyor ×
     update:
         Her şekilde update edilebilir. ✓
 
@@ -15,7 +15,7 @@ CATEGORIES -------
 
 PRODUCTS -------
     delete:
-        1) Ürüne bağlı reçeteyi sil ✓
+        1) Ürüne bağlı reçeteyi sil ✓ 
         2) Ürüne bağlı birimleri sil ✓
         3) Ürüne bağlı iş emirleri(workorders) varsa ürün silinemez ✓
         4) Ürüne bağlı sevk emirleri(dispatchProduct) varsa ürün silinemez ✓
@@ -23,22 +23,27 @@ PRODUCTS -------
     update:
         1) 
 
-    problemler:
-        Livewire component başka bir componentte çağrıldığında ilk seferde sorunsuz çalışıyor.
-        Modal kapatılıp açıldığında ve ürün seçildiğinde units dropdown'ını dolduramıyor. Wire of undefined hatası alıyorum ×
+    
 
 
 
 
 RECIPES -------
-    delete: 
+    delete:
+        1) product_recipe tablosundan ilgili kayıtları kaldır ✓
+    update:
+        1) workorder statuslara göre ayarlanacak !!
 
 
 UNITS -------
-
+    delete:
+        1) Ürünün temel birimi ise silinemez 
 
 
 WORKORDERS -------
+    problemler:
+        Livewire component başka bir componentte çağrıldığında ilk seferde sorunsuz çalışıyor.
+        Modal kapatılıp açıldığında ve ürün seçildiğinde units dropdown'ını dolduramıyor. Wire of undefined hatası alıyorum ×
 
 
 

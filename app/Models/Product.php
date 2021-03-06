@@ -78,7 +78,7 @@ class Product extends Model
     
     public function getBaseUnitAttribute()
     {
-        return $this->units->where('parent_id', 0)->first();
+        return $this->units()->where('parent_id', 0)->first();
     }
 
 

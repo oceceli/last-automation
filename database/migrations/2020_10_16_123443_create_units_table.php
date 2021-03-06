@@ -19,8 +19,15 @@ class CreateUnitsTable extends Migration
             $table->string('abbreviation');
             $table->boolean('operator');
             $table->float('factor');
+
+            $table->boolean('is_base')->nullable();
+
             $table->unsignedBigInteger('parent_id');
+            $table->foreign('parent_id')->references('id')->on('units')->onDelete('cascade');
+
             $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            
 
             $table->timestamps();
         });
