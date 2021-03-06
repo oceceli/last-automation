@@ -5,7 +5,6 @@ namespace App\Common\Units;
 use App\Common\Factories\Instantiator;
 use App\Models\Product;
 use App\Models\Unit;
-use Illuminate\Support\Facades\Validator;
 
 class Conversions 
 {
@@ -23,35 +22,25 @@ class Conversions
     {
         array_map(function($index) use ($product_id, $unit_id){
             if($index['id'] == $unit_id) {
-                Unit::create(['name' => $index['name'], 'abbreviation' => $index['abbreviation'], 'product_id' => $product_id, 'factor' => 1, 'operator' => true, 'parent_id' => 0]);
+                Unit::create(['name' => $index['name'], 'abbreviation' => $index['abbreviation'], 'product_id' => $product_id, 'factor' => 1, 'operator' => true, 'is_base' => true]);
                 return true;
             }
         }, self::units);
     }
 
 
-    // public static function addUnit(array $data)
-    // {
-    //     try {
-    //         Validator::validate($data, Unit::rules()['data']); 
-    //     } catch (\Throwable $th) {
-    //         return false;
-    //     }        
-    //     Unit::create($data);
-    //     return true;
-    // }
 
     /**
      * Convert given unit to product's base unit. 
      */
-    private static function converttttt($product_id, $unit_id, $amount)
-    {
-        $product = Product::find($product_id);
-        $unitsOfProduct = $product->units;
-        if( ! $unit = $unitsOfProduct->find($unit_id))
-            dd('verilen birim bu ürüne ait değil!');
+    // private static function converttttt($product_id, $unit_id, $amount)
+    // {
+    //     $product = Product::find($product_id);
+    //     $unitsOfProduct = $product->units;
+    //     if( ! $unit = $unitsOfProduct->find($unit_id))
+    //         dd('verilen birim bu ürüne ait değil!');
         
-    }
+    // }
 
 
     public static function toBase($unit, $amount = 1)

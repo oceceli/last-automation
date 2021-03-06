@@ -70,7 +70,8 @@ class Form extends Component
 
         $this->guessFields($this->selectedProduct); // !! kullanıcı ayarlarına kaydedilecek, tahmin istenmeyebilir
 
-        $this->unit_id = $this->selectedProduct->baseUnit->id;
+        $this->unit_id = $this->selectedProduct->baseUnit->id; // !! bununla if else ilişkisine girecek
+
         $this->emit('woProductChanged'); // fill the units
     }
 

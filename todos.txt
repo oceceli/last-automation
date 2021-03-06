@@ -37,7 +37,8 @@ RECIPES -------
 
 UNITS -------
     delete:
-        1) Ürünün temel birimi ise silinemez 
+        1) Ürüne ait temel birim ise silinemez ✓
+        2) Çocuğu varsa silinemez ✓
 
 
 WORKORDERS -------

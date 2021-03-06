@@ -164,15 +164,21 @@ class Form extends Component
         $key = $this->deletingCardKey;
         if(array_key_exists('id', $this->cards[$key])) {
             $unit = $this->selectedProduct->units->find($this->cards[$key]['id']);
-            $result = $unit->delete();
-
-            if($result['type'] == 'success') {
-                $this->emit('toast', __('common.delete'), $result['message'], 'success');
+            if($unit->delete()) {
                 unset($this->cards[$key]);
+                $this->emit('toast', '', __('common.context_deleted'), 'success');
             } else {
                 $this->lockCard($key);
-                $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'warning');
+                $this->emit('toast', '', __('common.unable_to_delete'), 'warning');
             }
+
+            // if($result['type'] == 'success') {
+            //     $this->emit('toast', __('common.delete'), $result['message'], 'success');
+            //     unset($this->cards[$key]);
+            // } else {
+            //     $this->lockCard($key);
+            //     $this->emit('toast', __('common.unable_to_delete'), $result['message'], 'warning');
+            // }
         } else {
             unset($this->cards[$key]);
         }

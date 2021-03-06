@@ -6,7 +6,6 @@ use App\Common\Units\Conversions;
 use App\Http\Livewire\FormHelpers;
 use \Illuminate\Support\Str;
 use App\Models\Category;
-use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\Unit;
 use App\Services\Product\ProductService;

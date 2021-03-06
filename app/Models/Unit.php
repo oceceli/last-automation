@@ -13,12 +13,7 @@ class Unit extends Model
 
     protected $guarded = [];
 
-    /**
-     * Eagerload relationships when retrieving the model
-     */
-    // protected $with = [];
-
-
+    
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -34,10 +29,45 @@ class Unit extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
+    
+
+
+    // @override
+    // public function delete() // ?? observerda da yaptım, bildirimler için bu kısmı silmedim. Yol bulursan sil
+    // {
+    //     // if($this->isBase()) {
+    //     //     return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
+    //     // } elseif($this->hasChildren()) {
+    //     if($this->hasChildren()) {
+    //         return ['message' => '!!! (model) Bu birime bağlı birimler olduğu için silinemez!', 'type' => 'error'];
+    //     } elseif($this->isUsedInRecipe()) {
+    //         return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
+    //     } elseif($this->isUsedInWorkOrder()) {
+    //         return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç iş emrinde kullanıldığı için silinemez!', 'type' => 'error'];
+    //     }
+    //     else {
+    //         parent::delete();
+    //         return ['message' => '!!! (model) Birim sorunsuzca kaldırıldı...', 'type' => 'success'];
+    //     }
+    // }
+
     public function isBase()
     {
-        return $this->parent_id == 0;
+        return $this->is_base;
     }
+
+    public function isUsedInRecipe()
+    {
+        return DB::table('product_recipe')->where('unit_id', $this->id)->exists(); // !! test et
+            // ? true : false;  
+    }
+
+    public function isUsedInWorkOrder() 
+    {
+        return DB::table('work_orders')->where('unit_id', $this->id)->exists(); // !! test et
+            // ? true : false;
+    }
+
 
     public function hasChildren()
     {
@@ -54,34 +84,6 @@ class Unit extends Model
             if($unit->parent_id == $this->id) return true;
             return $this->hasDescendant($unit->parent);
         } 
-    }
-
-    // @override
-    public function delete()
-    {
-        if($this->isBase()) {
-            return ['message' => '!!! (model) Temel birim silinemez!', 'type' => 'error'];
-        } elseif($this->hasChildren()) {
-            return ['message' => '!!! (model) Bu birime bağlı birimler olduğu için silinemez!', 'type' => 'error'];
-        } elseif($this->isUsedInRecipe()) {
-            return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç reçetede kullanıldığı için silinemez!', 'type' => 'error'];
-        } elseif($this->isUsedInWorkOrder()) {
-            return ['message' => '!!! (model) '. $this->product->prd_name .' ürününe ait bu birim bir/birkaç iş emrinde kullanıldığı için silinemez!', 'type' => 'error'];
-        }
-        else {
-            parent::delete();
-            return ['message' => '!!! (model) Birim sorunsuzca kaldırıldı...', 'type' => 'success'];
-        }
-    }
-    private function isUsedInRecipe()
-    {
-        return DB::table('product_recipe')->where('unit_id', $this->id)->first()
-            ? true : false;  
-    }
-    private function isUsedInWorkOrder() 
-    {
-        return DB::table('work_orders')->where('unit_id', $this->id)->first()
-            ? true : false;
     }
 
 

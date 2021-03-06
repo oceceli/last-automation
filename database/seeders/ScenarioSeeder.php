@@ -159,7 +159,8 @@ class ScenarioSeeder extends Seeder
             'abbreviation' => 'kısa'. $unitName, 
             'operator' => true,
             'factor' => 1,
-            'parent_id' => 0
+            // 'parent_id' => null,
+            'is_base' => true,
         ]);
         return $product;
     }
@@ -178,7 +179,7 @@ class ScenarioSeeder extends Seeder
         return Category::create(['ctg_name' => $name]);
     }   
 
-    private function cUnit($productId, $name, $abbreviation, $factor, $operator, $parentId)
+    private function cUnit($productId, $name, $abbreviation, $factor, $operator, $parentId = null)
     {
         return Unit::create([
             'product_id' => $productId, 

@@ -20,7 +20,7 @@ return [
     'non_literal' => 'Değişken',
 
     // 'random_code' => 'Rastgele',
-    'suggest_code' => 'Üret',
+    'suggest_code' => 'Öner',
     'amount' => 'Miktar',
     'includes' => 'içerisinde',
     'has_recipe' => 'Reçetesi var',
