@@ -17,7 +17,6 @@ class Company extends Model
 
     protected $with = ['addresses'];
 
-    // protected $casts = ['cmp_supplier' => 'boolean', 'cmp_customer' => 'boolean'];
 
     public function addresses()
     {
@@ -29,11 +28,6 @@ class Company extends Model
         return $this->hasMany(DispatchOrder::class);
     }
 
-    // public function delete()
-    // {
-    //     $this->addresses()->delete();
-    //     parent::delete();
-    // }
     
     public function companyType()
     {
