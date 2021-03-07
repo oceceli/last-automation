@@ -4,6 +4,7 @@ namespace App\Services\Stock;
 
 use App\Models\Product;
 use App\Models\StockMove;
+use App\Models\WorkOrder;
 
 class LotTracerService
 {
@@ -29,12 +30,18 @@ class LotTracerService
         // ];
     }
 
-    public static function isUsedInSomewhereExceptProduction(Product $product, string $lot)
+    public static function isUsedInSomewhereExceptProduction(Product $product, string $lot) : bool
     {
         return StockMove::lotRecords($product, $lot)
             ->whereNotIn('type', ['production_total', 'production_waste'])
             ->downward()
             ->exists();
+    }
+
+
+    public static function isUsingAnyActiveWorkOrder(Product $product, string $lot)
+    {
+        // return WorkOrder:: // !! devam et
     }
 
 

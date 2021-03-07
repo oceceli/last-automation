@@ -102,7 +102,7 @@ class WorkOrder extends Model implements CanReserveStocks
     public function canBeDeleted()
     {
         $stateBool = $this->isSuspended() || $this->isActive() || $this->isApproved();
-        $notUsed = ! LotTracerService::isUsedInSomewhereExceptProduction($this->product, $this->wo_lot_no);
+        $notUsed = ! LotTracerService::isUsedInSomewhereExceptProduction($this->product, $this->wo_lot_no); // !! devam
         return $stateBool && $notUsed;
     }
 

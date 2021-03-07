@@ -56,7 +56,8 @@ WORKORDERS -------
         2) İş emrine bağlı stok hareketleri varsa:
             a) Üretimden çıkan ürün başka bir yerde kullanılmadıysa tüm stok hakeretleri(StockMoves) ile birlikte sil ✓
             b) Başka yerde(sevk, içerik, manuel) kullanıldıysa silinemez ✓
-        3) Rezerve edilen stoklar approve olduğunda siliniyor ✓
+        3) Bu iş emrinden çıkan lotu başka bir iş emri rezerve ettiyse silinemez !!!!
+        4) Rezerve edilen stoklar approve olduğunda siliniyor ✓
     update:
         1) İş emri suspended veya active konumunda değilse güncellenemez ✓
 

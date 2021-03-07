@@ -72,7 +72,7 @@
                             <div class="flex justify-between">
                                 <span class="font-bold">{{ $item['ingredient']->prd_name }}</span>
                                 <div>
-                                    <span>{{ $item['amount'] }} {{ $item['unit']->name }}</span>
+                                    <span>{{ number_format($item['amount'],2, ',', '.') }} {{ $item['unit']->name }}</span>
                                     <span x-show="!lotNumbers" class="pl-6"><i class="caret right icon"></i></span>
                                     <span x-show="lotNumbers" class="pl-6"><i class="caret down icon"></i></span>
                                 </div>

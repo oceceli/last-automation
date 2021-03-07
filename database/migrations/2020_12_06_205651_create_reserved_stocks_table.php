@@ -26,7 +26,7 @@ class CreateReservedStocksTable extends Migration
             $table->string('reservable_type');
             $table->unsignedBigInteger('reservable_id');
             
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
