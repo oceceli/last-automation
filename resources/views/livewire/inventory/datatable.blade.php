@@ -29,7 +29,7 @@
                         </x-tbody-item>
                         <x-tbody-item class="font-semibold">
                             @if ($product->totalStock['reserved_amount'])
-                                {{ $product->totalStock['amount'] }} 
+                                {{ $product->totalStock['amount_string'] }} 
                                 <x-span tooltip="{{ __('inventory.reserved') }}" class="text-xs text-ease-red">
                                     - {{ $product->totalStock['reserved_amount_string'] }}
                                 </x-span>

@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     @if ($lot['reserved_amount'])
-                        <span>{{ $lot['amount'] }}</span>
+                        <span>{{ $lot['amount_string'] }}</span>
                         <span class="text-xs text-gray-200"> - {{ $lot['reserved_amount_string'] }}</span>
                     @else 
                         <span>{{ $lot['amount_string'] }}</span>

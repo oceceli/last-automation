@@ -52,6 +52,8 @@ class WorkOrder extends Model implements CanReserveStocks
     }
 
 
+
+
     public function formattedDatetime()
     {
         return $this->wo_datetime->format('d.m.Y');
@@ -72,8 +74,6 @@ class WorkOrder extends Model implements CanReserveStocks
         return strtoupper($value);
     }
 
-
-    
 
     public function areAllReady()
     {

@@ -31,6 +31,7 @@ PRODUCTS -------
 RECIPES -------
     delete:
         1) product_recipe tablosundan ilgili kayıtları kaldır ✓
+        2) Bağlı olduğu ürüne dokunma ✓
     update:
         1) workorder statuslara göre ayarlanacak !!
 
@@ -46,6 +47,12 @@ UNITS -------
 
 
 WORKORDERS -------
+    delete:
+        1) İş emri suspended veya active konumunda değilse silinemez ✓
+        2) İş emrine bağlı stok hareketleri varsa ??
+    update:
+        1) İş emri suspended veya active konumunda değilse güncellenemez ✓
+
     problemler:
         Livewire component başka bir componentte çağrıldığında ilk seferde sorunsuz çalışıyor.
         Modal kapatılıp açıldığında ve ürün seçildiğinde units dropdown'ını dolduramıyor. Wire of undefined hatası alıyorum ×
