@@ -37,10 +37,13 @@
                         </a>
                     @endcan
 
-                    <div class="p-2 text-center">
+                    <form method="POST" action="{{ route('logout') }}" class="p-2 text-center">
+                        @csrf
                         <span>{{ __('auth.logout')}}</span>
-                        <i class="icon circular power cursor-pointer"></i>
-                    </div>
+                        <button>
+                            <i class="icon circular power cursor-pointer"></i>
+                        </button>
+                    </form>
 
                 </div>
             </div>

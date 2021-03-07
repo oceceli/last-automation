@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // return view('web.layouts.welcome'); // !! bu viewi sil
-    return redirect()->route('dashboard');
-});
+// Route::get('/', function () {
+//     // return view('web.layouts.welcome'); // !! bu viewi sil
+//     // return redirect()->route('dashboard');
+// });
 
 
 
@@ -47,7 +47,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/users', 'UserController@index')->name('users.index');
     
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+    // Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 });
 

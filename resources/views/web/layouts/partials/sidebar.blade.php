@@ -100,9 +100,9 @@
                 <p>Son giriş: 21.10.2020</p>
                 <p>Ve bunun gibi loglar...</p>
             </div>
-            <a href="{{route('logout')}}">
-                <i class="icon circular large power"></i>
-            </a>
+            <button class="focus:outline-none">
+                <i class="icon blue link circular large lock"></i>
+            </button>
         </div>
         
 
