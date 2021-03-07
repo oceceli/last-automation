@@ -4,9 +4,11 @@ namespace App\Observers;
 
 class RecipeObserver
 {
-    public function deleting()
+    public function deleting(Recipe $recipe)
     {
         if(auth()->user()->cannot('delete recipes')) return false;
+
+        // if() // !! devam et,
     }
 
     public function updating()

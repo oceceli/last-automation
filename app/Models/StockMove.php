@@ -18,7 +18,7 @@ class StockMove extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['datetime' => 'date'];
+    protected $casts = ['datetime' => 'datetime'];
     
 
     /**
@@ -64,12 +64,27 @@ class StockMove extends Model
 
     public function scopeManualPositive($query)
     {
-        return $query->where(['type' => 'manual', 'direction' => true]);
+        return $query->where(['type' => 'manual'])->upward();
     }
 
     public function scopeApproved($query)
     {
         return $query->where('approved', true);
+    }
+
+    public function scopeUpward($query)
+    {
+        return $query->where('direction', true);
+    }
+    
+    public function scopeDownward($query)
+    {
+        return $query->where('direction', false);
+    }
+
+    public function scopeLotRecords($query, Product $product, $lotNumber) // !! lot numberservice'i kontrol et
+    {
+        return $query->where(['product_id' => $product->id, 'lot_number' => $lotNumber])->approved();
     }
 
 

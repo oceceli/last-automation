@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('web.layouts.welcome'); // !! değişecek
+    // return view('web.layouts.welcome'); // !! bu viewi sil
+    return redirect()->route('dashboard');
 });
 
 
@@ -58,9 +59,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::fallback(function () {
-    return response()->json([
-        'message' => 'Page not found!',
-    ], 404);
-});
+// Route::fallback(function () {
+//     return response()->json([
+//         'message' => 'Page not found!',
+//     ], 404);
+// });
 

@@ -1,5 +1,5 @@
 
-SİLME VE UPDATE KURALLARI ************************************************ Test yazılabilir
+DELETE VE UPDATE KURALLARI ************************************************ Test yazılabilir
 
 CATEGORIES -------
     delete: 
@@ -17,9 +17,9 @@ PRODUCTS -------
     delete:
         1) Ürüne bağlı reçeteyi sil ✓ 
         2) Ürüne bağlı birimleri sil ✓
-        3) Ürüne bağlı iş emirleri(workorders) varsa ürün silinemez ✓
-        4) Ürüne bağlı sevk emirleri(dispatchProduct) varsa ürün silinemez ✓
-        5) Ürüne bağlı stok hareketleri(stockmoves) varsa ürün silinemez. Aynı zamanda stokta varsa da geçerli ✓ 
+        3) Ürüne bağlı iş emirleri(workorders) varsa ürün silinemez! ✓
+        4) Ürüne bağlı sevk emirleri(dispatchProduct) varsa ürün silinemez! ✓
+        5) Ürüne bağlı stok hareketleri(stockmoves) varsa ürün silinemez! Aynı zamanda stokta varsa da geçerli ✓ 
     update:
         1) 
 
@@ -30,8 +30,12 @@ PRODUCTS -------
 
 RECIPES -------
     delete:
-        1) product_recipe tablosundan ilgili kayıtları kaldır ✓
-        2) Bağlı olduğu ürüne dokunma ✓
+        1) product_recipe tablosundan içerikleri(ingredient) kaldır ✓
+        2) Bağlı olduğu ürüne ait aktif iş emri/emirleri var mı?
+            var:
+                Ürüne bağlı tüm iş emirleri onaylandı ise silinebilir 
+            yok:
+                Silinebilir ✓
     update:
         1) workorder statuslara göre ayarlanacak !!
 
@@ -49,7 +53,10 @@ UNITS -------
 WORKORDERS -------
     delete:
         1) İş emri suspended veya active konumunda değilse silinemez ✓
-        2) İş emrine bağlı stok hareketleri varsa ??
+        2) İş emrine bağlı stok hareketleri varsa:
+            a) Üretimden çıkan ürün başka bir yerde kullanılmadıysa tüm stok hakeretleri(StockMoves) ile birlikte sil ✓
+            b) Başka yerde(sevk, içerik, manuel) kullanıldıysa silinemez ✓
+        3) Rezerve edilen stoklar approve olduğunda siliniyor ✓
     update:
         1) İş emri suspended veya active konumunda değilse güncellenemez ✓
 
@@ -60,19 +67,34 @@ WORKORDERS -------
 
 
 STOCKMOVES -------
+    delete: 
+        Kendi silinemez ✓
+    update:
+        Kendi güncellenemez ✓
 
 
 
 RESERVEDSTOCKS -------
+    delete: 
+        İş ve sevk emri aracılığı ile silinebilir ✓
+    update:
+        İş ve sevk emri aracılığı ile güncellenebilir ✓
+
 
 
 
 COMPANIES -------
-
+    delete:
+        Firmaya bağlı sevk emirleri(dispatchOrders) varsa silinemez ✓
+        Bağlı tüm adresleri sil ✓
+    update:
 
 
 ADDRESSES -------
-
+    delete:
+        Sorunsuzca silinebilir ✓
+    update: 
+        Sorunsuzca güncellenebilir ✓
 
 
 DISPATCHORDERS -------

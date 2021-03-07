@@ -179,14 +179,21 @@ class Form extends Component
      */
     public function removeRecipe()
     {
-        $result = $this->selectedProduct->recipe->delete();
-
-        if($result['type'] == 'error') {
-            $this->emit('toast', __('common.error.title'), $result['message'], 'warning');
-        } else {
-            $this->emit('toast', '', $result['message'], 'success');
+        if($this->selectedProduct->recipe->delete()) {
+            $this->emit('toast', '', __('common.context_deleted'), 'success');
             $this->reset();
+        } else {
+            $this->emit('toast', __('common.error.title'), __('common.unable_to_delete'), 'warning');
         }
+
+        // $result = $this->selectedProduct->recipe->delete();
+
+        // if($result['type'] == 'error') {
+        //     $this->emit('toast', __('common.error.title'), $result['message'], 'warning');
+        // } else {
+        //     $this->emit('toast', '', $result['message'], 'success');
+        //     $this->reset();
+        // }
 
     }
 

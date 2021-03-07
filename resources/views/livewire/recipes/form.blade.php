@@ -24,7 +24,7 @@
     önceki {{ \App\Models\Product::find($oldProductId)->prd_code }}
     @endif --}}
 
-    
+    <x-error-area></x-error-area>
     <x-content theme="orange">
 
         <x-slot name="header">
@@ -96,7 +96,7 @@
                             {{-- CARDS ------------------------------------}}
                             <div class="flex flex-col gap-6 fields">
                                 @foreach ($cards as $key => $card)
-                                    <div wire:key="wire{{$key}}" class="relative flex border shadow rounded-lg bg-white border-blue-100 hover:border-blue-300">
+                                    <div wire:key="wire_card{{$key}}" class="relative flex border shadow rounded-lg bg-white border-blue-100 hover:border-blue-300">
 
                                         {{-- <div class="px-4 rounded-l-lg bg-green-300">
                                             <i class="inverted box icon"></i>

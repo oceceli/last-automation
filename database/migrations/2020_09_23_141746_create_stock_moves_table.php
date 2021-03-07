@@ -19,11 +19,11 @@ class CreateStockMovesTable extends Migration
             // $table->unsignedBigInteger('unit_id');
             $table->string('type');
             $table->string('lot_number');
-            $table->boolean('direction'); 
+            $table->boolean('direction');
             $table->integer('base_amount');
             $table->date('datetime');
 
-            $table->boolean('approved')->default(false); // !! envanter hesaplarken sadece true olanları baz al
+            $table->boolean('approved')->default(false);
 
             $table->string('stockable_type')->nullable();
             $table->bigInteger('stockable_id')->nullable();

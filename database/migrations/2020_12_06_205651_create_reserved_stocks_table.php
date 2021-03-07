@@ -16,6 +16,8 @@ class CreateReservedStocksTable extends Migration
         Schema::create('reserved_stocks', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
+            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+
             $table->string('reserved_lot');
             $table->float('reserved_amount');
             
@@ -24,7 +26,7 @@ class CreateReservedStocksTable extends Migration
             $table->string('reservable_type');
             $table->unsignedBigInteger('reservable_id');
             
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

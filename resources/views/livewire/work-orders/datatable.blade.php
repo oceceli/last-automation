@@ -89,12 +89,12 @@
                                     <x-show-button wire:key="showbutton_{{$loop->index}}" action="openDetailsModal({{ $workOrder->id }})" />
                                 @endcan
                                 @can('create update workorders')
-                                    @if ($workOrder->isSuspended() || $workOrder->isActive())
+                                    @if ($workOrder->canBeUpdated())
                                         <x-edit-button wire:key="editbutton_{{$loop->index}}" route="{{ route('work-orders.edit', ['work_order' => $workOrder]) }}" />
                                     @endif
                                 @endcan
                                 @can('delete workorders')
-                                    @if ($workOrder->isSuspended() || $workOrder->isActive())
+                                    @if ($workOrder->canBeDeleted())
                                         <x-delete-button wire:key="deletebutton_{{$loop->index}}" action="delete({{ $workOrder->id }})"  />
                                     @endif
                                 @endcan

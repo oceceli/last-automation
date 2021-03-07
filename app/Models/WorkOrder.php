@@ -11,6 +11,7 @@ use App\Models\Traits\Searchable;
 use App\Models\Traits\WorkOrder\FinalizedProduction;
 use App\Models\Traits\WorkOrder\FinalizeProduction;
 use App\Models\Traits\WorkOrder\WorkOrderStates;
+use App\Services\Stock\LotTracerService;
 
 class WorkOrder extends Model implements CanReserveStocks
 {
@@ -97,6 +98,18 @@ class WorkOrder extends Model implements CanReserveStocks
         return $this->reservationsFor($productId)->exists();
     }
 
+
+    public function canBeDeleted()
+    {
+        $stateBool = $this->isSuspended() || $this->isActive() || $this->isApproved();
+        $notUsed = ! LotTracerService::isUsedInSomewhereExceptProduction($this->product, $this->wo_lot_no);
+        return $stateBool && $notUsed;
+    }
+
+    public function canBeUpdated()
+    {
+        return $this->isSuspended() || $this->isActive();
+    }
 
 
     // public static function filterByProduct($productId) // sil

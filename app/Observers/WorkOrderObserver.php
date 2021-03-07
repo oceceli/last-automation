@@ -8,22 +8,25 @@ class WorkOrderObserver
 {
     public function deleting(WorkOrder $workOrder)
     {
-        // delete only when workorder is active or suspended
-        return $workOrder->isSuspended() || $workOrder->isActive();
+        // delete only when workorder is active, suspended or approved
+        return $workOrder->canBeDeleted();
 
     }
 
 
     public function deleted(WorkOrder $workOrder)
     {
-        // $workOrder->reservedStocks()->delete(); // !!! devam edilecek
+        if($workOrder->isApproved()) {
+            $workOrder->stockMoves()->delete();
+        }
+        // $workOrder->reservedStocks()->delete(); // ?? approve olduğunda zaten siliniyor
     }
 
 
     public function updating(WorkOrder $workOrder)
     {
         // update only when workorder is active or suspended
-        return $workOrder->isSuspended() || $workOrder->isActive();
+        return $workOrder->canBeUpdated();
     }
 
 

@@ -29,11 +29,11 @@ class Company extends Model
         return $this->hasMany(DispatchOrder::class);
     }
 
-    public function delete()
-    {
-        $this->addresses()->delete();
-        parent::delete();
-    }
+    // public function delete()
+    // {
+    //     $this->addresses()->delete();
+    //     parent::delete();
+    // }
     
     public function companyType()
     {
@@ -78,6 +78,11 @@ class Company extends Model
         return (boolean)$customer;
     }
 
+
+    // public function canBeDeleted()
+    // {
+        
+    // }
 
 
 }

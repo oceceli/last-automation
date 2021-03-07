@@ -47,7 +47,7 @@ class WorkOrderController extends Controller
     public function edit(WorkOrder $workOrder)
     {
         if(auth()->user()->cannot('create update workorders')) abort(403);
-        if( ! ($workOrder->isSuspended() || $workOrder->isActive())) abort(404);
+        if( ! ($workOrder->canBeUpdated())) abort(404);
         
         return view('web.sections.workorders.edit', compact('workOrder'));
     }
