@@ -49,6 +49,12 @@ class Recipe extends Model
     }
     
 
+    public function usingInAnActiveWorkOrder() : bool
+    {
+        return $this->product->workorders()
+            ->whereNotIn('wo_status', ['approved'])->exists();
+    }
+
 
 
     public function calculateNecessaryIngredients($amount, $unitId, $withTolerance = false) : array

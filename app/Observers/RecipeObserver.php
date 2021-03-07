@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Models\Recipe;
+
 class RecipeObserver
 {
     public function deleting(Recipe $recipe)
@@ -9,6 +11,7 @@ class RecipeObserver
         if(auth()->user()->cannot('delete recipes')) return false;
 
         // if() // !! devam et,
+        if($recipe->usingInAnActiveWorkOrder()) return false;
     }
 
     public function updating()

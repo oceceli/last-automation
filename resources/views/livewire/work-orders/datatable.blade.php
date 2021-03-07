@@ -69,7 +69,10 @@
                     <x-table-row>
                         <x-tbody-item class="center aligned collapsing">{{ $workOrder->wo_code }}</x-tbody-item>
                         <x-tbody-item class="center aligned collapsing font-bold">{{ $workOrder->wo_queue }}</x-tbody-item>
-                        <x-tbody-item>{{ $workOrder->product->prd_name }}</x-tbody-item>
+                        <x-tbody-item>
+                            <span class="font-semibold">{{ $workOrder->product->prd_name }}</span>
+                            <span class="font-bold text-xs text-ease">({{ $workOrder->product->prd_code }})</span>
+                        </x-tbody-item>
                         <x-tbody-item class="collapsing">{{ $workOrder->wo_amount }} {{ $workOrder->unit->name }}</x-tbody-item>
                         <x-tbody-item class="">{{ $workOrder->wo_lot_no }}</x-tbody-item>
                         <x-tbody-item>

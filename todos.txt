@@ -33,7 +33,7 @@ RECIPES -------
         1) product_recipe tablosundan içerikleri(ingredient) kaldır ✓
         2) Bağlı olduğu ürüne ait aktif iş emri/emirleri var mı?
             var:
-                Ürüne bağlı tüm iş emirleri onaylandı ise silinebilir 
+                Ürüne bağlı tüm iş emirleri onaylandı ise silinebilir ✓
             yok:
                 Silinebilir ✓
     update:
