@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Address\AddressService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,5 +56,10 @@ class Address extends Model
     public function getAdrDistrictAttribute($value)
     {
         return ucfirst($value);
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return AddressService::concatenated($this);
     }
 }

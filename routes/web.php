@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', 'UserController@index')->name('users.index');
     
     Route::get('/', 'DashboardController@index')->name('dashboard');
-    // Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    // Route::get('/dashboard', 'DashboardController@index')->name('dashboard'); 
 
 });
 

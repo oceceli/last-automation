@@ -11,6 +11,8 @@ class DispatchExtra extends Model
 
     protected $guarded = [];
 
+    // protected $touches = ['dispatchOrder'];
+
     public function dispatchOrder()
     {
         return $this->belongsTo(DispatchOrder::class);

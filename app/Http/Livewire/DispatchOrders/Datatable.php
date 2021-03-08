@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\DispatchOrders;
 
 use App\Contracts\ExportsContract;
+use App\Exports\DispatchOrderDetailedExport;
 use App\Http\Livewire\SmartTable;
 use App\Http\Livewire\Traits\Exportable;
 use App\Models\Address;
@@ -103,5 +104,10 @@ class Datatable extends Component implements ExportsContract
         if($bool == false) $this->reset('selectedDo', 'detailsModal');
     }
 
+
+    public function exportDispatchOrderDetailed()
+    {
+        return (new DispatchOrderDetailedExport($this->selectedDo->query()))->toExcel();
+    }
 
 }

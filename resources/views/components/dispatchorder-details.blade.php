@@ -50,11 +50,18 @@
             </x-list-item>
             @endif
         </div>
-        <div class="pt-5 {{ $tableClass['statusColor'] }}">
-            <i class="{{ $tableClass['icon'] }}"></i>
-            <span class="font-bold">
-                {{ __("dispatchorders.{$dispatchOrder->do_status}") }}
-            </span>
+        <div class="flex justify-between items-center">
+            <div class="pt-5 {{ $tableClass['statusColor'] }}">
+                <i class="{{ $tableClass['icon'] }}"></i>
+                <span class="font-bold">
+                    {{ __("dispatchorders.{$dispatchOrder->do_status}") }}
+                </span>
+            </div>
+            <div>
+                <x-span tooltip="Excel olarak indir">
+                    <i wire:click="exportDispatchOrderDetailed" class="large excel file icon text-ease-green cursor-pointer"></i>
+                </x-span>
+            </div>
         </div>
     </x-slot>
 
