@@ -424,7 +424,8 @@ class Form extends Component
     {
         return $this->validate([
             'product_id' => 'required|min:1',
-            'rcp_code' => 'required|unique:recipes,' . $this->product_id,
+            // 'rcp_code' => 'required|unique:recipes,' . $this->product_id,
+            'rcp_code' => 'required',
         ]);
     }
 
