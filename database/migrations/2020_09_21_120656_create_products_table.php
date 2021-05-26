@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             // $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null'); // !! null olmalı
 
             $table->string('prd_code')->unique();
-            $table->integer('prd_barcode')->unique()->nullable();
+            $table->string('prd_barcode')->unique()->nullable();
             $table->decimal('prd_cost')->nullable();
             $table->string('prd_name'); 
             $table->integer('prd_shelf_life');
