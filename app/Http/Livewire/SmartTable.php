@@ -94,7 +94,11 @@ trait SmartTable
             SearchService::search($query, $this->searchQuery, $searchFields);
         }
 
-        return $query->orderBy($this->orderByColumn, $this->direction);
+        // return $query->orderBy($this->orderByColumn, $this->direction);
+        
+        return $this->orderByColumn
+            ? $query->orderBy($this->orderByColumn, $this->direction)
+            : $query;
 
     }
 
