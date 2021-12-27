@@ -8,6 +8,7 @@ trait MinThreshold
 {
     public function getCriticalStockProductsProperty()
     {
+        $products = [];
         foreach (Product::withThreshold()->get() as $product) {
             if($product->totalStock['amount'] < $product->prd_min_threshold) {
                 $products[] = $product;
