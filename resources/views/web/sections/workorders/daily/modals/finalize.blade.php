@@ -61,7 +61,7 @@
                         <i class="small circular question mark icon"></i>
                     </span>
                 </div>
-                <div x-show="woAbortConfirmation" wire:click="abortWo({{ $finalizeWorkOrder->id }})" 
+                <div x-show="woAbortConfirmation" wire:click="woAbort({{ $finalizeWorkOrder->id }})" 
                         class="font-extrabold bg-red-200 text-center border-red-300 text-red-600 cursor-pointer p-2 rounded hover:bg-red-500 ease-in-out hover:text-white duration-200">
                     {{ __('common.abort') }}?
                 </div>

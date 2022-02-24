@@ -27,6 +27,11 @@ class Datatable extends Component implements ExportsContract
         'product.prd_name',
     ];
 
+    protected $orderByDefault = [
+        'column' => 'wo_datetime',
+        'direction' => 'asc',
+    ];
+
     // public $product;
 
     // filters
@@ -35,9 +40,9 @@ class Datatable extends Component implements ExportsContract
     public $filterWoCode;
     public $filterWoQueue;
 
-    public function mount($product = null)
+    public function mount($product = null) // override
     {
-        $this->stInit();
+        $this->stInit(); // smarttable içinde
         if($product) {
             $this->showFilters = true;
             $this->filterProduct = $product->id;

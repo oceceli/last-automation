@@ -1,11 +1,11 @@
-<div class="shadow h-full border-r">
+
     
-    <div class="h-full flex flex-col">
+    <div class="shadow lg:w-96 border-r h-full flex flex-col">
 
         <div class="bg-white">
             <div class="h-40 p-5 flex justify-center flex-shrink-0 shadow-lg relative border-b border-indigo-200">
                 <div class="text-center pt-6 flex-1">
-                    <p class="text-ease border-b">{{ __('staff_position') }}</p>
+                    <!-- <p class="text-ease border-b">{{ __('staff_position') }}</p> -->
                 </div>
                 <div class="flex-shrink-0">
                     <a href="{{ url('user/profile') }}">
@@ -14,7 +14,7 @@
                     <p class="text-center pt-2 font-bold">{{ $user->name }}</p>
                 </div>
                 <div class="text-center pt-6 flex-1 flex-shrink-0">
-                    <p class="text-ease border-b">{{ __('user_role') }}</p>
+                    <p class="text-ease border-b text-gray-300">{{ $user->roles->first()->name }}</p>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
         <div class="h-20 p-3 flex justify-between items-center">
             <div class="text-sm text-center text-gray-500">
                 <p>Son giriş: 21.10.2020</p>
-                <p>Ve bunun gibi loglar...</p>
+                <!-- <p>Ve bunun gibi loglar...</p> -->
             </div>
             <button class="focus:outline-none">
                 <i class="icon blue link circular large lock"></i>
@@ -107,7 +107,7 @@
         
 
     </div>
-</div>
+
 
 
 {{-- <div class="ui inline dropdown sidebardrop z-50">

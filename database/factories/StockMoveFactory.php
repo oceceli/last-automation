@@ -23,12 +23,13 @@ class StockMoveFactory extends Factory
     public function definition()
     {
         return [
-            'product_id' => $this->faker->numberBetween(1, 10),
+            'product_id' => $this->faker->numberBetween(11, 29), // according to seeder
+            'type' => 'manual',
             'lot_number' => $this->faker->numberBetween(2101004, 2102005),
             // 'unit_id' => $this->faker->number,
-            'type' => 'test',
-            'direction' => $this->faker->boolean(),
-            'base_amount' => $this->faker->numberBetween(),
+            'direction' => true,
+            'approved' => true,
+            'base_amount' => floor(($this->faker->numberBetween(50, 300)) / 5) * 5,
             'datetime' => now(),
         ];
     }

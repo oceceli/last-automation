@@ -43,6 +43,10 @@ trait SmartTable
     public function stInit()
     {
         $this->perPage = auth()->user()->getDatatablePerpage();
+        if(isset($this->orderByDefault)) {
+            $this->orderByColumn = $this->orderByDefault['column'];
+            $this->direction = $this->orderByDefault['direction'];
+        }
     }
 
 

@@ -20,10 +20,10 @@ class UsersSeeder extends Seeder
     {
         
         $su = User::create([
-            'name' => 'Super Man',
-            'email' => 'superman@oceceli.com',
+            'name' => 'Super User',
+            'email' => 'superuser@superuser.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$O3tk5grgZZCzi37R9/P7FuZZ3NPbuQf.GqT7U333wg8IX1kyketPi',
+            'password' => Hash::make(env('SU_ADMIN_PASS', 'secureadmin2021')),
             'remember_token' => Str::random(10),
         ]);
         

@@ -100,18 +100,19 @@ class WoDaily extends Component
     public function woApprove($workOrderId)
     {
         $this->findWo($workOrderId)->approve();
-        $this->closeApprovalModal();
+        $this->refreshTable();
     }
 
     public function woDeny($workOrderId)
     {
         $this->findWo($workOrderId)->deny();
-        $this->closeApprovalModal();
+        $this->refreshTable();
     }
 
     public function woAbort($workOrderId)
     {
         $this->findWo($workOrderId)->abort();
+        $this->refreshTable();
     }
 
 

@@ -132,5 +132,5 @@ return [
 
     'efficiency_limits_exceeded' => 'Verimlilik fazla/eksik!',
     // 'efficiency_limits_exceeded_for_this_production' => 'Bu ürün reçetesi için belirtilen %:efficiency verimlilik toleransı aşıldı. Lütfen değerleri doğru girdiğinizden emin olun. İsterseniz ilgili reçeteden verilimlik değerini güncelleyebilirsiniz',
-    'efficiency_limits_exceeded_for_this_production' => 'Üretim sonucu verileri, ürün reçetesi için belirtilen %:efficiency tolerans değerini aşıyor. Lütfen sonucu doğru girdiğinizden emin olun. İsterseniz ilgili reçeteden verilimlik değerini değiştirebilirsiniz.',
+    'efficiency_limits_exceeded_for_this_production' => 'Üretim sonucu verileri, ürün reçetesi için belirtilen %:efficiency tolerans değerini aşıyor. Lütfen sonucu doğru girdiğinizden emin olun. İsterseniz ilgili reçeteden verimlilik değerini değiştirebilirsiniz.',
 ];

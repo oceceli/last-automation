@@ -48,14 +48,14 @@
     </head>
 
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-cool-gray-700 overflow-y-hidden">
+        <div class="min-h-screen bg-blue-50 overflow-y-hidden">
             <!-- Page Heading -->
             {{-- @livewire('navigation-dropdown') --}}
 
                 <div class="flex" x-data="{sidebar: false}">
 
                     <template id="SIDEBAR"  x-if="!sidebar" x-cloak>
-                        <div class="w-96 h-screen bg-white relative">
+                        <div class="bg-white relative">
                             <x-layouts.partials.sidebar/>
                         </div>
                     </template>

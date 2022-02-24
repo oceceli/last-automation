@@ -13,6 +13,12 @@ class Datatable extends Component
     public $model = StockMove::class;
     public $view = 'livewire.stock-moves.datatable';
 
+    protected $orderByDefault = [
+        'column' => 'datetime',
+        'direction' => 'asc',
+    ];
+
+
     public function delete($id) // !! bunu bir trait yardımıyla tüm componentlere ekleyebilirim.
     {
         $result = $this->model::findAndDelete($id);

@@ -20,6 +20,11 @@ class Datatable extends Component implements ExportsContract
         'category.ctg_name', 'category.id',
     ];
 
+    protected $orderByDefault = [
+        'column' => 'prd_barcode',
+        'direction' => 'desc',
+    ];
+
     public $model = Product::class;
     protected $view = 'livewire.products.datatable';
 
