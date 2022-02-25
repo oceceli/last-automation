@@ -16,10 +16,10 @@ trait SalesTypeTrait
     protected function salesTypeRules()
     {
         return [
-            // 'st_name' => 'required|unique:sales_types',
-            // 'st_abbr' => 'required|unique:sales_types',
-            'st_name' => 'required|unique:sales_types,' . optional($this->salesType)->id,
-            'st_abbr' => 'required|unique:sales_types,' . optional($this->salesType)->id,
+            'st_name' => 'required',
+            'st_abbr' => 'required',
+            // 'st_name' => 'required|unique:sales_types,' . optional($this->salesType)->id,
+            // 'st_abbr' => 'required|unique:sales_types,' . optional($this->salesType)->id,
         ];
     }
 
