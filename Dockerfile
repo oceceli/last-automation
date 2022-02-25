@@ -38,9 +38,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www/html
 
 # Assign permissions of the working directory to the www-data user
-RUN chown -R www-data:www-data * \
- /var/www/html/storage \
- /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data .*
 
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
