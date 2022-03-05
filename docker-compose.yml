@@ -44,8 +44,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: laravel_web
-      MYSQL_ROOT_PASSWORD: replace_mysql_root_password
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
