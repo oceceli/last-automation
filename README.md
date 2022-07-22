@@ -25,7 +25,7 @@ composer install
 php artisan key:generate
 php artisan migrate --seed
 php artisan storage:link
-chown -R www-data:www-data /var/www
+chown -R www-data:www-data /var/www/html
 php artisan optimize
 ```
 
@@ -36,4 +36,7 @@ php artisan config:clear
 php artisan route:clear
 ```
 
-It will be serving at localhost:80
+It will be serving at 
+```
+localhost:80
+```
