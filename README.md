@@ -15,25 +15,25 @@ Docker and docker-compose must be installed
 
 ```
 docker-compose up -d --build
-docker-compose exec app bash
 ```
 
 inside app container:
 
 ```
+docker-compose exec app bash
 composer install
 php artisan key:generate
 php artisan migrate --seed
+php artisan storage:link
 chown -R www-data:www-data /var/www
+php artisan optimize
 ```
 
 
 If something gone wrong try these:
 ```
-php artisan storage:link
-php artisan route:cache
-php artisan route:clear
-php artisan config:cache
 php artisan config:clear
-php artisan optimize
+php artisan route:clear
 ```
+
+It will be serving at localhost:80

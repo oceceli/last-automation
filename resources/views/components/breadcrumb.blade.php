@@ -1,6 +1,6 @@
-<div class="flex items-center gap-5">
+<div class="flex items-center gap-5 py-2">
     <div>
-        test
+        
     </div>
     <div class="ui breadcrumb">
         @if($currentPath == '/')
