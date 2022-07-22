@@ -25,8 +25,8 @@ composer install
 php artisan key:generate
 php artisan migrate --seed
 php artisan storage:link
-chown -R www-data:www-data /var/www/html
 php artisan optimize
+chown -R www-data:www-data /var/www/html
 ```
 
 
