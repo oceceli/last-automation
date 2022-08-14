@@ -32,7 +32,7 @@ chown -R www-data:www-data /var/www/html
 
 If something gone wrong try these:
 ```
-php artisan optimize
+php artisan optimize:clear
 ```
 
 It will be serving at 
