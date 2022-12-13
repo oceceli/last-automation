@@ -1,3 +1,8 @@
+# Demo
+https://erp.oceceli.com/
+admin@admin.com
+secureadmin2021
+
 # An ERP-like automation system
 
 
