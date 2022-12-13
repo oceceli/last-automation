@@ -1,7 +1,8 @@
 # Demo
-https://erp.oceceli.com/
-admin@admin.com
-secureadmin2021
+https://erp.oceceli.com/  
+
+superuser@superuser.com  
+secureadmin2021  
 
 # An ERP-like automation system
 
